@@ -5,7 +5,7 @@ import { Suspense } from "react"
 import { InstallCommand } from "@/components/install-command"
 import { CodeBlock } from "@/components/code-block"
 import { Section } from "@/components/component-layout"
-import { DocsPreviewWrapper } from "@/components/docs-preview-wrapper"
+import { DocsPreviewWrapper, type VariantItem } from "@/components/docs-preview-wrapper"
 
 export interface PropItem {
   name: string
@@ -113,27 +113,34 @@ export async function DocsPageLayout({
 
 
             {/* Installation */}
-            <Section title="Installation" className="border-t border-border/40 pt-14">
+            <Section title="Installation" className="pt-10">
               <InstallCommand component={installPackageName} />
             </Section>
 
             {/* Usage */}
-            <Section title="Usage" className="border-t border-border/40 pt-14">
+            <Section title="Usage" className="pt-10">
               <div className="space-y-4">
-                <Suspense fallback={<CodeBlockSkeleton />}>
-                  {typeof usageCode === "string" ? (
-                    <CodeBlock code={usageCode} lang="tsx" />
-                  ) : (
-                    usageCode
-                  )}
-                </Suspense>
+                <div className="rounded-xl border border-border/60 overflow-hidden bg-white dark:bg-white/[0.02]">
+                  <Suspense fallback={<CodeBlockSkeleton />}>
+                    {typeof usageCode === "string" ? (
+                      <CodeBlock 
+                        code={usageCode} 
+                        lang="tsx" 
+                        lineNumbers={false}
+                        className="border-none !bg-transparent shadow-none !rounded-none [&_pre]:!overflow-auto [&_pre]:scrollbar-none [&_pre]:[-ms-overflow-style:none] [&_pre]:[scrollbar-width:none]" 
+                      />
+                    ) : (
+                      usageCode
+                    )}
+                  </Suspense>
+                </div>
               </div>
             </Section>
 
             {/* Props */}
             {props.length > 0 && (
-              <Section title="API Reference" className="border-t border-border/40 pt-14">
-                <div className="rounded-xl border border-border/60 overflow-hidden text-sm bg-white/80 dark:bg-white/[0.02]">
+              <Section title="API Reference" className="pt-10">
+                <div className="rounded-xl border border-border/60 overflow-hidden text-sm bg-white dark:bg-white/[0.02]">
                   <table className="w-full">
                     <thead className="bg-secondary/30">
                       <tr>
@@ -163,7 +170,7 @@ export async function DocsPageLayout({
 
             {/* Examples */}
             {examples.length > 0 && (
-              <Section title="Examples" className="border-t border-border/40 pt-14">
+              <Section title="Examples" className="pt-10">
                 <div className="space-y-20">
                   {examples.map((ex, i) => (
                     <div key={i} className="space-y-6">
@@ -217,6 +224,7 @@ export async function DocsPageLayout({
                 </Suspense>
               ) : null
             }
+            variants={examples as VariantItem[]}
           >
             {preview}
           </DocsPreviewWrapper>
