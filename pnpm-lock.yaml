@@ -14,6 +14,9 @@ importers:
       '@react-three/fiber':
         specifier: ^9.5.0
         version: 9.5.0(@types/react@19.2.7)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(three@0.182.0)
+      lucide-react:
+        specifier: ^0.475.0
+        version: 0.475.0(react@19.2.1)
       three:
         specifier: ^0.182.0
         version: 0.182.0
