@@ -54,6 +54,8 @@ function CodeBlockSkeleton({ className }: { className?: string }) {
 
 
 
+import { FloatingDocsSidebar } from "@/components/floating-docs-sidebar"
+
 export async function DocsPageLayout({
   title,
   description,
@@ -94,6 +96,7 @@ export async function DocsPageLayout({
       data-docs-layout
       className="flex flex-col lg:flex-row w-full h-full min-h-screen lg:h-screen bg-[#f3f4f6] dark:bg-[#080808] text-foreground"
     >
+      <FloatingDocsSidebar />
 
       {/* Left Column: Scrollable Content */}
       <div
