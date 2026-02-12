@@ -38,39 +38,67 @@ float fbm(vec2 p) {
   float v = 0.0;
   float a = 0.55;
   vec2 shift = vec2(100.0);
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 5; i++) {
     v += a * noise(p);
-    p = p * 2.1 + shift;
+    p = p * 2.05 + shift;
     a *= 0.5;
   }
   return v;
 }
 
+vec2 warp(vec2 p, float t) {
+  float n1 = fbm(p * 1.2 + vec2(0.0, t * 0.15));
+  float n2 = fbm(p * 2.1 - vec2(t * 0.2, 0.0));
+  vec2 w = vec2(n1, n2) - 0.5;
+  return p + w * 0.35;
+}
+
+float caustics(vec2 p, float t) {
+  vec2 q = p * 3.0;
+  q += vec2(sin(t * 0.7 + p.y * 2.2), cos(t * 0.5 + p.x * 1.9)) * 0.12;
+  float c = 0.0;
+  c += sin(q.x + fbm(q + t)) * cos(q.y - t * 0.8);
+  c += sin(q.x * 1.3 - t * 0.6);
+  c = pow(abs(c), 1.4);
+  return c;
+}
+
 void main() {
   vec2 uv = gl_FragCoord.xy / u_res;
-  vec2 p = uv;
+  float t = u_time * 0.35;
 
-  float t = u_time;
-  float vertical = smoothstep(0.0, 0.8, uv.y);
-  float base = 1.0 - vertical;
+  vec2 aspect = vec2(u_res.x / u_res.y, 1.0);
+  vec2 p = (uv - 0.5) * aspect;
 
-  float n = fbm(vec2(p.x * 3.0, p.y * 2.5 - t * 0.8));
-  float flicker = fbm(vec2(p.x * 6.0 + t * 0.6, p.y * 4.0));
+  float vignette = smoothstep(0.95, 0.35, length(p));
+  float baseFalloff = smoothstep(0.65, 0.0, uv.y);
 
-  float flame = base + n * 0.55 + flicker * 0.2;
-  flame = smoothstep(0.2, 0.95, flame);
+  vec2 wp = warp(p * 1.4, t);
+  float flow = fbm(wp * 2.4 + vec2(0.0, -t * 0.8));
+  float ribbons = fbm(wp * 5.6 + vec2(t * 0.2, t * 0.3));
+  float cells = fbm(wp * 8.0 - vec2(t * 0.35, 0.0));
 
-  vec3 colHot = vec3(1.0, 0.95, 0.75);
-  vec3 colMid = vec3(1.0, 0.55, 0.1);
-  vec3 colCool = vec3(0.8, 0.15, 0.02);
+  float liquid = baseFalloff * (0.42 + flow * 0.5 + ribbons * 0.2 + cells * 0.15);
+  liquid = smoothstep(0.08, 0.9, liquid);
 
-  vec3 color = mix(colCool, colMid, flame);
-  color = mix(color, colHot, flame * flame);
+  float highlight = caustics(wp, t);
+  float foam = smoothstep(0.55, 0.9, ribbons + cells * 0.6);
 
-  float alpha = clamp(flame * 1.1, 0.0, 1.0);
+  vec3 deep = vec3(0.01, 0.03, 0.06);
+  vec3 mid = vec3(0.05, 0.11, 0.18);
+  vec3 cyan = vec3(0.18, 0.55, 0.75);
+  vec3 pearl = vec3(0.6, 0.85, 0.95);
+
+  vec3 color = mix(deep, mid, liquid);
+  color = mix(color, cyan, liquid * liquid * 0.85);
+  color = mix(color, pearl, highlight * 0.35);
+  color += foam * 0.08;
+  color *= vignette;
+
+  float alpha = clamp(liquid * 0.9 + highlight * 0.12, 0.0, 1.0);
   color *= alpha;
 
-  float dither = (hash(gl_FragCoord.xy + t * 90.0) - 0.5) / 255.0;
+  float dither = (hash(gl_FragCoord.xy + t * 120.0) - 0.5) / 255.0;
   color += dither;
 
   gl_FragColor = vec4(color, alpha);
