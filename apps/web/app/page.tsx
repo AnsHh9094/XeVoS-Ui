@@ -33,17 +33,15 @@ export default function Home() {
       {/* ── Navbar ── */}
       <FloatingNavbar />
 
-      {/* ── Background Pattern ── */}
-      <div className="fixed inset-0 z-30 h-full w-full bg-white dark:bg-[#080808]">
-        <WebGLLiquid className="absolute inset-0 h-full w-full pointer-events-none opacity-90 block" />
-      </div>
+      <main className="flex flex-col items-center justify-center min-h-screen px-4 pt-28 pb-24 text-center relative overflow-hidden">
+        {/* ── Hero Background ── */}
+        <div className="absolute inset-0 z-0 bg-white dark:bg-[#080808]">
+          <div className="absolute bottom-0 left-0 right-0 h-28 z-0 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#080808] dark:via-[#080808]/80 pointer-events-none backdrop-blur-[1px]" />
+          <WebGLLiquid className="absolute inset-0 h-full w-full pointer-events-none opacity-90 block z-10" />
+          <div className="absolute top-0 left-0 right-0 h-24 z-20 bg-gradient-to-b from-white via-white/80 to-transparent dark:from-[#080808] dark:via-[#080808]/80 pointer-events-none backdrop-blur-[1px]" />
+        </div>
 
-      {/* ── Overlay Gradients ── */}
-      <div className="fixed top-0 left-0 right-0 z-20 h-24 bg-gradient-to-b from-white via-white/80 to-transparent dark:from-[#080808] dark:via-[#080808]/80 pointer-events-none backdrop-blur-[1px]" />
-      <div className="fixed bottom-0 left-0 right-0 z-20 h-24 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#080808] dark:via-[#080808]/80 pointer-events-none backdrop-blur-[1px]" />
-
-      <main className="flex flex-col items-center justify-center min-h-screen px-4 pt-20 pb-16 text-center relative overflow-hidden z-40">
-        <div className="max-w-4xl mx-auto space-y-8 relative z-10">
+        <div className="max-w-4xl mx-auto space-y-12 relative z-10">
 
           {/* ── Badge / Label (Optional) ── */}
           <motion.div
@@ -109,6 +107,119 @@ export default function Home() {
 
         </div>
       </main>
+
+      {/* ── Components Showcase ── */}
+      <section className="relative z-40 w-full px-4 pt-28 pb-36">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-xs uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500">Components</p>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+              A bento grid built for premium UI.
+            </h2>
+            <p className="mt-3 text-base sm:text-lg text-zinc-500 dark:text-zinc-400">
+              Each block is a preview-ready container styled like the docs gallery.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-8 gap-6">
+            {/* Card 1 */}
+            <div className="md:col-span-5 md:row-span-2 md:col-start-1 md:row-start-1 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+              <div className="p-1.5">
+                <div className="relative h-[360px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.25),transparent_45%),radial-gradient(circle_at_80%_30%,rgba(56,189,248,0.25),transparent_40%),radial-gradient(circle_at_50%_80%,rgba(16,185,129,0.18),transparent_45%)]" />
+                  <div className="absolute inset-0 opacity-80 [mask-image:radial-gradient(circle_at_center,black,transparent_68%)] bg-[linear-gradient(120deg,rgba(0,0,0,0.02),rgba(0,0,0,0.2),rgba(0,0,0,0.02))] dark:bg-[linear-gradient(120deg,rgba(255,255,255,0.02),rgba(255,255,255,0.12),rgba(255,255,255,0.02))]" />
+                </div>
+              </div>
+              <div className="px-5 pb-5 text-left">
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Hero Systems</h3>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+                  Fluid gradients, motion-ready surfaces, and adaptive layouts.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="md:col-span-3 md:col-start-6 md:row-start-1 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+              <div className="p-1.5">
+                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <div className="absolute inset-0 bg-[conic-gradient(from_120deg_at_50%_50%,rgba(99,102,241,0.4),rgba(56,189,248,0.3),rgba(16,185,129,0.25),rgba(99,102,241,0.4))] opacity-70" />
+                  <div className="absolute inset-0 mix-blend-overlay bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.7),transparent_40%)]" />
+                </div>
+              </div>
+              <div className="px-5 pb-5 text-left">
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Controls</h3>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+                  Buttons, toggles, and micro-interactions.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="md:col-span-3 md:row-span-2 md:col-start-6 md:row-start-2 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+              <div className="p-1.5">
+                <div className="relative h-[320px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(14,165,233,0.35),transparent_45%),radial-gradient(circle_at_30%_70%,rgba(168,85,247,0.25),transparent_50%)]" />
+                  <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(0,0,0,0.03),rgba(0,0,0,0.2))] dark:bg-[linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.12))]" />
+                </div>
+              </div>
+              <div className="px-5 pb-5 text-left">
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Navigation</h3>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+                  Floating navs, docks, and persistent bars.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 4 */}
+            <div className="md:col-span-5 md:col-start-1 md:row-start-3 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+              <div className="p-1.5">
+                <div className="relative h-[200px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_30%,rgba(16,185,129,0.35),transparent_45%),radial-gradient(circle_at_70%_70%,rgba(99,102,241,0.3),transparent_45%)]" />
+                  <div className="absolute inset-0 bg-[linear-gradient(160deg,rgba(0,0,0,0.03),rgba(0,0,0,0.22))] dark:bg-[linear-gradient(160deg,rgba(255,255,255,0.03),rgba(255,255,255,0.14))]" />
+                </div>
+              </div>
+              <div className="px-5 pb-5 text-left">
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Cards</h3>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+                  Bento-ready blocks with depth and polish.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 6 */}
+            <div className="md:col-span-5 md:col-start-4 md:row-start-4 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+              <div className="p-1.5">
+                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_25%,rgba(251,146,60,0.3),transparent_45%),radial-gradient(circle_at_30%_70%,rgba(14,165,233,0.25),transparent_45%)]" />
+                  <div className="absolute inset-0 bg-[linear-gradient(145deg,rgba(0,0,0,0.03),rgba(0,0,0,0.2))] dark:bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(255,255,255,0.12))]" />
+                </div>
+              </div>
+              <div className="px-5 pb-5 text-left">
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Data Views</h3>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+                  Tables, timelines, and animated charts.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 5 */}
+            <div className="md:col-span-3 md:col-start-1 md:row-start-4 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+              <div className="p-1.5">
+                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_40%,rgba(236,72,153,0.25),transparent_45%),radial-gradient(circle_at_70%_40%,rgba(59,130,246,0.28),transparent_45%),radial-gradient(circle_at_60%_80%,rgba(34,197,94,0.2),transparent_45%)]" />
+                  <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(0,0,0,0.02),rgba(0,0,0,0.2))] dark:bg-[linear-gradient(110deg,rgba(255,255,255,0.02),rgba(255,255,255,0.12))]" />
+                </div>
+              </div>
+              <div className="px-5 pb-5 text-left">
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Feedback</h3>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+                  Toasts, banners, and status-driven UI.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
