@@ -36,76 +36,70 @@ float noise(vec2 p) {
 
 float fbm(vec2 p) {
   float v = 0.0;
-  float a = 0.55;
-  vec2 shift = vec2(100.0);
-  for (int i = 0; i < 5; i++) {
+  float a = 0.5;
+  mat2 rot = mat2(0.87, 0.48, -0.48, 0.87);
+  for (int i = 0; i < 6; i++) {
     v += a * noise(p);
-    p = p * 2.05 + shift;
+    p = rot * p * 2.0;
     a *= 0.5;
   }
   return v;
 }
 
-vec2 warp(vec2 p, float t) {
-  float n1 = fbm(p * 1.2 + vec2(0.0, t * 0.15));
-  float n2 = fbm(p * 2.1 - vec2(t * 0.2, 0.0));
-  vec2 w = vec2(n1, n2) - 0.5;
-  return p + w * 0.35;
-}
-
-float caustics(vec2 p, float t) {
-  vec2 q = p * 3.0;
-  q += vec2(sin(t * 0.7 + p.y * 2.2), cos(t * 0.5 + p.x * 1.9)) * 0.12;
-  float c = 0.0;
-  c += sin(q.x + fbm(q + t)) * cos(q.y - t * 0.8);
-  c += sin(q.x * 1.3 - t * 0.6);
-  c = pow(abs(c), 1.4);
-  return c;
-}
-
 void main() {
   vec2 uv = gl_FragCoord.xy / u_res;
-  float t = u_time * 0.35;
-
+  float t = u_time * 0.15;
+  
   vec2 aspect = vec2(u_res.x / u_res.y, 1.0);
   vec2 p = (uv - 0.5) * aspect;
 
-  float vignette = smoothstep(0.95, 0.35, length(p));
-  float baseFalloff = smoothstep(0.65, 0.0, uv.y);
+  // Rising coordinates
+  vec2 flowP = vec2(p.x, p.y - t * 0.5);
 
-  vec2 wp = warp(p * 1.4, t);
-  float flow = fbm(wp * 2.4 + vec2(0.0, -t * 0.8));
-  float ribbons = fbm(wp * 5.6 + vec2(t * 0.2, t * 0.3));
-  float cells = fbm(wp * 8.0 - vec2(t * 0.35, 0.0));
+  // FBM warping layers
+  float n1 = fbm(flowP * 3.0 + vec2(0.0, t * 0.2));
+  vec2 warp = flowP + n1 * 0.5;
+  float n2 = fbm(warp * 4.0 - vec2(0.0, t * 0.4));
+  float n3 = fbm(warp * 6.0 + n2 * 1.0);
 
-  float liquid = baseFalloff * (0.42 + flow * 0.5 + ribbons * 0.2 + cells * 0.15);
-  liquid = smoothstep(0.08, 0.9, liquid);
+  // Vertical masking: Fade out towards top
+  // Strongest at bottom (uv.y ~ 0), gone by top (uv.y ~ 0.8)
+  float mask = smoothstep(0.8, 0.0, uv.y);
+  mask = pow(mask, 1.2); 
 
-  float highlight = caustics(wp, t);
-  float foam = smoothstep(0.55, 0.9, ribbons + cells * 0.6);
+  // Colors
+  vec3 c1 = vec3(0.02, 0.02, 0.05);  // Deep
+  vec3 c2 = vec3(0.1, 0.2, 0.5);     // Mid
+  vec3 c3 = vec3(0.6, 0.85, 0.95);   // High
 
-  vec3 deep = vec3(0.01, 0.03, 0.06);
-  vec3 mid = vec3(0.05, 0.11, 0.18);
-  vec3 cyan = vec3(0.18, 0.55, 0.75);
-  vec3 pearl = vec3(0.6, 0.85, 0.95);
+  float intensity = n3 * 1.2 + (n2 - 0.5) * 0.5;
+  
+  vec3 col = mix(c1, c2, smoothstep(0.2, 0.6, intensity));
+  col = mix(col, c3, smoothstep(0.7, 1.1, intensity));
+  
+  // Apply mask
+  col *= mask;
+  
+  // Compute alpha: transparent where mask is low or intensity is low
+  float alpha = mask * smoothstep(0.1, 0.9, intensity);
+  
+  // Dither
+  float dither = (hash(gl_FragCoord.xy + t) - 0.5) * 0.04;
+  col += dither;
 
-  vec3 color = mix(deep, mid, liquid);
-  color = mix(color, cyan, liquid * liquid * 0.85);
-  color = mix(color, pearl, highlight * 0.35);
-  color += foam * 0.08;
-  color *= vignette;
+  // ── Entrance Reveal (Left to Right) ────────────────
+  // u_time starts at 0 after the delay.
+  // We want a smooth wipe appearing from left (uv.x=0) to right (uv.x=1).
+  float revealProgress = u_time * 0.8; // Speed of the wipe
+  float revealMask = smoothstep(0.0, 0.3, revealProgress - uv.x);
+  
+  alpha *= revealMask;
 
-  float alpha = clamp(liquid * 0.9 + highlight * 0.12, 0.0, 1.0);
-  color *= alpha;
-
-  float dither = (hash(gl_FragCoord.xy + t * 120.0) - 0.5) / 255.0;
-  color += dither;
-
-  gl_FragColor = vec4(color, alpha);
+  gl_FragColor = vec4(col, alpha);
 }
 `
 
-export function WebGLLiquid({ className, delayMs = 1400 }: WebGLLiquidProps) {
+export function WebGLLiquid({ className, delayMs = 2400 }: WebGLLiquidProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {

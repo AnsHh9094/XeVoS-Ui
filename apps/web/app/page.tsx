@@ -96,7 +96,7 @@ export default function Home() {
           <div className="absolute left-0 right-0 top-0 z-20 h-24 bg-gradient-to-b from-white via-white/80 to-transparent backdrop-blur-[1px] pointer-events-none dark:from-[#080808] dark:via-[#080808]/80" />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-4xl space-y-12">
+        <div className="relative z-10 mx-auto max-w-4xl space-y-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -114,7 +114,7 @@ export default function Home() {
               {titleLine1.split("").map((char, i) => (
                 <motion.span
                   key={`l1-${i}`}
-                  className="inline-block bg-gradient-to-br from-zinc-900 via-zinc-500 to-zinc-900 bg-clip-text text-transparent dark:from-white dark:via-zinc-400 dark:to-white"
+                  className="inline-block bg-gradient-to-br from-zinc-900 via-zinc-600 to-zinc-900 bg-clip-text text-transparent dark:from-white dark:via-zinc-400 dark:to-white"
                   variants={letter}
                   custom={i}
                   style={{ transformOrigin: "50% 100%" }}
@@ -126,7 +126,7 @@ export default function Home() {
               {titleLine2.split("").map((char, i) => (
                 <motion.span
                   key={`l2-${i}`}
-                  className="inline-block bg-gradient-to-br from-zinc-900 via-zinc-500 to-zinc-900 bg-clip-text text-transparent dark:from-white dark:via-zinc-400 dark:to-white"
+                  className="inline-block bg-gradient-to-br from-zinc-900 via-zinc-600 to-zinc-900 bg-clip-text text-transparent dark:from-white dark:via-zinc-400 dark:to-white"
                   variants={letter}
                   custom={titleLine1.length + i}
                   style={{ transformOrigin: "50% 100%" }}
@@ -165,8 +165,8 @@ export default function Home() {
           <Reveal>
             <div className="mb-16 text-center">
               <p className="text-xs uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500">Components</p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl">
-                A bento grid built for premium UI.
+              <h2 className="mt-3 bg-gradient-to-br from-zinc-900 via-zinc-600 to-zinc-900 bg-clip-text text-3xl font-bold tracking-tight text-transparent dark:from-white dark:via-zinc-400 dark:to-white sm:text-4xl">
+                Premium Component Showcase
               </h2>
               <p className="mt-3 text-base text-zinc-500 dark:text-zinc-400 sm:text-lg">
                 Each block is a preview-ready container styled like the docs gallery.
@@ -302,17 +302,17 @@ export default function Home() {
           <ClosingPlasma className="absolute inset-0" />
 
           {/* Top fade from page bg */}
-          <div className="absolute left-0 right-0 top-0 z-10 h-40 bg-gradient-to-b from-white to-transparent pointer-events-none dark:from-[#080808]" />
+          <div className="absolute left-0 right-0 top-0 z-10 h-40 bg-gradient-to-b from-white via-white/70 to-transparent pointer-events-none dark:from-[#080808] dark:via-[#080808]/70" />
           {/* Bottom fade into footer */}
-          <div className="absolute bottom-0 left-0 right-0 z-10 h-32 bg-gradient-to-t from-[#080808]/90 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 z-10 h-32 bg-gradient-to-t from-zinc-50 via-zinc-50/60 to-transparent pointer-events-none dark:from-[#080808]/90 dark:via-transparent" />
 
           {/* Content */}
           <div className="relative z-20 flex h-full flex-col items-center justify-center px-4 text-center">
             <Reveal>
-              <h2 className="text-4xl font-bold tracking-tighter text-white/90 sm:text-5xl md:text-6xl lg:text-7xl">
+              <h2 className="text-4xl font-bold tracking-tighter text-zinc-900 sm:text-5xl md:text-6xl lg:text-7xl dark:text-white/90">
                 Ship your dream product.
               </h2>
-              <p className="mx-auto mt-6 max-w-xl text-lg text-zinc-400 md:text-xl">
+              <p className="mx-auto mt-6 max-w-xl text-lg text-zinc-500 md:text-xl dark:text-zinc-400">
                 Beautiful, performance-driven components to help you build faster and better.
                 Open source and free to use.
               </p>
@@ -320,22 +320,22 @@ export default function Home() {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Link
                     href="/docs"
-                    className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-2xl bg-white px-8 text-sm font-semibold text-black shadow-lg shadow-white/20 transition-all duration-300 hover:bg-zinc-50 hover:shadow-white/40"
+                    className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-2xl bg-zinc-900 px-8 text-sm font-semibold text-white shadow-lg shadow-zinc-900/20 transition-all duration-300 hover:bg-zinc-800 hover:shadow-zinc-900/40 dark:bg-white dark:text-black dark:shadow-white/20 dark:hover:bg-zinc-50 dark:hover:shadow-white/40"
                   >
                     <span>Start Building</span>
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/80 to-white opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="absolute inset-0 -z-10 bg-gradient-to-br from-zinc-800 to-zinc-900 opacity-0 transition-opacity duration-500 group-hover:opacity-100 dark:from-white/80 dark:to-white" />
                   </Link>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Link
                     href="https://github.com/harshjdhv/componentry"
                     target="_blank"
-                    className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-8 text-sm font-semibold text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:shadow-white/10"
+                    className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-2xl border border-zinc-300 bg-white/60 px-8 text-sm font-semibold text-zinc-700 shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-white/80 hover:border-zinc-400 hover:shadow-zinc-200/40 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 dark:hover:border-white/20 dark:hover:shadow-white/10"
                   >
                     <Github className="h-4 w-4 opacity-80 transition-opacity group-hover:opacity-100" />
                     <span>View on GitHub</span>
-                    <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="absolute inset-0 -z-10 bg-gradient-to-br from-zinc-100/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 dark:from-white/10" />
                   </Link>
                 </motion.div>
               </div>
