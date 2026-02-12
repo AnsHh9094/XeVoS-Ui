@@ -5,6 +5,32 @@ import { motion, type Variants } from "framer-motion"
 import { FloatingNavbar } from "@/components/floating-navbar"
 import { HeroButtons } from "@/components/landing/hero-buttons"
 import { WebGLLiquid } from "@/components/landing/webgl-liquid"
+import HeroGeometric from "@workspace/ui/components/hero-geometric"
+import { ParticleGalaxy } from "@workspace/ui/components/particle-galaxy"
+import { MatrixRain } from "@workspace/ui/components/matrix-rain"
+import { DitherGradient } from "@workspace/ui/components/dither-gradient"
+import { MagnetLines } from "@workspace/ui/components/magnet-lines"
+import {
+  MagneticDock,
+  DockIconHome,
+  DockIconSearch,
+  DockIconFolder,
+  DockIconMail,
+  DockIconMusic,
+  DockIconSettings,
+  DockIconTrash,
+} from "@workspace/ui/components/magnetic-dock"
+
+const dockItems = [
+  { id: "home", label: "Home", icon: <DockIconHome />, isActive: true },
+  { id: "search", label: "Search", icon: <DockIconSearch /> },
+  { id: "folder", label: "Finder", icon: <DockIconFolder /> },
+  { id: "mail", label: "Mail", icon: <DockIconMail />, badge: 2 },
+  { id: "music", label: "Music", icon: <DockIconMusic /> },
+  { id: "settings", label: "Settings", icon: <DockIconSettings /> },
+  { id: "trash", label: "Trash", icon: <DockIconTrash /> },
+]
+
 export default function Home() {
   const titleLine1 = "PREMIUM UI"
   const titleLine2 = "COMPONENTS"
@@ -125,96 +151,114 @@ export default function Home() {
             {/* Card 1 */}
             <div className="md:col-span-5 md:row-span-2 md:col-start-1 md:row-start-1 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
               <div className="p-1.5">
-                <div className="relative h-[360px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.25),transparent_45%),radial-gradient(circle_at_80%_30%,rgba(56,189,248,0.25),transparent_40%),radial-gradient(circle_at_50%_80%,rgba(16,185,129,0.18),transparent_45%)]" />
-                  <div className="absolute inset-0 opacity-80 [mask-image:radial-gradient(circle_at_center,black,transparent_68%)] bg-[linear-gradient(120deg,rgba(0,0,0,0.02),rgba(0,0,0,0.2),rgba(0,0,0,0.02))] dark:bg-[linear-gradient(120deg,rgba(255,255,255,0.02),rgba(255,255,255,0.12),rgba(255,255,255,0.02))]" />
+                <div className="relative h-[360px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <HeroGeometric
+                    title1="Hero"
+                    title2="Geometric"
+                    className="!min-h-full"
+                  />
                 </div>
               </div>
               <div className="px-5 pb-5 text-left">
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Hero Systems</h3>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                  Fluid gradients, motion-ready surfaces, and adaptive layouts.
-                </p>
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Hero Geometric</h3>
               </div>
             </div>
 
             {/* Card 2 */}
             <div className="md:col-span-3 md:col-start-6 md:row-start-1 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
               <div className="p-1.5">
-                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
-                  <div className="absolute inset-0 bg-[conic-gradient(from_120deg_at_50%_50%,rgba(99,102,241,0.4),rgba(56,189,248,0.3),rgba(16,185,129,0.25),rgba(99,102,241,0.4))] opacity-70" />
-                  <div className="absolute inset-0 mix-blend-overlay bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.7),transparent_40%)]" />
+                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <div className="absolute inset-0 bg-zinc-950">
+                    <ParticleGalaxy
+                      particleCount={4200}
+                      spread={2.1}
+                      glow={70}
+                      density={0.85}
+                      rotationSpeed={0.0013}
+                      cameraMovement={false}
+                      minZoom={2}
+                      maxZoom={6}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="px-5 pb-5 text-left">
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Controls</h3>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                  Buttons, toggles, and micro-interactions.
-                </p>
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Particle Galaxy</h3>
               </div>
             </div>
 
             {/* Card 3 */}
             <div className="md:col-span-3 md:row-span-2 md:col-start-6 md:row-start-2 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
               <div className="p-1.5">
-                <div className="relative h-[320px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(14,165,233,0.35),transparent_45%),radial-gradient(circle_at_30%_70%,rgba(168,85,247,0.25),transparent_50%)]" />
-                  <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(0,0,0,0.03),rgba(0,0,0,0.2))] dark:bg-[linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.12))]" />
+                <div className="relative h-[320px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <div className="absolute inset-0 bg-zinc-950">
+                    <DitherGradient
+                      colorFrom="#0ea5e9"
+                      colorMid="#8b5cf6"
+                      colorTo="#ec4899"
+                      intensity={0.18}
+                      speed={2.4}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="px-5 pb-5 text-left">
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Navigation</h3>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                  Floating navs, docks, and persistent bars.
-                </p>
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Dither Gradient</h3>
               </div>
             </div>
 
             {/* Card 4 */}
             <div className="md:col-span-5 md:col-start-1 md:row-start-3 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
               <div className="p-1.5">
-                <div className="relative h-[200px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_30%,rgba(16,185,129,0.35),transparent_45%),radial-gradient(circle_at_70%_70%,rgba(99,102,241,0.3),transparent_45%)]" />
-                  <div className="absolute inset-0 bg-[linear-gradient(160deg,rgba(0,0,0,0.03),rgba(0,0,0,0.22))] dark:bg-[linear-gradient(160deg,rgba(255,255,255,0.03),rgba(255,255,255,0.14))]" />
+                <div className="relative h-[200px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center bg-zinc-900">
+                    <div className="scale-[0.72] sm:scale-[0.88] md:scale-[1.02]">
+                      <MagneticDock
+                        items={dockItems}
+                        iconSize={68}
+                        maxScale={1.8}
+                        magneticDistance={190}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="px-5 pb-5 text-left">
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Cards</h3>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                  Bento-ready blocks with depth and polish.
-                </p>
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Magnetic Dock</h3>
               </div>
             </div>
 
             {/* Card 6 */}
             <div className="md:col-span-5 md:col-start-4 md:row-start-4 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
               <div className="p-1.5">
-                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_25%,rgba(251,146,60,0.3),transparent_45%),radial-gradient(circle_at_30%_70%,rgba(14,165,233,0.25),transparent_45%)]" />
-                  <div className="absolute inset-0 bg-[linear-gradient(145deg,rgba(0,0,0,0.03),rgba(0,0,0,0.2))] dark:bg-[linear-gradient(145deg,rgba(255,255,255,0.03),rgba(255,255,255,0.12))]" />
+                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <div className="absolute inset-0">
+                    <MagnetLines
+                      rows={8}
+                      columns={14}
+                      containerSize="100%"
+                      lineColor="rgba(113,113,122,0.7)"
+                      lineWidth="2px"
+                      lineHeight="18px"
+                      className="h-full w-full place-items-center bg-white dark:bg-zinc-950"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="px-5 pb-5 text-left">
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Data Views</h3>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                  Tables, timelines, and animated charts.
-                </p>
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Magnet Lines</h3>
               </div>
             </div>
 
             {/* Card 5 */}
             <div className="md:col-span-3 md:col-start-1 md:row-start-4 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
               <div className="p-1.5">
-                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-dashed border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_40%,rgba(236,72,153,0.25),transparent_45%),radial-gradient(circle_at_70%_40%,rgba(59,130,246,0.28),transparent_45%),radial-gradient(circle_at_60%_80%,rgba(34,197,94,0.2),transparent_45%)]" />
-                  <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(0,0,0,0.02),rgba(0,0,0,0.2))] dark:bg-[linear-gradient(110deg,rgba(255,255,255,0.02),rgba(255,255,255,0.12))]" />
+                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                  <MatrixRain variant="cyan" />
                 </div>
               </div>
               <div className="px-5 pb-5 text-left">
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Feedback</h3>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                  Toasts, banners, and status-driven UI.
-                </p>
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Matrix Rain</h3>
               </div>
             </div>
           </div>
