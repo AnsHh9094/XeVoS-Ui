@@ -4,8 +4,8 @@ import { MatrixRain } from "@workspace/ui/components/matrix-rain";
 
 export function MatrixRainDemo() {
   return (
-    <div className="relative flex h-[400px] w-full items-center justify-center">
-      <MatrixRain />
+    <div className="relative h-full w-full bg-background overflow-hidden">
+      <MatrixRain transparent />
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <h1 className="text-4xl font-bold text-foreground tracking-wider">
           MATRIX
@@ -17,8 +17,8 @@ export function MatrixRainDemo() {
 
 export function MatrixRainRainbowDemo() {
   return (
-    <div className="relative flex h-[400px] w-full items-center justify-center">
-      <MatrixRain variant="rainbow" />
+    <div className="relative h-full w-full bg-background overflow-hidden">
+      <MatrixRain variant="rainbow" transparent />
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <h1 className="text-4xl font-bold text-foreground tracking-widest">
           RGB
@@ -30,8 +30,8 @@ export function MatrixRainRainbowDemo() {
 
 export function MatrixRainCustomDemo() {
   return (
-    <div className="relative flex h-[400px] w-full items-center justify-center">
-      <MatrixRain fixedColor="#ec4899" speed={80} fontSize={20} />
+    <div className="relative h-full w-full bg-background overflow-hidden">
+      <MatrixRain fixedColor="#ec4899" speed={80} fontSize={20} transparent />
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <h1 className="text-4xl font-bold text-foreground">CYBERPUNK</h1>
       </div>

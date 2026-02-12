@@ -11,6 +11,7 @@ interface MatrixRainProps {
     fontSize?: number
     speed?: number
     fixedColor?: string
+    transparent?: boolean
 }
 
 export function MatrixRain({
@@ -21,6 +22,7 @@ export function MatrixRain({
     fontSize = 16,
     speed = 50,
     fixedColor,
+    transparent = false,
 }: MatrixRainProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -63,10 +65,12 @@ export function MatrixRain({
         let isDark = document.documentElement.classList.contains("dark")
 
         // Set default background based on theme immediately to avoid delay
-        const bg = isDark ? "#000000" : "#ffffff"
-
-        ctx.fillStyle = bg
-        ctx.fillRect(0, 0, w, h)
+        // If transparent, we don't need to fill initial background
+        if (!transparent) {
+            const bg = isDark ? "#000000" : "#ffffff"
+            ctx.fillStyle = bg
+            ctx.fillRect(0, 0, w, h)
+        }
 
         const draw = () => {
             // Check theme state on every frame
@@ -75,14 +79,24 @@ export function MatrixRain({
             // If theme changed, reset the background immediately
             if (currentIsDark !== isDark) {
                 isDark = currentIsDark
-                ctx.fillStyle = isDark ? "#000000" : "#ffffff"
-                ctx.fillRect(0, 0, canvas.width, canvas.height)
+                if (!transparent) {
+                    ctx.fillStyle = isDark ? "#000000" : "#ffffff"
+                    ctx.fillRect(0, 0, canvas.width, canvas.height)
+                }
             }
 
             // Semi-transparent color for trail effect
-            // Use black for dark mode, white for light mode
-            ctx.fillStyle = isDark ? "rgba(0, 0, 0, 0.05)" : "rgba(255, 255, 255, 0.05)"
-            ctx.fillRect(0, 0, canvas.width, canvas.height)
+            if (transparent) {
+                // For transparent background, we want to fade out the previous frame
+                ctx.globalCompositeOperation = "destination-out"
+                ctx.fillStyle = "rgba(0, 0, 0, 0.05)"
+                ctx.fillRect(0, 0, canvas.width, canvas.height)
+                ctx.globalCompositeOperation = "source-over"
+            } else {
+                // Use black for dark mode, white for light mode
+                ctx.fillStyle = isDark ? "rgba(0, 0, 0, 0.05)" : "rgba(255, 255, 255, 0.05)"
+                ctx.fillRect(0, 0, canvas.width, canvas.height)
+            }
 
             ctx.font = `${fontSize}px monospace`
 
@@ -124,12 +138,12 @@ export function MatrixRain({
             clearInterval(interval)
             resizeObserver.disconnect()
         }
-    }, [variant, fontSize, speed, fixedColor, width, height])
+    }, [variant, fontSize, speed, fixedColor, width, height, transparent])
 
     return (
         <canvas
             ref={canvasRef}
-            className={cn("size-full bg-background block rounded-[inherit]", className)}
+            className={cn("size-full block rounded-[inherit]", !transparent && "bg-background", className)}
             style={{ width, height }}
         />
     )
