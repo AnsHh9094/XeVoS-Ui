@@ -4,7 +4,7 @@ import React, { Suspense, lazy } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
-import { Logomark } from "@/components/logos/logomark"
+import { FloatingNavbar } from "@/components/floating-navbar"
 import { GitHubStarButton } from "@/components/github-star-button"
 
 // Lazy load heavy WebGL/Canvas components - they won't block initial render
@@ -46,43 +46,8 @@ export default function LandingPage() {
     <div className="min-h-screen w-full bg-[#FFFFFF] text-slate-950 font-sans selection:bg-slate-200">
 
       {/* --- Navigation (mix-blend for landing) --- */}
-      <header className="fixed top-0 left-0 right-0 z-50 mix-blend-exclusion">
-        <div className="flex h-14 items-center justify-between px-4 md:px-6">
-          <div className="flex items-center gap-4 md:gap-6">
-            <Link
-              href="/"
-              className="flex items-center gap-2.5 text-sm font-medium text-white hover:text-white/90 transition-colors"
-            >
-              <Logomark className="h-5 w-5" />
-              <span className="font-semibold uppercase tracking-tight">Componentry</span>
-            </Link>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <nav className="hidden md:flex items-center gap-1">
-              <Link
-                href="/docs"
-                className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors"
-              >
-                Docs
-              </Link>
-              <Link
-                href="/changelog"
-                className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors"
-              >
-                Changelog
-              </Link>
-              <Link
-                href="https://github.com/harshjdhv/componentry"
-                target="_blank"
-                className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors"
-              >
-                GitHub
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+      {/* --- Navigation (mix-blend for landing) --- */}
+      <FloatingNavbar />
 
 
       {/* --- Hero Section --- */}
