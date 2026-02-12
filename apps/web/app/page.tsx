@@ -1,15 +1,21 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { motion, type Variants } from "framer-motion"
+import { Github, ArrowUpRight, ArrowRight } from "lucide-react"
 import { FloatingNavbar } from "@/components/floating-navbar"
 import { HeroButtons } from "@/components/landing/hero-buttons"
+import { Logomark } from "@/components/logos/logomark"
+
 import { WebGLLiquid } from "@/components/landing/webgl-liquid"
+import { ClosingPlasma } from "@/components/landing/closing-plasma"
 import HeroGeometric from "@workspace/ui/components/hero-geometric"
 import { ParticleGalaxy } from "@workspace/ui/components/particle-galaxy"
 import { MatrixRain } from "@workspace/ui/components/matrix-rain"
 import { DitherGradient } from "@workspace/ui/components/dither-gradient"
 import { MagnetLines } from "@workspace/ui/components/magnet-lines"
+
 import {
   MagneticDock,
   DockIconHome,
@@ -31,14 +37,39 @@ const dockItems = [
   { id: "trash", label: "Trash", icon: <DockIconTrash /> },
 ]
 
+// ─── Scroll reveal ──────────────────────────────────────
+function Reveal({
+  children,
+  className,
+  delay = 0,
+}: {
+  children: React.ReactNode
+  className?: string
+  delay?: number
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 export default function Home() {
   const titleLine1 = "PREMIUM UI"
   const titleLine2 = "COMPONENTS"
+
   const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1]
   const container: Variants = {
     hidden: { opacity: 0 },
     show: { opacity: 1 },
   }
+
   const letter: Variants = {
     hidden: { y: 28, opacity: 0, filter: "blur(6px)" },
     show: (i: number) => ({
@@ -54,22 +85,18 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#080808] text-zinc-900 dark:text-zinc-100 font-sans selection:bg-zinc-900 selection:text-white dark:selection:bg-white dark:selection:text-zinc-900 relative">
-
-      {/* ── Navbar ── */}
+    <div className="relative min-h-screen bg-white font-sans text-zinc-900 selection:bg-zinc-900 selection:text-white dark:bg-[#080808] dark:text-zinc-100 dark:selection:bg-white dark:selection:text-zinc-900">
       <FloatingNavbar />
 
-      <main className="flex flex-col items-center justify-center min-h-screen px-4 pt-28 pb-24 text-center relative overflow-hidden">
-        {/* ── Hero Background ── */}
+      {/* ─── Hero ─────────────────────────────────────── */}
+      <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pb-24 pt-28 text-center">
         <div className="absolute inset-0 z-0 bg-white dark:bg-[#080808]">
-          <div className="absolute bottom-0 left-0 right-0 h-28 z-0 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#080808] dark:via-[#080808]/80 pointer-events-none backdrop-blur-[1px]" />
-          <WebGLLiquid className="absolute inset-0 h-full w-full pointer-events-none opacity-90 block z-10" />
-          <div className="absolute top-0 left-0 right-0 h-24 z-20 bg-gradient-to-b from-white via-white/80 to-transparent dark:from-[#080808] dark:via-[#080808]/80 pointer-events-none backdrop-blur-[1px]" />
+          <div className="absolute bottom-0 left-0 right-0 z-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent backdrop-blur-[1px] pointer-events-none dark:from-[#080808] dark:via-[#080808]/80" />
+          <WebGLLiquid className="absolute inset-0 z-10 block h-full w-full pointer-events-none opacity-90" />
+          <div className="absolute left-0 right-0 top-0 z-20 h-24 bg-gradient-to-b from-white via-white/80 to-transparent backdrop-blur-[1px] pointer-events-none dark:from-[#080808] dark:via-[#080808]/80" />
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-12 relative z-10">
-
-          {/* ── Badge / Label (Optional) ── */}
+        <div className="relative z-10 mx-auto max-w-4xl space-y-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,18 +104,17 @@ export default function Home() {
             className="flex justify-center"
           >
             <div className="inline-flex items-center rounded-full border border-zinc-200 bg-white/50 px-3 py-1 text-sm font-medium text-zinc-800 backdrop-blur-xl dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-200">
-              <span className="flex h-2 w-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+              <span className="mr-2 flex h-2 w-2 animate-pulse rounded-full bg-green-500" />
               <span>Open source and free to use</span>
             </div>
           </motion.div>
 
-          {/* ── Hero Title ── */}
           <motion.div initial="hidden" animate="show" variants={container}>
-            <h1 className="relative text-5xl sm:text-7xl md:text-8xl font-bold tracking-tighter leading-[0.9] pb-0">
+            <h1 className="relative pb-0 text-5xl font-bold leading-[0.9] tracking-tighter sm:text-7xl md:text-8xl">
               {titleLine1.split("").map((char, i) => (
                 <motion.span
                   key={`l1-${i}`}
-                  className="inline-block bg-gradient-to-br from-zinc-900 via-zinc-500 to-zinc-900 dark:from-white dark:via-zinc-400 dark:to-white bg-clip-text text-transparent"
+                  className="inline-block bg-gradient-to-br from-zinc-900 via-zinc-500 to-zinc-900 bg-clip-text text-transparent dark:from-white dark:via-zinc-400 dark:to-white"
                   variants={letter}
                   custom={i}
                   style={{ transformOrigin: "50% 100%" }}
@@ -100,7 +126,7 @@ export default function Home() {
               {titleLine2.split("").map((char, i) => (
                 <motion.span
                   key={`l2-${i}`}
-                  className="inline-block bg-gradient-to-br from-zinc-900 via-zinc-500 to-zinc-900 dark:from-white dark:via-zinc-400 dark:to-white bg-clip-text text-transparent"
+                  className="inline-block bg-gradient-to-br from-zinc-900 via-zinc-500 to-zinc-900 bg-clip-text text-transparent dark:from-white dark:via-zinc-400 dark:to-white"
                   variants={letter}
                   custom={titleLine1.length + i}
                   style={{ transformOrigin: "50% 100%" }}
@@ -111,18 +137,16 @@ export default function Home() {
             </h1>
           </motion.div>
 
-          {/* ── Hero Description ── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
           >
-            <p className="max-w-xl mx-auto text-lg sm:text-xl text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium tracking-tight mt-0">
+            <p className="mx-auto mt-0 max-w-xl text-lg font-medium leading-relaxed tracking-tight text-zinc-500 dark:text-zinc-400 sm:text-xl">
               Refined, animated React primitives for premium product UI.
             </p>
           </motion.div>
 
-          {/* ── CTAs ── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -130,44 +154,41 @@ export default function Home() {
           >
             <HeroButtons />
           </motion.div>
-
         </div>
       </main>
 
-      {/* ── Components Showcase ── */}
-      <section className="relative z-40 w-full px-4 pt-28 pb-36">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500">Components</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-              A bento grid built for premium UI.
-            </h2>
-            <p className="mt-3 text-base sm:text-lg text-zinc-500 dark:text-zinc-400">
-              Each block is a preview-ready container styled like the docs gallery.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-8 gap-6">
-            {/* Card 1 */}
-            <div className="md:col-span-5 md:row-span-2 md:col-start-1 md:row-start-1 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+
+      {/* ─── Bento Grid ───────────────────────────────── */}
+      <section className="relative z-40 w-full px-4 pb-40 pt-28">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <div className="mb-16 text-center">
+              <p className="text-xs uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-500">Components</p>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl">
+                A bento grid built for premium UI.
+              </h2>
+              <p className="mt-3 text-base text-zinc-500 dark:text-zinc-400 sm:text-lg">
+                Each block is a preview-ready container styled like the docs gallery.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-8">
+            <Reveal className="overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/70 backdrop-blur-xl dark:border-zinc-800/60 dark:bg-zinc-900/50 md:col-span-5 md:row-span-2 md:col-start-1 md:row-start-1">
               <div className="p-1.5">
-                <div className="relative h-[360px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
-                  <HeroGeometric
-                    title1="Hero"
-                    title2="Geometric"
-                    className="!min-h-full"
-                  />
+                <div className="relative h-[360px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
+                  <HeroGeometric title1="Hero" title2="Geometric" className="!min-h-full" />
                 </div>
               </div>
               <div className="px-5 pb-5 text-left">
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Hero Geometric</h3>
               </div>
-            </div>
+            </Reveal>
 
-            {/* Card 2 */}
-            <div className="md:col-span-3 md:col-start-6 md:row-start-1 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+            <Reveal className="overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/70 backdrop-blur-xl dark:border-zinc-800/60 dark:bg-zinc-900/50 md:col-span-3 md:col-start-6 md:row-start-1" delay={0.08}>
               <div className="p-1.5">
-                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                <div className="relative h-[220px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
                   <div className="absolute inset-0 bg-zinc-950">
                     <ParticleGalaxy
                       particleCount={4200}
@@ -185,12 +206,11 @@ export default function Home() {
               <div className="px-5 pb-5 text-left">
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Particle Galaxy</h3>
               </div>
-            </div>
+            </Reveal>
 
-            {/* Card 3 */}
-            <div className="md:col-span-3 md:row-span-2 md:col-start-6 md:row-start-2 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+            <Reveal className="overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/70 backdrop-blur-xl dark:border-zinc-800/60 dark:bg-zinc-900/50 md:col-span-3 md:row-span-2 md:col-start-6 md:row-start-2" delay={0.12}>
               <div className="p-1.5">
-                <div className="relative h-[320px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                <div className="relative h-[320px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
                   <div className="absolute inset-0 bg-zinc-950">
                     <DitherGradient
                       colorFrom="#0ea5e9"
@@ -205,12 +225,11 @@ export default function Home() {
               <div className="px-5 pb-5 text-left">
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Dither Gradient</h3>
               </div>
-            </div>
+            </Reveal>
 
-            {/* Card 4 */}
-            <div className="md:col-span-5 md:col-start-1 md:row-start-3 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+            <Reveal className="overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/70 backdrop-blur-xl dark:border-zinc-800/60 dark:bg-zinc-900/50 md:col-span-5 md:col-start-1 md:row-start-3" delay={0.06}>
               <div className="p-1.5">
-                <div className="relative h-[200px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                <div className="relative h-[200px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
                   <div className="absolute inset-0 flex items-center justify-center bg-zinc-900">
                     <div className="scale-[0.72] sm:scale-[0.88] md:scale-[1.02]">
                       <MagneticDock
@@ -226,12 +245,11 @@ export default function Home() {
               <div className="px-5 pb-5 text-left">
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Magnetic Dock</h3>
               </div>
-            </div>
+            </Reveal>
 
-            {/* Card 6 */}
-            <div className="md:col-span-5 md:col-start-4 md:row-start-4 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+            <Reveal className="overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/70 backdrop-blur-xl dark:border-zinc-800/60 dark:bg-zinc-900/50 md:col-span-5 md:col-start-4 md:row-start-4" delay={0.1}>
               <div className="p-1.5">
-                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                <div className="relative h-[220px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
                   <div className="absolute inset-0">
                     <MagnetLines
                       rows={8}
@@ -248,22 +266,148 @@ export default function Home() {
               <div className="px-5 pb-5 text-left">
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Magnet Lines</h3>
               </div>
-            </div>
+            </Reveal>
 
-            {/* Card 5 */}
-            <div className="md:col-span-3 md:col-start-1 md:row-start-4 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl overflow-hidden">
+            <Reveal className="overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/70 backdrop-blur-xl dark:border-zinc-800/60 dark:bg-zinc-900/50 md:col-span-3 md:col-start-1 md:row-start-4" delay={0.04}>
               <div className="p-1.5">
-                <div className="relative h-[220px] w-full rounded-[24px] bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+                <div className="relative h-[220px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
                   <MatrixRain variant="cyan" />
                 </div>
               </div>
               <div className="px-5 pb-5 text-left">
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Matrix Rain</h3>
               </div>
+            </Reveal>
+          </div>
+
+          {/* Explore all → */}
+          <Reveal delay={0.15}>
+            <div className="mt-12 flex justify-center">
+              <Link
+                href="/docs"
+                className="group inline-flex items-center gap-2 text-sm font-medium text-zinc-400 transition-colors hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-200"
+              >
+                <span>Explore all components</span>
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ─── Closing CTA ──────────────────────────────── */}
+      <section className="relative z-40 w-full">
+        <div className="relative h-[80vh] min-h-[560px] w-full overflow-hidden">
+          {/* Dither canvas */}
+          <ClosingPlasma className="absolute inset-0" />
+
+          {/* Top fade from page bg */}
+          <div className="absolute left-0 right-0 top-0 z-10 h-40 bg-gradient-to-b from-white to-transparent pointer-events-none dark:from-[#080808]" />
+          {/* Bottom fade into footer */}
+          <div className="absolute bottom-0 left-0 right-0 z-10 h-32 bg-gradient-to-t from-[#080808]/90 to-transparent pointer-events-none" />
+
+          {/* Content */}
+          <div className="relative z-20 flex h-full flex-col items-center justify-center px-4 text-center">
+            <Reveal>
+              <h2 className="text-4xl font-bold tracking-tighter text-white/90 sm:text-5xl md:text-6xl lg:text-7xl">
+                Ship your dream product.
+              </h2>
+              <p className="mx-auto mt-6 max-w-xl text-lg text-zinc-400 md:text-xl">
+                Beautiful, performance-driven components to help you build faster and better.
+                Open source and free to use.
+              </p>
+              <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href="/docs"
+                    className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-2xl bg-white px-8 text-sm font-semibold text-black shadow-lg shadow-white/20 transition-all duration-300 hover:bg-zinc-50 hover:shadow-white/40"
+                  >
+                    <span>Start Building</span>
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/80 to-white opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href="https://github.com/harshjdhv/componentry"
+                    target="_blank"
+                    className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-2xl border border-white/10 bg-white/5 px-8 text-sm font-semibold text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:shadow-white/10"
+                  >
+                    <Github className="h-4 w-4 opacity-80 transition-opacity group-hover:opacity-100" />
+                    <span>View on GitHub</span>
+                    <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  </Link>
+                </motion.div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
+
+      {/* ─── Footer ───────────────────────────────────── */}
+      <footer className="relative z-40 bg-zinc-50 py-16 dark:bg-zinc-950">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
+            <div className="md:col-span-2">
+              <Link href="/" className="flex items-center gap-2">
+                <Logomark className="h-6 w-6 text-zinc-900 dark:text-white" />
+                <span className="text-lg font-bold tracking-tight text-zinc-900 dark:text-white">Componentry</span>
+              </Link>
+              <p className="mt-4 max-w-xs text-sm text-zinc-500 dark:text-zinc-400">
+                A collection of premium, copy-paste React components for building stunning interfaces.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">Product</h3>
+              <ul className="mt-4 space-y-3">
+                <li>
+                  <Link href="/docs" className="text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+                    Components
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/docs/installation" className="text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+                    Installation
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/docs/templates" className="text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+                    Templates
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">Resources</h3>
+              <ul className="mt-4 space-y-3">
+                <li>
+                  <Link href="https://github.com/harshjdhv/componentry" target="_blank" className="text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+                    GitHub
+                  </Link>
+                </li>
+                <li>
+                  <Link href="https://x.com/harshjdhv" target="_blank" className="text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+                    X (@harshjdhv)
+                  </Link>
+                </li>
+                <li>
+                  <Link href="https://github.com/harshjdhv/componentry/blob/main/LICENSE" target="_blank" className="text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+                    License
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-16 flex flex-col items-center justify-between gap-4 pt-8 md:flex-row">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+              © {new Date().getFullYear()} Componentry. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
