@@ -1,10 +1,10 @@
 import React from "react";
 import {
-  HeroGeometricDemo,
-  HeroGeometricWarmDemo,
-  HeroGeometricSpeedDemo,
-} from "@/components/docs/previews/hero-geometric-preview";
+  HeroGeometricPersonalizePanel,
+  HeroGeometricPlayground,
+} from "@/components/docs/previews/hero-geometric-playground";
 import { DocsPageLayout } from "@/components/docs-page-layout";
+import { LiveCodeBlock } from "@/components/live-code-block";
 import { readComponentSource } from "@/lib/source-code";
 
 const basicUsageCode = `import { HeroGeometric } from "@/components/ui/hero-geometric"
@@ -12,23 +12,6 @@ const basicUsageCode = `import { HeroGeometric } from "@/components/ui/hero-geom
 <HeroGeometric 
     title1="Elevate" 
     title2="Your Brand" 
-/>`;
-
-const warmThemeCode = `import { HeroGeometric } from "@/components/ui/hero-geometric"
-
-<HeroGeometric 
-    color1="#EA580C" 
-    color2="#FFF7ED" 
-    title1="Warm" 
-    title2="Palette" 
-/>`;
-
-const highSpeedCode = `import { HeroGeometric } from "@/components/ui/hero-geometric"
-
-<HeroGeometric 
-    speed={2} 
-    title1="High" 
-    title2="Velocity" 
 />`;
 
 export async function HeroGeometricDocs() {
@@ -40,27 +23,15 @@ export async function HeroGeometricDocs() {
     <DocsPageLayout
       title="Hero Geometric"
       description="A geometric hero section inspired by premium editorial designs, featuring a custom WebGL shader background with Simplex noise for fluid, organic movement and advanced typography."
-      preview={<HeroGeometricDemo />}
-      previewCode={basicUsageCode}
+      preview={<HeroGeometricPlayground />}
+      personalizeContent={<HeroGeometricPersonalizePanel />}
+      previewCode=""
       installPackageName="hero-geometric"
       installDependencies="framer-motion @react-three/fiber @react-three/drei three"
       installSourceCode={sourceCode}
-      usageCode={basicUsageCode}
+      usageCode={<LiveCodeBlock defaultCode={basicUsageCode} />}
       fullWidthPreview={true}
-      examples={[
-        {
-          title: "Warm Theme",
-          preview: <HeroGeometricWarmDemo />,
-          code: warmThemeCode,
-          fullWidth: true,
-        },
-        {
-          title: "Increased Speed",
-          preview: <HeroGeometricSpeedDemo />,
-          code: highSpeedCode,
-          fullWidth: true,
-        },
-      ]}
+      unstyledPreview={true}
       props={[
         {
           name: "title1",

@@ -147,8 +147,17 @@ export async function DocsPageLayout({
 
             {/* Usage */}
             <Section title="Usage" className="pt-10">
-              <div className="space-y-4">
-                <div className="rounded-xl border border-border/60 overflow-hidden bg-white dark:bg-white/[0.02]">
+              <div className="space-y-4 usage-code-scrollbar-none">
+                <style>{`
+                  .usage-code-scrollbar-none * {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                  }
+                  .usage-code-scrollbar-none *::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}</style>
+                <div className="relative rounded-xl border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
                   <Suspense fallback={<CodeBlockSkeleton />}>
                     {typeof usageCode === "string" ? (
                       <DynamicCodeBlock
@@ -157,7 +166,7 @@ export async function DocsPageLayout({
                         variantHtmls={variantHtmls}
                         variantTitles={variantTitles}
                         variantCodes={variantCodes}
-                        className="border-none !bg-transparent shadow-none !rounded-none [&_pre]:!overflow-auto [&_pre]:scrollbar-none [&_pre]:[-ms-overflow-style:none] [&_pre]:[scrollbar-width:none]"
+                        className="border-none !bg-transparent shadow-none !rounded-none [&_pre]:!overflow-x-auto [&_pre]:!overflow-y-hidden"
                       />
                     ) : (
                       usageCode

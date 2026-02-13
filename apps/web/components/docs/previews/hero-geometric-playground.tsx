@@ -1,68 +1,65 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import DitherPrismHero from "@workspace/ui/components/dither-prism-hero";
+import HeroGeometric from "@workspace/ui/components/hero-geometric";
 import { cn } from "@/lib/utils";
 import {
-  DITHER_PRISM_HERO_DEFAULT_CONFIG,
-  type DitherPrismHeroConfig,
+  HERO_GEOMETRIC_DEFAULT_CONFIG,
+  type HeroGeometricConfig,
   usePlaygroundStore,
 } from "@/hooks/use-playground-store";
 
-const PRESETS: Array<{ name: string; config: DitherPrismHeroConfig }> = [
+const PRESETS: Array<{ name: string; config: HeroGeometricConfig }> = [
   {
     name: "Default",
-    config: DITHER_PRISM_HERO_DEFAULT_CONFIG,
+    config: HERO_GEOMETRIC_DEFAULT_CONFIG,
   },
   {
-    name: "Cyberpunk",
+    name: "Editorial",
     config: {
-      ...DITHER_PRISM_HERO_DEFAULT_CONFIG,
-      color1: "#0a0a0a",
-      color2: "#00ff88",
-      color3: "#00ffff",
-      title1: "Cyber",
-      title2: "Punk",
-      ditherIntensity: 0.25,
-      prismIntensity: 0.7,
+      ...HERO_GEOMETRIC_DEFAULT_CONFIG,
+      title1: "Shape",
+      title2: "Authority",
+      description: "High-contrast geometry with restrained motion and premium editorial rhythm.",
+      color1: "#0f172a",
+      color2: "#e2e8f0",
+      speed: 0.8,
     },
   },
   {
-    name: "Sunset",
+    name: "Warm",
     config: {
-      ...DITHER_PRISM_HERO_DEFAULT_CONFIG,
-      color1: "#1a0a0a",
-      color2: "#ff6b35",
-      color3: "#ffd93d",
-      title1: "Golden",
-      title2: "Hour",
-      ditherIntensity: 0.12,
-      prismIntensity: 0.4,
+      ...HERO_GEOMETRIC_DEFAULT_CONFIG,
+      title1: "Human",
+      title2: "Energy",
+      description: "A warm palette with crisp typography for product launches and storytelling pages.",
+      color1: "#ea580c",
+      color2: "#fff7ed",
+      speed: 1,
     },
   },
   {
-    name: "Ocean",
+    name: "Ice",
     config: {
-      ...DITHER_PRISM_HERO_DEFAULT_CONFIG,
-      color1: "#0a1628",
-      color2: "#0ea5e9",
-      color3: "#22d3ee",
-      title1: "Deep",
-      title2: "Ocean",
-      speed: 0.7,
-      particleCount: 100,
+      ...HERO_GEOMETRIC_DEFAULT_CONFIG,
+      title1: "Glacial",
+      title2: "Precision",
+      description: "Cool chroma gradients and subtle turbulence built for enterprise-first visual systems.",
+      color1: "#0c4a6e",
+      color2: "#ecfeff",
+      speed: 1.25,
     },
   },
   {
-    name: "Maximum",
+    name: "Kinetic",
     config: {
-      ...DITHER_PRISM_HERO_DEFAULT_CONFIG,
-      title1: "Maximum",
-      title2: "Impact",
-      ditherIntensity: 0.3,
-      prismIntensity: 0.9,
-      speed: 1.5,
-      particleCount: 80,
+      ...HERO_GEOMETRIC_DEFAULT_CONFIG,
+      title1: "Motion",
+      title2: "Driven",
+      description: "Turn up energy with faster shader flow while preserving legibility and hierarchy.",
+      color1: "#1d4ed8",
+      color2: "#dbeafe",
+      speed: 2,
     },
   },
 ];
@@ -75,6 +72,16 @@ const Input = ({ className, ...props }: React.InputHTMLAttributes<HTMLInputEleme
   <input
     className={cn(
       "h-10 w-full rounded-md border border-border/70 bg-transparent px-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25",
+      className,
+    )}
+    {...props}
+  />
+);
+
+const TextArea = ({ className, ...props }: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
+  <textarea
+    className={cn(
+      "min-h-24 w-full resize-none rounded-md border border-border/70 bg-transparent px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25",
       className,
     )}
     {...props}
@@ -176,57 +183,24 @@ const ColorPicker = ({
   );
 };
 
-const Switch = ({
-  checked,
-  onChange,
-  label,
-}: {
-  checked: boolean;
-  onChange: (val: boolean) => void;
-  label: string;
-}) => (
-  <label className="flex items-center justify-between rounded-md border border-border/70 p-2.5">
-    <span className="text-sm text-foreground/90">{label}</span>
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
-      onClick={() => onChange(!checked)}
-      className={cn(
-        "inline-flex h-6 w-10 items-center rounded-full border border-border transition-colors",
-        checked ? "bg-zinc-900 dark:bg-zinc-100" : "bg-zinc-200 dark:bg-zinc-800",
-      )}
-    >
-      <span
-        className={cn(
-          "mx-[2px] h-5 w-5 rounded-full bg-white transition-transform dark:bg-zinc-900",
-          checked ? "translate-x-4" : "translate-x-0.5",
-        )}
-      />
-    </button>
-  </label>
-);
-
-function generateCode(config: DitherPrismHeroConfig) {
+function generateCode(config: HeroGeometricConfig) {
   const props = Object.entries(config)
     .filter(([, value]) => value !== undefined && value !== null)
     .map(([key, value]) => {
-      if (key === "title1" || key === "title2" || key.startsWith("color")) {
+      if (key === "title1" || key === "title2" || key === "description" || key.startsWith("color")) {
         return `${key}="${value}"`;
       }
-      if (typeof value === "boolean") {
-        return value ? `${key}` : `${key}={false}`;
-      }
+
       return `${key}={${value}}`;
     })
     .join("\n    ");
 
-  return `<DitherPrismHero \n    ${props}\n/>`;
+  return `<HeroGeometric \n    ${props}\n/>`;
 }
 
-export function DitherPrismHeroPlayground() {
-  const config = usePlaygroundStore((state) => state.ditherPrismHeroConfig);
-  const renderVersion = usePlaygroundStore((state) => state.ditherPrismHeroRenderVersion);
+export function HeroGeometricPlayground() {
+  const config = usePlaygroundStore((state) => state.heroGeometricConfig);
+  const renderVersion = usePlaygroundStore((state) => state.heroGeometricRenderVersion);
 
   useEffect(() => {
     const code = generateCode(config);
@@ -240,7 +214,7 @@ export function DitherPrismHeroPlayground() {
   return (
     <div className="relative h-full w-full bg-[#f3f4f6] dark:bg-[#080808]">
       <div className="relative h-full w-full overflow-hidden rounded-none">
-        <DitherPrismHero
+        <HeroGeometric
           key={renderVersion}
           {...config}
           className="h-full w-full !min-h-full"
@@ -251,22 +225,22 @@ export function DitherPrismHeroPlayground() {
   );
 }
 
-export function DitherPrismHeroPersonalizePanel() {
-  const config = usePlaygroundStore((state) => state.ditherPrismHeroConfig);
-  const activePreset = usePlaygroundStore((state) => state.activeDitherPrismHeroPreset);
-  const setConfig = usePlaygroundStore((state) => state.setDitherPrismHeroConfig);
-  const setActivePreset = usePlaygroundStore((state) => state.setActiveDitherPrismHeroPreset);
-  const updateConfig = usePlaygroundStore((state) => state.updateDitherPrismHeroConfig);
-  const resetPreview = usePlaygroundStore((state) => state.resetDitherPrismHeroPreview);
-  const resetConfig = usePlaygroundStore((state) => state.resetDitherPrismHeroConfig);
+export function HeroGeometricPersonalizePanel() {
+  const config = usePlaygroundStore((state) => state.heroGeometricConfig);
+  const activePreset = usePlaygroundStore((state) => state.activeHeroGeometricPreset);
+  const setConfig = usePlaygroundStore((state) => state.setHeroGeometricConfig);
+  const setActivePreset = usePlaygroundStore((state) => state.setActiveHeroGeometricPreset);
+  const updateConfig = usePlaygroundStore((state) => state.updateHeroGeometricConfig);
+  const resetPreview = usePlaygroundStore((state) => state.resetHeroGeometricPreview);
+  const resetConfig = usePlaygroundStore((state) => state.resetHeroGeometricConfig);
 
   const selectedPresetConfig = useMemo(
     () => PRESETS.find((preset) => preset.name === activePreset)?.config,
     [activePreset],
   );
 
-  const handleChange = (key: keyof DitherPrismHeroConfig, value: string | number | boolean) => {
-    updateConfig({ [key]: value } as Partial<DitherPrismHeroConfig>);
+  const handleChange = (key: keyof HeroGeometricConfig, value: string | number) => {
+    updateConfig({ [key]: value } as Partial<HeroGeometricConfig>);
 
     if (activePreset === "Custom") {
       return;
@@ -295,7 +269,7 @@ export function DitherPrismHeroPersonalizePanel() {
         <header className="space-y-2">
           <h2 className="text-2xl font-bold tracking-tighter text-foreground">Personalize</h2>
           <p className="text-sm leading-relaxed text-muted-foreground/90">
-            Keep the same voice as docs: clean type, minimal controls, consistent spacing.
+            Shape your premium hero with custom typography, palette, and shader tempo.
           </p>
         </header>
 
@@ -335,7 +309,7 @@ export function DitherPrismHeroPersonalizePanel() {
                   <div
                     className="mb-1.5 h-4 rounded-sm border border-white/20"
                     style={{
-                      background: `linear-gradient(125deg, ${preset.config.color1} 0%, ${preset.config.color2} 55%, ${preset.config.color3} 100%)`,
+                      background: `linear-gradient(125deg, ${preset.config.color1} 0%, ${preset.config.color2} 100%)`,
                     }}
                   />
                   <span className="block truncate text-[10px] font-mono uppercase tracking-widest text-foreground/90">
@@ -361,36 +335,26 @@ export function DitherPrismHeroPersonalizePanel() {
               placeholder="Secondary headline"
             />
           </div>
+          <div className="mt-2.5">
+            <TextArea
+              value={config.description}
+              onChange={(e) => handleChange("description", e.target.value)}
+              placeholder="Narrative subheadline"
+            />
+          </div>
         </div>
 
         <div>
           <SectionTitle>Palette</SectionTitle>
-          <div className="grid grid-cols-3 gap-2.5">
-            <ColorPicker label="Primary Base" value={config.color1} onChange={(v) => handleChange("color1", v)} />
-            <ColorPicker label="Secondary Flow" value={config.color2} onChange={(v) => handleChange("color2", v)} />
-            <ColorPicker label="Accent Highlight" value={config.color3} onChange={(v) => handleChange("color3", v)} />
+          <div className="grid grid-cols-2 gap-2.5">
+            <ColorPicker label="Primary" value={config.color1} onChange={(v) => handleChange("color1", v)} />
+            <ColorPicker label="Secondary" value={config.color2} onChange={(v) => handleChange("color2", v)} />
           </div>
         </div>
 
         <div>
           <SectionTitle>Motion</SectionTitle>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-3">
-            <Slider
-              label="Dither Grain"
-              min={0}
-              max={1}
-              step={0.01}
-              value={config.ditherIntensity}
-              onChange={(v) => handleChange("ditherIntensity", v)}
-            />
-            <Slider
-              label="Prism Refraction"
-              min={0}
-              max={2}
-              step={0.1}
-              value={config.prismIntensity}
-              onChange={(v) => handleChange("prismIntensity", v)}
-            />
+          <div className="grid grid-cols-1 gap-3">
             <Slider
               label="Speed"
               min={0.2}
@@ -400,23 +364,6 @@ export function DitherPrismHeroPersonalizePanel() {
               onChange={(v) => handleChange("speed", v)}
               unit="x"
             />
-            {config.showParticles && (
-              <Slider
-                label="Particles"
-                min={0}
-                max={200}
-                step={10}
-                value={config.particleCount}
-                onChange={(v) => handleChange("particleCount", v)}
-              />
-            )}
-            <div className="col-span-2">
-              <Switch
-                label="Floating Particles"
-                checked={config.showParticles}
-                onChange={(v) => handleChange("showParticles", v)}
-              />
-            </div>
           </div>
         </div>
       </div>
