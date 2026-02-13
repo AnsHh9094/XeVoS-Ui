@@ -1,8 +1,8 @@
 
 import React from "react"
-import { ScrollBasedVelocity } from "@workspace/ui/components/scroll-based-velocity"
 import { DocsPageLayout } from "@/components/docs-page-layout"
 import { readComponentSource } from "@/lib/source-code"
+import { ScrollBasedVelocityDemo } from "@/components/docs/previews/scroll-based-velocity-preview"
 
 const basicCode = `import { ScrollBasedVelocity } from "@/components/ui/scroll-based-velocity";
 
@@ -19,36 +19,14 @@ export async function ScrollBasedVelocityDocs() {
         <DocsPageLayout
             title="Scroll Based Velocity"
             description="Text that scrolls across the screen and speeds up based on the user's scroll velocity."
-            preview={
-                <div className="w-full flex items-center justify-center">
-                    <ScrollBasedVelocity
-                        text="Velocity Scroll"
-                        default_velocity={5}
-                        className="font-display text-center text-4xl font-bold tracking-[-0.02em] text-foreground drop-shadow-sm md:text-7xl md:leading-[5rem]"
-                    />
-                </div>
-            }
+            preview={<ScrollBasedVelocityDemo />}
             previewCode={basicCode}
             installPackageName="scroll-based-velocity"
             installDependencies="framer-motion"
             installSourceCode={sourceCode}
             installSourceFilename="components/ui/scroll-based-velocity.tsx"
             usageCode={basicCode}
-            examples={[
-                {
-                    title: "Basic",
-                    preview: (
-                        <div className="w-full flex items-center justify-center">
-                            <ScrollBasedVelocity
-                                text="Velocity Scroll"
-                                default_velocity={5}
-                                className="font-display text-center text-4xl font-bold tracking-[-0.02em] text-foreground drop-shadow-sm md:text-7xl md:leading-[5rem]"
-                            />
-                        </div>
-                    ),
-                    code: basicCode,
-                },
-            ]}
+            fullWidthPreview={true}
             props={[
                 {
                     name: "text",
