@@ -31,7 +31,7 @@ const minimalItems = [
 
 export function MagneticDockDefaultPreview() {
   return (
-    <div className="flex items-center justify-center w-full min-h-[250px] p-8 bg-gradient-to-br from-neutral-100 via-neutral-50 to-white dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 rounded-t-xl">
+    <div className="flex items-center justify-center w-full h-full p-8">
       <MagneticDock items={defaultItems} />
     </div>
   );
@@ -39,7 +39,7 @@ export function MagneticDockDefaultPreview() {
 
 export function MagneticDockSolidPreview() {
   return (
-    <div className="flex items-center justify-center w-full min-h-[250px] p-8 bg-gradient-to-br from-neutral-100 via-neutral-50 to-white dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 rounded-t-xl">
+    <div className="flex items-center justify-center w-full h-full p-8">
       <MagneticDock items={minimalItems} variant="solid" />
     </div>
   );
@@ -47,7 +47,7 @@ export function MagneticDockSolidPreview() {
 
 export function MagneticDockLargeScalePreview() {
   return (
-    <div className="flex items-center justify-center w-full min-h-[280px] p-8 bg-gradient-to-br from-neutral-100 via-neutral-50 to-white dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 rounded-t-xl">
+    <div className="flex items-center justify-center w-full h-full p-8">
       <MagneticDock
         items={minimalItems}
         iconSize={48}

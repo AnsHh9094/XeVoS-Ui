@@ -5,7 +5,7 @@ import { PixelCanvas } from "@workspace/ui/components/pixel-canvas";
 function CursorHint() {
   return (
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-      <span className="text-2xl font-medium tracking-tight text-white/50">
+      <span className="text-2xl font-medium tracking-tight text-foreground/50">
         Move your cursor
       </span>
     </div>
@@ -14,7 +14,7 @@ function CursorHint() {
 
 export function PixelCanvasDemo() {
   return (
-    <div className="relative min-h-[400px] w-full bg-neutral-950">
+    <div className="relative h-full w-full overflow-hidden bg-white dark:bg-[#121212]">
       <PixelCanvas
         colors={["#e879f9", "#a78bfa", "#38bdf8", "#22d3ee"]}
         speed={0.02}
@@ -26,7 +26,7 @@ export function PixelCanvasDemo() {
 
 export function PixelCanvasTrailDemo() {
   return (
-    <div className="relative min-h-[400px] w-full bg-neutral-950">
+    <div className="relative h-full w-full overflow-hidden bg-white dark:bg-[#121212]">
       <PixelCanvas
         variant="trail"
         colors={["#f97316", "#fb923c", "#fbbf24", "#facc15"]}
@@ -40,7 +40,7 @@ export function PixelCanvasTrailDemo() {
 
 export function PixelCanvasGlowDemo() {
   return (
-    <div className="relative min-h-[400px] w-full bg-neutral-950">
+    <div className="relative h-full w-full overflow-hidden bg-white dark:bg-[#121212]">
       <PixelCanvas
         variant="glow"
         colors={["#22c55e", "#10b981", "#14b8a6", "#06b6d4"]}
@@ -54,7 +54,7 @@ export function PixelCanvasGlowDemo() {
 
 export function PixelCanvasSubtleDemo() {
   return (
-    <div className="relative min-h-[400px] w-full bg-neutral-950">
+    <div className="relative h-full w-full overflow-hidden bg-white dark:bg-[#121212]">
       <PixelCanvas
         colors={["#525252", "#a3a3a3", "#737373"]}
         gap={5}
