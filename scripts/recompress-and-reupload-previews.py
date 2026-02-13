@@ -55,13 +55,21 @@ def convert_media(input_mov: Path) -> tuple[Path, Path, Path | None]:
     webm = base.with_suffix(".webm")
     mp4 = base.with_suffix(".mp4")
     webp = base.with_suffix(".webp")
+    jpg = base.with_suffix(".jpg")
+
+    # Preview cards benefit from low decode cost and short clip durations.
+    # Keeping these aggressively compressed gives faster first frame and hover start.
+    common_video_filters = "scale='min(720,iw)':-2:flags=lanczos,fps=24"
+    max_preview_seconds = "6"
 
     run_ffmpeg(
         input_mov,
         webm,
         [
+            "-t",
+            max_preview_seconds,
             "-vf",
-            "scale='min(1280,iw)':-2:flags=lanczos,fps=30",
+            common_video_filters,
             "-an",
             "-c:v",
             "libvpx-vp9",
@@ -70,28 +78,36 @@ def convert_media(input_mov: Path) -> tuple[Path, Path, Path | None]:
             "-deadline",
             "good",
             "-cpu-used",
-            "2",
+            "4",
             "-crf",
-            "32",
+            "38",
             "-b:v",
             "0",
+            "-g",
+            "48",
         ],
     )
     run_ffmpeg(
         input_mov,
         mp4,
         [
+            "-t",
+            max_preview_seconds,
             "-vf",
-            "scale='min(1280,iw)':-2:flags=lanczos,fps=30",
+            common_video_filters,
             "-an",
             "-c:v",
             "libx264",
             "-preset",
-            "slow",
+            "veryfast",
             "-crf",
-            "24",
+            "30",
             "-pix_fmt",
             "yuv420p",
+            "-g",
+            "48",
+            "-keyint_min",
+            "48",
             "-movflags",
             "+faststart",
         ],
@@ -112,7 +128,26 @@ def convert_media(input_mov: Path) -> tuple[Path, Path, Path | None]:
     except subprocess.CalledProcessError:
         webp = None
 
-    return webm, mp4, webp
+    poster: Path | None = webp
+    if poster is None:
+        try:
+            run_ffmpeg(
+                input_mov,
+                jpg,
+                [
+                    "-vf",
+                    "scale='min(1280,iw)':-2:flags=lanczos",
+                    "-frames:v",
+                    "1",
+                    "-q:v",
+                    "4",
+                ],
+            )
+            poster = jpg
+        except subprocess.CalledProcessError:
+            poster = None
+
+    return webm, mp4, poster
 
 
 def content_type_for(path: Path) -> str:
@@ -123,6 +158,8 @@ def content_type_for(path: Path) -> str:
         return "video/mp4"
     if suffix == ".webp":
         return "image/webp"
+    if suffix == ".jpg" or suffix == ".jpeg":
+        return "image/jpeg"
     return "application/octet-stream"
 
 
@@ -178,7 +215,7 @@ def main() -> int:
                 download_from_r2(s3, key_mov, local_mov)
 
             print(f"[{i}/{len(urls)}] Converting {key_mov}")
-            webm, mp4, webp = convert_media(local_mov)
+            webm, mp4, poster = convert_media(local_mov)
 
             key_base = key_mov[: -len(".mov")]
             key_webm = f"{key_base}.webm"
@@ -186,9 +223,10 @@ def main() -> int:
             print(f"[{i}/{len(urls)}] Uploading {key_webm}, {key_mp4}")
             upload_file(s3, webm, key_webm)
             upload_file(s3, mp4, key_mp4)
-            if webp:
-                key_webp = f"{key_base}.webp"
-                upload_file(s3, webp, key_webp)
+            if poster:
+                poster_suffix = poster.suffix.lower()
+                key_poster = f"{key_base}{poster_suffix}"
+                upload_file(s3, poster, key_poster)
 
             if not args.skip_delete:
                 print(f"[{i}/{len(urls)}] Deleting old {key_mov}")

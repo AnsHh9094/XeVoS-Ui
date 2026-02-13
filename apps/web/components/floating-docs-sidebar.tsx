@@ -12,7 +12,18 @@ import { components } from "@/registry"
 type PreviewSources = {
     mp4: string
     webm: string
-    webp: string
+}
+
+let preferredPreviewFormat: "webm" | "mp4" | null = null
+
+function getPreferredPreviewSrc(sources: PreviewSources) {
+    if (typeof window === "undefined") return sources.mp4
+    if (!preferredPreviewFormat) {
+        const probe = document.createElement("video")
+        const supportsWebm = Boolean(probe.canPlayType('video/webm; codecs="vp9,opus"'))
+        preferredPreviewFormat = supportsWebm ? "webm" : "mp4"
+    }
+    return preferredPreviewFormat === "webm" ? sources.webm : sources.mp4
 }
 
 function getPreviewSources(previewVideo?: string) {
@@ -23,7 +34,6 @@ function getPreviewSources(previewVideo?: string) {
     return {
         mp4: `${base}.mp4${query}`,
         webm: `${base}.webm${query}`,
-        webp: `${base}.webp${query}`,
     }
 }
 
@@ -31,35 +41,45 @@ export function FloatingDocsSidebar() {
     const pathname = usePathname()
     const [isOpen, setIsOpen] = React.useState(false)
     const [isHoverVideoReady, setIsHoverVideoReady] = React.useState(false)
-    const [hasHoverPosterError, setHasHoverPosterError] = React.useState(false)
     const [hoverPreview, setHoverPreview] = React.useState<{
         title: string
+        videoSrc: string
         mp4: string
         webm: string
-        webp: string
-        x: number
-        y: number
     } | null>(null)
+    const [hoverPosition, setHoverPosition] = React.useState<{ x: number; y: number } | null>(null)
     const warmedPreviewKeys = React.useRef(new Set<string>())
     const warmingVideos = React.useRef(new Map<string, HTMLVideoElement>())
 
     const warmPreviewAssets = React.useCallback((sources: PreviewSources) => {
         if (typeof window === "undefined") return
-        if (warmedPreviewKeys.current.has(sources.mp4)) return
+        const selectedSrc = getPreferredPreviewSrc(sources)
+        if (warmedPreviewKeys.current.has(selectedSrc)) return
 
-        warmedPreviewKeys.current.add(sources.mp4)
-
-        const posterImage = new Image()
-        posterImage.src = sources.webp
+        warmedPreviewKeys.current.add(selectedSrc)
 
         const video = document.createElement("video")
         video.preload = "auto"
         video.muted = true
         video.playsInline = true
-        video.src = sources.mp4
+        video.src = selectedSrc
         video.load()
-        warmingVideos.current.set(sources.mp4, video)
+        warmingVideos.current.set(selectedSrc, video)
     }, [])
+
+    const getPreviewPosition = React.useCallback(
+        (event: React.MouseEvent<HTMLAnchorElement>) => {
+            const cardWidth = 224
+            const cardHeight = 170
+            const offset = 18
+            const maxX = Math.max(16, window.innerWidth - cardWidth - 16)
+            const maxY = Math.max(16, window.innerHeight - cardHeight - 16)
+            const x = Math.max(16, Math.min(event.clientX + offset, maxX))
+            const y = Math.max(16, Math.min(event.clientY + offset, maxY))
+            return { x, y }
+        },
+        []
+    )
 
     const updateHoverPreview = React.useCallback(
         (
@@ -76,29 +96,27 @@ export function FloatingDocsSidebar() {
             const sources = getPreviewSources(previewVideo)
             if (!sources) {
                 setHoverPreview(null)
+                setHoverPosition(null)
                 return
             }
             warmPreviewAssets(sources)
-
-            const cardWidth = 224
-            const cardHeight = 170
-            const offset = 18
-            const maxX = Math.max(16, window.innerWidth - cardWidth - 16)
-            const maxY = Math.max(16, window.innerHeight - cardHeight - 16)
-
-            const x = Math.max(16, Math.min(event.clientX + offset, maxX))
-            const y = Math.max(16, Math.min(event.clientY + offset, maxY))
+            setHoverPosition(getPreviewPosition(event))
 
             setHoverPreview({
                 title: item.title,
+                videoSrc: getPreferredPreviewSrc(sources),
                 mp4: sources.mp4,
                 webm: sources.webm,
-                webp: sources.webp,
-                x,
-                y,
             })
         },
-        [warmPreviewAssets]
+        [getPreviewPosition, warmPreviewAssets]
+    )
+
+    const updateHoverPosition = React.useCallback(
+        (event: React.MouseEvent<HTMLAnchorElement>) => {
+            setHoverPosition(getPreviewPosition(event))
+        },
+        [getPreviewPosition]
     )
 
     // Close when path changes
@@ -109,6 +127,7 @@ export function FloatingDocsSidebar() {
     React.useEffect(() => {
         if (!isOpen) {
             setHoverPreview(null)
+            setHoverPosition(null)
             setIsHoverVideoReady(false)
         }
     }, [isOpen])
@@ -116,12 +135,10 @@ export function FloatingDocsSidebar() {
     React.useEffect(() => {
         if (!hoverPreview) {
             setIsHoverVideoReady(false)
-            setHasHoverPosterError(false)
             return
         }
         setIsHoverVideoReady(false)
-        setHasHoverPosterError(false)
-    }, [hoverPreview])
+    }, [hoverPreview?.videoSrc])
 
     React.useEffect(() => {
         if (!isOpen) return
@@ -206,10 +223,14 @@ export function FloatingDocsSidebar() {
                                                         key={item.href}
                                                         href={item.href}
                                                         onMouseEnter={(e) => updateHoverPreview(item, e)}
-                                                        onMouseMove={(e) => updateHoverPreview(item, e)}
-                                                        onMouseLeave={() => setHoverPreview(null)}
+                                                        onMouseMove={updateHoverPosition}
+                                                        onMouseLeave={() => {
+                                                            setHoverPreview(null)
+                                                            setHoverPosition(null)
+                                                        }}
                                                         onClick={() => {
                                                             setHoverPreview(null)
+                                                            setHoverPosition(null)
                                                             setIsOpen(false)
                                                         }}
                                                         className={cn(
@@ -238,31 +259,24 @@ export function FloatingDocsSidebar() {
                         </div>
 
                         <AnimatePresence>
-                            {hoverPreview && (
+                            {hoverPreview && hoverPosition && (
                                 <motion.div
-                                    key={hoverPreview.mp4}
+                                    key={hoverPreview.videoSrc}
                                     initial={{ opacity: 0, scale: 0.98 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.98 }}
                                     transition={{ duration: 0.08, ease: "easeOut" }}
                                     className="fixed z-[70] w-56 pointer-events-none"
                                     style={{
-                                        left: hoverPreview.x,
-                                        top: hoverPreview.y,
+                                        left: hoverPosition.x,
+                                        top: hoverPosition.y,
                                     }}
                                 >
                                     <div className="overflow-hidden rounded-xl border border-zinc-200/70 dark:border-zinc-800/70 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md shadow-2xl">
                                         <div className="relative h-32 w-full bg-zinc-100 dark:bg-zinc-800/60">
-                                            <img
-                                                src={hoverPreview.webp}
-                                                alt={`${hoverPreview.title} preview`}
-                                                loading="eager"
-                                                onError={() => setHasHoverPosterError(true)}
-                                                className="absolute inset-0 h-full w-full object-cover"
-                                                style={{ display: hasHoverPosterError ? "none" : undefined }}
-                                            />
                                             <video
-                                                key={hoverPreview.mp4}
+                                                key={hoverPreview.videoSrc}
+                                                src={hoverPreview.videoSrc}
                                                 autoPlay
                                                 loop
                                                 muted
@@ -273,15 +287,7 @@ export function FloatingDocsSidebar() {
                                                     "relative h-full w-full object-cover transition-opacity duration-150",
                                                     isHoverVideoReady ? "opacity-100" : "opacity-0"
                                                 )}
-                                            >
-                                                <source src={hoverPreview.webm} type="video/webm" />
-                                                <source src={hoverPreview.mp4} type="video/mp4" />
-                                            </video>
-                                        </div>
-                                        <div className="px-2.5 py-2">
-                                            <p className="truncate text-[11px] font-medium text-zinc-800 dark:text-zinc-200">
-                                                {hoverPreview.title}
-                                            </p>
+                                            />
                                         </div>
                                     </div>
                                 </motion.div>
