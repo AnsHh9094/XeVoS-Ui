@@ -133,6 +133,22 @@ export const components: Record<string, ComponentMetadata> = {
     slug: "dither-prism-hero",
     isNew: true,
   },
+  "webgl-liquid": {
+    title: "WebGL Liquid",
+    description:
+      "Cinematic liquid shader hero with premium gradients, configurable reveal timing, and advanced flow controls.",
+    category: "Hero Backgrounds",
+    slug: "webgl-liquid",
+    isNew: true,
+  },
+  "closing-plasma": {
+    title: "Closing Plasma",
+    description:
+      "Plasma field tailored for footer and CTA sections with premium atmospheric motion.",
+    category: "Hero Backgrounds",
+    slug: "closing-plasma",
+    isNew: true,
+  },
 
   // Visual Effects
   "border-beam": {
