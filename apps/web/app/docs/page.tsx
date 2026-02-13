@@ -9,6 +9,12 @@ import { Logomark } from "@/components/logos/logomark"
 
 import { FloatingNavbar } from "@/components/floating-navbar"
 
+type PreviewSources = {
+  mp4: string
+  webm: string
+  webp: string
+}
+
 function getPreviewSources(previewVideo?: string) {
   if (!previewVideo) return null
 
@@ -35,10 +41,14 @@ function ComponentCard({
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const [isHovered, setIsHovered] = useState(false)
   const [isNearViewport, setIsNearViewport] = useState(false)
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
+  const [isVideoReady, setIsVideoReady] = useState(false)
+  const [hasPosterError, setHasPosterError] = useState(false)
   const previewSources = useMemo(
     () => getPreviewSources(component.previewVideo),
     [component.previewVideo]
-  )
+  ) as PreviewSources | null
+  const shouldPrioritizePoster = index < 6
 
   useEffect(() => {
     const element = cardRef.current
@@ -46,7 +56,7 @@ function ComponentCard({
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsNearViewport(Boolean(entry?.isIntersecting)),
-      { rootMargin: "250px 0px 250px 0px", threshold: 0.01 }
+      { rootMargin: "500px 0px 500px 0px", threshold: 0.01 }
     )
     observer.observe(element)
 
@@ -54,8 +64,20 @@ function ComponentCard({
   }, [])
 
   useEffect(() => {
+    if (!isNearViewport) return
+    setShouldLoadVideo(true)
+  }, [isNearViewport])
+
+  useEffect(() => {
+    setIsVideoReady(false)
+    setHasPosterError(false)
+  }, [component.slug])
+
+  useEffect(() => {
     const video = videoRef.current
     if (!video) return
+
+    if (!shouldLoadVideo) return
 
     if (isHovered) {
       const playPromise = video.play()
@@ -67,11 +89,12 @@ function ComponentCard({
 
     video.pause()
     video.currentTime = 0.01
-  }, [isHovered])
+  }, [isHovered, shouldLoadVideo])
 
   const shouldRenderVideo = Boolean(previewSources)
   const startPreview = () => {
     setIsHovered(true)
+    setShouldLoadVideo(true)
     const video = videoRef.current
     if (!video) return
     video.preload = "auto"
@@ -111,15 +134,25 @@ function ComponentCard({
         {/* ── Preview area (Floating) ── */}
         <div className="p-1.5">
           <div className="relative h-[220px] w-full rounded-xl bg-zinc-50 dark:bg-zinc-900/80 group-hover:bg-zinc-100/50 dark:group-hover:bg-zinc-800/80 transition-colors border border-dashed border-zinc-200/50 dark:border-zinc-800/50 overflow-hidden">
+            {previewSources && !hasPosterError && (
+              <img
+                src={previewSources.webp}
+                alt={`${component.title} preview`}
+                loading={shouldPrioritizePoster ? "eager" : "lazy"}
+                fetchPriority={shouldPrioritizePoster ? "high" : "auto"}
+                onError={() => setHasPosterError(true)}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            )}
             {shouldRenderVideo && previewSources && (
               <video
                 ref={videoRef}
                 loop
                 muted
                 playsInline
-                preload={isHovered || isNearViewport ? "auto" : "metadata"}
-                poster={previewSources.webp}
+                preload={shouldLoadVideo ? "auto" : "metadata"}
                 onLoadedData={(e) => {
+                  setIsVideoReady(true)
                   if (!isHovered) {
                     const video = e.currentTarget
                     if (video.currentTime < 0.01) {
@@ -137,13 +170,13 @@ function ComponentCard({
                     }
                   }
                 }}
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-opacity duration-200 ${isVideoReady ? "opacity-100" : "opacity-0"}`}
               >
-                {previewSources.mp4 && (
-                  <source src={previewSources.mp4} type="video/mp4" />
-                )}
-                {previewSources.webm && (
+                {shouldLoadVideo && previewSources.webm && (
                   <source src={previewSources.webm} type="video/webm" />
+                )}
+                {shouldLoadVideo && previewSources.mp4 && (
+                  <source src={previewSources.mp4} type="video/mp4" />
                 )}
               </video>
             )}

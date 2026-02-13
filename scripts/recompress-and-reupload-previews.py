@@ -131,7 +131,10 @@ def upload_file(client, local_path: Path, object_key: str) -> None:
         str(local_path),
         BUCKET_NAME,
         object_key,
-        ExtraArgs={"ContentType": content_type_for(local_path)},
+        ExtraArgs={
+            "ContentType": content_type_for(local_path),
+            "CacheControl": "public, max-age=31536000, immutable",
+        },
     )
 
 def download_from_r2(client, object_key: str, destination: Path) -> None:
