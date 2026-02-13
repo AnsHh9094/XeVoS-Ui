@@ -128,7 +128,7 @@ export const components: Record<string, ComponentMetadata> = {
   "dither-prism-hero": {
     title: "Dither Prism Hero",
     description:
-      "Stunning WebGL hero with advanced dithering, prismatic refraction, holographic iridescence, and mouse-reactive effects.",
+      "Stunning WebGL hero with advanced dithering, prismatic refraction, holographic iridescence, and center-focused energy.",
     category: "Hero Backgrounds",
     slug: "dither-prism-hero",
     isNew: true,

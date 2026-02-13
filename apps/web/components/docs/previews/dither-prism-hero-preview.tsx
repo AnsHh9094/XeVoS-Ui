@@ -16,14 +16,12 @@ const instrumentSerif = Instrument_Serif({
 interface DitherPrismHeroPreviewProps {
     title1?: string;
     title2?: string;
-    description?: string;
     color1?: string;
     color2?: string;
     color3?: string;
     speed?: number;
     ditherIntensity?: number;
     prismIntensity?: number;
-    mouseIntensity?: number;
     showParticles?: boolean;
     particleCount?: number;
 }
@@ -31,14 +29,12 @@ interface DitherPrismHeroPreviewProps {
 function DitherPrismHeroPreviewWrapper({
     title1 = "Experience",
     title2 = "The Future",
-    description,
     color1,
     color2,
     color3,
     speed,
     ditherIntensity,
     prismIntensity,
-    mouseIntensity,
     showParticles,
     particleCount,
 }: DitherPrismHeroPreviewProps) {
@@ -63,14 +59,12 @@ function DitherPrismHeroPreviewWrapper({
                     key={key}
                     title1={title1}
                     title2={title2}
-                    description={description}
                     color1={color1}
                     color2={color2}
                     color3={color3}
                     speed={speed}
                     ditherIntensity={ditherIntensity}
                     prismIntensity={prismIntensity}
-                    mouseIntensity={mouseIntensity}
                     showParticles={showParticles}
                     particleCount={particleCount}
                     className="min-h-full"
@@ -86,7 +80,6 @@ export function DitherPrismHeroDemo() {
         <DitherPrismHeroPreviewWrapper
             title1="Experience"
             title2="The Future"
-            description="Move your cursor to interact"
         />
     );
 }
@@ -143,7 +136,6 @@ export function DitherPrismHeroIntenseDemo() {
         <DitherPrismHeroPreviewWrapper
             ditherIntensity={0.3}
             prismIntensity={0.9}
-            mouseIntensity={1.0}
             speed={1.5}
             title1="Maximum"
             title2="Impact"

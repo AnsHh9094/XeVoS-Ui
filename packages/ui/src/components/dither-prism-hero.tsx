@@ -369,7 +369,6 @@ const DitherPrismPlane = ({
     speed = 1,
     ditherIntensity = 0.15,
     prismIntensity = 0.5,
-    mouseIntensity = 0.5,
 }: {
     color1: string;
     color2: string;
@@ -377,19 +376,16 @@ const DitherPrismPlane = ({
     speed?: number;
     ditherIntensity?: number;
     prismIntensity?: number;
-    mouseIntensity?: number;
 }) => {
     const meshRef = useRef<THREE.Mesh>(null);
-    const mouseRef = useRef({ x: 0.5, y: 0.5 });
-    const targetMouseRef = useRef({ x: 0.5, y: 0.5 });
-    const { size, gl } = useThree();
+    const { size } = useThree();
 
     const uniforms = useMemo(
         () => ({
             uTime: { value: 0 },
             uResolution: { value: new THREE.Vector2(1000, 1000) },
             uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-            uMouseIntensity: { value: mouseIntensity },
+            uMouseIntensity: { value: 0.8 },
             uColor1: { value: new THREE.Color(color1) },
             uColor2: { value: new THREE.Color(color2) },
             uColor3: { value: new THREE.Color(color3) },
@@ -400,42 +396,13 @@ const DitherPrismPlane = ({
         [] // Depend on nothing to keep reference stable
     );
 
-    // Mouse tracking
-    useEffect(() => {
-        const canvas = gl.domElement;
-
-        const handleMouseMove = (event: MouseEvent) => {
-            const rect = canvas.getBoundingClientRect();
-            targetMouseRef.current = {
-                x: (event.clientX - rect.left) / rect.width,
-                y: 1.0 - (event.clientY - rect.top) / rect.height,
-            };
-        };
-
-        const handleMouseLeave = () => {
-            targetMouseRef.current = { x: 0.5, y: 0.5 };
-        };
-
-        canvas.addEventListener("mousemove", handleMouseMove);
-        canvas.addEventListener("mouseleave", handleMouseLeave);
-
-        return () => {
-            canvas.removeEventListener("mousemove", handleMouseMove);
-            canvas.removeEventListener("mouseleave", handleMouseLeave);
-        };
-    }, [gl]);
-
     useFrame((state) => {
         const { clock } = state;
 
-        // Smooth mouse interpolation
-        mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.05;
-        mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.05;
-
         uniforms.uTime.value = clock.getElapsedTime() * speed;
         uniforms.uResolution.value.set(size.width, size.height);
-        uniforms.uMouse.value.set(mouseRef.current.x, mouseRef.current.y);
-        uniforms.uMouseIntensity.value = mouseIntensity;
+        uniforms.uMouse.value.set(0.5, 0.5);
+        uniforms.uMouseIntensity.value = 0.8;
         uniforms.uColor1.value.set(color1);
         uniforms.uColor2.value.set(color2);
         uniforms.uColor3.value.set(color3);
@@ -541,8 +508,6 @@ interface DitherPrismHeroProps extends React.HTMLAttributes<HTMLDivElement> {
     title1?: string;
     /** Second line of headline */
     title2?: string;
-    /** Subtitle text */
-    description?: string;
     /** Primary color (deep/dark) */
     color1?: string;
     /** Secondary color (mid) */
@@ -555,8 +520,6 @@ interface DitherPrismHeroProps extends React.HTMLAttributes<HTMLDivElement> {
     ditherIntensity?: number;
     /** Prismatic refraction intensity (0-1) */
     prismIntensity?: number;
-    /** Mouse interaction intensity (0-1) */
-    mouseIntensity?: number;
     /** Number of floating particles */
     particleCount?: number;
     /** Show floating particles */
@@ -567,20 +530,21 @@ interface DitherPrismHeroProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
 }
 
+const HERO_HEADLINE_CLASS =
+    "pb-[0.08em] text-[12cqi] md:text-[8cqi] lg:text-[6cqi] leading-[0.96] tracking-tighter font-bold text-transparent bg-clip-text bg-gradient-to-b from-zinc-900 via-zinc-500 to-zinc-800";
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // Main Export Component
 // ═══════════════════════════════════════════════════════════════════════════════
 export default function DitherPrismHero({
     title1,
     title2,
-    description,
     color1 = "#0f0f23",
     color2 = "#6366f1",
     color3 = "#ec4899",
     speed = 1,
     ditherIntensity = 0.15,
     prismIntensity = 0.5,
-    mouseIntensity = 0.8,
     particleCount = 50,
     showParticles = true,
     particleColor = "#ffffff",
@@ -623,7 +587,6 @@ export default function DitherPrismHero({
                             speed={speed}
                             ditherIntensity={ditherIntensity}
                             prismIntensity={prismIntensity}
-                            mouseIntensity={mouseIntensity}
                         />
                         {showParticles && (
                             <FloatingParticles count={particleCount} color={particleColor} />
@@ -633,7 +596,7 @@ export default function DitherPrismHero({
             )}
 
             {/* Content Overlay */}
-            {(title1 || title2 || description || children) && (
+            {(title1 || title2 || children) && (
                 <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center pt-8 pb-8 md:pt-20 md:pb-20">
                     <div className="w-full max-w-[1200px] px-6 flex flex-col items-center">
                         {/* Headline */}
@@ -649,9 +612,9 @@ export default function DitherPrismHero({
                                                 ease: [0.16, 1, 0.3, 1],
                                                 delay: 0.2,
                                             }}
-                                            className="text-[12cqi] md:text-[8cqi] lg:text-[6cqi] leading-[0.9] tracking-tighter"
+                                            className={HERO_HEADLINE_CLASS}
                                         >
-                                            <span className="font-serif italic font-light opacity-90">
+                                            <span>
                                                 {title1}
                                             </span>
                                         </motion.h1>
@@ -667,26 +630,12 @@ export default function DitherPrismHero({
                                                 ease: [0.16, 1, 0.3, 1],
                                                 delay: 0.35,
                                             }}
-                                            className="text-[12cqi] md:text-[8cqi] lg:text-[6cqi] leading-[0.9] tracking-tighter font-bold"
+                                            className={HERO_HEADLINE_CLASS}
                                         >
                                             {title2}
                                         </motion.h1>
                                     </div>
                                 )}
-                            </div>
-                        )}
-
-                        {/* Subheadline */}
-                        {description && (
-                            <div className="max-w-[480px] text-center mb-8">
-                                <motion.p
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-                                    className="text-lg md:text-[1.35rem] leading-relaxed opacity-80 font-normal"
-                                >
-                                    {description}
-                                </motion.p>
                             </div>
                         )}
 
