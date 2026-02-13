@@ -32,8 +32,20 @@ function ComponentCard({
       >
         {/* ── Preview area (Floating) ── */}
         <div className="p-1.5">
-          <div className="relative h-[220px] w-full rounded-xl bg-zinc-50 dark:bg-zinc-900/80 group-hover:bg-zinc-100/50 dark:group-hover:bg-zinc-800/80 transition-colors border border-dashed border-zinc-200/50 dark:border-zinc-800/50">
-            {/* Placeholder for future video/interaction */}
+          <div className="relative h-[220px] w-full rounded-xl bg-zinc-50 dark:bg-zinc-900/80 group-hover:bg-zinc-100/50 dark:group-hover:bg-zinc-800/80 transition-colors border border-dashed border-zinc-200/50 dark:border-zinc-800/50 overflow-hidden">
+            {component.previewVideo ? (
+              <video
+                src={component.previewVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              /* Placeholder for future video/interaction */
+              null
+            )}
           </div>
         </div>
 
@@ -126,8 +138,8 @@ export default function DocsPage() {
                   setActiveSection(cat)
                 }}
                 className={`relative px-4 py-2 text-[13px] font-medium transition-all duration-300 rounded-lg ${isActive
-                    ? "text-zinc-900 dark:text-zinc-100"
-                    : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50"
+                  ? "text-zinc-900 dark:text-zinc-100"
+                  : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50"
                   }`}
               >
                 {isActive && (

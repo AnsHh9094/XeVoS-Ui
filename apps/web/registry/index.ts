@@ -10,6 +10,7 @@ export interface ComponentMetadata {
   category: ComponentCategory;
   slug: string;
   isNew?: boolean;
+  previewVideo?: string;
 }
 
 export const components: Record<string, ComponentMetadata> = {
@@ -20,6 +21,7 @@ export const components: Record<string, ComponentMetadata> = {
       "A text scramble effect that cycles through characters before revealing the final text. Inspired by cyberpunk and futuristic UIs.",
     category: "Text Animations",
     slug: "hyper-text",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/hovereffect1.mov",
   },
   "true-focus": {
     title: "True Focus",
@@ -27,18 +29,21 @@ export const components: Record<string, ComponentMetadata> = {
       "Applies dynamic blur / clarity based over a series of words in order.",
     category: "Text Animations",
     slug: "true-focus",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/truefocus.mov",
   },
   "text-animate": {
     title: "Text Animate",
     description: "Animate text characters with staggered delays and effects.",
     category: "Text Animations",
     slug: "text-animate",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/textanimate.mov",
   },
   "scroll-based-velocity": {
     title: "Velocity Scroll",
     description: "Text that moves horizontally based on scroll speed.",
     category: "Text Animations",
     slug: "scroll-based-velocity",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/scrollvelocity.mov",
   },
 
   // Components
@@ -48,48 +53,56 @@ export const components: Record<string, ComponentMetadata> = {
       "Animated circuit board visualization with nodes and connections.",
     category: "Components",
     slug: "circuit-board",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/circuitboard.mov",
   },
   "command-menu": {
     title: "Command Menu",
     description: "Fast, accessible, and composable command menu for React.",
     category: "Components",
     slug: "command-menu",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/commandmenu.mov",
   },
   "flight-status-card": {
     title: "Flight Status Card",
     description: "A detailed card showing flight information with animations.",
     category: "Components",
     slug: "flight-status-card",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/flightstuatscard.mov",
   },
   "magnetic-dock": {
     title: "Magnetic Dock",
     description: "MacOS style dock that scales items based on mouse proximity.",
     category: "Components",
     slug: "magnetic-dock",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/magneticdock.mov",
   },
   "showcase-card": {
     title: "Showcase Card",
     description: "Card component for showcasing projects or features.",
     category: "Components",
     slug: "showcase-card",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/showcasecard.mov",
   },
   "spotlight-card": {
     title: "Spotlight Card",
     description: "A card that reveals a spotlight effect on hover.",
     category: "Components",
     slug: "spotlight-card",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/spotlightcard.mov",
   },
   "auth-modal": {
     title: "Auth Modal",
     description: "Beautiful authentication modal with transitions.",
     category: "Components",
     slug: "auth-modal",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/authmodal.mov",
   },
   "testimonial-marquee": {
     title: "Testimonial Marquee",
     description: "Infinite scrolling marquee for testimonials.",
     category: "Components",
     slug: "testimonial-marquee",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/testimonialmarquee.mov",
   },
   "collection-surfer": {
     title: "Collection Surfer",
@@ -102,6 +115,7 @@ export const components: Record<string, ComponentMetadata> = {
     description: "GitHub-style contribution calendar heatmap.",
     category: "Components",
     slug: "github-calendar",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/githubcalendar.mov",
   },
 
   // Hero Backgrounds
@@ -132,42 +146,49 @@ export const components: Record<string, ComponentMetadata> = {
     description: "Gradient background with dithering noise.",
     category: "Visual Effects",
     slug: "dither-gradient",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/dithergradient.mov",
   },
   "liquid-blob": {
     title: "Liquid Blob",
     description: "Animated liquid blob shape.",
     category: "Visual Effects",
     slug: "liquid-blob",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/liquidblob.mov",
   },
   "magnet-lines": {
     title: "Magnet Lines",
     description: "Lines that react to cursor movement like a magnetic field.",
     category: "Visual Effects",
     slug: "magnet-lines",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/magneticlines.mov",
   },
   "noise-texture": {
     title: "Noise Texture",
     description: "Subtle noise texture overlay.",
     category: "Visual Effects",
     slug: "noise-texture",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/noisetexture.mov",
   },
   "particle-galaxy": {
     title: "Particle Galaxy",
     description: "Interactive 3D particle system resembling a galaxy.",
     category: "Visual Effects",
     slug: "particle-galaxy",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/particlegalaxy.mov",
   },
   "pixel-canvas": {
     title: "Pixel Canvas",
     description: "Canvas where pixels react to interaction.",
     category: "Visual Effects",
     slug: "pixel-canvas",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/pixelcanvas.mov",
   },
   "matrix-rain": {
     title: "Matrix Rain",
     description: "Classic Matrix digital rain effect.",
     category: "Visual Effects",
     slug: "matrix-rain",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/matrixrain.mov",
   },
 };
 
