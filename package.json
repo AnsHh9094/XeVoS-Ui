@@ -7,7 +7,9 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "screenshot": "node scripts/screenshot.js"
+    "screenshot": "node scripts/screenshot.js",
+    "optimize:previews": "./scripts/optimize-preview-videos.sh",
+    "recompress:previews": "scripts/venv/bin/python scripts/recompress-and-reupload-previews.py"
   },
   "devDependencies": {
     "@types/three": "^0.182.0",
