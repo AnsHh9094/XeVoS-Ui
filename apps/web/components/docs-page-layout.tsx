@@ -96,26 +96,29 @@ export async function DocsPageLayout({
       data-docs-layout
       className="flex flex-col lg:flex-row w-full h-full min-h-screen lg:h-screen bg-[#f3f4f6] dark:bg-[#080808] text-foreground"
     >
+      {/* Navigation - Moved out to be global */}
+      <div className="fixed top-6 left-4 lg:absolute lg:top-8 lg:left-16 z-50 flex items-center gap-3 pointer-events-none">
+        <div className="pointer-events-auto">
+          <FloatingDocsSidebar />
+        </div>
+        <div className="inline-flex h-8 items-center gap-2 rounded-full border border-border/40 bg-white/50 dark:bg-white/[0.03] px-4 text-[10px] font-mono uppercase tracking-widest text-muted-foreground backdrop-blur-md shadow-sm pointer-events-auto">
+          <Link href="/docs" className="hover:text-foreground transition-colors">Docs</Link>
+          <span aria-hidden="true" className="text-border">/</span>
+          <span className="text-foreground font-medium">{title}</span>
+        </div>
+      </div>
+
       {/* Left Column: Scrollable Content */}
       <div
         data-docs-left-column
         className="w-full lg:basis-1/2 lg:max-w-1/2 h-full flex flex-col relative z-10 bg-[#f3f4f6] dark:bg-[#080808]"
       >
-        {/* Premium Overlay & Navigation */}
-        <div className="absolute top-0 left-0 right-0 z-30 h-32 bg-gradient-to-b from-[#f3f4f6] via-[#f3f4f6]/95 to-transparent dark:from-[#080808] dark:via-[#080808]/95 pointer-events-none backdrop-blur-[1px]" />
+        {/* Premium Overlay & Navigation Gradients - Only visible on desktop or when navigation is over this column */}
+        <div className="absolute top-0 left-0 right-0 z-30 h-32 bg-gradient-to-b from-[#f3f4f6] via-[#f3f4f6]/95 to-transparent dark:from-[#080808] dark:via-[#080808]/95 pointer-events-none backdrop-blur-[1px] hidden lg:block" />
         <div className="absolute bottom-0 left-0 right-0 z-30 h-32 bg-gradient-to-t from-[#f3f4f6] via-[#f3f4f6]/95 to-transparent dark:from-[#080808] dark:via-[#080808]/95 pointer-events-none backdrop-blur-[1px]" />
 
-        <div className="absolute top-8 left-8 lg:left-16 z-40 flex items-center gap-3">
-          <FloatingDocsSidebar />
-          <div className="inline-flex h-8 items-center gap-2 rounded-full border border-border/40 bg-white/50 dark:bg-white/[0.03] px-4 text-[10px] font-mono uppercase tracking-widest text-muted-foreground backdrop-blur-md shadow-sm">
-            <Link href="/docs" className="hover:text-foreground transition-colors">Docs</Link>
-            <span aria-hidden="true" className="text-border">/</span>
-            <span className="text-foreground font-medium">{title}</span>
-          </div>
-        </div>
-
         <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-          <div className="px-8 lg:px-16 pt-32 lg:pt-48 pb-40 space-y-20 max-w-3xl mx-auto">
+          <div className="px-6 lg:px-16 pt-12 lg:pt-48 pb-40 space-y-16 lg:space-y-20 max-w-3xl mx-auto">
 
             {/* Header Section */}
             <header className="space-y-10">
@@ -272,7 +275,7 @@ export async function DocsPageLayout({
         {/* We use a large padding to offset the card from the left side, mimicking the image */}
         <div
           data-docs-preview-shell
-          className="relative w-full h-[400px] lg:h-full p-4 lg:pt-3 lg:pb-3 lg:pr-3 lg:pl-1.5 overflow-hidden"
+          className="relative w-full h-[55vh] lg:h-full p-4 lg:pt-3 lg:pb-3 lg:pr-3 lg:pl-1.5 overflow-hidden"
         >
 
           {/* Floating Card Container */}

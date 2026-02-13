@@ -58,6 +58,7 @@ export function DocsPreviewWrapper({ children, fullWidthPreview, sourceCodeConte
 
     if (!leftColumn || !rightColumn || !previewShell) return
 
+    // Set up transitions and base styles
     const easing = "cubic-bezier(0.22, 1, 0.36, 1)"
     leftColumn.style.transition = `flex-basis 420ms ${easing}, max-width 420ms ${easing}, opacity 280ms ease, border-color 220ms ease`
     rightColumn.style.transition = `flex-basis 420ms ${easing}, max-width 420ms ${easing}`
@@ -66,29 +67,69 @@ export function DocsPreviewWrapper({ children, fullWidthPreview, sourceCodeConte
     leftColumn.style.minWidth = "0"
     rightColumn.style.minWidth = "0"
 
-    if (isExpanded) {
-      leftColumn.style.flex = "0 0 0%"
-      leftColumn.style.maxWidth = "0"
-      leftColumn.style.opacity = "0"
-      leftColumn.style.pointerEvents = "none"
-      leftColumn.style.borderRightColor = "transparent"
-      rightColumn.style.flex = "1 1 100%"
-      rightColumn.style.maxWidth = "100%"
-      previewShell.style.paddingLeft = "1rem"
-      previewShell.style.paddingRight = "1rem"
-    } else {
-      leftColumn.style.flex = "0 0 50%"
-      leftColumn.style.maxWidth = "50%"
-      leftColumn.style.opacity = ""
-      leftColumn.style.pointerEvents = ""
-      leftColumn.style.borderRightColor = ""
-      rightColumn.style.flex = "1 1 50%"
-      rightColumn.style.maxWidth = "50%"
-      previewShell.style.paddingLeft = ""
-      previewShell.style.paddingRight = ""
+    const handleResize = () => {
+      const isMobile = window.matchMedia("(max-width: 1023px)").matches
+
+      if (isMobile) {
+        // Mobile Logic
+        if (isExpanded) {
+          leftColumn.style.display = "none"
+          rightColumn.style.flex = "1 1 100%"
+          previewShell.style.height = "100dvh"
+          previewShell.style.padding = "0"
+        } else {
+          leftColumn.style.display = ""
+          rightColumn.style.flex = ""
+          previewShell.style.height = ""
+          previewShell.style.padding = ""
+        }
+
+        // Reset Desktop Specific Styles
+        leftColumn.style.maxWidth = ""
+        leftColumn.style.opacity = ""
+        leftColumn.style.pointerEvents = ""
+        leftColumn.style.borderRightColor = ""
+        rightColumn.style.maxWidth = ""
+      } else {
+        // Desktop Logic
+        // Reset Mobile Specific Styles
+        leftColumn.style.display = ""
+        previewShell.style.height = ""
+
+        if (isExpanded) {
+          leftColumn.style.flex = "0 0 0%"
+          leftColumn.style.maxWidth = "0"
+          leftColumn.style.opacity = "0"
+          leftColumn.style.pointerEvents = "none"
+          leftColumn.style.borderRightColor = "transparent"
+          rightColumn.style.flex = "1 1 100%"
+          rightColumn.style.maxWidth = "100%"
+          previewShell.style.paddingLeft = "1rem"
+          previewShell.style.paddingRight = "1rem"
+        } else {
+          leftColumn.style.flex = "0 0 50%"
+          leftColumn.style.maxWidth = "50%"
+          leftColumn.style.opacity = ""
+          leftColumn.style.pointerEvents = ""
+          leftColumn.style.borderRightColor = ""
+          rightColumn.style.flex = "1 1 50%"
+          rightColumn.style.maxWidth = "50%"
+          previewShell.style.paddingLeft = ""
+          previewShell.style.paddingRight = ""
+        }
+      }
     }
 
+    // Initial call
+    handleResize()
+
+    // Add listener
+    window.addEventListener("resize", handleResize)
     return () => {
+      window.removeEventListener("resize", handleResize)
+
+      // Cleanup
+      leftColumn.style.display = ""
       leftColumn.style.flex = ""
       leftColumn.style.maxWidth = ""
       leftColumn.style.opacity = ""
@@ -97,12 +138,16 @@ export function DocsPreviewWrapper({ children, fullWidthPreview, sourceCodeConte
       leftColumn.style.transition = ""
       leftColumn.style.overflow = ""
       leftColumn.style.minWidth = ""
+
       rightColumn.style.flex = ""
       rightColumn.style.maxWidth = ""
       rightColumn.style.transition = ""
       rightColumn.style.minWidth = ""
+
       previewShell.style.paddingLeft = ""
       previewShell.style.paddingRight = ""
+      previewShell.style.padding = ""
+      previewShell.style.height = ""
       previewShell.style.transition = ""
     }
   }, [isExpanded])
