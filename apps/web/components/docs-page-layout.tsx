@@ -98,15 +98,22 @@ export async function DocsPageLayout({
       data-docs-layout
       className="flex flex-col lg:flex-row w-full h-full min-h-screen lg:h-screen bg-[#f3f4f6] dark:bg-[#080808] text-foreground"
     >
-      {/* Navigation - Moved out to be global */}
-      <div className="fixed top-6 left-4 lg:absolute lg:top-8 lg:left-16 z-50 flex items-center gap-3 pointer-events-none">
+      {/* Minimal Navigation Cluster */}
+      <div className="fixed top-5 left-6 lg:absolute lg:top-8 lg:left-16 z-50 flex items-center gap-2.5 pointer-events-none">
         <div className="pointer-events-auto">
           <FloatingDocsSidebar />
         </div>
-        <div className="inline-flex h-8 items-center gap-2 rounded-full border border-border/40 bg-white/50 dark:bg-white/[0.03] px-4 text-[10px] font-mono uppercase tracking-widest text-muted-foreground backdrop-blur-md shadow-sm pointer-events-auto">
-          <Link href="/docs" className="hover:text-foreground transition-colors">Docs</Link>
-          <span aria-hidden="true" className="text-border">/</span>
-          <span className="text-foreground font-medium">{title}</span>
+        <div className="inline-flex h-9 items-center gap-2 rounded-md bg-background/55 px-3.5 text-xs text-muted-foreground backdrop-blur-sm pointer-events-auto">
+          <Link
+            href="/docs"
+            className="text-sm font-medium transition-colors hover:text-foreground"
+          >
+            Docs
+          </Link>
+          <span className="text-border">/</span>
+          <span className="max-w-[180px] truncate text-sm font-semibold text-foreground">
+            {title}
+          </span>
         </div>
       </div>
 

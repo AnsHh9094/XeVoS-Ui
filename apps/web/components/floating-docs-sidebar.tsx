@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { PanelLeft, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { docsConfig } from "@/config/docs"
 import { components } from "@/registry"
@@ -162,20 +162,20 @@ export function FloatingDocsSidebar() {
 
     return (
         <>
-            {/* Trigger Button - Matches Breadcrumbs Style */}
+            {/* Trigger Button */}
             <div
-                className="hidden xl:block"
+                className=""
                 onMouseEnter={() => setIsOpen(true)}
             >
                 <button
                     onClick={() => setIsOpen(!isOpen)}
                     className={cn(
-                        "flex items-center justify-center w-8 h-8 rounded-full border border-border/40 bg-white/50 dark:bg-zinc-800/50 text-muted-foreground backdrop-blur-md shadow-sm transition-all duration-300 hover:bg-white/80 dark:hover:bg-zinc-700/80 hover:scale-105 active:scale-95 group",
+                        "group flex h-9 w-9 items-center justify-center rounded-md bg-background/60 text-muted-foreground backdrop-blur-sm transition-colors hover:bg-background/80 hover:text-foreground",
                         isOpen ? "opacity-0 pointer-events-none scale-90" : "opacity-100"
                     )}
                     aria-label="Open Navigation"
                 >
-                    <Menu className="w-3.5 h-3.5 group-hover:text-foreground transition-colors" />
+                    <PanelLeft className="h-3.5 w-3.5" />
                 </button>
             </div>
 
@@ -187,7 +187,7 @@ export function FloatingDocsSidebar() {
                         animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
                         exit={{ x: -60, opacity: 0, filter: "blur(5px)" }}
                         transition={{ type: "spring", stiffness: 350, damping: 35, mass: 0.8 }}
-                        className="fixed top-4 bottom-4 left-4 z-50 w-72 hidden xl:flex flex-col"
+                        className="fixed top-4 bottom-4 left-6 z-50 w-72 flex flex-col"
                         onMouseLeave={() => setIsOpen(false)}
                     >
                         <div className="flex-1 flex flex-col gap-1 overflow-hidden p-2 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-[#121212] shadow-2xl shadow-black/40">

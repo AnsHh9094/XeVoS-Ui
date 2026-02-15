@@ -15,7 +15,7 @@ export function FloatingNavbar() {
 
     return (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit pointer-events-none">
-            <div className="flex items-center gap-1.5 px-2 py-1.5 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/80 dark:bg-zinc-900/90 backdrop-blur-xl shadow-lg shadow-zinc-200/20 dark:shadow-black/20 pointer-events-auto">
+            <div className="flex items-center gap-1.5 px-2 py-1.5 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/80 dark:bg-[#121212] backdrop-blur-xl shadow-lg shadow-zinc-200/20 dark:shadow-black/20 pointer-events-auto">
 
                 {/* Logo */}
                 <Link href="/" className="flex items-center justify-center p-1.5 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors group">
