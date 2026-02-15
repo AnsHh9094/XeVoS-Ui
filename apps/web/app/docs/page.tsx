@@ -111,7 +111,7 @@ function ComponentCard({
     if (isHovered) {
       const playPromise = video.play()
       if (playPromise) {
-        playPromise.catch(() => {})
+        playPromise.catch(() => { })
       }
       return
     }
@@ -129,7 +129,7 @@ function ComponentCard({
     video.preload = "auto"
     const playPromise = video.play()
     if (playPromise) {
-      playPromise.catch(() => {})
+      playPromise.catch(() => { })
     }
   }
 
@@ -186,7 +186,7 @@ function ComponentCard({
                     if (!video) return
                     const playPromise = video.play()
                     if (playPromise) {
-                      playPromise.catch(() => {})
+                      playPromise.catch(() => { })
                     }
                   }
                 }}
@@ -254,6 +254,21 @@ export default function DocsPage() {
     }
   }, [])
 
+  // Scroll active nav item into view
+  useEffect(() => {
+    if (activeSection) {
+      const id = `nav-item-${activeSection}`
+      const element = document.getElementById(id)
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "center",
+        })
+      }
+    }
+  }, [activeSection])
+
   const grouped = categoryOrder
     .map(cat => ({
       category: cat,
@@ -271,20 +286,21 @@ export default function DocsPage() {
       <FloatingNavbar />
 
       {/* ── Floating Dock Nav ── */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit px-4 pointer-events-none">
-        <nav className="flex items-center gap-1 p-1.5 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/80 dark:bg-[#121212] backdrop-blur-xl shadow-lg shadow-zinc-200/20 dark:shadow-black/20 pointer-events-auto">
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-[calc(100vw-2rem)] sm:max-w-fit pointer-events-none">
+        <nav className="flex items-center gap-1 p-1.5 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/80 dark:bg-[#121212] backdrop-blur-xl shadow-lg shadow-zinc-200/20 dark:shadow-black/20 pointer-events-auto overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {categoryOrder.map((cat) => {
             const isActive = activeSection === cat
             return (
               <a
                 key={cat}
+                id={`nav-item-${cat}`}
                 href={`#${cat.toLowerCase().replace(/\s+/g, '-')}`}
                 onClick={(e) => {
                   e.preventDefault()
                   document.getElementById(cat.toLowerCase().replace(/\s+/g, '-'))?.scrollIntoView({ behavior: 'smooth' })
                   setActiveSection(cat)
                 }}
-                className={`relative px-4 py-2 text-[13px] font-medium transition-all duration-300 rounded-lg ${isActive
+                className={`relative px-4 py-2 text-[13px] font-medium transition-all duration-300 rounded-lg whitespace-nowrap flex-shrink-0 ${isActive
                   ? "text-zinc-900 dark:text-zinc-100"
                   : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50"
                   }`}
@@ -341,43 +357,7 @@ export default function DocsPage() {
           })}
         </div>
 
-        {/* ── Footer ── */}
-        <div className="mt-32 pt-8 border-t border-zinc-100 dark:border-zinc-800">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <Logomark className="w-4 h-4 text-zinc-400 dark:text-zinc-600" />
-              <p className="text-xs text-zinc-400 dark:text-zinc-600">
-                Built by{" "}
-                <Link
-                  href="https://x.com/harshjdhv"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-zinc-500 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300 transition-colors"
-                >
-                  @harshjdhv
-                </Link>
-              </p>
-            </div>
-            <div className="flex items-center gap-6">
-              <Link
-                href="https://x.com/harshjdhv"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-zinc-400 dark:text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-300 transition-colors"
-              >
-                Twitter
-              </Link>
-              <Link
-                href="https://github.com/harshjdhv"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-zinc-400 dark:text-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-300 transition-colors"
-              >
-                GitHub
-              </Link>
-            </div>
-          </div>
-        </div>
+
       </main >
     </div >
   )
