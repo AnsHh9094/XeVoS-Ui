@@ -6,7 +6,7 @@ import { motion, type Variants } from "framer-motion"
 import { Github, ArrowUpRight, ArrowRight } from "lucide-react"
 import { FloatingNavbar } from "@/components/floating-navbar"
 import { HeroButtons } from "@/components/landing/hero-buttons"
-import { Logomark } from "@/components/logos/logomark"
+import { ComponentryLogomark } from "@/components/logos/componentry-logomark"
 
 import { WebGLLiquid } from "@/components/landing/webgl-liquid"
 import dynamic from "next/dynamic"
@@ -372,7 +372,7 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
             <div className="md:col-span-2">
               <Link href="/" className="flex items-center gap-2">
-                <Logomark className="h-6 w-6 text-zinc-900 dark:text-white" />
+                <ComponentryLogomark className="h-6 w-6 text-zinc-900 dark:text-white" />
                 <span className="text-lg font-bold tracking-tight text-zinc-900 dark:text-white">Componentry</span>
               </Link>
               <p className="mt-4 max-w-xs text-sm text-zinc-500 dark:text-zinc-400">
