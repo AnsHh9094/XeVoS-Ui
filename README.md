@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="apps/web/public/www.componentry.fun_.png" alt="Componentry Banner" width="100%" />
+  <img src="apps/web/public/banner.png" alt="Componentry Banner" width="100%" />
 </div>
 
 <h1 align="center">Componentry</h1>

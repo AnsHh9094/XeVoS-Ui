@@ -100,11 +100,11 @@ export const metadata: Metadata = {
     siteName: "Componentry",
     images: [
       {
-        url: `${siteUrl}/opengraph-image.jpg`,
+        url: `${siteUrl}/og.png`,
         width: 1200,
         height: 630,
         alt: "Componentry - Premium React UI Component Library",
-        type: "image/jpeg",
+        type: "image/png",
       },
     ],
   },
@@ -114,7 +114,7 @@ export const metadata: Metadata = {
     description: "Free, open-source React UI components by Harsh Jadhav. Beautiful, animated, copy-paste components.",
     images: [
       {
-        url: `${siteUrl}/opengraph-image.jpg`,
+        url: `${siteUrl}/og.png`,
         width: 1200,
         height: 630,
         alt: "Componentry - Premium React UI Component Library",
@@ -145,7 +145,7 @@ export const metadata: Metadata = {
   category: "technology",
   classification: "UI Component Library",
   other: {
-    "msapplication-TileImage": "/preview.png",
+    "msapplication-TileImage": "/og.png",
     ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
       "google-site-verification": process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
     }),
