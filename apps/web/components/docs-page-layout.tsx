@@ -99,7 +99,7 @@ export async function DocsPageLayout({
       className="flex flex-col lg:flex-row w-full h-full min-h-screen lg:h-screen bg-[#f3f4f6] dark:bg-[#080808] text-foreground"
     >
       {/* Minimal Navigation Cluster */}
-      <div className="fixed top-5 left-6 lg:absolute lg:top-8 lg:left-16 z-50 flex items-center gap-2.5 pointer-events-none">
+      <div className="fixed top-5 left-4 sm:left-6 lg:absolute lg:top-8 lg:left-16 z-50 flex items-center gap-2.5 pointer-events-none">
         <div className="pointer-events-auto">
           <FloatingDocsSidebar />
         </div>
@@ -111,7 +111,7 @@ export async function DocsPageLayout({
             Docs
           </Link>
           <span className="text-border">/</span>
-          <span className="max-w-[180px] truncate text-sm font-semibold text-foreground">
+          <span className="max-w-[100px] sm:max-w-[180px] truncate text-sm font-semibold text-foreground">
             {title}
           </span>
         </div>
