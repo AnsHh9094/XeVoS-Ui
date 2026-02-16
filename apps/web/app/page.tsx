@@ -143,7 +143,7 @@ export default function Home() {
                   {char === " " ? "\u00A0" : char}
                 </motion.span>
               ))}
-              <br className="hidden md:block" />
+              <br />
               {titleLine2.split("").map((char, i) => (
                 <motion.span
                   key={`l2-${i}`}
