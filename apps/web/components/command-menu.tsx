@@ -8,23 +8,15 @@ import { useTheme } from "next-themes"
 import {
   Search,
   FileText,
-  Hash,
   ArrowRight,
-  User,
-  CreditCard,
-  LayoutGrid,
-  LogIn,
-  Zap,
-  Home,
-  CornerDownLeft,
-  Github,
-  Twitter,
-  Circle,
   CircleDashed,
   Laptop,
   Moon,
-  Sun
+  Sun,
+  CornerDownLeft
 } from "lucide-react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faGithub, faXTwitter } from "@fortawesome/free-brands-svg-icons"
 import { motion, AnimatePresence } from "framer-motion"
 import { docsConfig } from "@/config/docs"
 
@@ -47,13 +39,13 @@ const mainPages = [
 const socialPages = [
   {
     title: "GitHub",
-    href: "https://github.com/codewithbeto/componentry",
-    icon: Github
+    href: "https://github.com/harshjdhv/componentry",
+    icon: (props: any) => <FontAwesomeIcon icon={faGithub} {...props} />
   },
   {
     title: "X",
-    href: "https://x.com/codewithbeto",
-    icon: Twitter
+    href: "https://x.com/harshjdhv",
+    icon: (props: any) => <FontAwesomeIcon icon={faXTwitter} {...props} />
   }
 ]
 
