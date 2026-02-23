@@ -1,8 +1,8 @@
 "use client"
 
-import React from "react"
+import React, { useRef } from "react"
 import Link from "next/link"
-import { motion, type Variants } from "framer-motion"
+import { motion, type Variants, useInView } from "framer-motion"
 import { Github, ArrowUpRight, ArrowRight } from "lucide-react"
 import { FloatingNavbar } from "@/components/floating-navbar"
 import { HeroButtons } from "@/components/landing/hero-buttons"
@@ -81,6 +81,23 @@ function Reveal({
   )
 }
 
+// ─── Lazy Render Utility ────────────────────────────────
+function LazyRender({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { margin: "100px" })
+  return (
+    <div ref={ref} className={className}>
+      {isInView && children}
+    </div>
+  )
+}
+
 export default function Home() {
   const titleLine1 = "PREMIUM UI"
   const titleLine2 = "COMPONENTS"
@@ -113,7 +130,7 @@ export default function Home() {
       <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pb-24 pt-28 text-center">
         <div className="absolute inset-0 z-0 bg-white dark:bg-[#080808]">
           <div className="absolute bottom-0 left-0 right-0 z-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent backdrop-blur-[1px] pointer-events-none dark:from-[#080808] dark:via-[#080808]/80" />
-          <WebGLLiquid delayMs={0} className="absolute inset-0 z-10 block h-full w-full pointer-events-none opacity-90" />
+          <LazyRender className="absolute inset-0 z-10 block h-full w-full pointer-events-none opacity-90"><WebGLLiquid delayMs={0} className="h-full w-full" /></LazyRender>
           <div className="absolute left-0 right-0 top-0 z-20 h-24 bg-gradient-to-b from-white via-white/80 to-transparent backdrop-blur-[1px] pointer-events-none dark:from-[#080808] dark:via-[#080808]/80" />
         </div>
 
@@ -210,7 +227,7 @@ export default function Home() {
             <Reveal className="overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/70 backdrop-blur-xl dark:border-zinc-800/60 dark:bg-zinc-900/50 md:col-span-3 md:col-start-6 md:row-start-1" delay={0.08}>
               <div className="p-1.5">
                 <div className="relative h-[220px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
-                  <div className="absolute inset-0 bg-zinc-950">
+                  <LazyRender className="absolute inset-0 bg-zinc-950">
                     <ParticleGalaxy
                       particleCount={1800}
                       spread={2.1}
@@ -222,7 +239,7 @@ export default function Home() {
                       maxZoom={6}
                       enableZoom={false}
                     />
-                  </div>
+                  </LazyRender>
                 </div>
               </div>
               <div className="px-5 pb-5 text-left">
@@ -233,7 +250,7 @@ export default function Home() {
             <Reveal className="overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/70 backdrop-blur-xl dark:border-zinc-800/60 dark:bg-zinc-900/50 md:col-span-3 md:row-span-2 md:col-start-6 md:row-start-2" delay={0.12}>
               <div className="p-1.5">
                 <div className="relative h-[320px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
-                  <div className="absolute inset-0 bg-zinc-950">
+                  <LazyRender className="absolute inset-0 bg-zinc-950">
                     <DitherGradient
                       colorFrom="#0ea5e9"
                       colorMid="#8b5cf6"
@@ -241,7 +258,7 @@ export default function Home() {
                       intensity={0.18}
                       speed={2.4}
                     />
-                  </div>
+                  </LazyRender>
                 </div>
               </div>
               <div className="px-5 pb-5 text-left">
@@ -272,7 +289,7 @@ export default function Home() {
             <Reveal className="overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/70 backdrop-blur-xl dark:border-zinc-800/60 dark:bg-zinc-900/50 md:col-span-5 md:col-start-4 md:row-start-4" delay={0.1}>
               <div className="p-1.5">
                 <div className="relative h-[220px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
-                  <div className="absolute inset-0">
+                  <LazyRender className="absolute inset-0">
                     <MagnetLines
                       rows={8}
                       columns={14}
@@ -282,7 +299,7 @@ export default function Home() {
                       lineHeight="18px"
                       className="h-full w-full place-items-center bg-white dark:bg-zinc-950"
                     />
-                  </div>
+                  </LazyRender>
                 </div>
               </div>
               <div className="px-5 pb-5 text-left">
@@ -292,9 +309,9 @@ export default function Home() {
 
             <Reveal className="overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/70 backdrop-blur-xl dark:border-zinc-800/60 dark:bg-zinc-900/50 md:col-span-3 md:col-start-1 md:row-start-4" delay={0.04}>
               <div className="p-1.5">
-                <div className="relative h-[220px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
+                <LazyRender className="relative h-[220px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
                   <MatrixRain variant="cyan" />
-                </div>
+                </LazyRender>
               </div>
               <div className="px-5 pb-5 text-left">
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Matrix Rain</h3>
@@ -321,7 +338,9 @@ export default function Home() {
       <section className="relative z-40 w-full">
         <div className="relative h-[80vh] min-h-[560px] w-full overflow-hidden">
           {/* Dither canvas */}
-          <ClosingPlasma className="absolute inset-0" />
+          <LazyRender className="absolute inset-0">
+            <ClosingPlasma className="h-full w-full" />
+          </LazyRender>
 
           {/* Top fade from page bg */}
           <div className="absolute left-0 right-0 top-0 z-10 h-40 bg-gradient-to-b from-white via-white/70 to-transparent pointer-events-none dark:from-[#080808] dark:via-[#080808]/70" />
