@@ -7,6 +7,7 @@ import { Github, ArrowUpRight, ArrowRight } from "lucide-react"
 import { FloatingNavbar } from "@/components/floating-navbar"
 import { HeroButtons } from "@/components/landing/hero-buttons"
 import { ComponentryLogomark } from "@/components/logos/componentry-logomark"
+import { usePrefetchPreviewVideos } from "@/hooks/use-prefetch-preview-videos"
 
 import { WebGLLiquid } from "@/components/landing/webgl-liquid"
 import dynamic from "next/dynamic"
@@ -103,6 +104,9 @@ export default function Home() {
   const titleLine2 = "COMPONENTS"
 
   const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1]
+
+  // Prefetch all /docs preview videos in background using idle bandwidth
+  usePrefetchPreviewVideos()
   const container: Variants = {
     hidden: { opacity: 0 },
     show: { opacity: 1 },
