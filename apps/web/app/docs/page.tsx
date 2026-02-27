@@ -4,7 +4,7 @@ import type React from "react"
 import { useState, useEffect, useMemo, useRef } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { components, type ComponentCategory, type ComponentMetadata } from "@/registry"
+import { components, isNewComponent, type ComponentCategory, type ComponentMetadata } from "@/registry"
 import { Logomark } from "@/components/logos/logomark"
 
 import { FloatingNavbar } from "@/components/floating-navbar"
@@ -202,7 +202,7 @@ function ComponentCard({
             <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-700 dark:group-hover:text-zinc-300 transition-colors">
               {component.title}
             </h3>
-            {component.isNew && (
+            {isNewComponent(component) && (
               <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
                 New
               </span>

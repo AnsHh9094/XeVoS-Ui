@@ -9,8 +9,16 @@ export interface ComponentMetadata {
   description: string;
   category: ComponentCategory;
   slug: string;
-  isNew?: boolean;
+  addedAt?: string;
   previewVideo?: string;
+}
+
+const NEW_BADGE_DURATION_MS = 5 * 24 * 60 * 60 * 1000; // 5 days
+
+export function isNewComponent(component: ComponentMetadata): boolean {
+  if (!component.addedAt) return false;
+  const addedTime = new Date(component.addedAt).getTime();
+  return Date.now() - addedTime < NEW_BADGE_DURATION_MS;
 }
 
 export const components: Record<string, ComponentMetadata> = {
@@ -137,7 +145,9 @@ export const components: Record<string, ComponentMetadata> = {
     description: "An inline interactive slider styled as a pill.",
     category: "Components",
     slug: "scrub-input",
-    isNew: true,
+    addedAt: "2026-02-27",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/scrubinput.mp4",
   },
 
   // Hero Backgrounds
@@ -155,7 +165,6 @@ export const components: Record<string, ComponentMetadata> = {
       "Stunning WebGL hero with advanced dithering, prismatic refraction, holographic iridescence, and center-focused energy.",
     category: "Hero Backgrounds",
     slug: "dither-prism-hero",
-    isNew: true,
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/ditherprismhero.mov",
   },
@@ -165,7 +174,6 @@ export const components: Record<string, ComponentMetadata> = {
       "Cinematic liquid shader hero with premium gradients, configurable reveal timing, and advanced flow controls.",
     category: "Hero Backgrounds",
     slug: "webgl-liquid",
-    isNew: true,
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/webglliquid.mov",
   },
@@ -175,7 +183,6 @@ export const components: Record<string, ComponentMetadata> = {
       "Plasma field tailored for footer and CTA sections with premium atmospheric motion.",
     category: "Hero Backgrounds",
     slug: "closing-plasma",
-    isNew: true,
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/closingplasma.mov",
   },
