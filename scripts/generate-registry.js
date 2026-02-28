@@ -4,6 +4,7 @@ const path = require('path');
 // Configuration
 const COMPONENT_DIR = path.join(__dirname, '../packages/ui/src/components');
 const REGISTRY_DIR = path.join(__dirname, '../apps/web/public/r');
+const REGISTRY_INDEX_PATH = path.join(REGISTRY_DIR, 'registry.json');
 
 const args = process.argv.slice(2);
 
@@ -72,3 +73,35 @@ if (existingFileIndex >= 0) {
 fs.writeFileSync(registryPath, JSON.stringify(registryData, null, 2));
 
 console.log(`Successfully updated ${registryPath}`);
+
+// Keep registry.json in sync when present.
+if (fs.existsSync(REGISTRY_INDEX_PATH)) {
+  try {
+    const registryIndex = JSON.parse(fs.readFileSync(REGISTRY_INDEX_PATH, 'utf8'));
+    if (!Array.isArray(registryIndex.items)) {
+      registryIndex.items = [];
+    }
+
+    const existingNames = new Set(
+      registryIndex.items
+        .map((item) => (typeof item === 'string' ? item : item?.name))
+        .filter(Boolean)
+    );
+
+    if (!existingNames.has(componentName)) {
+      registryIndex.items.push({
+        name: componentName,
+        type: 'registry:ui',
+      });
+      registryIndex.items.sort((a, b) => {
+        const aName = typeof a === 'string' ? a : a.name;
+        const bName = typeof b === 'string' ? b : b.name;
+        return aName.localeCompare(bName);
+      });
+      fs.writeFileSync(REGISTRY_INDEX_PATH, JSON.stringify(registryIndex, null, 2));
+      console.log(`Added ${componentName} to ${REGISTRY_INDEX_PATH}`);
+    }
+  } catch (error) {
+    console.error('Warning: could not sync apps/web/public/r/registry.json:', error.message);
+  }
+}
