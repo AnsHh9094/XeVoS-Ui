@@ -96,23 +96,7 @@ export function MyComponent({
 
 This file allows users to install the component via CLI:
 ```bash
-npx shadcn@latest add @componentry/{component-name} --registry "https://componentry.fun/r/registry.json"
-```
-
-One-time setup option for consumers (in their app `components.json`):
-
-```json
-{
-  "registries": {
-    "@componentry": "https://componentry.fun/r/{name}.json"
-  }
-}
-```
-
-Then they can run:
-
-```bash
-npx shadcn@latest add @componentry/{component-name}
+npx shadcn@latest add "https://componentry.fun/r/{component-name}.json"
 ```
 
 ### 🛠️ Automatic Generation (Recommended)
