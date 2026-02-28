@@ -57,6 +57,22 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/scrollvelocity.mov",
   },
+  "letter-cascade": {
+    title: "Letter Cascade",
+    description:
+      "Kinetic text animation where letters scatter outward with spring physics and blur, then elegantly reassemble.",
+    category: "Text Animations",
+    slug: "letter-cascade",
+    addedAt: "2026-02-28",
+  },
+  "text-repel": {
+    title: "Text Repel",
+    description:
+      "Physics-based text where each letter reacts to cursor proximity with spring dynamics, creating an interactive magnetic force-field effect.",
+    category: "Text Animations",
+    slug: "text-repel",
+    addedAt: "2026-02-28",
+  },
 
   // Components
   "circuit-board": {
