@@ -149,6 +149,14 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/scrubinput.mp4",
   },
+  "scroll-choreography": {
+    title: "Scroll Choreography",
+    description:
+      "A smooth, scroll-driven image choreography component using Framer Motion.",
+    category: "Components",
+    slug: "scroll-choreography",
+    addedAt: "2026-02-28",
+  },
 
   // Hero Backgrounds
   "hero-geometric": {
