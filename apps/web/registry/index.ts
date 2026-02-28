@@ -64,6 +64,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Text Animations",
     slug: "letter-cascade",
     addedAt: "2026-02-28",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/lettercascade.webm",
   },
   "text-repel": {
     title: "Text Repel",
@@ -72,6 +74,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Text Animations",
     slug: "text-repel",
     addedAt: "2026-02-28",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/textrepel.webm",
   },
 
   // Components
@@ -172,6 +176,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Components",
     slug: "scroll-choreography",
     addedAt: "2026-02-28",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/scrollchoreography.webm",
   },
 
   // Hero Backgrounds
