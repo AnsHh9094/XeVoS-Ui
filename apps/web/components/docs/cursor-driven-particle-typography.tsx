@@ -3,11 +3,15 @@ import { CursorDrivenParticleTypography } from "@workspace/ui/components/cursor-
 import { DocsPageLayout } from "@/components/docs-page-layout"
 import { readComponentSource } from "@/lib/source-code"
 
-const importCode = `import { CursorDrivenParticleTypography } from "@/components/ui/cursor-driven-particle-typography"`
-
 const defaultCode = `import { CursorDrivenParticleTypography } from "@/components/ui/cursor-driven-particle-typography"
 
-<CursorDrivenParticleTypography text="Componentry" />`
+export default function ParticleTypographyDefault() {
+  return (
+    <div className="w-full min-h-[400px] relative">
+      <CursorDrivenParticleTypography text="Design" />
+    </div>
+  )
+}`
 
 export async function CursorDrivenParticleTypographyDocs() {
     const sourceCode = (await readComponentSource("cursor-driven-particle-typography")) || "// Unable to load source code"
@@ -33,7 +37,7 @@ export async function CursorDrivenParticleTypographyDocs() {
             installSourceCode={sourceCode}
             installSourceFilename="components/ui/cursor-driven-particle-typography.tsx"
 
-            usageCode={importCode}
+            usageCode={defaultCode}
 
             examples={[
                 {
@@ -48,12 +52,20 @@ export async function CursorDrivenParticleTypographyDocs() {
                             />
                         </div>
                     ),
-                    code: `<CursorDrivenParticleTypography
-  text="Create"
-  color="#2563eb"
-  particleSize={2}
-  dispersionStrength={20}
-/>`,
+                    code: `import { CursorDrivenParticleTypography } from "@/components/ui/cursor-driven-particle-typography"
+
+export default function ParticleTypographyBlue() {
+  return (
+    <div className="w-full min-h-[400px] relative">
+      <CursorDrivenParticleTypography
+        text="Create"
+        color="#2563eb"
+        particleSize={2}
+        dispersionStrength={20}
+      />
+    </div>
+  )
+}`,
                 },
                 {
                     title: "Fine Particles (High Density)",
@@ -67,12 +79,20 @@ export async function CursorDrivenParticleTypographyDocs() {
                             />
                         </div>
                     ),
-                    code: `<CursorDrivenParticleTypography
-  text="Details"
-  particleDensity={2}
-  particleSize={1}
-  fontSize={120}
-/>`,
+                    code: `import { CursorDrivenParticleTypography } from "@/components/ui/cursor-driven-particle-typography"
+
+export default function ParticleTypographyDense() {
+  return (
+    <div className="w-full min-h-[400px] relative">
+      <CursorDrivenParticleTypography
+        text="Details"
+        particleDensity={2}
+        particleSize={1}
+        fontSize={120}
+      />
+    </div>
+  )
+}`,
                 }
             ]}
 
