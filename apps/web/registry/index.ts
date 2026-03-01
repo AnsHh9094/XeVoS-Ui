@@ -77,6 +77,14 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/textrepel.webm",
   },
+  "cursor-driven-particle-typography": {
+    title: "Particle Typography",
+    description:
+      "Renders dynamic typography constructed entirely from particles that elegantly disperse and reassemble upon cursor interaction using spring physics.",
+    category: "Text Animations",
+    slug: "cursor-driven-particle-typography",
+    addedAt: "2026-03-01",
+  },
 
   // Components
   "circuit-board": {

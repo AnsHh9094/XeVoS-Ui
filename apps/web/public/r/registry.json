@@ -2,7 +2,12 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "componentry",
   "homepage": "https://componentry.fun",
-  "aliases": ["componentry", "componentryui", "ui", "cmp"],
+  "aliases": [
+    "componentry",
+    "componentryui",
+    "ui",
+    "cmp"
+  ],
   "items": [
     {
       "name": "auth-modal",
@@ -26,6 +31,10 @@
     },
     {
       "name": "command-menu",
+      "type": "registry:ui"
+    },
+    {
+      "name": "cursor-driven-particle-typography",
       "type": "registry:ui"
     },
     {

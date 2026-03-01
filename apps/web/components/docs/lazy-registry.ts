@@ -130,6 +130,10 @@ const docsImportMap: Record<
     import("@/components/docs/text-repel").then((m) => ({
       default: m.TextRepelDocs,
     })),
+  "cursor-driven-particle-typography": () =>
+    import("@/components/docs/cursor-driven-particle-typography").then((m) => ({
+      default: m.CursorDrivenParticleTypographyDocs,
+    })),
 };
 
 /**
