@@ -10,6 +10,10 @@
   ],
   "items": [
     {
+      "name": "animated-gradient",
+      "type": "registry:ui"
+    },
+    {
       "name": "auth-modal",
       "type": "registry:ui"
     },

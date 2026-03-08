@@ -227,6 +227,13 @@ export const components: Record<string, ComponentMetadata> = {
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/closingplasma.mov",
   },
 
+  "animated-gradient": {
+    title: "Animated Gradient",
+    description:
+      "A beautiful, animated, and customizable WebGL gradient with noise capabilities.",
+    category: "Hero Backgrounds",
+    slug: "animated-gradient",
+  },
   // Visual Effects
   "border-beam": {
     title: "Border Beam",

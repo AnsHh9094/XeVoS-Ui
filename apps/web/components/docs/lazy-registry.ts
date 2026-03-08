@@ -82,6 +82,10 @@ const docsImportMap: Record<
     import("@/components/docs/closing-plasma").then((m) => ({
       default: m.ClosingPlasmaDocs,
     })),
+  "animated-gradient": () =>
+    import("@/components/docs/animated-gradient").then((m) => ({
+      default: m.AnimatedGradientDocs,
+    })),
   "border-beam": () =>
     import("@/components/docs/border-beam").then((m) => ({
       default: m.BorderBeamDocs,

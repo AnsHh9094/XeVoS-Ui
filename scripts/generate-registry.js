@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const REGISTRY_ITEM_SCHEMA = 'https://ui.shadcn.com/schema/registry-item.json';
+
 // Configuration
 const COMPONENT_DIR = path.join(__dirname, '../packages/ui/src/components');
 const REGISTRY_DIR = path.join(__dirname, '../apps/web/public/r');
@@ -27,6 +29,18 @@ if (!fs.existsSync(sourcePath)) {
 // Read source content
 const sourceContent = fs.readFileSync(sourcePath, 'utf8');
 
+function toTitleCase(slug) {
+  return slug
+    .split('-')
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function normalizeRegistryContent(content) {
+  return content.replace(/@workspace\/ui\/lib\/utils/g, '@/lib/utils');
+}
+
 // Prepare registry data
 let registryData;
 if (fs.existsSync(registryPath)) {
@@ -40,13 +54,36 @@ if (fs.existsSync(registryPath)) {
 } else {
   console.log(`Creating new registry file for ${componentName}...`);
   registryData = {
+    $schema: REGISTRY_ITEM_SCHEMA,
     name: componentName,
     type: 'registry:ui',
+    title: toTitleCase(componentName),
     dependencies: [],
+    devDependencies: [],
     registryDependencies: [],
     description: `Component for ${componentName}`, // Default description
     files: []
   };
+}
+
+if (!registryData.$schema) {
+  registryData.$schema = REGISTRY_ITEM_SCHEMA;
+}
+
+if (!registryData.title) {
+  registryData.title = toTitleCase(componentName);
+}
+
+if (!Array.isArray(registryData.dependencies)) {
+  registryData.dependencies = [];
+}
+
+if (!Array.isArray(registryData.devDependencies)) {
+  registryData.devDependencies = [];
+}
+
+if (!Array.isArray(registryData.registryDependencies)) {
+  registryData.registryDependencies = [];
 }
 
 // Update or add the main file content
@@ -60,11 +97,11 @@ if (!registryData.files) {
 const existingFileIndex = registryData.files.findIndex(f => f.path === targetFilePath || f.path.endsWith(componentFilename));
 
 if (existingFileIndex >= 0) {
-  registryData.files[existingFileIndex].content = sourceContent;
+  registryData.files[existingFileIndex].content = normalizeRegistryContent(sourceContent);
 } else {
   registryData.files.push({
     path: targetFilePath,
-    content: sourceContent,
+    content: normalizeRegistryContent(sourceContent),
     type: 'registry:ui'
   });
 }
