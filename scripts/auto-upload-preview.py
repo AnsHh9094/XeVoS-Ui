@@ -24,7 +24,7 @@ from pathlib import Path
 # EDIT THESE VARIABLES FOR EACH UPLOAD
 # ===========================================================================
 VIDEO_FILENAME = "main.mov"
-COMPONENT_SLUG = "cursor-driven-particle-typography"
+COMPONENT_SLUG = "animated-gradient"
 # ===========================================================================
 
 # ---------------------------------------------------------------------------

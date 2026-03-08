@@ -13,7 +13,7 @@ const COMMANDS: Record<PackageManager, string> = {
   pnpm: "pnpm dlx shadcn@latest add",
   npm: "npx shadcn@latest add",
   yarn: "yarn dlx shadcn@latest add",
-  bun: "bunx shadcn@latest add",
+  bun: "bunx --bun shadcn@latest add",
 }
 
 interface InstallCommandProps {
@@ -24,9 +24,11 @@ interface InstallCommandProps {
 export function InstallCommand({ component }: InstallCommandProps) {
   const [selected, setSelected] = React.useState<PackageManager>("pnpm")
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
-  const componentUrl = `${baseUrl}/r/${component}.json`
-  const command = `${COMMANDS[selected]} "${componentUrl}"`
+  const registryNamespace = process.env.NEXT_PUBLIC_REGISTRY_NAMESPACE || "@componentry"
+  const componentRef = component.startsWith("@")
+    ? component
+    : `${registryNamespace}/${component}`
+  const command = `${COMMANDS[selected]} ${componentRef}`
 
   return (
     <div className="w-full max-w-full">
@@ -68,7 +70,7 @@ export function InstallCommand({ component }: InstallCommandProps) {
             <span className="mr-2 text-muted-foreground/40 select-none">$</span>
             <span className="text-zinc-950 dark:text-zinc-100">{COMMANDS[selected]}</span>
             {" "}
-            <span className="text-muted-foreground">"{componentUrl}"</span>
+            <span className="text-muted-foreground">{componentRef}</span>
           </div>
           
           <div className="absolute right-0 top-0 bottom-0 pl-16 pr-4 flex items-center bg-gradient-to-l from-zinc-100 via-zinc-100/90 to-transparent dark:from-zinc-900 dark:via-zinc-900/90 dark:to-transparent">

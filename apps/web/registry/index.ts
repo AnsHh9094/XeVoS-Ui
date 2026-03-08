@@ -233,6 +233,8 @@ export const components: Record<string, ComponentMetadata> = {
       "A beautiful, animated, and customizable WebGL gradient with noise capabilities.",
     category: "Hero Backgrounds",
     slug: "animated-gradient",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/animatedgradient.webm",
   },
   // Visual Effects
   "border-beam": {

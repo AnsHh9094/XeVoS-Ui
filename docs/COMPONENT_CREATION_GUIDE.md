@@ -96,7 +96,7 @@ export function MyComponent({
 
 This file allows users to install the component via CLI:
 ```bash
-npx shadcn@latest add "https://componentry.fun/r/{component-name}.json"
+npx shadcn@latest add @componentry/{component-name}
 ```
 
 ### 🛠️ Automatic Generation (Recommended)
