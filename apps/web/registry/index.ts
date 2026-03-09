@@ -237,6 +237,14 @@ export const components: Record<string, ComponentMetadata> = {
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/animatedgradient.webm",
   },
   // Visual Effects
+  "image-trail": {
+    title: "Image Trail",
+    description:
+      "Leaves a trail of images behind the cursor with a premium delay fade.",
+    category: "Visual Effects",
+    slug: "image-trail",
+    addedAt: "2026-03-09",
+  },
   "border-beam": {
     title: "Border Beam",
     description: "Animated beam of light traveling along the border.",

@@ -138,6 +138,10 @@ const docsImportMap: Record<
     import("@/components/docs/cursor-driven-particle-typography").then((m) => ({
       default: m.CursorDrivenParticleTypographyDocs,
     })),
+  "image-trail": () =>
+    import("@/components/docs/image-trail").then((m) => ({
+      default: m.ImageTrailDocs,
+    })),
 };
 
 /**
