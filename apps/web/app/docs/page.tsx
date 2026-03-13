@@ -8,7 +8,7 @@ import { components, isNewComponent, type ComponentCategory, type ComponentMetad
 import { Logomark } from "@/components/logos/logomark"
 import { usePrefetchPreviewVideos } from "@/hooks/use-prefetch-preview-videos"
 
-import { FloatingNavbar } from "@/components/floating-navbar"
+import { SiteHeader } from "@/components/site-header"
 
 type PreviewSources = {
   mp4: string
@@ -281,13 +281,13 @@ export default function DocsPage() {
     .filter(g => g.items.length > 0)
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#080808] text-zinc-900 dark:text-zinc-100 font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#111] text-zinc-900 dark:text-zinc-100 font-sans overflow-x-hidden">
       {/* ── Overlays ── */}
-      <div className="fixed top-0 left-0 right-0 z-40 h-24 bg-gradient-to-b from-white via-white/80 to-transparent dark:from-[#080808] dark:via-[#080808]/80 pointer-events-none backdrop-blur-[1px]" />
-      <div className="fixed bottom-0 left-0 right-0 z-40 h-24 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#080808] dark:via-[#080808]/80 pointer-events-none backdrop-blur-[1px]" />
+      <div className="fixed top-0 left-0 right-0 z-40 h-24 bg-gradient-to-b from-white via-white/80 to-transparent dark:from-[#111] dark:via-[#111]/80 pointer-events-none backdrop-blur-[1px]" />
+      <div className="fixed bottom-0 left-0 right-0 z-40 h-24 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#111] dark:via-[#111]/80 pointer-events-none backdrop-blur-[1px]" />
 
       {/* ── Top Floating Header ── */}
-      <FloatingNavbar />
+      <SiteHeader />
 
       {/* ── Floating Dock Nav ── */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-[calc(100vw-2rem)] sm:max-w-fit pointer-events-none">
