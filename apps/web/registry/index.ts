@@ -49,6 +49,13 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/textanimate.mov",
   },
+  "mac-keyboard": {
+    title: "Mac Keyboard",
+    description: "A realistic Mac keyboard component with interactive keys and detailed styling.",
+    category: "Components",
+    slug: "mac-keyboard",
+    addedAt: "2026-03-13",
+  },
   "scroll-based-velocity": {
     title: "Velocity Scroll",
     description: "Text that moves horizontally based on scroll speed.",

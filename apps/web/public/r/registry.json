@@ -78,6 +78,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "mac-keyboard",
+      "type": "registry:ui"
+    },
+    {
       "name": "magnet-lines",
       "type": "registry:ui"
     },
