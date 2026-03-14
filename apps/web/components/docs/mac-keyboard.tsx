@@ -40,20 +40,20 @@ import { Command } from "lucide-react";
 
 export default function KeyboardShortcutDemo() {
   return (
-    <div className="flex w-full items-center justify-center p-10 bg-neutral-100 dark:bg-neutral-900">
+    <div className="flex w-full min-h-[400px] items-center justify-center p-10 bg-neutral-100 dark:bg-neutral-900 rounded-xl">
       <MacKeyboard
-        className="h-16 p-2 gap-1.5 shadow-xl w-auto"
+        className="h-24 w-fit flex-row sm:scale-100"
         style={{ minWidth: 0 }}
       >
         <MacKey
           width={1.5}
           keyCode="MetaLeft"
-          className="items-end pr-1 pb-1 text-xs"
+          className="items-end pr-2 pb-2 text-sm"
           label={<span className="font-bold">command</span>}
         >
-          <Command className="absolute top-2 left-2 h-4 w-4" />
+          <Command className="absolute top-3 left-3 h-5 w-5" />
         </MacKey>
-        <MacKey width={1} keyCode="KeyK" label="K" className="text-sm" />
+        <MacKey width={1} keyCode="KeyK" label="K" className="text-xl" />
       </MacKeyboard>
     </div>
   );
@@ -65,18 +65,18 @@ export default function KeyboardShortcutDemo() {
     preview: (
       <div className="flex w-full min-h-[400px] items-center justify-center overflow-hidden py-10">
         <MacKeyboard
-          className="h-16 p-2 gap-1.5 shadow-xl w-auto sm:scale-100"
+          className="h-24 w-fit flex-row sm:scale-100"
           style={{ minWidth: 0 }}
         >
           <MacKey
             width={1.5}
             keyCode="MetaLeft"
-            className="items-end pr-1 pb-1 text-xs"
+            className="items-end pr-2 pb-2 text-sm"
             label={<span className="font-bold">command</span>}
           >
-            <Command className="absolute top-2 left-2 h-4 w-4" />
+            <Command className="absolute top-3 left-3 h-5 w-5" />
           </MacKey>
-          <MacKey width={1} keyCode="KeyK" label="K" className="text-sm" />
+          <MacKey width={1} keyCode="KeyK" label="K" className="text-xl" />
         </MacKeyboard>
       </div>
     )
@@ -96,7 +96,7 @@ export default function KeyboardShortcutDemo() {
       installDependencies="lucide-react"
       installSourceCode={sourceCode}
       installSourceFilename="components/ui/mac-keyboard.tsx"
-      installationNote={installationNote}
+      usageNote={installationNote}
       usageCode={usageCode}
       examples={[specificKeysVariant]}
       fullWidthPreview={true}
