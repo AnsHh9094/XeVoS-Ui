@@ -70,6 +70,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "layered-stack",
+      "type": "registry:ui"
+    },
+    {
       "name": "letter-cascade",
       "type": "registry:ui"
     },

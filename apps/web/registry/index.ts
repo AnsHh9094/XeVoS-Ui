@@ -196,6 +196,13 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/scrollchoreography.webm",
   },
+  "layered-stack": {
+    title: "Layered Stack",
+    description: "A stack of layered cards that interact with mouse hover.",
+    category: "Components",
+    slug: "layered-stack",
+    addedAt: "2026-03-15",
+  },
 
   // Hero Backgrounds
   "hero-geometric": {
