@@ -55,6 +55,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Components",
     slug: "mac-keyboard",
     addedAt: "2026-03-13",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/mackeyboard.webm",
   },
   "scroll-based-velocity": {
     title: "Velocity Scroll",
@@ -202,6 +204,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Components",
     slug: "layered-stack",
     addedAt: "2026-03-15",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/layeredstack.webm",
   },
 
   // Hero Backgrounds
@@ -258,6 +262,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Visual Effects",
     slug: "image-trail",
     addedAt: "2026-03-09",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/imagetrail.webm",
   },
   "border-beam": {
     title: "Border Beam",
