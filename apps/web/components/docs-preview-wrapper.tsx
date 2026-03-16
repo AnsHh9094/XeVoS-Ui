@@ -5,9 +5,12 @@ import * as ReactDOM from "react-dom"
 import { cn } from "@/lib/utils"
 import { RotateCcw, Search, Settings2, Check, Maximize, Minimize, CodeXml, ChevronLeft, Copy } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { CommandMenu } from "@/components/command-menu"
-import { motion, AnimatePresence, type PanInfo } from "framer-motion"
+import { motion, AnimatePresence, useDragControls, type PanInfo } from "framer-motion"
 import { useDocStore } from "@/hooks/use-doc-store"
+
+const CommandMenu = React.lazy(() =>
+  import("@/components/command-menu").then((mod) => ({ default: mod.CommandMenu }))
+)
 
 export interface VariantItem {
   title: string
@@ -20,9 +23,8 @@ interface DocsPreviewWrapperProps {
   children: React.ReactNode
   fullWidthPreview?: boolean
   personalizeContent?: React.ReactNode
-  sourceCodeContent?: React.ReactNode
   sourceCodeFilename?: string
-  sourceCode?: string
+  sourceCodeKey?: string
   variants?: VariantItem[]
   hideDefaultVariant?: boolean
 }
@@ -31,9 +33,8 @@ export function DocsPreviewWrapper({
   children,
   fullWidthPreview,
   personalizeContent,
-  sourceCodeContent,
   sourceCodeFilename,
-  sourceCode,
+  sourceCodeKey,
   variants = [],
   hideDefaultVariant = false,
 }: DocsPreviewWrapperProps) {
@@ -43,9 +44,14 @@ export function DocsPreviewWrapper({
   const [mounted, setMounted] = React.useState(false)
   const [copied, setCopied] = React.useState(false)
   const [isExpanded, setIsExpanded] = React.useState(false)
+  const [sourceHtml, setSourceHtml] = React.useState<string | null>(null)
+  const [sourceCode, setSourceCode] = React.useState("")
+  const [isSourceLoading, setIsSourceLoading] = React.useState(false)
+  const [sourceLoadError, setSourceLoadError] = React.useState<string | null>(null)
   const [activeVariant, setActiveVariant] = React.useState(
     hideDefaultVariant && variants.length > 0 ? 0 : -1
   ) // -1 = default preview
+  const sourceDragControls = useDragControls()
 
   const resolvedActiveVariant = hideDefaultVariant && activeVariant === -1 ? 0 : activeVariant
 
@@ -60,6 +66,38 @@ export function DocsPreviewWrapper({
   const variantBarRef = React.useRef<HTMLDivElement>(null)
   const iconButtonClass =
     "inline-flex h-7 w-7 items-center justify-center rounded-md border border-transparent text-foreground/60 transition-all duration-150 hover:border-border/70 hover:bg-muted/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 active:scale-[0.97]"
+  const hasSourceCode = Boolean(sourceCodeKey)
+
+  const handleSourceOpen = React.useCallback(async () => {
+    setShowSource(true)
+    setShowPersonalize(false)
+
+    if (!sourceCodeKey || sourceHtml || isSourceLoading) {
+      return
+    }
+
+    try {
+      setIsSourceLoading(true)
+      setSourceLoadError(null)
+      const response = await fetch("/api/docs/source", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ component: sourceCodeKey }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to load source code")
+      }
+
+      const data = (await response.json()) as { code?: string; html?: string }
+      setSourceCode(data.code || "")
+      setSourceHtml(data.html || "")
+    } catch {
+      setSourceLoadError("Unable to load source code right now.")
+    } finally {
+      setIsSourceLoading(false)
+    }
+  }, [isSourceLoading, sourceCodeKey, sourceHtml])
 
   React.useEffect(() => {
     setMounted(true)
@@ -175,21 +213,26 @@ export function DocsPreviewWrapper({
       <div className="absolute top-4 right-4 z-20">
         <div className="flex items-center gap-0.5 rounded-lg border border-border/70 bg-white/95 dark:bg-[#121212] px-1 py-1">
           {/* Search */}
-          <CommandMenu
-            trigger={
+          <React.Suspense
+            fallback={
               <button className={iconButtonClass} aria-label="Search">
                 <Search className="w-4 h-4" />
               </button>
             }
-          />
+          >
+            <CommandMenu
+              trigger={
+                <button className={iconButtonClass} aria-label="Search">
+                  <Search className="w-4 h-4" />
+                </button>
+              }
+            />
+          </React.Suspense>
 
           {/* View Source */}
-          {sourceCodeContent && (
+          {hasSourceCode && (
             <button
-              onClick={() => {
-                setShowSource(true)
-                setShowPersonalize(false)
-              }}
+              onClick={handleSourceOpen}
               className={cn(
                 iconButtonClass,
                 showSource && "border-primary/30 bg-primary/90 text-primary-foreground"
@@ -370,6 +413,8 @@ export function DocsPreviewWrapper({
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               drag="y"
+              dragControls={sourceDragControls}
+              dragListener={false}
               dragConstraints={{ top: 0, bottom: 0 }}
               dragElastic={{ top: 0, bottom: 0.4 }}
               onDragEnd={(_: unknown, info: PanInfo) => {
@@ -385,7 +430,10 @@ export function DocsPreviewWrapper({
                   <div className="absolute inset-0 h-40 bg-gradient-to-b from-[#f3f4f6] via-[#f3f4f6] to-transparent dark:from-[#121212] dark:via-[#121212] dark:to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_20%,transparent)]" />
                   <div className="relative z-10 flex flex-col pointer-events-auto">
                     {/* Drag handle - top edge-to-edge */}
-                    <div className="flex items-center justify-center pt-2 pb-1">
+                    <div
+                      className="flex items-center justify-center pt-2 pb-1 touch-none"
+                      onPointerDown={(event) => sourceDragControls.start(event)}
+                    >
                       <div className="w-10 h-1 rounded-full bg-zinc-900/[0.08] dark:bg-white/[0.08] transition-colors hover:bg-zinc-900/[0.15] dark:hover:bg-white/[0.15]" />
                     </div>
 
@@ -429,26 +477,26 @@ export function DocsPreviewWrapper({
 
                 {/* Code content - full height, hidden scrollbar */}
                 <div className="relative h-full min-h-0">
-                  {/* Hide line numbers inside drawer */}
-                  <style>{`
-                    [data-drawer-code] .shiki [data-line]::before {
-                      display: none !important;
-                    }
-                    [data-drawer-code] * {
-                      -ms-overflow-style: none !important;
-                      scrollbar-width: none !important;
-                    }
-                    [data-drawer-code] *::-webkit-scrollbar {
-                      display: none !important;
-                      width: 0 !important;
-                      height: 0 !important;
-                    }
-                  `}</style>
                   {/* Bottom gradient overlay */}
                   <div className="absolute bottom-0 left-0 right-0 z-10 h-24 bg-gradient-to-t from-[#f3f4f6] via-[#f3f4f6]/80 to-transparent dark:from-[#121212] dark:via-[#121212]/80 dark:to-transparent pointer-events-none backdrop-blur-sm [mask-image:linear-gradient(to_top,black,transparent)]" />
-                  <div data-drawer-code className="h-full overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] [&_>_div]:h-full [&_>_div_>_div]:h-full [&_>_div_>_div]:flex [&_>_div_>_div]:flex-col [&_.relative.group]:flex-1 [&_.relative.group]:min-h-0 [&_.relative.group_>_div]:h-full [&_pre]:min-h-full [&_pre]:!pt-24 [&_.relative.group_>_button]:hidden">
-                    <div className="h-full w-full [&_>_*]:h-full [&_>_*]:flex [&_>_*]:flex-col [&_>_*_>_*]:border-none [&_>_*_>_*]:rounded-none [&_>_*_>_*]:bg-transparent">
-                      {sourceCodeContent}
+                  <div data-drawer-code className="h-full overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] [&_pre]:min-h-full [&_pre]:!pt-24 [&_pre]:!px-4 [&_.relative.group_>_button]:hidden">
+                    <div className="h-full w-full">
+                      {isSourceLoading && (
+                        <div className="h-full w-full px-4 pt-24 pb-8">
+                          <div className="h-full w-full animate-pulse rounded-xl border border-border bg-muted/20" />
+                        </div>
+                      )}
+                      {!isSourceLoading && sourceLoadError && (
+                        <div className="px-4 pt-24 text-sm text-muted-foreground">{sourceLoadError}</div>
+                      )}
+                      {!isSourceLoading && !sourceLoadError && sourceHtml && (
+                        <div
+                          data-code-block
+                          data-line-numbers="false"
+                          className="relative text-sm w-full border-none bg-transparent [&_.relative.group_>_button]:hidden [&_.shiki]:border-none [&_.shiki]:rounded-none"
+                          dangerouslySetInnerHTML={{ __html: sourceHtml }}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>

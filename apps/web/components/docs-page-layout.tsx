@@ -10,6 +10,7 @@ import { DocsPreviewWrapper, type VariantItem } from "@/components/docs-preview-
 import { highlightCode } from "@/lib/shiki"
 import type { BundledLanguage } from "shiki"
 import { CodeXml, Info } from "lucide-react"
+import { FloatingDocsSidebarLazy } from "@/components/floating-docs-sidebar-lazy"
 
 export interface PropItem {
   name: string
@@ -56,11 +57,6 @@ function CodeBlockSkeleton({ className }: { className?: string }) {
     />
   )
 }
-
-
-
-import { FloatingDocsSidebar } from "@/components/floating-docs-sidebar"
-
 export async function DocsPageLayout({
   title,
   description,
@@ -87,16 +83,6 @@ export async function DocsPageLayout({
     usageHtml = await highlightCode(usageCode.trim(), "tsx" as BundledLanguage)
   }
 
-  // Pre-highlight variant codes
-  const variantHtmls = await Promise.all(
-    examples.map(async (ex) => {
-      // Use ex.code if available, otherwise fallback to usageCode or empty 
-      // (Assuming variants usually have 'code' similar to how they have 'preview')
-      // Note: ExampleItem interface has 'code' string obligatory in interface
-      return await highlightCode((ex.code || "").trim(), "tsx" as BundledLanguage)
-    })
-  )
-
   const variantCodes = examples.map(ex => ex.code || "")
   const variantTitles = examples.map(ex => ex.title)
 
@@ -108,7 +94,7 @@ export async function DocsPageLayout({
       {/* Minimal Navigation Cluster */}
       <div className="fixed top-5 left-4 sm:left-6 lg:absolute lg:top-8 lg:left-16 z-50 flex items-center gap-2.5 pointer-events-none">
         <div className="pointer-events-auto">
-          <FloatingDocsSidebar />
+          <FloatingDocsSidebarLazy />
         </div>
         <div className="inline-flex h-9 items-center gap-2 rounded-md bg-background/55 px-3.5 text-xs text-muted-foreground backdrop-blur-sm pointer-events-auto">
           <Link
@@ -168,15 +154,6 @@ export async function DocsPageLayout({
             {importCode && (
               <Section title="Import" className="pt-10">
                 <div className="space-y-4 usage-code-scrollbar-none">
-                  <style>{`
-                    .usage-code-scrollbar-none * {
-                      -ms-overflow-style: none;
-                      scrollbar-width: none;
-                    }
-                    .usage-code-scrollbar-none *::-webkit-scrollbar {
-                      display: none;
-                    }
-                  `}</style>
                   <div className="relative rounded-xl border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
                     <Suspense fallback={<CodeBlockSkeleton />}>
                       {typeof importCode === "string" ? (
@@ -202,22 +179,12 @@ export async function DocsPageLayout({
                 </div>
               )}
               <div className="space-y-4 usage-code-scrollbar-none">
-                <style>{`
-                  .usage-code-scrollbar-none * {
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
-                  }
-                  .usage-code-scrollbar-none *::-webkit-scrollbar {
-                    display: none;
-                  }
-                `}</style>
                 <div className="relative rounded-xl border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
                   <Suspense fallback={<CodeBlockSkeleton />}>
                     {typeof usageCode === "string" ? (
                       <DynamicCodeBlock
                         originalCode={usageCode}
                         defaultHtml={usageHtml}
-                        variantHtmls={variantHtmls}
                         variantTitles={variantTitles}
                         variantCodes={variantCodes}
                         className="border-none !bg-transparent shadow-none !rounded-none [&_pre]:!overflow-x-auto [&_pre]:!overflow-y-hidden"
@@ -349,18 +316,7 @@ export async function DocsPageLayout({
             personalizeContent={personalizeContent}
             hideDefaultVariant={hideDefaultPreviewVariant}
             sourceCodeFilename={installSourceCode ? (installSourceFilename || `${installPackageName}.tsx`) : undefined}
-            sourceCode={installSourceCode}
-            sourceCodeContent={
-              installSourceCode ? (
-                <Suspense fallback={<CodeBlockSkeleton />}>
-                  <CodeBlock
-                    code={installSourceCode}
-                    lang="tsx"
-                    className="border-none rounded-none bg-transparent h-full max-h-none"
-                  />
-                </Suspense>
-              ) : null
-            }
+            sourceCodeKey={installSourceCode ? installPackageName : undefined}
             variants={examples as VariantItem[]}
           >
             {preview}

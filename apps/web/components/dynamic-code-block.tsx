@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils"
 interface DynamicCodeBlockProps {
   originalCode: string;
   defaultHtml: string;
-  variantHtmls: string[];
   className?: string;
   variantCodes?: string[];
   variantTitles?: string[];
@@ -18,17 +17,58 @@ interface DynamicCodeBlockProps {
 export function DynamicCodeBlock({
   originalCode,
   defaultHtml,
-  variantHtmls,
   className,
   variantCodes = [],
   variantTitles = []
 }: DynamicCodeBlockProps) {
   const { activeVariantIndex, setActiveVariantIndex } = useDocStore()
-  
+  const [variantHtmlMap, setVariantHtmlMap] = React.useState<Record<number, string>>({})
+  const [loadingVariant, setLoadingVariant] = React.useState<number | null>(null)
+
+  React.useEffect(() => {
+    let cancelled = false
+
+    const loadVariantHtml = async () => {
+      if (activeVariantIndex < 0) return
+      if (variantHtmlMap[activeVariantIndex]) return
+
+      const variantCode = variantCodes[activeVariantIndex]
+      if (!variantCode) return
+
+      setLoadingVariant(activeVariantIndex)
+      try {
+        const response = await fetch("/api/docs/source", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code: variantCode, lang: "tsx" }),
+        })
+
+        if (!response.ok) {
+          return
+        }
+
+        const data = (await response.json()) as { html?: string }
+        if (!cancelled && data.html) {
+          setVariantHtmlMap((prev) => ({ ...prev, [activeVariantIndex]: data.html as string }))
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingVariant((current) => (current === activeVariantIndex ? null : current))
+        }
+      }
+    }
+
+    loadVariantHtml()
+    return () => {
+      cancelled = true
+    }
+  }, [activeVariantIndex, variantCodes, variantHtmlMap])
+
   // Determine which HTML to show
-  const htmlToRender = activeVariantIndex === -1 
-    ? defaultHtml 
-    : (variantHtmls[activeVariantIndex] || defaultHtml);
+  const isMissingVariantHtml = activeVariantIndex >= 0 && !variantHtmlMap[activeVariantIndex]
+  const htmlToRender = activeVariantIndex === -1
+    ? defaultHtml
+    : (variantHtmlMap[activeVariantIndex] || "");
 
   // Determine which raw code to use for copy button
   const rawCodeToUse = activeVariantIndex === -1
@@ -37,40 +77,10 @@ export function DynamicCodeBlock({
 
   return (
     <div
+      data-code-block
+      data-line-numbers="false"
       className={`relative text-sm w-full border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50 ${className?.includes('h-full') ? 'flex flex-col ' : ''}${className || "rounded-xl"}`}
     >
-      <style>{`
-        .shiki {
-          counter-reset: line;
-        }
-        .shiki code {
-          display: grid;
-        }
-        /* Hide line numbers as requested for Usage block */
-        .shiki [data-line]::before {
-          content: none;
-          display: none;
-        }
-        .shiki,
-        .shiki span {
-          background-color: transparent !important;
-        }
-        .dark .shiki,
-        .dark .shiki span {
-          color: var(--shiki-dark) !important;
-          background-color: transparent !important;
-        }
-        
-        /* Hide scrollbars for the tab header */
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .no-scrollbar {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
-        }
-      `}</style>
-      
       {/* Editor Tab Header */}
       <div className="flex w-full items-center border-b border-border/40 bg-zinc-50/50 dark:bg-zinc-900/20 overflow-x-auto no-scrollbar">
         
@@ -115,6 +125,14 @@ export function DynamicCodeBlock({
           className={`[&_pre]:p-4 [&_pre]:overflow-x-auto overflow-auto ${className?.includes('max-h-none') ? (className?.includes('h-full') ? 'flex-1 min-h-0' : 'h-full') : 'max-h-[500px]'}`}
           dangerouslySetInnerHTML={{ __html: htmlToRender }}
         />
+        {isMissingVariantHtml && (
+          <div className="pointer-events-none absolute inset-0 p-4">
+            <div className="h-full w-full animate-pulse rounded-md border border-border bg-muted/20" />
+          </div>
+        )}
+        {loadingVariant !== null && (
+          <div className="pointer-events-none absolute inset-0 bg-background/40 backdrop-blur-[1px]" />
+        )}
       </div>
     </div>
   );

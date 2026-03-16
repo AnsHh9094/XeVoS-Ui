@@ -28,46 +28,10 @@ export async function CodeBlock({
 
   return (
     <div
+      data-code-block
+      data-line-numbers={lineNumbers ? "true" : "false"}
       className={`relative text-sm w-full border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50 ${className?.includes('h-full') ? 'flex flex-col ' : ''}${className || "rounded-xl"}`}
     >
-      <style>{`
-        .shiki {
-          counter-reset: line;
-        }
-        .shiki code {
-          display: grid;
-        }
-        ${lineNumbers ? `
-        .shiki [data-line]::before {
-          counter-increment: line;
-          content: counter(line);
-          display: inline-block;
-          width: 1.5rem;
-          margin-right: 1.25rem;
-          text-align: right;
-          color: #a1a1aa;
-          user-select: none;
-          font-size: 0.75rem;
-        }
-        .dark .shiki [data-line]::before {
-          color: #52525b;
-        }
-        ` : `
-        .shiki [data-line]::before {
-          content: none;
-          display: none;
-        }
-        `}
-        .shiki,
-        .shiki span {
-          background-color: transparent !important;
-        }
-        .dark .shiki,
-        .dark .shiki span {
-          color: var(--shiki-dark) !important;
-          background-color: transparent !important;
-        }
-      `}</style>
       {/* Optional filename header */}
       {filename && (
         <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border bg-zinc-200/50 dark:bg-zinc-900/80">

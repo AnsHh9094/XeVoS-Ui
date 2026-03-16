@@ -33,17 +33,6 @@ export function InstallCommand({ component }: InstallCommandProps) {
   return (
     <div className="w-full max-w-full">
       <div className="relative rounded-xl border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50 font-mono text-sm leading-relaxed text-foreground">
-        <style>{`
-          /* Hide scrollbars for the tab header */
-          .no-scrollbar::-webkit-scrollbar {
-            display: none;
-          }
-          .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-          }
-        `}</style>
-
         {/* Tab Header */}
         <div className="flex items-center border-b border-border/40 bg-zinc-50/50 dark:bg-zinc-900/20 overflow-x-auto no-scrollbar">
           {PACKAGE_MANAGERS.map((pm) => (

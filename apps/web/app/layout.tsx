@@ -7,26 +7,31 @@ import Script from "next/script"
 import "@workspace/ui/globals.css"
 import { Providers } from "@/components/providers"
 import { JsonLd } from "@/components/seo/json-ld"
+import { RouteScrollbarController } from "@/components/route-scrollbar-controller"
 
 const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
 })
 
 const fontMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: "swap",
 })
 
 const fontSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-serif",
+  display: "swap",
 })
 
 const fontDisplay = Syne({
   subsets: ["latin"],
   variable: "--font-display",
+  display: "swap",
 })
 
 const siteUrl = "https://www.componentry.fun"
@@ -177,6 +182,7 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} ${fontDisplay.variable} font-sans antialiased`}
       >
+        <RouteScrollbarController />
         <Providers>{children}</Providers>
         <SpeedInsights />
       </body>
