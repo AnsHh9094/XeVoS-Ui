@@ -44,6 +44,17 @@ export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
                         <Link href="/docs" className="text-foreground/60 transition-colors hover:text-foreground">
                             Docs
                         </Link>
+                        <Link href="/docs/mcp" className="text-foreground/60 transition-colors hover:text-foreground">
+                            MCP
+                        </Link>
+                        <Link
+                            href="https://github.com/sponsors/harshjdhv"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-foreground/60 transition-colors hover:text-foreground"
+                        >
+                            Sponsor
+                        </Link>
                     </nav>
                 </div>
                 <div className="ml-auto flex items-center gap-2 sm:gap-4">

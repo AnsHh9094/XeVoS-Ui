@@ -18,6 +18,10 @@ const gettingStarted: NavGroup = {
       title: "Introduction",
       href: "/docs",
     },
+    {
+      title: "MCP",
+      href: "/docs/mcp",
+    },
   ],
 };
 
