@@ -321,6 +321,14 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/pixelcanvas.mov",
   },
+  "signature": {
+    title: "Signature",
+    description: "An animated SVG signature effect that draws out text as if hand-written.",
+    category: "Components",
+    slug: "signature",
+    addedAt: "2026-03-17",
+    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/scrubinput.mp4",
+  },
   "matrix-rain": {
     title: "Matrix Rain",
     description: "Classic Matrix digital rain effect.",
