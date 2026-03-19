@@ -66,6 +66,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "image-ripple-effect",
+      "type": "registry:ui"
+    },
+    {
       "name": "interactive-hover-button",
       "type": "registry:ui"
     },

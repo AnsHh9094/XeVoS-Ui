@@ -146,6 +146,10 @@ const docsImportMap: Record<
     import("@/components/docs/image-trail").then((m) => ({
       default: m.ImageTrailDocs,
     })),
+  "image-ripple-effect": () =>
+    import("@/components/docs/image-ripple-effect").then((m) => ({
+      default: m.ImageRippleEffectDocs,
+    })),
   "layered-stack": () =>
     import("@/components/docs/layered-stack").then((m) => ({
       default: m.LayeredStackDocs,
