@@ -187,7 +187,7 @@ export const components: Record<string, ComponentMetadata> = {
 
 | Category | Use For |
 |----------|---------|
-| `"Text Animations"` | Text effects (HyperText, TrueFocus, TextAnimate) |
+| `"Text Animations"` | Text effects (HyperText, TextAnimate) |
 | `"Components"` | Interactive UI elements (Cards, Modals, Docks) |
 | `"Hero Backgrounds"` | Full-page background effects |
 | `"Visual Effects"` | Decorative effects (Blobs, Particles, Noise) |

@@ -22,10 +22,6 @@ const docsImportMap: Record<
     import("@/components/docs/text-animate").then((m) => ({
       default: m.TextAnimateDocs,
     })),
-  "true-focus": () =>
-    import("@/components/docs/true-focus").then((m) => ({
-      default: m.TrueFocusDocs,
-    })),
   "scroll-based-velocity": () =>
     import("@/components/docs/scroll-based-velocity").then((m) => ({
       default: m.ScrollBasedVelocityDocs,
