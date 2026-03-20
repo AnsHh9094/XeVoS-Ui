@@ -146,6 +146,10 @@ const docsImportMap: Record<
     import("@/components/docs/image-ripple-effect").then((m) => ({
       default: m.ImageRippleEffectDocs,
     })),
+  "infinite-image-field": () =>
+    import("@/components/docs/infinite-image-field").then((m) => ({
+      default: m.InfiniteImageFieldDocs,
+    })),
   "layered-stack": () =>
     import("@/components/docs/layered-stack").then((m) => ({
       default: m.LayeredStackDocs,
