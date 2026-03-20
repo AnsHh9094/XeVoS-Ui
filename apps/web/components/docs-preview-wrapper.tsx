@@ -3,7 +3,7 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
 import { cn } from "@/lib/utils"
-import { RotateCcw, Search, Settings2, Check, Maximize, Minimize, CodeXml, ChevronLeft, Copy } from "lucide-react"
+import { RotateCcw, Search, SlidersHorizontal, Check, Maximize, Minimize, CodeXml, ChevronLeft, Copy } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { motion, AnimatePresence, useDragControls, type PanInfo } from "framer-motion"
 import { useDocStore } from "@/hooks/use-doc-store"
@@ -64,8 +64,7 @@ export function DocsPreviewWrapper({
 
   const previewRef = React.useRef<HTMLDivElement>(null)
   const variantBarRef = React.useRef<HTMLDivElement>(null)
-  const iconButtonClass =
-    "inline-flex h-7 w-7 items-center justify-center rounded-md border border-transparent text-foreground/60 transition-all duration-150 hover:border-border/70 hover:bg-muted/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 active:scale-[0.97]"
+  const iconButtonClass = "inline-flex h-7 w-7 items-center justify-center rounded-md border border-transparent text-foreground/60 transition-all duration-150 hover:border-border/70 hover:bg-muted/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 active:scale-[0.97]"
   const hasSourceCode = Boolean(sourceCodeKey)
 
   const handleSourceOpen = React.useCallback(async () => {
@@ -213,30 +212,19 @@ export function DocsPreviewWrapper({
       <div className="absolute top-4 right-4 z-20">
         <div className="flex items-center gap-0.5 rounded-lg border border-border/70 bg-white/95 dark:bg-[#121212] px-1 py-1">
           {/* Search */}
-          <React.Suspense
-            fallback={
-              <button className={iconButtonClass} aria-label="Search">
-                <Search className="w-4 h-4" />
-              </button>
-            }
-          >
-            <CommandMenu
-              trigger={
-                <button className={iconButtonClass} aria-label="Search">
-                  <Search className="w-4 h-4" />
-                </button>
-              }
-            />
+          <React.Suspense fallback={
+            <button className={iconButtonClass} aria-label="Search"><Search className="w-4 h-4" /></button>
+          }>
+            <CommandMenu trigger={
+              <button className={iconButtonClass} aria-label="Search"><Search className="w-4 h-4" /></button>
+            } />
           </React.Suspense>
 
           {/* View Source */}
           {hasSourceCode && (
             <button
               onClick={handleSourceOpen}
-              className={cn(
-                iconButtonClass,
-                showSource && "border-primary/30 bg-primary/90 text-primary-foreground"
-              )}
+              className={cn(iconButtonClass, showSource && "border-primary/30 bg-primary/90 text-primary-foreground")}
               aria-label="View Source"
             >
               <CodeXml className="w-4 h-4" />
@@ -246,26 +234,16 @@ export function DocsPreviewWrapper({
           {/* Personalize */}
           {personalizeContent && (
             <button
-              onClick={() => {
-                setShowPersonalize(true)
-                setShowSource(false)
-              }}
-              className={cn(
-                iconButtonClass,
-                showPersonalize && "border-primary/30 bg-primary/90 text-primary-foreground"
-              )}
+              onClick={() => { setShowPersonalize(true); setShowSource(false) }}
+              className={cn(iconButtonClass, showPersonalize && "border-primary/30 bg-primary/90 text-primary-foreground")}
               aria-label="Personalize"
             >
-              <Settings2 className="w-4 h-4" />
+              <SlidersHorizontal className="w-4 h-4" />
             </button>
           )}
 
           {/* Reload */}
-          <button
-            onClick={() => setKey(k => k + 1)}
-            className={iconButtonClass}
-            aria-label="Reload preview"
-          >
+          <button onClick={() => setKey(k => k + 1)} className={iconButtonClass} aria-label="Reload preview">
             <RotateCcw className="w-4 h-4" />
           </button>
 
@@ -482,8 +460,10 @@ export function DocsPreviewWrapper({
                   <div data-drawer-code className="h-full overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] [&_pre]:min-h-full [&_pre]:!pt-24 [&_pre]:!px-4 [&_.relative.group_>_button]:hidden">
                     <div className="h-full w-full">
                       {isSourceLoading && (
-                        <div className="h-full w-full px-4 pt-24 pb-8">
-                          <div className="h-full w-full animate-pulse rounded-xl border border-border bg-muted/20" />
+                        <div className="flex h-full items-center justify-center px-4 pt-24 pb-8">
+                          <span className="bg-gradient-to-r from-muted-foreground/30 via-muted-foreground/70 to-muted-foreground/30 bg-[length:200%_100%] bg-clip-text text-sm text-transparent [animation:shimmer_1.8s_ease-in-out_infinite] font-mono tracking-wide">
+                            Loading source code...
+                          </span>
                         </div>
                       )}
                       {!isSourceLoading && sourceLoadError && (
