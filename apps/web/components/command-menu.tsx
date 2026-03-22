@@ -329,11 +329,14 @@ export function CommandMenu({ trigger }: { trigger?: React.ReactNode }) {
               >
                 <Command
                   label="Spotlight Search"
-                  className="overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-[#F5F4F3] dark:bg-[#121212] shadow-2xl shadow-black/20 dark:shadow-black/40"
+                  className="relative overflow-hidden rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-[#F5F4F3] dark:bg-[#121212] backdrop-blur-xl [box-shadow:0_0_0_1px_rgba(255,255,255,0.8)_inset,0_0_24px_4px_rgba(255,255,255,0.09)_inset,0_24px_64px_-12px_rgba(0,0,0,0.12),0_8px_24px_-4px_rgba(0,0,0,0.08)] dark:[box-shadow:0_0_0_1px_rgba(255,255,255,0.06)_inset,0_0_24px_4px_rgba(255,255,255,0.02)_inset,0_24px_64px_-12px_rgba(0,0,0,0.6),0_8px_24px_-4px_rgba(0,0,0,0.4)] tracking-tight"
                   shouldFilter={true}
                 >
+                  {/* Top sheen */}
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white dark:via-white/20 to-transparent" />
+
                   <div className="p-2">
-                    <div className="flex items-center gap-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 px-3 py-3">
+                    <div className="flex items-center gap-2 rounded-xl border border-zinc-200/80 dark:border-zinc-700/40 bg-zinc-100/70 dark:bg-zinc-800/50 px-3 py-2.5 [box-shadow:inset_0_1px_2px_rgba(0,0,0,0.04)] dark:[box-shadow:inset_0_1px_2px_rgba(0,0,0,0.2)]">
                       <Search className="h-4 w-4 text-muted-foreground/50" />
                       <Command.Input
                         ref={inputRef}
@@ -354,7 +357,7 @@ export function CommandMenu({ trigger }: { trigger?: React.ReactNode }) {
                     </div>
                   </div>
 
-                  <Command.List className="max-h-[400px] overflow-y-auto overscroll-contain p-2">
+                  <Command.List className="max-h-[400px] overflow-y-auto overscroll-contain p-2 scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_bottom,transparent,black_2rem,black_calc(100%-2rem),transparent)]">
                     <Command.Empty className="flex flex-col items-center justify-center py-14 text-center">
                       <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted/50">
                         <Search className="h-5 w-5 text-muted-foreground/50" />
@@ -391,7 +394,7 @@ export function CommandMenu({ trigger }: { trigger?: React.ReactNode }) {
                     </Command.Group>
                   </Command.List>
 
-                  <div className="flex items-center justify-between border-t border-border/50 bg-muted/30 px-4 py-2.5">
+                  <div className="flex items-center justify-between border-t border-zinc-200/60 dark:border-zinc-800/60 bg-zinc-50/60 dark:bg-zinc-900/40 px-4 py-2.5">
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <kbd className="flex h-5 w-5 items-center justify-center rounded border bg-background font-mono text-[10px] text-muted-foreground shadow-sm">
                         <CornerDownLeft className="h-3 w-3" />

@@ -181,7 +181,7 @@ export function Testimonials() {
         }
       `}</style>
 
-      <section className="w-full pt-6 pb-20 overflow-hidden">
+      <section className="w-full pt-6 pb-20 overflow-x-hidden">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
