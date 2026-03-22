@@ -25,7 +25,7 @@ export function HeroButtons() {
                     href="/docs"
                     className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-xl bg-primary px-8 hover:px-10 text-sm font-semibold text-primary-foreground transition-all duration-300 shadow-[0_2px_4px_0_rgba(0,0,0,0.12),0_0_0_1px_rgba(255,255,255,0.2),inset_0_1px_0_0_rgba(255,255,255,0.2)] hover:shadow-[0_4px_8px_0_rgba(0,0,0,0.15),0_0_0_1px_rgba(255,255,255,0.2),inset_0_1px_0_0_rgba(255,255,255,0.2)] dark:shadow-[0_2px_4px_0_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.1)]"
                 >
-                    <span>Quick Start</span>
+                    <span>Documentation</span>
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
             </motion.div>
