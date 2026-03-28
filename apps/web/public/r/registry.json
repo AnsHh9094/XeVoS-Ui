@@ -50,6 +50,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "eye-tracking",
+      "type": "registry:ui"
+    },
+    {
       "name": "flight-status-card",
       "type": "registry:ui"
     },
