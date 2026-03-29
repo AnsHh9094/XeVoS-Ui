@@ -23,8 +23,8 @@ from pathlib import Path
 # ===========================================================================
 # EDIT THESE VARIABLES FOR EACH UPLOAD
 # ===========================================================================
-VIDEO_FILENAME = "main.mov"
-COMPONENT_SLUG = "animated-gradient"
+VIDEO_FILENAME = "infinteimagefield.mov"
+COMPONENT_SLUG = "infinite-image-field"
 # ===========================================================================
 
 # ---------------------------------------------------------------------------
