@@ -114,6 +114,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "music-player",
+      "type": "registry:ui"
+    },
+    {
       "name": "noise-texture",
       "type": "registry:ui"
     },
