@@ -10,6 +10,10 @@ const docsImportMap: Record<
     | { [key: string]: React.ComponentType<Record<string, unknown>> }
   >
 > = {
+  "scroll-split-card": () =>
+    import("@/components/docs/scroll-split-card").then((m) => ({
+      default: m.ScrollSplitCardDocs,
+    })),
   "hyper-text": () =>
     import("@/components/docs/hyper-text").then((m) => ({
       default: m.HyperTextDocs,

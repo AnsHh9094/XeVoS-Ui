@@ -138,6 +138,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "scroll-split-card",
+      "type": "registry:ui"
+    },
+    {
       "name": "scrub-input",
       "type": "registry:ui"
     },

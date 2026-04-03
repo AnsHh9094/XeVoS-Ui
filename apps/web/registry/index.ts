@@ -22,6 +22,13 @@ export function isNewComponent(component: ComponentMetadata): boolean {
 }
 
 export const components: Record<string, ComponentMetadata> = {
+  "scroll-split-card": {
+    title: "Scroll Split Card",
+    description: "A scroll-driven interactive card that splits into three panels and flips.",
+    category: "Components",
+    slug: "scroll-split-card",
+    addedAt: "2026-04-03",
+  },
   // Text Animations
   "hyper-text": {
     title: "Hyper Text",
