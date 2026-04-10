@@ -63,7 +63,7 @@ export async function LayeredStackDocs() {
       installSourceCode={sourceCode}
       installSourceFilename="components/ui/layered-stack.tsx"
       
-      usageCode={importCode}
+      usageCode={defaultCode}
       
       props={[
         {
