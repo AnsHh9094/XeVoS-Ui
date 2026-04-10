@@ -10,6 +10,10 @@ const docsImportMap: Record<
     | { [key: string]: React.ComponentType<Record<string, unknown>> }
   >
 > = {
+  "sticky-scroll-cards": () =>
+    import("@/components/docs/sticky-scroll-cards").then((m) => ({
+      default: m.StickyScrollCardsDocs,
+    })),
   "music-player": () =>
     import("@/components/docs/music-player").then((m) => ({
       default: m.MusicPlayerDocs,

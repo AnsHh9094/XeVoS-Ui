@@ -170,6 +170,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "sticky-scroll-cards",
+      "type": "registry:ui"
+    },
+    {
       "name": "testimonial-marquee",
       "type": "registry:ui"
     },
