@@ -141,6 +141,14 @@ When creating new components:
 
 MIT License - feel free to use these components in personal and commercial projects.
 
+## Third-Party Licenses
+
+Some components use third-party dependencies with separate license terms.
+
+- `image-trail` and `layered-stack` require `gsap` (GSAP).
+- If you use or redistribute those components, you are responsible for complying with GSAP's license terms.
+- GSAP license: https://gsap.com/licensing/
+
 See [LICENSE](./LICENSE) for more information.
 
 ## Acknowledgments

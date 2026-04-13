@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from "next"
 import { Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif, Syne } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import Script from "next/script"
 import "@workspace/ui/globals.css"
 import { Providers } from "@/components/providers"
 import { JsonLd } from "@/components/seo/json-ld"
@@ -171,13 +170,6 @@ export default function RootLayout({
       <Analytics />
       <head>
         <JsonLd />
-        <Script
-          src="https://cdn.databuddy.cc/databuddy.js"
-          data-client-id="d4128a8e-f7b1-456a-9e5e-505f04ec580e"
-          data-track-interactions="true"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
       </head>
       <body
         className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} ${fontDisplay.variable} font-sans antialiased`}
