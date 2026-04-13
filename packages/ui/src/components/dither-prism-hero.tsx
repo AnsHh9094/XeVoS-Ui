@@ -7,6 +7,7 @@ import * as THREE from "three";
 import { motion } from "framer-motion";
 
 import { cn } from "@workspace/ui/lib/utils";
+import { WebGLErrorBoundary, WebGLFallback } from "@workspace/ui/components/webgl-error-boundary";
 
 // Type augmentation for R3F
 declare global {
@@ -571,27 +572,29 @@ export default function DitherPrismHero({
             {/* WebGL Background */}
             {mounted && (
                 <div className="absolute top-0 left-0 w-full h-full z-0">
-                    <Canvas
-                        camera={{ position: [0, 0, 1] }}
-                        dpr={[1, 2]}
-                        gl={{
-                            antialias: false,
-                            alpha: true,
-                            powerPreference: "high-performance",
-                        }}
-                    >
-                        <DitherPrismPlane
-                            color1={color1}
-                            color2={color2}
-                            color3={color3}
-                            speed={speed}
-                            ditherIntensity={ditherIntensity}
-                            prismIntensity={prismIntensity}
-                        />
-                        {showParticles && (
-                            <FloatingParticles count={particleCount} color={particleColor} />
-                        )}
-                    </Canvas>
+                    <WebGLErrorBoundary fallback={<WebGLFallback className="absolute inset-0 h-full w-full" />}>
+                        <Canvas
+                            camera={{ position: [0, 0, 1] }}
+                            dpr={[1, 2]}
+                            gl={{
+                                antialias: false,
+                                alpha: true,
+                                powerPreference: "high-performance",
+                            }}
+                        >
+                            <DitherPrismPlane
+                                color1={color1}
+                                color2={color2}
+                                color3={color3}
+                                speed={speed}
+                                ditherIntensity={ditherIntensity}
+                                prismIntensity={prismIntensity}
+                            />
+                            {showParticles && (
+                                <FloatingParticles count={particleCount} color={particleColor} />
+                            )}
+                        </Canvas>
+                    </WebGLErrorBoundary>
                 </div>
             )}
 

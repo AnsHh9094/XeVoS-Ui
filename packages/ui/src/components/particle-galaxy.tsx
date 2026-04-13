@@ -3,6 +3,7 @@
 import { cn } from "@workspace/ui/lib/utils"
 import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
+import { WebGLErrorBoundary, WebGLFallback } from "@workspace/ui/components/webgl-error-boundary"
 
 interface ParticleGalaxyProps {
     className?: string
@@ -83,6 +84,7 @@ export function ParticleGalaxy({
     const mouseRef = useRef({ x: 0, y: 0 })
     const frameRef = useRef<number | undefined>(undefined)
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+    const [hasWebGLError, setHasWebGLError] = useState(false)
 
     // 3D interaction state
     const isDraggingRef = useRef(false)
@@ -116,50 +118,52 @@ export function ParticleGalaxy({
     }, [])
 
     useEffect(() => {
+        if (hasWebGLError) return
         if (!canvasRef.current || !containerRef.current || dimensions.width === 0 || dimensions.height === 0)
             return
 
-        const canvas = canvasRef.current
-        const container = containerRef.current
+        try {
+            const canvas = canvasRef.current
+            const container = containerRef.current
 
-        // Scene
-        const scene = new THREE.Scene()
-        sceneRef.current = scene
+            // Scene
+            const scene = new THREE.Scene()
+            sceneRef.current = scene
 
-        // Camera
-        const camera = new THREE.PerspectiveCamera(
-            75,
-            dimensions.width / dimensions.height,
-            0.1,
-            1000
-        )
-        camera.position.z = 3
-        cameraRef.current = camera
+            // Camera
+            const camera = new THREE.PerspectiveCamera(
+                75,
+                dimensions.width / dimensions.height,
+                0.1,
+                1000
+            )
+            camera.position.z = 3
+            cameraRef.current = camera
 
-        // Renderer with transparent background
-        const renderer = new THREE.WebGLRenderer({
-            canvas,
-            alpha: true, // Transparent background
-            antialias: true,
-        })
-        renderer.setSize(dimensions.width, dimensions.height)
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-        rendererRef.current = renderer
+            // Renderer with transparent background
+            const renderer = new THREE.WebGLRenderer({
+                canvas,
+                alpha: true, // Transparent background
+                antialias: true,
+            })
+            renderer.setSize(dimensions.width, dimensions.height)
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+            rendererRef.current = renderer
 
-        // Create galaxy particles
-        const geometry = new THREE.BufferGeometry()
-        const positions = new Float32Array(particleCount * 3)
-        const colors = new Float32Array(particleCount * 3)
-        const scales = new Float32Array(particleCount)
+            // Create galaxy particles
+            const geometry = new THREE.BufferGeometry()
+            const positions = new Float32Array(particleCount * 3)
+            const colors = new Float32Array(particleCount * 3)
+            const scales = new Float32Array(particleCount)
 
-        // Convert hex colors to RGB
-        const colorPalette = [
-            new THREE.Color(colorProp[0]),
-            new THREE.Color(colorProp[1]),
-            new THREE.Color(colorProp[2]),
-        ]
+            // Convert hex colors to RGB
+            const colorPalette = [
+                new THREE.Color(colorProp[0]),
+                new THREE.Color(colorProp[1]),
+                new THREE.Color(colorProp[2]),
+            ]
 
-        for (let i = 0; i < particleCount; i++) {
+            for (let i = 0; i < particleCount; i++) {
             const i3 = i * 3
 
             // Spiral galaxy distribution with customizable spread
@@ -207,12 +211,12 @@ export function ParticleGalaxy({
             scales[i] = Math.random()
         }
 
-        geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3))
-        geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3))
-        geometry.setAttribute("scale", new THREE.BufferAttribute(scales, 1))
+            geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3))
+            geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3))
+            geometry.setAttribute("scale", new THREE.BufferAttribute(scales, 1))
 
-        // Custom shader material for better particle rendering
-        const material = new THREE.ShaderMaterial({
+            // Custom shader material for better particle rendering
+            const material = new THREE.ShaderMaterial({
             uniforms: {
                 uTime: { value: 0 },
                 uSize: { value: particleSize * 100 },
@@ -267,36 +271,36 @@ export function ParticleGalaxy({
             vertexColors: true,
         })
 
-        const particles = new THREE.Points(geometry, material)
-        scene.add(particles)
-        particlesRef.current = particles
+            const particles = new THREE.Points(geometry, material)
+            scene.add(particles)
+            particlesRef.current = particles
 
-        // ===== 3D INTERACTION CONTROLS =====
+            // ===== 3D INTERACTION CONTROLS =====
 
-        // Mouse hover for subtle tilt (only when not dragging)
-        const handleMouseMove = (event: MouseEvent) => {
+            // Mouse hover for subtle tilt (only when not dragging)
+            const handleMouseMove = (event: MouseEvent) => {
             if (isDraggingRef.current) return
             const rect = container.getBoundingClientRect()
             mouseRef.current.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
             mouseRef.current.y = -(((event.clientY - rect.top) / rect.height) * 2 - 1)
         }
 
-        const handleMouseLeave = () => {
+            const handleMouseLeave = () => {
             if (!isDraggingRef.current) {
                 mouseRef.current.x = 0
                 mouseRef.current.y = 0
             }
         }
 
-        // Drag to rotate
-        const handleMouseDown = (event: MouseEvent) => {
+            // Drag to rotate
+            const handleMouseDown = (event: MouseEvent) => {
             if (!enableDrag) return
             isDraggingRef.current = true
             previousMouseRef.current = { x: event.clientX, y: event.clientY }
             container.style.cursor = "grabbing"
         }
 
-        const handleMouseMoveGlobal = (event: MouseEvent) => {
+            const handleMouseMoveGlobal = (event: MouseEvent) => {
             if (!isDraggingRef.current || !enableDrag) return
 
             const deltaX = event.clientX - previousMouseRef.current.x
@@ -311,14 +315,14 @@ export function ParticleGalaxy({
             previousMouseRef.current = { x: event.clientX, y: event.clientY }
         }
 
-        const handleMouseUp = () => {
+            const handleMouseUp = () => {
             if (!enableDrag) return
             isDraggingRef.current = false
             container.style.cursor = enableDrag ? "grab" : "default"
         }
 
-        // Mouse wheel zoom
-        const handleWheel = (event: WheelEvent) => {
+            // Mouse wheel zoom
+            const handleWheel = (event: WheelEvent) => {
             if (!enableZoom) return
             event.preventDefault()
 
@@ -327,18 +331,18 @@ export function ParticleGalaxy({
             targetZoomRef.current = Math.max(minZoom, Math.min(maxZoom, targetZoomRef.current))
         }
 
-        // Touch support
-        let touchStartDistance = 0
-        let touchStartZoom = 3
+            // Touch support
+            let touchStartDistance = 0
+            let touchStartZoom = 3
 
-        const getTouchDistance = (touches: TouchList) => {
+            const getTouchDistance = (touches: TouchList) => {
             if (touches.length < 2) return 0
             const dx = touches[0]!.clientX - touches[1]!.clientX
             const dy = touches[0]!.clientY - touches[1]!.clientY
             return Math.sqrt(dx * dx + dy * dy)
         }
 
-        const handleTouchStart = (event: TouchEvent) => {
+            const handleTouchStart = (event: TouchEvent) => {
             if (!enableTouch) return
 
             if (event.touches.length === 2) {
@@ -355,7 +359,7 @@ export function ParticleGalaxy({
             }
         }
 
-        const handleTouchMove = (event: TouchEvent) => {
+            const handleTouchMove = (event: TouchEvent) => {
             if (!enableTouch) return
 
             if (event.touches.length === 2 && enableZoom) {
@@ -381,29 +385,29 @@ export function ParticleGalaxy({
             }
         }
 
-        const handleTouchEnd = () => {
+            const handleTouchEnd = () => {
             if (!enableTouch) return
             isDraggingRef.current = false
             touchStartDistance = 0
         }
 
-        // Add event listeners
-        container.addEventListener("mousemove", handleMouseMove)
-        container.addEventListener("mouseleave", handleMouseLeave)
-        container.addEventListener("mousedown", handleMouseDown)
-        document.addEventListener("mousemove", handleMouseMoveGlobal)
-        document.addEventListener("mouseup", handleMouseUp)
-        container.addEventListener("wheel", handleWheel, { passive: false })
-        container.addEventListener("touchstart", handleTouchStart, { passive: false })
-        container.addEventListener("touchmove", handleTouchMove, { passive: false })
-        container.addEventListener("touchend", handleTouchEnd)
+            // Add event listeners
+            container.addEventListener("mousemove", handleMouseMove)
+            container.addEventListener("mouseleave", handleMouseLeave)
+            container.addEventListener("mousedown", handleMouseDown)
+            document.addEventListener("mousemove", handleMouseMoveGlobal)
+            document.addEventListener("mouseup", handleMouseUp)
+            container.addEventListener("wheel", handleWheel, { passive: false })
+            container.addEventListener("touchstart", handleTouchStart, { passive: false })
+            container.addEventListener("touchmove", handleTouchMove, { passive: false })
+            container.addEventListener("touchend", handleTouchEnd)
 
-        // Set cursor style
-        container.style.cursor = enableDrag ? "grab" : "default"
+            // Set cursor style
+            container.style.cursor = enableDrag ? "grab" : "default"
 
-        // Animation
-        const clock = new THREE.Clock()
-        const animate = () => {
+            // Animation
+            const clock = new THREE.Clock()
+            const animate = () => {
             const elapsedTime = clock.getElapsedTime()
 
             // Update material uniforms
@@ -455,10 +459,10 @@ export function ParticleGalaxy({
             frameRef.current = requestAnimationFrame(animate)
         }
 
-        animate()
+            animate()
 
-        // Cleanup
-        return () => {
+            // Cleanup
+            return () => {
             container.removeEventListener("mousemove", handleMouseMove)
             container.removeEventListener("mouseleave", handleMouseLeave)
             container.removeEventListener("mousedown", handleMouseDown)
@@ -474,8 +478,13 @@ export function ParticleGalaxy({
             geometry.dispose()
             material.dispose()
             renderer.dispose()
+            }
+        } catch {
+            setHasWebGLError(true)
+            return
         }
     }, [
+        hasWebGLError,
         dimensions,
         particleCount,
         particleSize,
@@ -500,9 +509,19 @@ export function ParticleGalaxy({
         maxZoom,
     ])
 
+    if (hasWebGLError) {
+        return (
+            <div ref={containerRef} className={cn("relative w-full h-full", className)}>
+                <WebGLFallback className="absolute inset-0 h-full w-full" />
+            </div>
+        )
+    }
+
     return (
-        <div ref={containerRef} className={cn("relative w-full h-full", className)}>
-            <canvas ref={canvasRef} className="w-full h-full" />
-        </div>
+        <WebGLErrorBoundary fallback={<WebGLFallback className="absolute inset-0 h-full w-full" />}>
+            <div ref={containerRef} className={cn("relative w-full h-full", className)}>
+                <canvas ref={canvasRef} className="w-full h-full" />
+            </div>
+        </WebGLErrorBoundary>
     )
 }
