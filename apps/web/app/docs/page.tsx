@@ -159,11 +159,11 @@ function ComponentCard({
         onMouseLeave={stopPreview}
         onFocus={startPreview}
         onBlur={stopPreview}
-        className="group relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 overflow-hidden transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:hover:shadow-[0_8px_30px_rgb(255,255,255,0.02)] hover:border-zinc-300 dark:hover:border-zinc-700"
+        className="group relative flex flex-col rounded-2xl border border-border bg-white dark:bg-zinc-900/50 overflow-hidden transition-all duration-300 shadow-card hover:-translate-y-0.5 hover:border-input hover:shadow-card-hover"
       >
         {/* ── Preview area (Floating) ── */}
         <div className="p-1.5">
-          <div className="relative h-[220px] w-full rounded-xl bg-zinc-50 dark:bg-zinc-900/80 group-hover:bg-zinc-100/50 dark:group-hover:bg-zinc-800/80 transition-colors border border-dashed border-zinc-200/50 dark:border-zinc-800/50 overflow-hidden">
+          <div className="relative h-[220px] w-full rounded-xl bg-zinc-50 dark:bg-zinc-900/80 group-hover:bg-zinc-100/50 dark:group-hover:bg-zinc-800/80 transition-colors border border-dashed border-border shadow-surface-inset overflow-hidden">
             {shouldRenderVideo && previewSources && (
               <video
                 ref={videoRef}
@@ -204,7 +204,7 @@ function ComponentCard({
               {component.title}
             </h3>
             {isNewComponent(component) && (
-              <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
+              <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 border border-border shadow-panel">
                 New
               </span>
             )}
@@ -291,7 +291,7 @@ export default function DocsPage() {
 
       {/* ── Floating Dock Nav ── */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-[calc(100vw-2rem)] sm:max-w-fit pointer-events-none">
-        <nav className="flex items-center gap-1 p-1.5 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/80 dark:bg-[#121212] backdrop-blur-xl shadow-lg shadow-zinc-200/20 dark:shadow-black/20 pointer-events-auto overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <nav className="flex items-center gap-1 p-1.5 rounded-2xl border border-border bg-white/80 dark:bg-[#121212] backdrop-blur-xl shadow-card pointer-events-auto overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {categoryOrder.map((cat) => {
             const isActive = activeSection === cat
             return (
@@ -312,7 +312,7 @@ export default function DocsPage() {
                 {isActive && (
                   <motion.div
                     layoutId="activeSection"
-                    className="absolute inset-0 bg-zinc-100 dark:bg-zinc-800/50 rounded-lg shadow-sm"
+                    className="absolute inset-0 rounded-lg bg-secondary shadow-panel"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
