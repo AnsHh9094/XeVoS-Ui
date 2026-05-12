@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { X } from "lucide-react"
+import { X, PanelLeft } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { docsConfig } from "@/config/docs"
 import { components, isNewComponent } from "@/registry"
@@ -170,20 +170,13 @@ export function FloatingDocsSidebar() {
                 <button
                     onClick={() => setIsOpen(!isOpen)}
                     className={cn(
-                        "group flex h-9 w-9 items-center justify-center rounded-md bg-background/60 text-muted-foreground backdrop-blur-sm transition-colors hover:bg-background/80 hover:text-foreground",
+                        "group flex h-8 w-8 items-center justify-center rounded text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100",
                         isOpen ? "opacity-0 pointer-events-none scale-90" : "opacity-100"
                     )}
                     aria-label="Open Navigation"
                 >
-                    <svg
-                        width="15"
-                        height="15"
-                        viewBox="0 0 18 18"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <rect x="1" y="2" width="16" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.4" />
-                        <rect x="1" y="2" width="5.5" height="14" rx="2.5" fill="currentColor" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+                        <path d="M184,40H72A32,32,0,0,0,40,72V184A32,32,0,0,0,72,216H184A32,32,0,0,0,216,184V72A32,32,0,0,0,184,40ZM56,72A16,16,0,0,1,72,56H128V200H72A16,16,0,0,1,56,184Z" />
                     </svg>
                 </button>
             </div>

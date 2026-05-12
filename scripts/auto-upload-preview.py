@@ -11,8 +11,8 @@ Takes a video from the `temporary` root folder, then:
 
 All credentials are read from the .env file at the repo root.
 
-Edit the variables below before running:
-    python scripts/auto-upload-preview.py
+Edit the variables below before running, or pass them as arguments:
+    python scripts/auto-upload-preview.py recording.mov component-slug
 """
 import os
 import re
@@ -249,8 +249,10 @@ def upload_file(client, local_path: Path, object_key: str) -> None:
 # Main
 # ---------------------------------------------------------------------------
 def main() -> int:
-    input_video = TEMPORARY_DIR / VIDEO_FILENAME
-    slug = COMPONENT_SLUG
+    video_filename = sys.argv[1] if len(sys.argv) > 1 else VIDEO_FILENAME
+    slug = sys.argv[2] if len(sys.argv) > 2 else COMPONENT_SLUG
+
+    input_video = TEMPORARY_DIR / video_filename
 
     if not input_video.exists():
         print(f"❌ Error: Video file not found → {input_video}")
