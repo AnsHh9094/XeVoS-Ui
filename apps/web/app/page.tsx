@@ -16,8 +16,6 @@ import { InfiniteIconField } from "@/components/landing/infinite-icon-field"
 import { Footer } from "@/components/footer"
 
 // Componentry Previews for Bento
-import { BorderBeam } from "@workspace/ui/components/border-beam"
-import { HyperText } from "@workspace/ui/components/hyper-text"
 import { MatrixRain } from "@workspace/ui/components/matrix-rain"
 import { ScrollBasedVelocity } from "@workspace/ui/components/scroll-based-velocity"
 import { AnimatedGradient } from "@workspace/ui/components/animated-gradient"
@@ -101,7 +99,6 @@ export default function Home() {
                <div className="absolute inset-0 opacity-60 mix-blend-multiply dark:mix-blend-screen scale-150">
                  <MatrixRain speed={30} fontSize={10} variant="cyan" />
                </div>
-               <HyperText text="reveal" className="absolute z-10 font-bold text-xl text-zinc-800 dark:text-white tracking-widest uppercase" />
             </div>
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
               Matrix rain
@@ -140,7 +137,6 @@ export default function Home() {
                     lineWidth="4px"
                     lineHeight="32px"
                  />
-                 <BorderBeam duration={12} size={150} colorFrom="#e5e5e5" colorTo="#333333" className="rounded-xl opacity-10 dark:opacity-30 absolute inset-0 pointer-events-none" borderWidth={1} />
             </div>
             <div className="flex shrink-0 items-center justify-between gap-2 px-3 pb-1 pt-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
               Magnet lines
@@ -148,19 +144,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Card 5: 1x1 Dark */}
-          <div className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
-            <div className={`${showcasePreviewClass} flex flex-col items-center justify-center p-0`}>
-                <div className="relative w-full h-full rounded-xl overflow-hidden">
-                   <AnimatedGradient config={{ preset: "Aurora" }} />
-                </div>
-            </div>
-            <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
-              Animated gradient
-            </div>
-          </div>
-
-          {/* Card 6: 1x1 Dither Gradient */}
+          {/* Card 5: 1x1 Dither Gradient */}
           <div className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
             <div className={`${showcasePreviewClass} flex flex-col items-center justify-center`}>
               <div className="absolute inset-0 z-0 opacity-100 rounded-xl overflow-hidden">
@@ -169,6 +153,18 @@ export default function Home() {
             </div>
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
               Dither gradient
+            </div>
+          </div>
+
+          {/* Card 6: 1x1 Dark */}
+          <div className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
+            <div className={`${showcasePreviewClass} flex flex-col items-center justify-center p-0`}>
+                <div className="relative w-full h-full rounded-xl overflow-hidden">
+                   <AnimatedGradient config={{ preset: "Aurora" }} />
+                </div>
+            </div>
+            <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
+              Animated gradient
             </div>
           </div>
 

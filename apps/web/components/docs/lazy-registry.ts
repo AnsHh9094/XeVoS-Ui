@@ -22,18 +22,6 @@ const docsImportMap: Record<
     import("@/components/docs/scroll-split-card").then((m) => ({
       default: m.ScrollSplitCardDocs,
     })),
-  "hyper-text": () =>
-    import("@/components/docs/hyper-text").then((m) => ({
-      default: m.HyperTextDocs,
-    })),
-  "auth-modal": () =>
-    import("@/components/docs/auth-modal").then((m) => ({
-      default: m.AuthModalDocs,
-    })),
-  "text-animate": () =>
-    import("@/components/docs/text-animate").then((m) => ({
-      default: m.TextAnimateDocs,
-    })),
   "scroll-based-velocity": () =>
     import("@/components/docs/scroll-based-velocity").then((m) => ({
       default: m.ScrollBasedVelocityDocs,
@@ -46,10 +34,6 @@ const docsImportMap: Record<
     import("@/components/docs/collection-surfer").then((m) => ({
       default: m.CollectionSurferDocs,
     })),
-  "command-menu": () =>
-    import("@/components/docs/command-menu").then((m) => ({
-      default: m.CommandMenuDocs,
-    })),
   "flight-status-card": () =>
     import("@/components/docs/flight-status-card").then((m) => ({
       default: m.FlightStatusCardDocs,
@@ -61,18 +45,6 @@ const docsImportMap: Record<
   "mac-keyboard": () =>
     import("@/components/docs/mac-keyboard").then((m) => ({
       default: m.MacKeyboardDocs,
-    })),
-  "showcase-card": () =>
-    import("@/components/docs/showcase-card").then((m) => ({
-      default: m.ShowcaseCardDocs,
-    })),
-  "spotlight-card": () =>
-    import("@/components/docs/spotlight-card").then((m) => ({
-      default: m.SpotlightCardDocs,
-    })),
-  "testimonial-marquee": () =>
-    import("@/components/docs/testimonial-marquee").then((m) => ({
-      default: m.TestimonialMarqueeDocs,
     })),
   "magnetic-dock": () =>
     import("@/components/docs/magnetic-dock").then((m) => ({
@@ -98,17 +70,9 @@ const docsImportMap: Record<
     import("@/components/docs/animated-gradient").then((m) => ({
       default: m.AnimatedGradientDocs,
     })),
-  "border-beam": () =>
-    import("@/components/docs/border-beam").then((m) => ({
-      default: m.BorderBeamDocs,
-    })),
   "dither-gradient": () =>
     import("@/components/docs/dither-gradient").then((m) => ({
       default: m.DitherGradientDocs,
-    })),
-  "liquid-blob": () =>
-    import("@/components/docs/liquid-blob").then((m) => ({
-      default: m.LiquidBlobDocs,
     })),
   "magnet-lines": () =>
     import("@/components/docs/magnet-lines").then((m) => ({
@@ -118,21 +82,9 @@ const docsImportMap: Record<
     import("@/components/docs/matrix-rain").then((m) => ({
       default: m.MatrixRainDocs,
     })),
-  "noise-texture": () =>
-    import("@/components/docs/noise-texture").then((m) => ({
-      default: m.NoiseTextureDocs,
-    })),
-  "particle-galaxy": () =>
-    import("@/components/docs/particle-galaxy").then((m) => ({
-      default: m.ParticleGalaxyDocs,
-    })),
   "pixel-canvas": () =>
     import("@/components/docs/pixel-canvas").then((m) => ({
       default: m.PixelCanvasDocs,
-    })),
-  "scrub-input": () =>
-    import("@/components/docs/scrub-input").then((m) => ({
-      default: m.ScrubInputDocs,
     })),
   "scroll-choreography": () =>
     import("@/components/docs/scroll-choreography").then((m) => ({

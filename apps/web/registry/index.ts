@@ -49,24 +49,6 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/scrollsplitcard.webm",
   },
-  // Text Animations
-  "hyper-text": {
-    title: "Hyper Text",
-    description:
-      "A text scramble effect that cycles through characters before revealing the final text. Inspired by cyberpunk and futuristic UIs.",
-    category: "Text Animations",
-    slug: "hyper-text",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/hovereffect1.mov",
-  },
-  "text-animate": {
-    title: "Text Animate",
-    description: "Animate text characters with staggered delays and effects.",
-    category: "Text Animations",
-    slug: "text-animate",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/textanimate.mov",
-  },
   "mac-keyboard": {
     title: "Mac Keyboard",
     description: "A realistic Mac keyboard component with interactive keys and detailed styling.",
@@ -125,14 +107,6 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/circuitboard.mov",
   },
-  "command-menu": {
-    title: "Command Menu",
-    description: "Fast, accessible, and composable command menu for React.",
-    category: "Components",
-    slug: "command-menu",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/commandmenu.mov",
-  },
   "flight-status-card": {
     title: "Flight Status Card",
     description: "A detailed card showing flight information with animations.",
@@ -149,38 +123,6 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/magneticdock.mov",
   },
-  "showcase-card": {
-    title: "Showcase Card",
-    description: "Card component for showcasing projects or features.",
-    category: "Components",
-    slug: "showcase-card",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/showcasecard.mov",
-  },
-  "spotlight-card": {
-    title: "Spotlight Card",
-    description: "A card that reveals a spotlight effect on hover.",
-    category: "Components",
-    slug: "spotlight-card",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/spotlightcard.mov",
-  },
-  "auth-modal": {
-    title: "Auth Modal",
-    description: "Beautiful authentication modal with transitions.",
-    category: "Components",
-    slug: "auth-modal",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/authmodal.mov",
-  },
-  "testimonial-marquee": {
-    title: "Testimonial Marquee",
-    description: "Infinite scrolling marquee for testimonials.",
-    category: "Components",
-    slug: "testimonial-marquee",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/testimonialmarquee.mov",
-  },
   "collection-surfer": {
     title: "Collection Surfer",
     description: "Smooth surfing interaction for browsing collections.",
@@ -196,15 +138,6 @@ export const components: Record<string, ComponentMetadata> = {
     slug: "github-calendar",
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/githubcalendar.mov",
-  },
-  "scrub-input": {
-    title: "Scrub Input",
-    description: "An inline interactive slider styled as a pill.",
-    category: "Components",
-    slug: "scrub-input",
-    addedAt: "2026-02-27",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/scrubinput.mp4",
   },
   "scroll-choreography": {
     title: "Scroll Choreography",
@@ -321,14 +254,6 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/infiniteimagefield.webm",
   },
-  "border-beam": {
-    title: "Border Beam",
-    description: "Animated beam of light traveling along the border.",
-    category: "Visual Effects",
-    slug: "border-beam",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/borderbeam.mov",
-  },
   "dither-gradient": {
     title: "Dither Gradient",
     description: "Gradient background with dithering noise.",
@@ -337,14 +262,6 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/dithergradient.mov",
   },
-  "liquid-blob": {
-    title: "Liquid Blob",
-    description: "Animated liquid blob shape.",
-    category: "Visual Effects",
-    slug: "liquid-blob",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/liquidblob.mov",
-  },
   "magnet-lines": {
     title: "Magnet Lines",
     description: "Lines that react to cursor movement like a magnetic field.",
@@ -352,22 +269,6 @@ export const components: Record<string, ComponentMetadata> = {
     slug: "magnet-lines",
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/magneticlines.mov",
-  },
-  "noise-texture": {
-    title: "Noise Texture",
-    description: "Subtle noise texture overlay.",
-    category: "Visual Effects",
-    slug: "noise-texture",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/noisetexture.mov",
-  },
-  "particle-galaxy": {
-    title: "Particle Galaxy",
-    description: "Interactive 3D particle system resembling a galaxy.",
-    category: "Visual Effects",
-    slug: "particle-galaxy",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/particlegalaxy.mov",
   },
   "pixel-canvas": {
     title: "Pixel Canvas",
