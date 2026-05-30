@@ -3,11 +3,12 @@ import type React from "react"
 import Link from "next/link"
 import { Suspense } from "react"
 import { InstallCommand } from "@/components/install-command"
-import { CodeBlock } from "@/components/code-block"
+import { ImportCodeBlock } from "@/components/import-code-block"
 import { DynamicCodeBlock } from "@/components/dynamic-code-block"
 import { Section } from "@/components/component-layout"
 import { DocsPreviewWrapper, type VariantItem } from "@/components/docs-preview-wrapper"
 import { highlightCode } from "@/lib/shiki"
+import { splitImportAndUsage, stripImportFromCode } from "@/lib/split-import"
 import type { BundledLanguage } from "shiki"
 import { CodeXml, Info } from "lucide-react"
 import { FloatingDocsSidebarLazy } from "@/components/floating-docs-sidebar-lazy"
@@ -77,14 +78,37 @@ export async function DocsPageLayout({
 
   // Generate the page context markdown automatically
 
-  // Pre-highlight default usage code
+  // Auto-split import lines from usageCode for Import + Usage sections
+  let resolvedImportCode = ""
+  let resolvedUsageCode = ""
+  let importHtml = ""
   let usageHtml = ""
+
   if (typeof usageCode === "string") {
-    usageHtml = await highlightCode(usageCode.trim(), "tsx" as BundledLanguage)
+    const split = splitImportAndUsage(usageCode)
+
+    resolvedImportCode =
+      typeof importCode === "string" && importCode.trim()
+        ? importCode.trim()
+        : split.importCode
+
+    resolvedUsageCode = split.usageCode || usageCode.trim()
+
+    // If usage still starts with imports (e.g. explicit importCode + full usageCode), strip them
+    if (resolvedUsageCode.startsWith("import ")) {
+      resolvedUsageCode = stripImportFromCode(resolvedUsageCode)
+    }
+
+    if (resolvedImportCode) {
+      importHtml = await highlightCode(resolvedImportCode, "tsx" as BundledLanguage)
+    }
+    if (resolvedUsageCode) {
+      usageHtml = await highlightCode(resolvedUsageCode, "tsx" as BundledLanguage)
+    }
   }
 
-  const variantCodes = examples.map(ex => ex.code || "")
-  const variantTitles = examples.map(ex => ex.title)
+  const variantCodes = examples.map((ex) => stripImportFromCode(ex.code || ""))
+  const variantTitles = examples.map((ex) => ex.title)
 
   return (
     <div
@@ -150,27 +174,6 @@ export async function DocsPageLayout({
               <InstallCommand component={installPackageName} />
             </Section>
 
-            {/* Import */}
-            {importCode && (
-              <Section title="Import" className="pt-10">
-                <div className="space-y-4 usage-code-scrollbar-none">
-                  <div className="relative rounded-xl border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
-                    <Suspense fallback={<CodeBlockSkeleton />}>
-                      {typeof importCode === "string" ? (
-                        <CodeBlock
-                          code={importCode}
-                          lang="tsx"
-                          className="border-none !bg-transparent shadow-none !rounded-none [&_pre]:!overflow-x-auto [&_pre]:!overflow-y-hidden"
-                        />
-                      ) : (
-                        importCode
-                      )}
-                    </Suspense>
-                  </div>
-                </div>
-              </Section>
-            )}
-
             {/* Usage */}
             <Section title="Usage" className="pt-10">
               {usageNote && (
@@ -178,22 +181,35 @@ export async function DocsPageLayout({
                   {usageNote}
                 </div>
               )}
-              <div className="space-y-4 usage-code-scrollbar-none">
-                <div className="relative rounded-xl border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
-                  <Suspense fallback={<CodeBlockSkeleton />}>
-                    {typeof usageCode === "string" ? (
-                      <DynamicCodeBlock
-                        originalCode={usageCode}
-                        defaultHtml={usageHtml}
-                        variantTitles={variantTitles}
-                        variantCodes={variantCodes}
-                        className="border-none !bg-transparent shadow-none !rounded-none [&_pre]:!overflow-x-auto [&_pre]:!overflow-y-hidden"
-                      />
-                    ) : (
-                      usageCode
-                    )}
-                  </Suspense>
-                </div>
+              <div className="usage-code-scrollbar-none">
+                {typeof usageCode === "string" ? (
+                  resolvedUsageCode ? (
+                    <Suspense fallback={<CodeBlockSkeleton />}>
+                      {resolvedImportCode ? (
+                        <div className="space-y-3">
+                          <ImportCodeBlock html={importHtml} />
+                          <DynamicCodeBlock
+                            originalCode={resolvedUsageCode}
+                            defaultHtml={usageHtml}
+                            variantTitles={variantTitles}
+                            variantCodes={variantCodes}
+                            hideDefaultTab={hideDefaultPreviewVariant}
+                          />
+                        </div>
+                      ) : (
+                        <DynamicCodeBlock
+                          originalCode={resolvedUsageCode}
+                          defaultHtml={usageHtml}
+                          variantTitles={variantTitles}
+                          variantCodes={variantCodes}
+                          hideDefaultTab={hideDefaultPreviewVariant}
+                        />
+                      )}
+                    </Suspense>
+                  ) : null
+                ) : (
+                  usageCode
+                )}
               </div>
             </Section>
 

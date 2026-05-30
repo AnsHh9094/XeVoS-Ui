@@ -1,17 +1,18 @@
 "use client"
 
 import * as React from "react"
-import { CopyButton } from "@/components/copy-button"
-import { useDocStore } from "@/hooks/use-doc-store"
-import { FileCode2 } from "lucide-react"
+import { Code2 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { DocsCodePanel } from "@/components/docs-code-panel"
+import { useDocStore } from "@/hooks/use-doc-store"
 
 interface DynamicCodeBlockProps {
-  originalCode: string;
-  defaultHtml: string;
-  className?: string;
-  variantCodes?: string[];
-  variantTitles?: string[];
+  originalCode: string
+  defaultHtml: string
+  className?: string
+  variantCodes?: string[]
+  variantTitles?: string[]
+  hideDefaultTab?: boolean
 }
 
 export function DynamicCodeBlock({
@@ -19,11 +20,34 @@ export function DynamicCodeBlock({
   defaultHtml,
   className,
   variantCodes = [],
-  variantTitles = []
+  variantTitles = [],
+  hideDefaultTab = false,
 }: DynamicCodeBlockProps) {
   const { activeVariantIndex, setActiveVariantIndex } = useDocStore()
   const [variantHtmlMap, setVariantHtmlMap] = React.useState<Record<number, string>>({})
   const [loadingVariant, setLoadingVariant] = React.useState<number | null>(null)
+
+  const tabs = React.useMemo(() => {
+    const items: { id: string; label: string }[] = []
+    if (!hideDefaultTab) {
+      items.push({ id: "default", label: "Default" })
+    }
+    variantTitles.forEach((title, i) => {
+      items.push({ id: String(i), label: title })
+    })
+    return items
+  }, [hideDefaultTab, variantTitles])
+
+  const activeTab = React.useMemo(() => {
+    if (activeVariantIndex === -1) return hideDefaultTab ? tabs[0]?.id ?? "default" : "default"
+    return String(activeVariantIndex)
+  }, [activeVariantIndex, hideDefaultTab, tabs])
+
+  React.useEffect(() => {
+    if (hideDefaultTab && activeVariantIndex === -1 && variantTitles.length > 0) {
+      setActiveVariantIndex(0)
+    }
+  }, [hideDefaultTab, activeVariantIndex, variantTitles.length, setActiveVariantIndex])
 
   React.useEffect(() => {
     let cancelled = false
@@ -64,65 +88,43 @@ export function DynamicCodeBlock({
     }
   }, [activeVariantIndex, variantCodes, variantHtmlMap])
 
-  // Determine which HTML to show
   const isMissingVariantHtml = activeVariantIndex >= 0 && !variantHtmlMap[activeVariantIndex]
-  const htmlToRender = activeVariantIndex === -1
-    ? defaultHtml
-    : (variantHtmlMap[activeVariantIndex] || "");
+  const htmlToRender =
+    activeVariantIndex === -1 ? defaultHtml : variantHtmlMap[activeVariantIndex] || ""
 
-  // Determine which raw code to use for copy button
-  const rawCodeToUse = activeVariantIndex === -1
-    ? originalCode
-    : (variantCodes[activeVariantIndex] || originalCode);
+  const rawCodeToUse =
+    activeVariantIndex === -1
+      ? originalCode
+      : variantCodes[activeVariantIndex] || originalCode
+
+  const handleTabChange = (id: string) => {
+    if (id === "default") {
+      setActiveVariantIndex(-1)
+      return
+    }
+    setActiveVariantIndex(Number(id))
+  }
 
   return (
-    <div
-      data-code-block
-      data-line-numbers="false"
-      className={`relative text-sm w-full border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50 ${className?.includes('h-full') ? 'flex flex-col ' : ''}${className || "rounded-xl"}`}
+    <DocsCodePanel
+      icon={Code2}
+      copyCode={rawCodeToUse.trim()}
+      tabs={tabs.length > 1 ? tabs : undefined}
+      activeTab={activeTab}
+      onTabChange={handleTabChange}
+      tabListAriaLabel="Example variant"
+      className={className}
     >
-      {/* Editor Tab Header */}
-      <div className="flex w-full items-center border-b border-border/40 bg-zinc-50/50 dark:bg-zinc-900/20 overflow-x-auto no-scrollbar">
-        
-        {/* Default Tab (-1) */}
-        <button
-          onClick={() => setActiveVariantIndex(-1)}
-          className={cn(
-            "flex items-center gap-2 border-r border-border/40 px-4 py-2.5 text-xs font-medium transition-all min-w-fit outline-none hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50",
-            activeVariantIndex === -1 
-              ? "bg-transparent text-zinc-950 dark:text-zinc-50 font-semibold" 
-              : "bg-zinc-100/30 dark:bg-zinc-800/10 text-muted-foreground/80 hover:text-foreground"
-          )}
-        >
-           <FileCode2 className={cn("h-3.5 w-3.5", activeVariantIndex === -1 ? "text-zinc-950 dark:text-zinc-50" : "text-muted-foreground/70")} />
-           <span>Default</span>
-        </button>
-
-        {/* Variant Tabs */}
-        {variantTitles.map((title, i) => (
-           <button
-            key={i}
-            onClick={() => setActiveVariantIndex(i)}
-            className={cn(
-               "flex items-center gap-2 border-r border-border/40 px-4 py-2.5 text-xs font-medium transition-all min-w-fit outline-none hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50",
-               activeVariantIndex === i
-                ? "bg-transparent text-zinc-950 dark:text-zinc-50 font-semibold" 
-                : "bg-zinc-100/30 dark:bg-zinc-800/10 text-muted-foreground/80 hover:text-foreground"
-            )}
-           >
-             <FileCode2 className={cn("h-3.5 w-3.5", activeVariantIndex === i ? "text-zinc-950 dark:text-zinc-50" : "text-muted-foreground/70")} />
-             <span>{title}</span>
-           </button>
-        ))}
-
-        {/* Empty tab bar space */}
-        <div className="flex-1" />
-      </div>
-
-      <div className={`relative group ${className?.includes('h-full') ? 'flex-1 min-h-0 flex flex-col' : 'h-full'}`}>
-        <CopyButton code={rawCodeToUse.trim()} />
+      <div className={cn(className?.includes("h-full") && "h-full")}>
         <div
-          className={`[&_pre]:p-4 [&_pre]:overflow-x-auto overflow-auto ${className?.includes('max-h-none') ? (className?.includes('h-full') ? 'flex-1 min-h-0' : 'h-full') : 'max-h-[500px]'}`}
+          className={cn(
+            "[&_pre]:overflow-x-auto [&_pre]:p-4 overflow-auto",
+            className?.includes("max-h-none")
+              ? className?.includes("h-full")
+                ? "h-full"
+                : "h-full"
+              : "max-h-[500px]"
+          )}
           dangerouslySetInnerHTML={{ __html: htmlToRender }}
         />
         {isMissingVariantHtml && (
@@ -134,6 +136,6 @@ export function DynamicCodeBlock({
           <div className="pointer-events-none absolute inset-0 bg-background/40 backdrop-blur-[1px]" />
         )}
       </div>
-    </div>
-  );
+    </DocsCodePanel>
+  )
 }
