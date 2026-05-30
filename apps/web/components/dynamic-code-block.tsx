@@ -5,6 +5,7 @@ import { Code2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { DocsCodePanel } from "@/components/docs-code-panel"
 import { useDocStore } from "@/hooks/use-doc-store"
+import { useSmoothCodeHeight } from "@/hooks/use-smooth-code-height"
 
 interface DynamicCodeBlockProps {
   originalCode: string
@@ -13,6 +14,21 @@ interface DynamicCodeBlockProps {
   variantCodes?: string[]
   variantTitles?: string[]
   hideDefaultTab?: boolean
+}
+
+async function fetchHighlightedTsx(code: string): Promise<string> {
+  const response = await fetch("/api/docs/source", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ code, lang: "tsx" }),
+  })
+
+  if (!response.ok) {
+    throw new Error("Failed to highlight code")
+  }
+
+  const data = (await response.json()) as { html?: string }
+  return data.html ?? ""
 }
 
 export function DynamicCodeBlock({
@@ -25,7 +41,8 @@ export function DynamicCodeBlock({
 }: DynamicCodeBlockProps) {
   const { activeVariantIndex, setActiveVariantIndex } = useDocStore()
   const [variantHtmlMap, setVariantHtmlMap] = React.useState<Record<number, string>>({})
-  const [loadingVariant, setLoadingVariant] = React.useState<number | null>(null)
+  const [visibleHtml, setVisibleHtml] = React.useState(defaultHtml)
+  const [isSwitching, setIsSwitching] = React.useState(false)
 
   const tabs = React.useMemo(() => {
     const items: { id: string; label: string }[] = []
@@ -43,6 +60,16 @@ export function DynamicCodeBlock({
     return String(activeVariantIndex)
   }, [activeVariantIndex, hideDefaultTab, tabs])
 
+  const targetHtml =
+    activeVariantIndex === -1 ? defaultHtml : variantHtmlMap[activeVariantIndex]
+
+  const rawCodeToUse =
+    activeVariantIndex === -1
+      ? originalCode
+      : variantCodes[activeVariantIndex] || originalCode
+
+  const { contentRef, wrapperProps } = useSmoothCodeHeight([visibleHtml, activeVariantIndex])
+
   React.useEffect(() => {
     if (hideDefaultTab && activeVariantIndex === -1 && variantTitles.length > 0) {
       setActiveVariantIndex(0)
@@ -52,50 +79,47 @@ export function DynamicCodeBlock({
   React.useEffect(() => {
     let cancelled = false
 
-    const loadVariantHtml = async () => {
-      if (activeVariantIndex < 0) return
-      if (variantHtmlMap[activeVariantIndex]) return
-
-      const variantCode = variantCodes[activeVariantIndex]
-      if (!variantCode) return
-
-      setLoadingVariant(activeVariantIndex)
-      try {
-        const response = await fetch("/api/docs/source", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ code: variantCode, lang: "tsx" }),
+    const prefetchVariants = async () => {
+      const entries = await Promise.all(
+        variantCodes.map(async (code, index) => {
+          if (!code) return null
+          try {
+            const html = await fetchHighlightedTsx(code)
+            return { index, html }
+          } catch {
+            return null
+          }
         })
+      )
 
-        if (!response.ok) {
-          return
-        }
+      if (cancelled) return
 
-        const data = (await response.json()) as { html?: string }
-        if (!cancelled && data.html) {
-          setVariantHtmlMap((prev) => ({ ...prev, [activeVariantIndex]: data.html as string }))
+      setVariantHtmlMap((prev) => {
+        const next = { ...prev }
+        for (const entry of entries) {
+          if (entry?.html) {
+            next[entry.index] = entry.html
+          }
         }
-      } finally {
-        if (!cancelled) {
-          setLoadingVariant((current) => (current === activeVariantIndex ? null : current))
-        }
-      }
+        return next
+      })
     }
 
-    loadVariantHtml()
+    prefetchVariants()
     return () => {
       cancelled = true
     }
-  }, [activeVariantIndex, variantCodes, variantHtmlMap])
+  }, [variantCodes])
 
-  const isMissingVariantHtml = activeVariantIndex >= 0 && !variantHtmlMap[activeVariantIndex]
-  const htmlToRender =
-    activeVariantIndex === -1 ? defaultHtml : variantHtmlMap[activeVariantIndex] || ""
-
-  const rawCodeToUse =
-    activeVariantIndex === -1
-      ? originalCode
-      : variantCodes[activeVariantIndex] || originalCode
+  React.useEffect(() => {
+    if (targetHtml) {
+      setIsSwitching(true)
+      setVisibleHtml(targetHtml)
+      const timer = window.setTimeout(() => setIsSwitching(false), 200)
+      return () => window.clearTimeout(timer)
+    }
+    return undefined
+  }, [targetHtml])
 
   const handleTabChange = (id: string) => {
     if (id === "default") {
@@ -104,6 +128,9 @@ export function DynamicCodeBlock({
     }
     setActiveVariantIndex(Number(id))
   }
+
+  const isLoadingActiveVariant =
+    activeVariantIndex >= 0 && !variantHtmlMap[activeVariantIndex]
 
   return (
     <DocsCodePanel
@@ -115,26 +142,25 @@ export function DynamicCodeBlock({
       tabListAriaLabel="Example variant"
       className={className}
     >
-      <div className={cn(className?.includes("h-full") && "h-full")}>
+      <div
+        {...wrapperProps}
+        className={cn(wrapperProps.className, className?.includes("h-full") && "h-full")}
+      >
         <div
+          ref={contentRef}
           className={cn(
-            "[&_pre]:overflow-x-auto [&_pre]:p-4 overflow-auto",
+            "transition-opacity duration-150",
+            (isSwitching || isLoadingActiveVariant) && "opacity-70",
             className?.includes("max-h-none")
-              ? className?.includes("h-full")
-                ? "h-full"
-                : "h-full"
-              : "max-h-[500px]"
+              ? "h-full"
+              : "max-h-[500px] overflow-auto"
           )}
-          dangerouslySetInnerHTML={{ __html: htmlToRender }}
-        />
-        {isMissingVariantHtml && (
-          <div className="pointer-events-none absolute inset-0 p-4">
-            <div className="h-full w-full animate-pulse rounded-md border border-border bg-muted/20" />
-          </div>
-        )}
-        {loadingVariant !== null && (
-          <div className="pointer-events-none absolute inset-0 bg-background/40 backdrop-blur-[1px]" />
-        )}
+        >
+          <div
+            className="[&_pre]:overflow-x-auto [&_pre]:p-4 [&_pre]:whitespace-pre"
+            dangerouslySetInnerHTML={{ __html: visibleHtml }}
+          />
+        </div>
       </div>
     </DocsCodePanel>
   )

@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import {
   INSTALL_COMMANDS,
   PackageManagerCommand,
@@ -16,9 +17,10 @@ export function InstallCommand({ component }: InstallCommandProps) {
     ? component
     : `${registryNamespace}/${component}`
 
-  const getCommand = (pm: PackageManager) => `${INSTALL_COMMANDS[pm]} ${componentRef}`
-
-  return (
-    <PackageManagerCommand getCommand={getCommand} />
+  const getCommand = React.useCallback(
+    (pm: PackageManager) => `${INSTALL_COMMANDS[pm]} ${componentRef}`,
+    [componentRef]
   )
+
+  return <PackageManagerCommand getCommand={getCommand} />
 }
