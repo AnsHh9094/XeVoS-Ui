@@ -70,7 +70,7 @@ function CommandTabs({ selected, onSelect }: { selected: PackageManager; onSelec
             <span className="text-zinc-950 dark:text-zinc-100">{MCP_INIT_COMMANDS[selected]}</span>
           </div>
 
-          <div className="absolute right-0 top-0 bottom-0 pl-16 pr-4 flex items-center bg-gradient-to-l from-zinc-100 via-zinc-100/90 to-transparent dark:from-zinc-900 dark:via-zinc-900/90 dark:to-transparent">
+          <div className="absolute right-0 top-0 bottom-0 pl-16 pr-4 flex items-center bg-gradient-to-l from-zinc-100/90 to-transparent dark:from-zinc-900/90 dark:to-transparent">
             <CopyButton code={MCP_INIT_COMMANDS[selected]} />
           </div>
         </div>
@@ -92,7 +92,7 @@ export default function McpDocsPage() {
       <main className="max-w-3xl mx-auto pt-32 pb-32 px-6 sm:px-8 relative z-10">
         {/* ── Hero (match /docs) ── */}
         <div className="mb-12">
-          <h1 className="text-4xl lg:text-5xl font-bold tracking-tighter bg-gradient-to-br from-zinc-900 via-zinc-500 to-zinc-900 dark:from-white dark:via-zinc-400 dark:to-white bg-clip-text text-transparent leading-[1.1] mb-2 inline-block">
+          <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 leading-[1.1] mb-2 inline-block">
             MCP
           </h1>
           <p className="text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">

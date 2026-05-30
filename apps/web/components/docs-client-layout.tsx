@@ -48,7 +48,7 @@ export function DocsClientLayout({
                                 <AnimatePresence mode="popLayout">
                                     <motion.h1
                                         layoutId="title"
-                                        className="text-4xl lg:text-6xl font-bold tracking-tighter bg-gradient-to-br from-zinc-900 via-zinc-500 to-zinc-900 dark:from-white dark:via-zinc-400 dark:to-white bg-clip-text text-transparent leading-[1.1] mb-2 pb-2"
+                                        className="text-4xl lg:text-6xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 leading-[1.1] mb-2 pb-2"
                                     >
                                         {title}
                                     </motion.h1>

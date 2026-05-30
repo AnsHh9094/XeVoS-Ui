@@ -326,7 +326,7 @@ export default function DocsPage() {
 
         {/* ── Hero ── */}
         <div className="mb-12 max-w-3xl">
-          <h1 className="text-4xl lg:text-5xl font-bold tracking-tighter bg-gradient-to-br from-zinc-900 via-zinc-500 to-zinc-900 dark:from-white dark:via-zinc-400 dark:to-white bg-clip-text text-transparent leading-[1.1] mb-2 inline-block">
+          <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 leading-[1.1] mb-2 inline-block">
             Crafted Components.
           </h1>
           <p className="text-lg text-zinc-500 dark:text-zinc-400 max-w-xl leading-relaxed">

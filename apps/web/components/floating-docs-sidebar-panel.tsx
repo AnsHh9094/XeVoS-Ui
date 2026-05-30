@@ -228,7 +228,7 @@ export function FloatingDocsSidebarPanel() {
               ))}
             </div>
 
-            <div className="pointer-events-none absolute bottom-2 left-2 right-2 h-8 rounded-b-2xl bg-gradient-to-t from-white to-transparent dark:from-zinc-950" />
+            <div className="pointer-events-none absolute bottom-2 left-2 right-2 h-6 rounded-b-2xl bg-gradient-to-t from-white to-transparent dark:from-zinc-950" />
           </div>
 
           <AnimatePresence>

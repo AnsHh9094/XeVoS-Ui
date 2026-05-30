@@ -115,9 +115,9 @@ export async function DocsPageLayout({
         data-docs-left-column
         className="w-full lg:basis-1/2 lg:max-w-1/2 h-full flex flex-col relative z-10 bg-[#f3f4f6] dark:bg-[#080808]"
       >
-        {/* Premium Overlay & Navigation Gradients - Only visible on desktop or when navigation is over this column */}
-        <div className="absolute top-0 left-0 right-0 z-30 h-32 bg-gradient-to-b from-[#f3f4f6] via-[#f3f4f6]/95 to-transparent dark:from-[#080808] dark:via-[#080808]/95 pointer-events-none backdrop-blur-[1px] hidden lg:block" />
-        <div className="absolute bottom-0 left-0 right-0 z-30 h-32 bg-gradient-to-t from-[#f3f4f6] via-[#f3f4f6]/95 to-transparent dark:from-[#080808] dark:via-[#080808]/95 pointer-events-none backdrop-blur-[1px]" />
+        {/* Scroll edge fades — subtly blend content into page background */}
+        <div className="absolute top-0 left-0 right-0 z-30 h-24 bg-gradient-to-b from-[#f3f4f6] to-transparent dark:from-[#080808] pointer-events-none hidden lg:block" />
+        <div className="absolute bottom-0 left-0 right-0 z-30 h-24 bg-gradient-to-t from-[#f3f4f6] to-transparent dark:from-[#080808] pointer-events-none" />
 
         <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <div className="px-6 lg:px-16 pt-12 lg:pt-48 pb-40 space-y-16 lg:space-y-20 max-w-3xl mx-auto">
@@ -128,7 +128,7 @@ export async function DocsPageLayout({
 
               <div className="space-y-6">
                 {/* Title */}
-                <h1 className="text-4xl lg:text-6xl font-bold tracking-tighter bg-gradient-to-br from-zinc-900 via-zinc-500 to-zinc-900 dark:from-white dark:via-zinc-400 dark:to-white bg-clip-text text-transparent leading-[1.1] mb-2 pb-2">
+                <h1 className="text-4xl lg:text-6xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 leading-[1.1] mb-2 pb-2">
                   {title}
                 </h1>
 

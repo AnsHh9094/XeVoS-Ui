@@ -427,7 +427,7 @@ export function DocsPreviewWrapper({
             >
               <div className="relative h-full bg-[#f3f4f6] dark:bg-[#121212] lg:rounded-2xl overflow-hidden border border-border/20 shadow-2xl pointer-events-auto">
                 <div className="absolute top-0 left-0 right-0 z-20 pointer-events-none">
-                  <div className="absolute inset-0 h-40 bg-gradient-to-b from-[#f3f4f6] via-[#f3f4f6] to-transparent dark:from-[#121212] dark:via-[#121212] dark:to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_20%,transparent)]" />
+                  <div className="absolute inset-0 h-32 bg-gradient-to-b from-[#f3f4f6] to-transparent dark:from-[#121212] [mask-image:linear-gradient(to_bottom,black_20%,transparent)]" />
                   <div className="relative z-10 flex flex-col pointer-events-auto">
                     <div className="flex items-center justify-center pt-2 pb-1">
                       <div className="w-10 h-1 rounded-full bg-zinc-900/[0.08] dark:bg-white/[0.08] transition-colors hover:bg-zinc-900/[0.15] dark:hover:bg-white/[0.15]" />
@@ -446,7 +446,7 @@ export function DocsPreviewWrapper({
                 </div>
 
                 <div className="relative h-full min-h-0">
-                  <div className="absolute bottom-0 left-0 right-0 z-10 h-24 bg-gradient-to-t from-[#f3f4f6] via-[#f3f4f6]/80 to-transparent dark:from-[#121212] dark:via-[#121212]/80 dark:to-transparent pointer-events-none backdrop-blur-sm [mask-image:linear-gradient(to_top,black,transparent)]" />
+                  <div className="absolute bottom-0 left-0 right-0 z-10 h-16 bg-gradient-to-t from-[#f3f4f6] to-transparent dark:from-[#121212] pointer-events-none [mask-image:linear-gradient(to_top,black_30%,transparent)]" />
                   <div className="h-full">{personalizeContent}</div>
                 </div>
               </div>
@@ -480,7 +480,7 @@ export function DocsPreviewWrapper({
               <div className="relative h-full bg-[#f3f4f6] dark:bg-[#121212] lg:rounded-2xl overflow-hidden border border-border/20 shadow-2xl pointer-events-auto">
                 {/* Header Overlay */}
                 <div className="absolute top-0 left-0 right-0 z-20 pointer-events-none">
-                  <div className="absolute inset-0 h-40 bg-gradient-to-b from-[#f3f4f6] via-[#f3f4f6] to-transparent dark:from-[#121212] dark:via-[#121212] dark:to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_20%,transparent)]" />
+                  <div className="absolute inset-0 h-32 bg-gradient-to-b from-[#f3f4f6] to-transparent dark:from-[#121212] [mask-image:linear-gradient(to_bottom,black_20%,transparent)]" />
                   <div className="relative z-10 flex flex-col pointer-events-auto">
                     {/* Drag handle - top edge-to-edge */}
                     <div
@@ -531,12 +531,12 @@ export function DocsPreviewWrapper({
                 {/* Code content - full height, hidden scrollbar */}
                 <div className="relative h-full min-h-0">
                   {/* Bottom gradient overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 z-10 h-24 bg-gradient-to-t from-[#f3f4f6] via-[#f3f4f6]/80 to-transparent dark:from-[#121212] dark:via-[#121212]/80 dark:to-transparent pointer-events-none backdrop-blur-sm [mask-image:linear-gradient(to_top,black,transparent)]" />
+                  <div className="absolute bottom-0 left-0 right-0 z-10 h-16 bg-gradient-to-t from-[#f3f4f6] to-transparent dark:from-[#121212] pointer-events-none [mask-image:linear-gradient(to_top,black_30%,transparent)]" />
                   <div data-drawer-code className="h-full overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] [&_pre]:min-h-full [&_pre]:!pt-24 [&_pre]:!px-4 [&_.relative.group_>_button]:hidden">
                     <div className="h-full w-full">
                       {isSourceLoading && (
                         <div className="flex h-full items-center justify-center px-4 pt-24 pb-8">
-                          <span className="bg-gradient-to-r from-muted-foreground/30 via-muted-foreground/70 to-muted-foreground/30 bg-[length:200%_100%] bg-clip-text text-sm text-transparent [animation:shimmer_1.8s_ease-in-out_infinite] font-mono tracking-wide">
+                          <span className="text-sm text-muted-foreground/60 font-mono tracking-wide">
                             Loading source code...
                           </span>
                         </div>
