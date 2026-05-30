@@ -181,14 +181,14 @@ export function Testimonials() {
         }
       `}</style>
 
-      <section className="w-full pt-6 pb-20 overflow-x-hidden">
+      <section className="w-full min-w-0 overflow-x-hidden pt-6 pb-20">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-12 px-4"
+          className="mx-auto mb-12 max-w-[1240px] text-center"
         >
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-zinc-400 dark:text-zinc-600 mb-3">
             What developers are saying
@@ -204,14 +204,10 @@ export function Testimonials() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="relative flex flex-col gap-3"
+          className="relative flex flex-col gap-3 [mask-image:linear-gradient(to_right,transparent,black_2.5rem,black_calc(100%-2.5rem),transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_2.5rem,black_calc(100%-2.5rem),transparent)] sm:[mask-image:linear-gradient(to_right,transparent,black_4rem,black_calc(100%-4rem),transparent)] sm:[-webkit-mask-image:linear-gradient(to_right,transparent,black_4rem,black_calc(100%-4rem),transparent)]"
         >
           <MarqueeRow items={row1} direction="left" speed={40} />
           <MarqueeRow items={row2} direction="right" speed={35} />
-
-          {/* Edge fades */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white dark:from-[#111] to-transparent z-10" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white dark:from-[#111] to-transparent z-10" />
         </motion.div>
       </section>
     </>

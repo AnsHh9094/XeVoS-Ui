@@ -9,11 +9,11 @@ export function HeroButtons() {
     const installCommand = "npx shadcn@latest add @componentry/magnetic-dock"
 
     return (
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 pb-2">
-            <motion.div whileTap={{ scale: 0.98 }}>
-                <div className="group relative inline-flex h-12 items-center justify-center gap-3 overflow-hidden rounded-xl bg-[#E3E3E3]/80 px-4 hover:px-6 text-sm font-semibold text-zinc-900 backdrop-blur-xl transition-all duration-300 shadow-[0_2px_4px_0_rgba(0,0,0,0.10),0_0_0_1px_rgba(0,0,0,0.16),inset_0_1px_0_0_rgba(255,255,255,1)] hover:shadow-[0_4px_8px_0_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.16),inset_0_1px_0_0_rgba(255,255,255,1)] dark:bg-zinc-800/80 dark:text-zinc-100 dark:shadow-[0_2px_4px_0_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.1)]">
+        <div className="flex w-full min-w-0 flex-col items-stretch justify-start gap-4 pt-6 pb-2 sm:flex-row sm:items-start">
+            <motion.div whileTap={{ scale: 0.98 }} className="min-w-0 w-full sm:w-auto">
+                <div className="group relative flex h-12 w-full min-w-0 items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-b from-[#EAEAEA]/90 to-[#D8D8D8]/90 px-3 text-sm font-semibold text-zinc-900 backdrop-blur-xl transition-all duration-500 shadow-[0_1px_1px_0_rgba(0,0,0,0.06),0_4px_8px_-2px_rgba(0,0,0,0.10),0_0_0_1px_rgba(0,0,0,0.15),inset_0_1.5px_0_0_rgba(255,255,255,0.9),inset_0_-1px_0_0_rgba(0,0,0,0.04)] hover:shadow-[0_2px_2px_0_rgba(0,0,0,0.06),0_10px_20px_-6px_rgba(0,0,0,0.14),0_0_0_1px_rgba(0,0,0,0.15),inset_0_1.5px_0_0_rgba(255,255,255,0.9),inset_0_-1px_0_0_rgba(0,0,0,0.04)] dark:bg-gradient-to-b dark:from-zinc-700/90 dark:to-zinc-800/90 dark:text-zinc-100 dark:shadow-[0_1px_1px_0_rgba(0,0,0,0.3),0_4px_8px_-2px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.08),inset_0_1.5px_0_0_rgba(255,255,255,0.06)] sm:inline-flex sm:w-auto sm:gap-3 sm:px-4 sm:hover:px-6">
                     <Terminal className="h-4 w-4 text-zinc-600 dark:text-zinc-400" />
-                    <span className="font-mono text-sm tracking-tight text-zinc-700 dark:text-zinc-400 max-w-[180px] sm:max-w-[260px] whitespace-nowrap overflow-hidden text-ellipsis">
+                    <span className="min-w-0 flex-1 truncate font-mono text-xs tracking-tight text-zinc-700 dark:text-zinc-400 sm:text-sm">
                         {installCommand}
                     </span>
                     <CopyButton code={installCommand} absolute={false} className="p-1.5" />
@@ -23,7 +23,7 @@ export function HeroButtons() {
             <motion.div whileTap={{ scale: 0.98 }} className="relative z-10 w-full sm:w-fit">
                 <Link
                     href="/docs"
-                    className="rounded-xl transition-colors h-10 px-4 font-medium flex whitespace-nowrap gap-5 items-center justify-between cursor-pointer bg-white text-zinc-900 hover:bg-zinc-50 shadow-[0_1.5px_2px_0_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.15),0_-1px_0_0_rgba(255,255,255,0.5)] dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 w-full sm:w-fit"
+                    className="rounded-xl transition-all duration-500 h-12 px-5 font-medium flex whitespace-nowrap gap-5 items-center justify-between cursor-pointer bg-gradient-to-b from-zinc-800 to-zinc-900 text-zinc-100 hover:from-zinc-700 hover:to-zinc-800 shadow-[0_1px_1px_0_rgba(0,0,0,0.2),0_4px_8px_-2px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.06),inset_0_1.5px_0_0_rgba(255,255,255,0.08)] hover:shadow-[0_2px_2px_0_rgba(0,0,0,0.3),0_10px_20px_-6px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.06),inset_0_1.5px_0_0_rgba(255,255,255,0.08)] dark:bg-gradient-to-b dark:from-white dark:to-zinc-100 dark:text-zinc-900 dark:hover:from-zinc-50 dark:hover:to-zinc-200 dark:shadow-[0_1px_1px_0_rgba(0,0,0,0.06),0_4px_8px_-2px_rgba(0,0,0,0.10),0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_0_0_rgba(255,255,255,1),inset_0_-1px_0_0_rgba(0,0,0,0.03)] dark:hover:shadow-[0_2px_2px_0_rgba(0,0,0,0.06),0_10px_20px_-6px_rgba(0,0,0,0.14),0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_0_0_rgba(255,255,255,1),inset_0_-1px_0_0_rgba(0,0,0,0.03)] w-full sm:w-fit"
                 >
                     <span className="text-sm font-medium">Documentation</span>
                     <ArrowRight className="size-3.5" />
