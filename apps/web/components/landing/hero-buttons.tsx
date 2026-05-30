@@ -20,13 +20,13 @@ export function HeroButtons() {
                 </div>
             </motion.div>
 
-            <motion.div whileTap={{ scale: 0.98 }} className="relative z-10">
+            <motion.div whileTap={{ scale: 0.98 }} className="relative z-10 w-full sm:w-fit">
                 <Link
                     href="/docs"
-                    className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-xl bg-primary px-8 hover:px-10 text-sm font-semibold text-primary-foreground transition-all duration-300 shadow-[0_2px_4px_0_rgba(0,0,0,0.12),0_0_0_1px_rgba(255,255,255,0.2),inset_0_1px_0_0_rgba(255,255,255,0.2)] hover:shadow-[0_4px_8px_0_rgba(0,0,0,0.15),0_0_0_1px_rgba(255,255,255,0.2),inset_0_1px_0_0_rgba(255,255,255,0.2)] dark:shadow-[0_2px_4px_0_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.1)]"
+                    className="rounded-xl transition-colors h-10 px-4 font-medium flex whitespace-nowrap gap-5 items-center justify-between cursor-pointer bg-white text-zinc-900 hover:bg-zinc-50 shadow-[0_1.5px_2px_0_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.15),0_-1px_0_0_rgba(255,255,255,0.5)] dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 w-full sm:w-fit"
                 >
-                    <span>Documentation</span>
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    <span className="text-sm font-medium">Documentation</span>
+                    <ArrowRight className="size-3.5" />
                 </Link>
             </motion.div>
         </div>

@@ -57,22 +57,20 @@ export default function Home() {
             initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-100 leading-[1.05]"
+            className="text-zinc-900 dark:text-white text-5xl sm:text-6xl md:text-7xl leading-[1.0] font-semibold font-display tracking-[-0.06em]"
           >
-            <span className="inline-block dark:bg-gradient-to-b dark:from-white/80 dark:via-white dark:to-white/60 dark:bg-clip-text dark:text-transparent">
-              Animated components
-            </span>
+            Animated components
             <br className="hidden sm:block" />
-            <span className="text-zinc-400 dark:text-zinc-500">that actually ship.</span>
+            that actually ship.
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto font-medium tracking-tight"
+            className="mt-4 text-base sm:text-lg md:text-xl text-zinc-400 dark:text-zinc-600 max-w-2xl mx-auto font-medium tracking-tight"
           >
-            A curated collection of 40+ copy-paste React components built with Tailwind CSS, TypeScript & Framer Motion. Drop into any project — zero configuration, zero compromise.
+            Animated React components, ready to ship.
           </motion.p>
         </div>
 
@@ -173,10 +171,10 @@ export default function Home() {
 
           {/* Card 7: 3x1 Magnetic Dock */}
           <div className={`md:col-span-3 md:row-span-1 ${showcaseCardClass}`}>
-            <div className={`${showcasePreviewClass} flex flex-col items-center justify-center p-10 text-black`}>
+            <div className={`${showcasePreviewClass} flex items-center justify-center p-10 text-black overflow-visible max-h-[260px]`}>
               <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px] opacity-70 dark:opacity-60" />
               
-              <div className="z-10 w-full flex justify-center items-center relative translate-y-2">
+              <div className="z-10 flex items-center justify-center translate-y-2">
                  <MagneticDock 
                     items={[
                        { id: "home", label: "Home", icon: <DockIconHome /> },
