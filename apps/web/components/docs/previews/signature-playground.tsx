@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Signature } from "@workspace/ui/components/signature";
 import { cn } from "@/lib/utils";
 import {
@@ -8,6 +8,12 @@ import {
   type SignatureConfig,
   usePlaygroundStore,
 } from "@/hooks/use-playground-store";
+import {
+  PlaygroundSectionTitle,
+  PlaygroundInput,
+  PlaygroundSlider,
+  PlaygroundColorPicker,
+} from "@/components/playground-primitives";
 
 const PRESETS: Array<{ name: string; config: SignatureConfig }> = [
   {
@@ -35,147 +41,7 @@ const PRESETS: Array<{ name: string; config: SignatureConfig }> = [
   },
 ];
 
-const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <div className="mb-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
-    {children}
-  </div>
-);
 
-const Input = ({
-  className,
-  ...props
-}: React.InputHTMLAttributes<HTMLInputElement>) => (
-  <input
-    className={cn(
-      "h-10 w-full rounded-md border border-border/70 bg-transparent px-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25",
-      className,
-    )}
-    {...props}
-  />
-);
-
-const Slider = ({
-  value,
-  min,
-  max,
-  step,
-  onChange,
-  label,
-  unit = "",
-}: {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  onChange: (val: number) => void;
-  label: string;
-  unit?: string;
-}) => (
-  <div className="space-y-2">
-    <div className="flex items-center justify-between text-sm">
-      <span className="text-foreground/90">{label}</span>
-      <span className="font-mono text-muted-foreground">
-        {Number(value).toFixed(step < 0.1 ? 2 : 1)}
-        {unit}
-      </span>
-    </div>
-    <input
-      type="range"
-      min={min}
-      max={max}
-      step={step}
-      value={value}
-      onChange={(e) => onChange(parseFloat(e.target.value))}
-      className="h-2 w-full cursor-pointer appearance-none rounded-full bg-zinc-300/70 dark:bg-zinc-700/70
-      [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-white dark:[&::-webkit-slider-thumb]:bg-zinc-100"
-    />
-  </div>
-);
-
-function normalizeHexColor(value: string) {
-  const trimmed = value.trim();
-  if (!/^#?[0-9a-fA-F]{6}$/.test(trimmed)) {
-    return null;
-  }
-  return `#${trimmed.replace("#", "").toLowerCase()}`;
-}
-
-const ColorPicker = ({
-  value,
-  onChange,
-  label,
-  defaultColor = "#000000",
-}: {
-  value: string;
-  onChange: (val: string) => void;
-  label: string;
-  defaultColor?: string;
-}) => {
-  const [draft, setDraft] = useState(value);
-
-  // Sync draft when value changes externally
-  useEffect(() => {
-    setDraft(value);
-  }, [value]);
-
-  const isValidHex = /^#?[0-9a-fA-F]{6}$/.test(value);
-  // If not valid, fallback to the default computed color for the color input UI
-  const colorInputVal = isValidHex
-    ? value.startsWith("#")
-      ? value
-      : `#${value}`
-    : defaultColor;
-
-  return (
-    <label className="flex items-center gap-3 rounded-md border border-border/70 p-2.5">
-      <span className="relative h-8 w-8 overflow-hidden rounded border border-border">
-        {isValidHex ? (
-          <span
-            aria-hidden="true"
-            className="absolute inset-0"
-            style={{ backgroundColor: value }}
-          />
-        ) : (
-          <span
-            aria-hidden="true"
-            className="absolute inset-0"
-            style={{ backgroundColor: defaultColor }}
-          />
-        )}
-        <input
-          type="color"
-          value={colorInputVal}
-          onInput={(e) => onChange((e.target as HTMLInputElement).value)}
-          onChange={(e) => onChange(e.target.value)}
-          aria-label={`${label} color picker`}
-          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-        />
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="mb-1 block text-xs font-semibold text-foreground/90">
-          {label}
-        </span>
-        <input
-          value={draft}
-          onChange={(e) => {
-            const next = e.target.value;
-            setDraft(next);
-            if (next === "") {
-              onChange("");
-              return;
-            }
-            const normalized = normalizeHexColor(next);
-            if (normalized) {
-              onChange(normalized);
-            }
-          }}
-          placeholder="e.g. #000000 or empty for auto"
-          className="h-8 w-full rounded border border-border/70 bg-transparent px-2.5 font-mono text-xs text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25"
-        />
-      </span>
-    </label>
-  );
-};
 
 function generateCode(config: SignatureConfig) {
   const props = Object.entries(config)
@@ -305,7 +171,7 @@ export function SignaturePersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Presets</SectionTitle>
+          <PlaygroundSectionTitle>Presets</PlaygroundSectionTitle>
           <div className="grid grid-cols-3 gap-1.5">
             {PRESETS.map((preset) => {
               const isActive =
@@ -336,9 +202,9 @@ export function SignaturePersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Content</SectionTitle>
+          <PlaygroundSectionTitle>Content</PlaygroundSectionTitle>
           <div className="grid grid-cols-1 gap-2.5">
-            <Input
+            <PlaygroundInput
               value={config.text}
               onChange={(e) => handleChange("text", e.target.value)}
               placeholder="Text to trace"
@@ -347,9 +213,9 @@ export function SignaturePersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Styling</SectionTitle>
+          <PlaygroundSectionTitle>Styling</PlaygroundSectionTitle>
           <div className="grid grid-cols-1 gap-2.5">
-            <ColorPicker
+            <PlaygroundColorPicker
               label="Color"
               value={config.color}
               defaultColor={pickerDefaultColor}
@@ -359,9 +225,9 @@ export function SignaturePersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Parameters</SectionTitle>
+          <PlaygroundSectionTitle>Parameters</PlaygroundSectionTitle>
           <div className="grid grid-cols-1 gap-3">
-            <Slider
+            <PlaygroundSlider
               label="Font Size"
               min={16}
               max={120}
@@ -370,7 +236,7 @@ export function SignaturePersonalizePanel() {
               onChange={(v) => handleChange("fontSize", v)}
               unit="px"
             />
-            <Slider
+            <PlaygroundSlider
               label="Duration"
               min={0.5}
               max={10}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import WebGLLiquid from "@workspace/ui/components/webgl-liquid";
 import { cn } from "@/lib/utils";
 import {
@@ -8,6 +8,14 @@ import {
   type WebGLLiquidConfig,
   usePlaygroundStore,
 } from "@/hooks/use-playground-store";
+import {
+  PlaygroundSectionTitle,
+  PlaygroundInput,
+  PlaygroundTextArea,
+  PlaygroundSlider,
+  PlaygroundSwitch,
+  PlaygroundColorPicker,
+} from "@/components/playground-primitives";
 
 const PRESETS: Array<{ name: string; config: WebGLLiquidConfig }> = [
   {
@@ -73,154 +81,7 @@ const PRESETS: Array<{ name: string; config: WebGLLiquidConfig }> = [
   },
 ];
 
-const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <div className="mb-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{children}</div>
-);
 
-const Input = ({ className, ...props }: React.InputHTMLAttributes<HTMLInputElement>) => (
-  <input
-    className={cn(
-      "h-10 w-full rounded-md border border-border/70 bg-transparent px-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25",
-      className,
-    )}
-    {...props}
-  />
-);
-
-const TextArea = ({ className, ...props }: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
-  <textarea
-    className={cn(
-      "min-h-24 w-full resize-none rounded-md border border-border/70 bg-transparent px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25",
-      className,
-    )}
-    {...props}
-  />
-);
-
-const Slider = ({
-  value,
-  min,
-  max,
-  step,
-  onChange,
-  label,
-  unit = "",
-}: {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  onChange: (val: number) => void;
-  label: string;
-  unit?: string;
-}) => (
-  <div className="space-y-2">
-    <div className="flex items-center justify-between text-sm">
-      <span className="text-foreground/90">{label}</span>
-      <span className="font-mono text-muted-foreground">
-        {Number(value).toFixed(step < 0.1 ? 2 : 1)}
-        {unit}
-      </span>
-    </div>
-    <input
-      type="range"
-      min={min}
-      max={max}
-      step={step}
-      value={value}
-      onChange={(e) => onChange(parseFloat(e.target.value))}
-      className="h-2 w-full cursor-pointer appearance-none rounded-full bg-zinc-300/70 dark:bg-zinc-700/70
-      [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-white dark:[&::-webkit-slider-thumb]:bg-zinc-100"
-    />
-  </div>
-);
-
-const Switch = ({
-  checked,
-  onChange,
-  label,
-}: {
-  checked: boolean;
-  onChange: (val: boolean) => void;
-  label: string;
-}) => (
-  <label className="flex items-center justify-between rounded-md border border-border/70 p-2.5">
-    <span className="text-sm text-foreground/90">{label}</span>
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
-      onClick={() => onChange(!checked)}
-      className={cn(
-        "inline-flex h-6 w-10 items-center rounded-full border border-border transition-colors",
-        checked ? "bg-zinc-900 dark:bg-zinc-100" : "bg-zinc-200 dark:bg-zinc-800",
-      )}
-    >
-      <span
-        className={cn(
-          "mx-[2px] h-5 w-5 rounded-full bg-white transition-transform dark:bg-zinc-900",
-          checked ? "translate-x-4" : "translate-x-0.5",
-        )}
-      />
-    </button>
-  </label>
-);
-
-function normalizeHexColor(value: string) {
-  const trimmed = value.trim();
-  if (!/^#?[0-9a-fA-F]{6}$/.test(trimmed)) {
-    return null;
-  }
-  return `#${trimmed.replace("#", "").toLowerCase()}`;
-}
-
-const ColorPicker = ({
-  value,
-  onChange,
-  label,
-}: {
-  value: string;
-  onChange: (val: string) => void;
-  label: string;
-}) => {
-  const [draft, setDraft] = useState(value);
-
-  useEffect(() => {
-    setDraft(value);
-  }, [value]);
-
-  return (
-    <label className="flex items-center gap-3 rounded-md border border-border/70 p-2.5">
-      <span className="relative h-8 w-8 overflow-hidden rounded border border-border">
-        <span aria-hidden="true" className="absolute inset-0" style={{ backgroundColor: value }} />
-        <input
-          type="color"
-          value={value}
-          onInput={(e) => onChange((e.target as HTMLInputElement).value)}
-          onChange={(e) => onChange(e.target.value)}
-          aria-label={`${label} color picker`}
-          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-        />
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="mb-1 block text-xs font-semibold text-foreground/90">{label}</span>
-        <input
-          value={draft}
-          onChange={(e) => {
-            const next = e.target.value;
-            setDraft(next);
-            const normalized = normalizeHexColor(next);
-            if (normalized) {
-              onChange(normalized);
-            }
-          }}
-          placeholder="#000000"
-          className="h-8 w-full rounded border border-border/70 bg-transparent px-2.5 font-mono text-xs text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25"
-        />
-      </span>
-    </label>
-  );
-};
 
 function generateCode(config: WebGLLiquidConfig) {
   const props = Object.entries(config)
@@ -328,7 +189,7 @@ export function WebGLLiquidPersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Presets</SectionTitle>
+          <PlaygroundSectionTitle>Presets</PlaygroundSectionTitle>
           <div className="grid grid-cols-5 gap-1.5">
             {PRESETS.map((preset) => {
               const isActive =
@@ -363,19 +224,19 @@ export function WebGLLiquidPersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Typography</SectionTitle>
+          <PlaygroundSectionTitle>Typography</PlaygroundSectionTitle>
           <div className="grid grid-cols-1 gap-2.5">
-            <Input
+            <PlaygroundInput
               value={config.title}
               onChange={(e) => handleChange("title", e.target.value)}
               placeholder="Headline line one"
             />
-            <Input
+            <PlaygroundInput
               value={config.subtitle}
               onChange={(e) => handleChange("subtitle", e.target.value)}
               placeholder="Headline line two"
             />
-            <TextArea
+            <PlaygroundTextArea
               value={config.description}
               onChange={(e) => handleChange("description", e.target.value)}
               placeholder="Support text"
@@ -384,11 +245,11 @@ export function WebGLLiquidPersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Palette</SectionTitle>
+          <PlaygroundSectionTitle>Palette</PlaygroundSectionTitle>
           <div className="grid grid-cols-3 gap-2.5">
-            <ColorPicker label="Deep Base" value={config.colorDeep} onChange={(v) => handleChange("colorDeep", v)} />
-            <ColorPicker label="Mid Tone" value={config.colorMid} onChange={(v) => handleChange("colorMid", v)} />
-            <ColorPicker
+            <PlaygroundColorPicker label="Deep Base" value={config.colorDeep} onChange={(v) => handleChange("colorDeep", v)} />
+            <PlaygroundColorPicker label="Mid Tone" value={config.colorMid} onChange={(v) => handleChange("colorMid", v)} />
+            <PlaygroundColorPicker
               label="Highlight"
               value={config.colorHighlight}
               onChange={(v) => handleChange("colorHighlight", v)}
@@ -397,9 +258,9 @@ export function WebGLLiquidPersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Motion</SectionTitle>
+          <PlaygroundSectionTitle>Motion</PlaygroundSectionTitle>
           <div className="grid grid-cols-2 gap-x-4 gap-y-3">
-            <Slider
+            <PlaygroundSlider
               label="Speed"
               min={0.2}
               max={2.5}
@@ -408,7 +269,7 @@ export function WebGLLiquidPersonalizePanel() {
               onChange={(v) => handleChange("speed", v)}
               unit="x"
             />
-            <Slider
+            <PlaygroundSlider
               label="Flow Strength"
               min={0.2}
               max={2}
@@ -416,7 +277,7 @@ export function WebGLLiquidPersonalizePanel() {
               value={config.flowStrength}
               onChange={(v) => handleChange("flowStrength", v)}
             />
-            <Slider
+            <PlaygroundSlider
               label="Grain"
               min={0}
               max={0.16}
@@ -424,7 +285,7 @@ export function WebGLLiquidPersonalizePanel() {
               value={config.grain}
               onChange={(v) => handleChange("grain", v)}
             />
-            <Slider
+            <PlaygroundSlider
               label="Contrast"
               min={0.8}
               max={1.8}
@@ -432,7 +293,7 @@ export function WebGLLiquidPersonalizePanel() {
               value={config.contrast}
               onChange={(v) => handleChange("contrast", v)}
             />
-            <Slider
+            <PlaygroundSlider
               label="Opacity"
               min={0.4}
               max={1}
@@ -440,7 +301,7 @@ export function WebGLLiquidPersonalizePanel() {
               value={config.opacity}
               onChange={(v) => handleChange("opacity", v)}
             />
-            <Slider
+            <PlaygroundSlider
               label="Delay"
               min={0}
               max={2400}
@@ -450,7 +311,7 @@ export function WebGLLiquidPersonalizePanel() {
               unit="ms"
             />
             <div className="col-span-2">
-              <Switch label="Reveal Wipe" checked={config.reveal} onChange={(v) => handleChange("reveal", v)} />
+              <PlaygroundSwitch label="Reveal Wipe" checked={config.reveal} onChange={(v) => handleChange("reveal", v)} />
             </div>
           </div>
         </div>

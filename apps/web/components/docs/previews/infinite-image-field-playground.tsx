@@ -4,6 +4,10 @@ import { useEffect } from "react";
 import { InfiniteImageField } from "@workspace/ui/components/infinite-image-field";
 import { usePlaygroundStore } from "@/hooks/use-playground-store";
 import { create } from "zustand";
+import {
+  PlaygroundSectionTitle,
+  PlaygroundSlider,
+} from "@/components/playground-primitives";
 
 interface InfiniteImageFieldConfig {
   gap: number;
@@ -77,52 +81,6 @@ export function InfiniteImageFieldPlayground() {
   );
 }
 
-// ─── Shared primitives ────────────────────────────────────────────────────────
-
-const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <div className="mb-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
-    {children}
-  </div>
-);
-
-const Slider = ({
-  value,
-  min,
-  max,
-  step,
-  onChange,
-  label,
-  unit = "",
-}: {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  onChange: (val: number) => void;
-  label: string;
-  unit?: string;
-}) => (
-  <div className="space-y-2">
-    <div className="flex items-center justify-between text-sm">
-      <span className="text-foreground/90">{label}</span>
-      <span className="font-mono text-muted-foreground">
-        {Number(value).toFixed(step < 0.1 ? 2 : 1)}
-        {unit}
-      </span>
-    </div>
-    <input
-      type="range"
-      min={min}
-      max={max}
-      step={step}
-      value={value}
-      onChange={(e) => onChange(parseFloat(e.target.value))}
-      className="h-2 w-full cursor-pointer appearance-none rounded-full bg-zinc-300/70 dark:bg-zinc-700/70
-      [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-white dark:[&::-webkit-slider-thumb]:bg-zinc-100"
-    />
-  </div>
-);
-
 // ─── Personalize panel ────────────────────────────────────────────────────────
 
 export function InfiniteImageFieldPersonalizePanel() {
@@ -152,9 +110,9 @@ export function InfiniteImageFieldPersonalizePanel() {
 
         {/* Motion */}
         <div>
-          <SectionTitle>Motion</SectionTitle>
+          <PlaygroundSectionTitle>Motion</PlaygroundSectionTitle>
           <div className="grid grid-cols-1 gap-3">
-            <Slider
+            <PlaygroundSlider
               label="Max Speed"
               min={1}
               max={20}
@@ -163,7 +121,7 @@ export function InfiniteImageFieldPersonalizePanel() {
               onChange={(v) => updateConfig({ maxSpeed: v })}
               unit="px"
             />
-            <Slider
+            <PlaygroundSlider
               label="Smoothing"
               min={0.01}
               max={0.3}
@@ -176,9 +134,9 @@ export function InfiniteImageFieldPersonalizePanel() {
 
         {/* Layout */}
         <div>
-          <SectionTitle>Layout</SectionTitle>
+          <PlaygroundSectionTitle>Layout</PlaygroundSectionTitle>
           <div className="grid grid-cols-1 gap-3">
-            <Slider
+            <PlaygroundSlider
               label="Gap"
               min={4}
               max={80}
@@ -192,9 +150,9 @@ export function InfiniteImageFieldPersonalizePanel() {
 
         {/* Style */}
         <div>
-          <SectionTitle>Style</SectionTitle>
+          <PlaygroundSectionTitle>Style</PlaygroundSectionTitle>
           <div className="grid grid-cols-1 gap-3">
-            <Slider
+            <PlaygroundSlider
               label="Border Radius"
               min={0}
               max={40}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import DitherPrismHero from "@workspace/ui/components/dither-prism-hero";
 import { cn } from "@/lib/utils";
 import {
@@ -8,6 +8,13 @@ import {
   type DitherPrismHeroConfig,
   usePlaygroundStore,
 } from "@/hooks/use-playground-store";
+import {
+  PlaygroundSectionTitle,
+  PlaygroundInput,
+  PlaygroundSlider,
+  PlaygroundSwitch,
+  PlaygroundColorPicker,
+} from "@/components/playground-primitives";
 
 const PRESETS: Array<{ name: string; config: DitherPrismHeroConfig }> = [
   {
@@ -67,145 +74,7 @@ const PRESETS: Array<{ name: string; config: DitherPrismHeroConfig }> = [
   },
 ];
 
-const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <div className="mb-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{children}</div>
-);
 
-const Input = ({ className, ...props }: React.InputHTMLAttributes<HTMLInputElement>) => (
-  <input
-    className={cn(
-      "h-10 w-full rounded-md border border-border/70 bg-transparent px-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25",
-      className,
-    )}
-    {...props}
-  />
-);
-
-const Slider = ({
-  value,
-  min,
-  max,
-  step,
-  onChange,
-  label,
-  unit = "",
-}: {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  onChange: (val: number) => void;
-  label: string;
-  unit?: string;
-}) => (
-  <div className="space-y-2">
-    <div className="flex items-center justify-between text-sm">
-      <span className="text-foreground/90">{label}</span>
-      <span className="font-mono text-muted-foreground">
-        {Number(value).toFixed(step < 0.1 ? 2 : 1)}
-        {unit}
-      </span>
-    </div>
-    <input
-      type="range"
-      min={min}
-      max={max}
-      step={step}
-      value={value}
-      onChange={(e) => onChange(parseFloat(e.target.value))}
-      className="h-2 w-full cursor-pointer appearance-none rounded-full bg-zinc-300/70 dark:bg-zinc-700/70
-      [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-white dark:[&::-webkit-slider-thumb]:bg-zinc-100"
-    />
-  </div>
-);
-
-function normalizeHexColor(value: string) {
-  const trimmed = value.trim();
-  if (!/^#?[0-9a-fA-F]{6}$/.test(trimmed)) {
-    return null;
-  }
-
-  return `#${trimmed.replace("#", "").toLowerCase()}`;
-}
-
-const ColorPicker = ({
-  value,
-  onChange,
-  label,
-}: {
-  value: string;
-  onChange: (val: string) => void;
-  label: string;
-}) => {
-  const [draft, setDraft] = useState(value);
-
-  useEffect(() => {
-    setDraft(value);
-  }, [value]);
-
-  return (
-    <label className="flex items-center gap-3 rounded-md border border-border/70 p-2.5">
-      <span className="relative h-8 w-8 overflow-hidden rounded border border-border">
-        <span aria-hidden="true" className="absolute inset-0" style={{ backgroundColor: value }} />
-        <input
-          type="color"
-          value={value}
-          onInput={(e) => onChange((e.target as HTMLInputElement).value)}
-          onChange={(e) => onChange(e.target.value)}
-          aria-label={`${label} color picker`}
-          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-        />
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="mb-1 block text-xs font-semibold text-foreground/90">{label}</span>
-        <input
-          value={draft}
-          onChange={(e) => {
-            const next = e.target.value;
-            setDraft(next);
-            const normalized = normalizeHexColor(next);
-            if (normalized) {
-              onChange(normalized);
-            }
-          }}
-          placeholder="#000000"
-          className="h-8 w-full rounded border border-border/70 bg-transparent px-2.5 font-mono text-xs text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25"
-        />
-      </span>
-    </label>
-  );
-};
-
-const Switch = ({
-  checked,
-  onChange,
-  label,
-}: {
-  checked: boolean;
-  onChange: (val: boolean) => void;
-  label: string;
-}) => (
-  <label className="flex items-center justify-between rounded-md border border-border/70 p-2.5">
-    <span className="text-sm text-foreground/90">{label}</span>
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
-      onClick={() => onChange(!checked)}
-      className={cn(
-        "inline-flex h-6 w-10 items-center rounded-full border border-border transition-colors",
-        checked ? "bg-zinc-900 dark:bg-zinc-100" : "bg-zinc-200 dark:bg-zinc-800",
-      )}
-    >
-      <span
-        className={cn(
-          "mx-[2px] h-5 w-5 rounded-full bg-white transition-transform dark:bg-zinc-900",
-          checked ? "translate-x-4" : "translate-x-0.5",
-        )}
-      />
-    </button>
-  </label>
-);
 
 function generateCode(config: DitherPrismHeroConfig) {
   const props = Object.entries(config)
@@ -313,7 +182,7 @@ export function DitherPrismHeroPersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Presets</SectionTitle>
+          <PlaygroundSectionTitle>Presets</PlaygroundSectionTitle>
           <div className="grid grid-cols-5 gap-1.5">
             {PRESETS.map((preset) => {
               const isActive =
@@ -348,14 +217,14 @@ export function DitherPrismHeroPersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Typography</SectionTitle>
+          <PlaygroundSectionTitle>Typography</PlaygroundSectionTitle>
           <div className="grid grid-cols-2 gap-2.5">
-            <Input
+            <PlaygroundInput
               value={config.title1}
               onChange={(e) => handleChange("title1", e.target.value)}
               placeholder="Primary headline"
             />
-            <Input
+            <PlaygroundInput
               value={config.title2}
               onChange={(e) => handleChange("title2", e.target.value)}
               placeholder="Secondary headline"
@@ -364,18 +233,18 @@ export function DitherPrismHeroPersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Palette</SectionTitle>
+          <PlaygroundSectionTitle>Palette</PlaygroundSectionTitle>
           <div className="grid grid-cols-3 gap-2.5">
-            <ColorPicker label="Primary Base" value={config.color1} onChange={(v) => handleChange("color1", v)} />
-            <ColorPicker label="Secondary Flow" value={config.color2} onChange={(v) => handleChange("color2", v)} />
-            <ColorPicker label="Accent Highlight" value={config.color3} onChange={(v) => handleChange("color3", v)} />
+            <PlaygroundColorPicker label="Primary Base" value={config.color1} onChange={(v) => handleChange("color1", v)} />
+            <PlaygroundColorPicker label="Secondary Flow" value={config.color2} onChange={(v) => handleChange("color2", v)} />
+            <PlaygroundColorPicker label="Accent Highlight" value={config.color3} onChange={(v) => handleChange("color3", v)} />
           </div>
         </div>
 
         <div>
-          <SectionTitle>Motion</SectionTitle>
+          <PlaygroundSectionTitle>Motion</PlaygroundSectionTitle>
           <div className="grid grid-cols-2 gap-x-4 gap-y-3">
-            <Slider
+            <PlaygroundSlider
               label="Dither Grain"
               min={0}
               max={1}
@@ -383,7 +252,7 @@ export function DitherPrismHeroPersonalizePanel() {
               value={config.ditherIntensity}
               onChange={(v) => handleChange("ditherIntensity", v)}
             />
-            <Slider
+            <PlaygroundSlider
               label="Prism Refraction"
               min={0}
               max={2}
@@ -391,7 +260,7 @@ export function DitherPrismHeroPersonalizePanel() {
               value={config.prismIntensity}
               onChange={(v) => handleChange("prismIntensity", v)}
             />
-            <Slider
+            <PlaygroundSlider
               label="Speed"
               min={0.2}
               max={3}
@@ -401,7 +270,7 @@ export function DitherPrismHeroPersonalizePanel() {
               unit="x"
             />
             {config.showParticles && (
-              <Slider
+              <PlaygroundSlider
                 label="Particles"
                 min={0}
                 max={200}
@@ -411,7 +280,7 @@ export function DitherPrismHeroPersonalizePanel() {
               />
             )}
             <div className="col-span-2">
-              <Switch
+              <PlaygroundSwitch
                 label="Floating Particles"
                 checked={config.showParticles}
                 onChange={(v) => handleChange("showParticles", v)}
