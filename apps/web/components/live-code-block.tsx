@@ -60,18 +60,12 @@ export function LiveCodeBlock({ defaultCode, lang = "tsx" }: LiveCodeBlockProps)
     }
 
     return (
-        <div className="relative group min-h-[200px]">
-            <div className="absolute top-0 right-0 p-2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-zinc-100/90 dark:bg-zinc-900/90 rounded-bl-md border-l border-b border-border">
-                Real-time
-            </div>
-            
-            <div className="relative text-sm w-full border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50 rounded-xl min-h-[200px] flex flex-col">
-                <CopyButton code={displayCode.trim()} />
-                <div
-                    className="flex-1 min-h-[200px] [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:!overflow-y-hidden overflow-auto"
-                    dangerouslySetInnerHTML={{ __html: html || `<pre><code>${displayCode.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>` }}
-                />
-            </div>
+        <div className="relative text-sm w-full border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50 rounded-xl min-h-[200px] flex flex-col" data-code-block>
+            <CopyButton code={displayCode.trim()} />
+            <div
+                className="flex-1 min-h-[200px] [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:!overflow-y-hidden overflow-auto"
+                dangerouslySetInnerHTML={{ __html: html || `<pre><code>${displayCode.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>` }}
+            />
         </div>
     );
 }

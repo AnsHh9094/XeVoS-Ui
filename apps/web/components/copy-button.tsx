@@ -22,7 +22,7 @@ export function CopyButton({ code, className, absolute = true }: CopyButtonProps
     <button
       onClick={handleCopy}
       className={`${absolute ? "absolute top-3 right-3" : ""} p-2 rounded-lg transition-all duration-200 z-10 ${copied
-        ? "bg-transparent text-zinc-50"
+        ? "bg-transparent text-green-600 dark:text-green-400"
         : "bg-transparent text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50"
         } ${className || ""}`}
       aria-label={copied ? "Copied" : "Copy code"}
