@@ -13,6 +13,8 @@ import { highlightCode } from "@/lib/shiki"
 import { splitImportAndUsage, stripImportFromCode } from "@/lib/split-import"
 import type { BundledLanguage } from "shiki"
 import { FloatingDocsSidebarLazy } from "@/components/floating-docs-sidebar-lazy"
+import { buildDocsPageMarkdown } from "@/lib/docs-page-markdown"
+import { PageContextMenu } from "@/components/page-context-menu"
 
 export interface PropItem {
   name: string
@@ -65,6 +67,7 @@ export async function DocsPageLayout({
   preview,
   installPackageName,
   installSourceCode,
+  installDependencies,
   installSourceFilename,
   importCode,
   usageCode,
@@ -77,7 +80,17 @@ export async function DocsPageLayout({
   usageNote,
 }: DocsPageLayoutProps) {
 
-  // Generate the page context markdown automatically
+  const pageMarkdown = buildDocsPageMarkdown({
+    title,
+    description,
+    installPackageName,
+    installDependencies,
+    installSourceCode,
+    installSourceFilename,
+    usageCode: typeof usageCode === "string" ? usageCode : "",
+    examples,
+    props,
+  })
 
   // Auto-split import lines from usageCode for Import + Usage sections
   let resolvedImportCode = ""
@@ -148,19 +161,17 @@ export async function DocsPageLayout({
           <div className="px-6 lg:px-16 pt-12 lg:pt-48 pb-40 space-y-16 lg:space-y-20 max-w-3xl mx-auto">
 
             {/* Header Section */}
-            <header className="space-y-10">
-              {/* Nav / Breadcrumb moved to absolute position above */}
-
+            <header>
               <div className="space-y-6">
-                {/* Title */}
                 <h1 className="text-4xl lg:text-6xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 leading-[1.1] mb-2 pb-2">
                   {title}
                 </h1>
 
-                {/* Description */}
                 <p className="text-lg text-muted-foreground/90 leading-relaxed max-w-2xl font-normal">
                   {description}
                 </p>
+
+                <PageContextMenu content={pageMarkdown} />
               </div>
             </header>
 
