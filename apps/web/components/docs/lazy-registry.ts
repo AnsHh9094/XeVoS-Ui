@@ -122,6 +122,10 @@ const docsImportMap: Record<
     import("@/components/docs/layered-stack").then((m) => ({
       default: m.LayeredStackDocs,
     })),
+  "orbit-card-stack": () =>
+    import("@/components/docs/orbit-card-stack").then((m) => ({
+      default: m.OrbitCardStackDocs,
+    })),
   "signature": () =>
     import("@/components/docs/signature").then((m) => ({
       default: m.SignatureDocs,

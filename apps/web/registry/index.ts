@@ -166,6 +166,14 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/layeredstack.webm",
   },
+  "orbit-card-stack": {
+    title: "Orbit Card Stack",
+    description:
+      "Premium hover card deck that fans outward and lifts the active card without changing its color or angle.",
+    category: "Components",
+    slug: "orbit-card-stack",
+    addedAt: "2026-06-07",
+  },
 
   "split-flap-display": {
     title: "Split Flap Display",

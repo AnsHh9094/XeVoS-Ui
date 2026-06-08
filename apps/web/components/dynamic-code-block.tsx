@@ -157,7 +157,7 @@ export function DynamicCodeBlock({
           )}
         >
           <div
-            className="[&_pre]:overflow-x-auto [&_pre]:p-4 [&_pre]:whitespace-pre"
+            className="[&_pre]:whitespace-pre-wrap [&_pre]:break-words [&_pre]:p-4"
             dangerouslySetInnerHTML={{ __html: visibleHtml }}
           />
         </div>

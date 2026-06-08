@@ -126,6 +126,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "orbit-card-stack",
+      "type": "registry:ui"
+    },
+    {
       "name": "particle-galaxy",
       "type": "registry:ui"
     },
