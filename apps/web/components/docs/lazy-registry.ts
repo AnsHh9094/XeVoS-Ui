@@ -98,6 +98,10 @@ const docsImportMap: Record<
     import("@/components/docs/text-repel").then((m) => ({
       default: m.TextRepelDocs,
     })),
+  "kinetic-text-reveal": () =>
+    import("@/components/docs/kinetic-text-reveal").then((m) => ({
+      default: m.KineticTextRevealDocs,
+    })),
   "cursor-driven-particle-typography": () =>
     import("@/components/docs/cursor-driven-particle-typography").then((m) => ({
       default: m.CursorDrivenParticleTypographyDocs,
@@ -117,6 +121,10 @@ const docsImportMap: Record<
   "layered-stack": () =>
     import("@/components/docs/layered-stack").then((m) => ({
       default: m.LayeredStackDocs,
+    })),
+  "orbit-card-stack": () =>
+    import("@/components/docs/orbit-card-stack").then((m) => ({
+      default: m.OrbitCardStackDocs,
     })),
   "signature": () =>
     import("@/components/docs/signature").then((m) => ({

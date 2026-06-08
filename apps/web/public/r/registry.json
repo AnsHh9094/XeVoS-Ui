@@ -86,6 +86,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "kinetic-text-reveal",
+      "type": "registry:ui"
+    },
+    {
       "name": "layered-stack",
       "type": "registry:ui"
     },
@@ -119,6 +123,10 @@
     },
     {
       "name": "noise-texture",
+      "type": "registry:ui"
+    },
+    {
+      "name": "orbit-card-stack",
       "type": "registry:ui"
     },
     {

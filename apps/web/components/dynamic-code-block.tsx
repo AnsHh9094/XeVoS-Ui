@@ -68,7 +68,20 @@ export function DynamicCodeBlock({
       ? originalCode
       : variantCodes[activeVariantIndex] || originalCode
 
-  const { contentRef, wrapperProps } = useSmoothCodeHeight([visibleHtml, activeVariantIndex])
+  const { contentRef, contentHeight, wrapperProps } = useSmoothCodeHeight([
+    visibleHtml,
+    activeVariantIndex,
+  ])
+  const hasUnboundedHeight = className?.includes("max-h-none")
+  const resolvedWrapperStyle = hasUnboundedHeight
+    ? wrapperProps.style
+    : {
+        ...wrapperProps.style,
+        height:
+          contentHeight !== undefined
+            ? Math.min(contentHeight, 500)
+            : wrapperProps.style.height,
+      }
 
   React.useEffect(() => {
     if (hideDefaultTab && activeVariantIndex === -1 && variantTitles.length > 0) {
@@ -144,6 +157,7 @@ export function DynamicCodeBlock({
     >
       <div
         {...wrapperProps}
+        style={resolvedWrapperStyle}
         className={cn(wrapperProps.className, className?.includes("h-full") && "h-full")}
       >
         <div
@@ -151,13 +165,13 @@ export function DynamicCodeBlock({
           className={cn(
             "transition-opacity duration-150",
             (isSwitching || isLoadingActiveVariant) && "opacity-70",
-            className?.includes("max-h-none")
+            hasUnboundedHeight
               ? "h-full"
               : "max-h-[500px] overflow-auto"
           )}
         >
           <div
-            className="[&_pre]:overflow-x-auto [&_pre]:p-4 [&_pre]:whitespace-pre"
+            className="[&_pre]:whitespace-pre-wrap [&_pre]:break-words [&_pre]:p-4"
             dangerouslySetInnerHTML={{ __html: visibleHtml }}
           />
         </div>

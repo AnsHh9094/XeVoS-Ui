@@ -385,7 +385,7 @@ export function DocsPreviewWrapper({
               : "p-10 flex items-center justify-center"
           )}
         >
-          <div key={key} className="w-full h-full flex items-center justify-center">
+          <div key={key} className={cn("w-full h-full", !fullWidthPreview && "flex items-center justify-center")}>
             {resolvedActiveVariant === -1 ? children : variants[resolvedActiveVariant]?.preview}
           </div>
         </div>

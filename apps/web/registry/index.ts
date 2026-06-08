@@ -86,6 +86,16 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/textrepel.webm",
   },
+  "kinetic-text-reveal": {
+    title: "Kinetic Text Reveal",
+    description:
+      "Directional text reveal with soft blur and configurable word, character, or line stagger timing.",
+    category: "Text Animations",
+    slug: "kinetic-text-reveal",
+    addedAt: "2026-06-07",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/kinetictextreveal.webm",
+  },
   "cursor-driven-particle-typography": {
     title: "Particle Typography",
     description:
@@ -157,6 +167,16 @@ export const components: Record<string, ComponentMetadata> = {
     addedAt: "2026-03-15",
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/layeredstack.webm",
+  },
+  "orbit-card-stack": {
+    title: "Orbit Card Stack",
+    description:
+      "Premium hover card deck that fans outward and lifts the active card without changing its color or angle.",
+    category: "Components",
+    slug: "orbit-card-stack",
+    addedAt: "2026-06-07",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/orbitcardstack.webm",
   },
 
   "split-flap-display": {
