@@ -49,13 +49,14 @@ export async function SilkAuroraDocs() {
       title="Silk Aurora"
       description="A premium WebGL hero background with satin-dark aurora ribbons, pearlescent highlights, subtle grain, and optional cursor depth."
       preview={
-        <SilkAurora
-          title="Silk Aurora"
-          subtitle="Premium Atmosphere"
-          description="Polished motion for luxury product heroes, editorial launches, and high-end SaaS moments."
-          className="h-full min-h-full"
-          style={{ minHeight: "100%" }}
-        />
+        <div className="relative h-full w-full bg-[#f3f4f6] dark:bg-[#080808]">
+          <SilkAurora
+            title="Silk Aurora"
+            subtitle="Premium Atmosphere"
+            description="Polished motion for luxury product heroes, editorial launches, and high-end SaaS moments."
+            className="h-full w-full min-h-0"
+          />
+        </div>
       }
       previewCode={basicUsageCode}
       installPackageName="silk-aurora"
@@ -67,18 +68,20 @@ export async function SilkAuroraDocs() {
         {
           title: "Champagne",
           preview: (
-            <SilkAurora
-              title="Maison Lumiere"
-              subtitle="Private Preview"
-              description="Quiet motion, warm sheen, and a velvet base for refined product launches."
-              baseColor="#060505"
-              midColor="#19130f"
-              sheenColor="#ffe2a9"
-              accentColor="#c58d5d"
-              intensity={0.9}
-              speed={0.75}
-              className="h-[520px] min-h-0"
-            />
+            <div className="relative h-full w-full bg-[#f3f4f6] dark:bg-[#080808]">
+              <SilkAurora
+                title="Maison Lumiere"
+                subtitle="Private Preview"
+                description="Quiet motion, warm sheen, and a velvet base for refined product launches."
+                baseColor="#060505"
+                midColor="#19130f"
+                sheenColor="#ffe2a9"
+                accentColor="#c58d5d"
+                intensity={0.9}
+                speed={0.75}
+                className="h-full w-full min-h-0"
+              />
+            </div>
           ),
           code: champagneCode,
           fullWidth: true,
@@ -86,18 +89,20 @@ export async function SilkAuroraDocs() {
         {
           title: "Editorial",
           preview: (
-            <SilkAurora
-              title="Nocturne Index"
-              subtitle="Editorial Systems"
-              description="A cooler metallic palette for dashboards, media covers, and cinematic editorial moments."
-              baseColor="#030407"
-              midColor="#101827"
-              sheenColor="#d6e8ff"
-              accentColor="#86f0dc"
-              intensity={1.15}
-              grain={0.7}
-              className="h-[520px] min-h-0"
-            />
+            <div className="relative h-full w-full bg-[#f3f4f6] dark:bg-[#080808]">
+              <SilkAurora
+                title="Nocturne Index"
+                subtitle="Editorial Systems"
+                description="A cooler metallic palette for dashboards, media covers, and cinematic editorial moments."
+                baseColor="#030407"
+                midColor="#101827"
+                sheenColor="#d6e8ff"
+                accentColor="#86f0dc"
+                intensity={1.15}
+                grain={0.7}
+                className="h-full w-full min-h-0"
+              />
+            </div>
           ),
           code: editorialCode,
           fullWidth: true,

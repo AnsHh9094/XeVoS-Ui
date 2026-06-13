@@ -237,6 +237,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Hero Backgrounds",
     slug: "silk-aurora",
     addedAt: "2026-06-09",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/silkaurora.webm",
   },
   "closing-plasma": {
     title: "Closing Plasma",
