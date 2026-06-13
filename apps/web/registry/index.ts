@@ -24,7 +24,8 @@ export function isNewComponent(component: ComponentMetadata): boolean {
 export const components: Record<string, ComponentMetadata> = {
   "sticky-scroll-cards": {
     title: "Sticky Scroll Cards",
-    description: "A scroll-driven card stack where images pin and scale as you scroll, creating a layered depth effect.",
+    description:
+      "A scroll-driven card stack where images pin and scale as you scroll, creating a layered depth effect.",
     category: "Components",
     slug: "sticky-scroll-cards",
     addedAt: "2026-04-10",
@@ -33,7 +34,8 @@ export const components: Record<string, ComponentMetadata> = {
   },
   "music-player": {
     title: "Music Player",
-    description: "A fun interactive vinyl record music player with swinging tonearm.",
+    description:
+      "A fun interactive vinyl record music player with swinging tonearm.",
     category: "Components",
     slug: "music-player",
     addedAt: "2026-04-03",
@@ -42,7 +44,8 @@ export const components: Record<string, ComponentMetadata> = {
   },
   "scroll-split-card": {
     title: "Scroll Split Card",
-    description: "A scroll-driven interactive card that splits into three panels and flips.",
+    description:
+      "A scroll-driven interactive card that splits into three panels and flips.",
     category: "Components",
     slug: "scroll-split-card",
     addedAt: "2026-04-03",
@@ -51,7 +54,8 @@ export const components: Record<string, ComponentMetadata> = {
   },
   "mac-keyboard": {
     title: "Mac Keyboard",
-    description: "A realistic Mac keyboard component with interactive keys and detailed styling.",
+    description:
+      "A realistic Mac keyboard component with interactive keys and detailed styling.",
     category: "Components",
     slug: "mac-keyboard",
     addedAt: "2026-03-13",
@@ -181,7 +185,8 @@ export const components: Record<string, ComponentMetadata> = {
 
   "split-flap-display": {
     title: "Split Flap Display",
-    description: "A premium split-flap display component inspired by vintage departure boards.",
+    description:
+      "A premium split-flap display component inspired by vintage departure boards.",
     category: "Components",
     slug: "split-flap-display",
     addedAt: "2026-03-27",
@@ -190,7 +195,8 @@ export const components: Record<string, ComponentMetadata> = {
   },
   "eye-tracking": {
     title: "Eye Tracking",
-    description: "Hyper-realistic eyes that follow your cursor with smooth spring physics, reactive pupils, blinking, and multiple stunning variants.",
+    description:
+      "Hyper-realistic eyes that follow your cursor with smooth spring physics, reactive pupils, blinking, and multiple stunning variants.",
     category: "Components",
     slug: "eye-tracking",
     addedAt: "2026-03-28",
@@ -223,6 +229,16 @@ export const components: Record<string, ComponentMetadata> = {
     slug: "webgl-liquid",
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/webglliquid.mov",
+  },
+  "silk-aurora": {
+    title: "Silk Aurora",
+    description:
+      "Premium WebGL hero background with satin-dark aurora ribbons, pearlescent highlights, fine grain, and cursor depth.",
+    category: "Hero Backgrounds",
+    slug: "silk-aurora",
+    addedAt: "2026-06-09",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/silkaurora.webm",
   },
   "closing-plasma": {
     title: "Closing Plasma",
@@ -298,9 +314,10 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/pixelcanvas.mov",
   },
-  "signature": {
+  signature: {
     title: "Signature",
-    description: "An animated SVG signature effect that draws out text as if hand-written.",
+    description:
+      "An animated SVG signature effect that draws out text as if hand-written.",
     category: "Components",
     slug: "signature",
     addedAt: "2026-03-17",
