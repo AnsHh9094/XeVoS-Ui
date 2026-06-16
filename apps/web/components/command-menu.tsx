@@ -294,11 +294,10 @@ export function CommandMenu({ trigger }: { trigger?: React.ReactNode }) {
       ) : (
         <button
           onClick={() => setOpen(true)}
-          className="group inline-flex items-center justify-center md:justify-start gap-2 whitespace-nowrap transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 border-0 md:border md:border-input/50 md:hover:border-input hover:bg-accent/50 md:px-3 md:py-2 relative h-9 w-9 md:w-40 lg:w-56 rounded-md md:rounded-lg bg-transparent md:bg-muted/30 text-sm font-normal text-muted-foreground"
+          className="group inline-flex items-center xl:justify-start justify-center gap-2 whitespace-nowrap transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 border-0 xl:border xl:border-input/50 xl:hover:border-input hover:bg-accent/50 xl:px-3 xl:py-2 relative h-9 w-9 xl:w-36 rounded-md xl:rounded-lg bg-transparent xl:bg-muted/30 text-sm font-normal text-muted-foreground"
         >
-          <Search className="h-[1.2rem] w-[1.2rem] md:h-4 md:w-4 opacity-70 group-hover:opacity-100 md:opacity-50 md:group-hover:opacity-70 transition-opacity" />
-          <span className="hidden lg:inline-flex">Search...</span>
-          <span className="hidden md:inline-flex lg:hidden">Search</span>
+          <Search className="h-[1.2rem] w-[1.2rem] xl:h-4 xl:w-4 opacity-70 group-hover:opacity-100 xl:opacity-50 xl:group-hover:opacity-70 transition-opacity" />
+          <span className="hidden xl:inline-flex">Search...</span>
           <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-6 select-none items-center gap-0.5 rounded-md border bg-background/80 px-1.5 font-mono text-[10px] font-medium text-muted-foreground/70 sm:flex">
             <span className="text-xs">⌘</span>K
           </kbd>
