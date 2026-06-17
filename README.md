@@ -20,6 +20,12 @@
 </p>
 
 <p align="center">
+  <a href="https://vercel.com/open-source-program">
+    <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge-2026.svg" />
+  </a>
+</p>
+
+<p align="center">
   <a href="https://github.com/harshjdhv/componentry/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
   </a>
@@ -156,6 +162,25 @@ See [LICENSE](./LICENSE) for more information.
 - Inspired by [shadcn/ui](https://ui.shadcn.com/)
 - Built with [Tailwind CSS](https://tailwindcss.com/)
 - Powered by [Vercel](https://vercel.com/)
+
+<p align="center">
+  <a href="https://star-history.com/#harshjdhv/componentry&Date">
+    <picture>
+      <source
+        media="(prefers-color-scheme: dark)"
+        srcset="https://api.star-history.com/svg?repos=harshjdhv/componentry&type=Date&theme=dark&legend=top-left"
+      />
+      <source
+        media="(prefers-color-scheme: light)"
+        srcset="https://api.star-history.com/svg?repos=harshjdhv/componentry&type=Date&legend=top-left"
+      />
+      <img
+        alt="Star History Chart"
+        src="https://api.star-history.com/svg?repos=harshjdhv/componentry&type=Date&legend=top-left"
+      />
+    </picture>
+  </a>
+</p>
 
 ---
 

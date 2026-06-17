@@ -45,13 +45,19 @@ export default function Home() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="group inline-flex items-center rounded-full border border-border bg-white/40 dark:bg-zinc-900/30 px-3 py-1.5 text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-300 backdrop-blur-xl shadow-panel transition-colors hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50">
-              <span className="flex size-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)] mr-2.5 animate-pulse" />
-              100% free and open source
-              <svg className="ml-2 size-3.5 opacity-60 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            <a
+              href="https://vercel.com/open-source-program"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white/40 dark:bg-zinc-900/30 px-2.5 py-1 text-[11px] sm:text-xs font-medium text-zinc-700 dark:text-zinc-300 backdrop-blur-xl shadow-panel transition-colors hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50"
+            >
+              Backed by
+              <svg viewBox="0 0 76 65" className="size-4" fill="currentColor">
+                <path d="M37.59.25l36.95 64H.64z" />
               </svg>
-            </div>
+              <span className="font-semibold tracking-tight">Vercel</span>
+              OSS Program
+            </a>
           </motion.div>
 
           <motion.h1
