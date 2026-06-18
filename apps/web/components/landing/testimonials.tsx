@@ -93,7 +93,7 @@ const row2: Testimonial[] = [
 function TestimonialCard({ item }: { item: Testimonial }) {
   const isX = item.source === "x"
   return (
-    <div className="group relative flex h-auto w-[320px] shrink-0 flex-col gap-3 overflow-hidden rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-[#161616] p-5 transition-colors duration-300 hover:border-zinc-300/80 dark:hover:border-zinc-700/80 transform-gpu [backface-visibility:hidden]">
+    <div className="group relative flex h-auto w-[320px] shrink-0 flex-col gap-3 overflow-hidden rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-[#161616] p-5 transition-[border-color,box-shadow] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-zinc-300/80 dark:hover:border-zinc-700/80 hover:shadow-sm active:scale-[0.98] transform-gpu [backface-visibility:hidden]">
       {/* Source badge + quote */}
       <div className="flex items-start justify-between gap-2">
         <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 line-clamp-4 flex-1">
@@ -187,7 +187,7 @@ export function Testimonials() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           className="mx-auto mb-12 max-w-[1240px] text-center"
         >
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-zinc-400 dark:text-zinc-600 mb-3">
@@ -203,7 +203,7 @@ export function Testimonials() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           className="relative flex flex-col gap-3 [mask-image:linear-gradient(to_right,transparent,black_2.5rem,black_calc(100%-2.5rem),transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_2.5rem,black_calc(100%-2.5rem),transparent)] sm:[mask-image:linear-gradient(to_right,transparent,black_4rem,black_calc(100%-4rem),transparent)] sm:[-webkit-mask-image:linear-gradient(to_right,transparent,black_4rem,black_calc(100%-4rem),transparent)]"
         >
           <MarqueeRow items={row1} direction="left" speed={40} />
