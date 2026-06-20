@@ -65,7 +65,7 @@ export function SiteHeader({ sidebarToggle, landingGutter }: SiteHeaderProps) {
                 </div>
                 <div className="ml-auto flex items-center gap-2 sm:gap-4">
                     <Link
-                        href="https://shadcnblocks.com"
+                        href="https://shadcnblocks.com/?utm_source=componentry&utm_medium=sponsor&utm_campaign=header_badge"
                         target="_blank"
                         data-umami-event="click-sponsor-shadcnblocks"
                         className="hidden md:inline-flex items-center gap-2 border border-input/50 hover:border-input hover:bg-accent/50 pl-2 pr-3 h-9 rounded-md bg-muted/30 text-sm font-normal transition-colors"
