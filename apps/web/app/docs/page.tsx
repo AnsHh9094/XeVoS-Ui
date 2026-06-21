@@ -162,9 +162,55 @@ function ComponentCard({
         onBlur={stopPreview}
         className="group relative flex flex-col rounded-2xl border border-border bg-white dark:bg-zinc-900/50 overflow-hidden transition-all duration-300 shadow-card hover:-translate-y-0.5 hover:border-input hover:shadow-card-hover"
       >
+        {/* ── Expandable hover info (upper side) ── */}
+        <motion.div
+          initial={false}
+          animate={{
+            height: isHovered ? 32 : 0,
+            opacity: isHovered ? 1 : 0,
+          }}
+          transition={{
+            duration: 0.5,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="overflow-hidden"
+        >
+          <div className="px-4 pb-1 pt-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-zinc-400">{component.category}</span>
+              <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
+                View component
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  className="transition-transform duration-200 group-hover:translate-x-0.5"
+                >
+                  <path
+                    d="M5 2L9 6L5 10"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </motion.div>
+
         {/* ── Preview area (Floating) ── */}
         <div className="p-1.5">
-          <div className="relative h-[220px] w-full rounded-xl bg-zinc-50 dark:bg-zinc-900/80 group-hover:bg-zinc-100/50 dark:group-hover:bg-zinc-800/80 transition-colors border border-dashed border-border shadow-surface-inset overflow-hidden">
+          <motion.div 
+            initial={false}
+            animate={{ height: isHovered ? 228 : 260 }}
+            transition={{
+              duration: 0.5,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="relative w-full rounded-xl bg-zinc-50 dark:bg-zinc-900/80 group-hover:bg-zinc-100/50 dark:group-hover:bg-zinc-800/80 transition-colors border border-dashed border-border shadow-surface-inset overflow-hidden"
+          >
             {shouldRenderVideo && previewSources && (
               <video
                 ref={videoRef}
@@ -195,7 +241,7 @@ function ComponentCard({
                 className={`w-full h-full object-cover transition-opacity duration-200 ${isVideoReady ? "opacity-100" : "opacity-0"}`}
               />
             )}
-          </div>
+          </motion.div>
         </div>
 
         {/* ── Info area ── */}
