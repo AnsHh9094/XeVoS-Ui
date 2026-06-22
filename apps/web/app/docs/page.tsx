@@ -12,7 +12,18 @@ import { FloatingNavbar } from "@/components/floating-navbar"
 type PreviewSources = {
   mp4: string
   webm: string
-  webp: string
+}
+
+let preferredPreviewFormat: "webm" | "mp4" | null = null
+
+function getPreferredPreviewSrc(sources: PreviewSources) {
+  if (typeof window === "undefined") return sources.mp4
+  if (!preferredPreviewFormat) {
+    const probe = document.createElement("video")
+    const supportsWebm = Boolean(probe.canPlayType('video/webm; codecs="vp9,opus"'))
+    preferredPreviewFormat = supportsWebm ? "webm" : "mp4"
+  }
+  return preferredPreviewFormat === "webm" ? sources.webm : sources.mp4
 }
 
 function getPreviewSources(previewVideo?: string) {
@@ -25,7 +36,6 @@ function getPreviewSources(previewVideo?: string) {
   return {
     mp4: `${base}.mp4${query}`,
     webm: `${base}.webm${query}`,
-    webp: `${base}.webp${query}`,
   }
 }
 
@@ -43,12 +53,15 @@ function ComponentCard({
   const [isNearViewport, setIsNearViewport] = useState(false)
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const [isVideoReady, setIsVideoReady] = useState(false)
-  const [hasPosterError, setHasPosterError] = useState(false)
   const previewSources = useMemo(
     () => getPreviewSources(component.previewVideo),
     [component.previewVideo]
   ) as PreviewSources | null
-  const shouldPrioritizePoster = index < 6
+  const previewVideoSrc = useMemo(
+    () => (previewSources ? getPreferredPreviewSrc(previewSources) : ""),
+    [previewSources]
+  )
+  const shouldAutoWarmVideo = index < 4
 
   useEffect(() => {
     const element = cardRef.current
@@ -65,13 +78,29 @@ function ComponentCard({
 
   useEffect(() => {
     if (!isNearViewport) return
-    setShouldLoadVideo(true)
-  }, [isNearViewport])
+    if (shouldAutoWarmVideo) {
+      setShouldLoadVideo(true)
+      return
+    }
+
+    const warmWhenIdle = () => setShouldLoadVideo(true)
+    const idleApi = window as Window & {
+      requestIdleCallback?: (cb: IdleRequestCallback, options?: IdleRequestOptions) => number
+      cancelIdleCallback?: (handle: number) => void
+    }
+
+    if (typeof idleApi.requestIdleCallback === "function") {
+      const idleId = idleApi.requestIdleCallback(warmWhenIdle, { timeout: 1500 })
+      return () => idleApi.cancelIdleCallback?.(idleId)
+    }
+
+    const timeoutId = setTimeout(warmWhenIdle, 400)
+    return () => clearTimeout(timeoutId)
+  }, [isNearViewport, shouldAutoWarmVideo])
 
   useEffect(() => {
     setIsVideoReady(false)
-    setHasPosterError(false)
-  }, [component.slug])
+  }, [component.slug, previewVideoSrc])
 
   useEffect(() => {
     const video = videoRef.current
@@ -134,19 +163,10 @@ function ComponentCard({
         {/* ── Preview area (Floating) ── */}
         <div className="p-1.5">
           <div className="relative h-[220px] w-full rounded-xl bg-zinc-50 dark:bg-zinc-900/80 group-hover:bg-zinc-100/50 dark:group-hover:bg-zinc-800/80 transition-colors border border-dashed border-zinc-200/50 dark:border-zinc-800/50 overflow-hidden">
-            {previewSources && !hasPosterError && (
-              <img
-                src={previewSources.webp}
-                alt={`${component.title} preview`}
-                loading={shouldPrioritizePoster ? "eager" : "lazy"}
-                fetchPriority={shouldPrioritizePoster ? "high" : "auto"}
-                onError={() => setHasPosterError(true)}
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-            )}
             {shouldRenderVideo && previewSources && (
               <video
                 ref={videoRef}
+                src={shouldLoadVideo ? previewVideoSrc : undefined}
                 loop
                 muted
                 playsInline
@@ -171,14 +191,7 @@ function ComponentCard({
                   }
                 }}
                 className={`w-full h-full object-cover transition-opacity duration-200 ${isVideoReady ? "opacity-100" : "opacity-0"}`}
-              >
-                {shouldLoadVideo && previewSources.webm && (
-                  <source src={previewSources.webm} type="video/webm" />
-                )}
-                {shouldLoadVideo && previewSources.mp4 && (
-                  <source src={previewSources.mp4} type="video/mp4" />
-                )}
-              </video>
+              />
             )}
           </div>
         </div>

@@ -37,14 +37,14 @@ for input in "${FILES[@]}"; do
 
   # High-quality VP9 for smallest preview size at good visual fidelity.
   ffmpeg -y -i "$input" \
-    -vf "scale='min(1280,iw)':-2:flags=lanczos,fps=30" \
-    -an -c:v libvpx-vp9 -row-mt 1 -deadline good -cpu-used 2 -crf 32 -b:v 0 \
+    -t 6 -vf "scale='min(720,iw)':-2:flags=lanczos,fps=24" \
+    -an -c:v libvpx-vp9 -row-mt 1 -deadline good -cpu-used 4 -crf 38 -b:v 0 -g 48 \
     "$webm"
 
   # Broad compatibility fallback.
   ffmpeg -y -i "$input" \
-    -vf "scale='min(1280,iw)':-2:flags=lanczos,fps=30" \
-    -an -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -movflags +faststart \
+    -t 6 -vf "scale='min(720,iw)':-2:flags=lanczos,fps=24" \
+    -an -c:v libx264 -preset veryfast -crf 30 -pix_fmt yuv420p -g 48 -keyint_min 48 -movflags +faststart \
     "$mp4"
 
   # Poster frame for future usage in cards if needed.
