@@ -27,15 +27,25 @@ export function LiveCodeBlock({ defaultCode, lang = "tsx" }: LiveCodeBlockProps)
     }, [code]);
 
     if (!isMounted) {
-        return <CodeBlock code={defaultCode} lang={lang} />;
+        return (
+            <CodeBlock
+                code={defaultCode}
+                lang={lang}
+                className="min-h-[200px] border-none !rounded-none !bg-transparent [&_pre]:!overflow-x-auto [&_pre]:!overflow-y-hidden"
+            />
+        );
     }
 
     return (
-        <div className="relative group transition-all duration-300 min-h-[200px] border border-border rounded-lg overflow-hidden bg-zinc-950">
-            <div className="absolute top-0 right-0 p-2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-black/50 backdrop-blur-sm rounded-bl-lg border-l border-b border-border">
+        <div className="relative group min-h-[200px]">
+            <div className="absolute top-0 right-0 p-2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-zinc-100/90 dark:bg-zinc-900/90 rounded-bl-md border-l border-b border-border">
                 Real-time
             </div>
-            <CodeBlock code={displayCode} lang={lang} className="min-h-[200px]" />
+            <CodeBlock
+                code={displayCode}
+                lang={lang}
+                className="min-h-[200px] border-none !rounded-none !bg-transparent [&_pre]:!overflow-x-auto [&_pre]:!overflow-y-hidden"
+            />
         </div>
     );
 }

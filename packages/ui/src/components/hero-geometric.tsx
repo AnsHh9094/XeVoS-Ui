@@ -130,6 +130,16 @@ void main() {
 }
 `;
 
+const HERO_GEOMETRIC_FALLBACK_COLOR_1 = "#3B82F6";
+const HERO_GEOMETRIC_FALLBACK_COLOR_2 = "#F0F9FF";
+const HEX_COLOR_REGEX = /^#?[0-9a-fA-F]{6}$/;
+
+function sanitizeHexColor(value: string, fallback: string) {
+    const trimmed = value.trim();
+    if (!HEX_COLOR_REGEX.test(trimmed)) return fallback;
+    return trimmed.startsWith("#") ? trimmed : `#${trimmed}`;
+}
+
 const GradientPlane = ({
     color1,
     color2,
@@ -144,18 +154,18 @@ const GradientPlane = ({
         () => ({
             uTime: { value: 0 },
             uResolution: { value: new THREE.Vector2(1000, 1000) },
-            uColor1: { value: new THREE.Color(color1) },
-            uColor2: { value: new THREE.Color(color2) },
+            uColor1: { value: new THREE.Color(HERO_GEOMETRIC_FALLBACK_COLOR_1) },
+            uColor2: { value: new THREE.Color(HERO_GEOMETRIC_FALLBACK_COLOR_2) },
         }),
-        [color1, color2]
+        []
     );
 
     useFrame((state) => {
         const { clock, size } = state;
         uniforms.uTime.value = clock.getElapsedTime() * speed;
         uniforms.uResolution.value.set(size.width, size.height);
-        uniforms.uColor1.value.set(color1);
-        uniforms.uColor2.value.set(color2);
+        uniforms.uColor1.value.set(sanitizeHexColor(color1, HERO_GEOMETRIC_FALLBACK_COLOR_1));
+        uniforms.uColor2.value.set(sanitizeHexColor(color2, HERO_GEOMETRIC_FALLBACK_COLOR_2));
     });
 
     return (
@@ -183,6 +193,9 @@ interface HeroGeometricProps extends React.ComponentPropsWithoutRef<"div"> {
     color2?: string;
     speed?: number;
 }
+
+const HERO_HEADLINE_CLASS =
+    "pb-[0.08em] text-[12cqi] md:text-[8cqi] lg:text-[6cqi] leading-[0.96] tracking-tighter font-bold text-zinc-900";
 
 export default function HeroGeometric({
     title1,
@@ -229,11 +242,9 @@ export default function HeroGeometric({
                                         initial={{ y: "100%", opacity: 0 }}
                                         animate={{ y: "0%", opacity: 1 }}
                                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-                                        className="text-[12cqi] md:text-[8cqi] lg:text-[6cqi] leading-[0.9] tracking-tighter text-[#131313]"
+                                        className={HERO_HEADLINE_CLASS}
                                     >
-                                        <span className="font-serif italic font-light text-[#1a1a1a]">
-                                            {title1}
-                                        </span>
+                                        {title1}
                                     </motion.h1>
                                 </div>
                             )}
@@ -243,7 +254,7 @@ export default function HeroGeometric({
                                         initial={{ y: "100%", opacity: 0 }}
                                         animate={{ y: "0%", opacity: 1 }}
                                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
-                                        className="text-[12cqi] md:text-[8cqi] lg:text-[6cqi] leading-[0.9] tracking-tighter font-bold text-black"
+                                        className={HERO_HEADLINE_CLASS}
                                     >
                                         {title2}
                                     </motion.h1>
