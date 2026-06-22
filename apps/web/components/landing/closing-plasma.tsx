@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useCallback } from "react"
+import { useTheme } from "next-themes"
 
 interface ClosingPlasmaProps {
     className?: string
@@ -13,13 +14,14 @@ void main() {
 }
 `
 
-// ── Organic Plasma / Liquid Fire ─────────────────────
+// ── Theme-aware Ethereal Plasma ──────────────────────
 const FRAG = `
 precision highp float;
 
 uniform vec2 u_res;
 uniform float u_time;
 uniform vec2 u_mouse;
+uniform float u_isDark;
 
 // ── Noise Functions ──────────────────────────────
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -27,10 +29,8 @@ vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
 
 float snoise(vec2 v) {
-  const vec4 C = vec4(0.211324865405187,  // (3.0-sqrt(3.0))/6.0
-                      0.366025403784439,  // 0.5*(sqrt(3.0)-1.0)
-                     -0.577350269189626,  // -1.0 + 2.0 * C.x
-                      0.024390243902439); // 1.0 / 41.0
+  const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+                     -0.577350269189626, 0.024390243902439);
   vec2 i  = floor(v + dot(v, C.yy) );
   vec2 x0 = v -   i + dot(i, C.xx);
   vec2 i1;
@@ -54,16 +54,16 @@ float snoise(vec2 v) {
   return 130.0 * dot(m, g);
 }
 
-// ── Domain Warping ───────────────────────────────
 float fbm(vec2 p) {
     float total = 0.0;
     float amplitude = 0.5;
     float frequency = 1.0;
-    for (int i = 0; i < 4; i++) {
+    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
+    for (int i = 0; i < 5; i++) {
         total += snoise(p * frequency) * amplitude;
+        p = rot * p;
         frequency *= 2.0;
         amplitude *= 0.5;
-        p += vec2(1.2, 3.4); // Shift to avoid artifacts
     }
     return total;
 }
@@ -72,78 +72,65 @@ void main() {
     vec2 uv = gl_FragCoord.xy / u_res;
     float aspect = u_res.x / u_res.y;
     vec2 p = (uv - 0.5) * vec2(aspect, 1.0);
-    float t = u_time * 0.2; // Slow elegant movement
+    float t = u_time * 0.15;
 
     // Mouse influence
     vec2 mouse = (u_mouse - 0.5) * vec2(aspect, 1.0);
     float dMouse = length(p - mouse);
-    // Add a subtle push/pull from mouse
-    p -= (mouse - p) * 0.05 * smoothstep(0.5, 0.0, dMouse);
+    p += (mouse - p) * 0.02 * smoothstep(0.4, 0.0, dMouse);
 
-    // ── Pattern Generation ───────────────────────
+    // ── Warped Fog ───────────────────────────────
+    vec2 flow = vec2(
+        fbm(p + vec2(t * 0.2, t * 0.1)),
+        fbm(p + vec2(-t * 0.1, t * 0.3))
+    );
+
+    float n = fbm(p * 2.0 + flow * 1.5);
+
+    float ridges = 1.0 - abs(snoise(p * 4.0 + n) * 2.0);
+    ridges = pow(ridges, 3.0); 
+
+    // ── Dark Theme Palette ──────────────────────
+    vec3 darkA = vec3(0.05, 0.05, 0.08);
+    vec3 darkB = vec3(0.12, 0.15, 0.25);
+    vec3 darkC = vec3(0.3, 0.4, 0.6);
+
+    // ── Light Theme Palette ─────────────────────
+    // Soft luminous tones that blend with white
+    vec3 lightA = vec3(0.92, 0.93, 0.96);    // Very light cool grey
+    vec3 lightB = vec3(0.82, 0.85, 0.92);    // Soft lavender grey
+    vec3 lightC = vec3(0.72, 0.76, 0.88);    // Muted periwinkle
+
+    // Interpolate palettes based on theme
+    vec3 colorA = mix(lightA, darkA, u_isDark);
+    vec3 colorB = mix(lightB, darkB, u_isDark);
+    vec3 colorC = mix(lightC, darkC, u_isDark);
+
+    // Mix based on noise
+    vec3 col = mix(colorA, colorB, smoothstep(-0.5, 0.5, n));
+    col = mix(col, colorC, smoothstep(0.3, 1.0, n * 0.5 + ridges * 0.5));
     
-    // Domain warping: distortion 1
-    vec2 q = vec2(
-        fbm(p + vec2(0.0, t * 0.5)),
-        fbm(p + vec2(4.2, t * 0.3))
-    );
+    // Add subtle glow points
+    float sparkle = pow(snoise(gl_FragCoord.xy * 0.2 + t * 2.0), 20.0) * 0.5;
+    // Sparkle color adapts to theme
+    vec3 sparkleColor = mix(vec3(0.55, 0.58, 0.72), vec3(0.8, 0.9, 1.0), u_isDark);
+    col += sparkleColor * sparkle;
 
-    // Domain warping: distortion 2
-    vec2 r = vec2(
-        fbm(p + 4.0 * q + vec2(t * 0.4, 9.2)),
-        fbm(p + 4.0 * q + vec2(8.3, t * 0.2))
-    );
-
-    // Final noise value with deep warping
-    float f = fbm(p + 4.0 * r);
-
-    // ── Color Mix ────────────────────────────────
-    // Creating a "liquid metal / plasma" palette
+    // ── Post FX ──────────────────────────────────
     
-    // Base dark varying color
-    vec3 col = mix(
-        vec3(0.05, 0.0, 0.1),  // Deep plum/black
-        vec3(0.1, 0.05, 0.2), // Dark violet
-        clamp(f * f * 4.0, 0.0, 1.0)
-    );
+    // Vignette — softer in light mode to avoid darkening edges too harshly
+    float vigStrength = mix(1.8, 1.6, u_isDark);
+    float vig = 1.0 - smoothstep(0.5, vigStrength, length(p));
+    // In light mode, lerp vignette towards white instead of black
+    col = mix(col, col * vig, u_isDark);
+    // Light mode: fade edges toward white
+    float lightVig = 1.0 - smoothstep(0.4, 1.5, length(p));
+    col = mix(mix(vec3(1.0), col, lightVig), col, u_isDark);
 
-    // Mid-tones (Cyan/Magenta glow)
-    col = mix(
-        col,
-        vec3(0.2, 0.1, 0.4), // Indigo
-        clamp(length(q), 0.0, 1.0)
-    );
-
-    // Highlights (Gold/Electric Blue swirl)
-    // We mix based on the 'r' vector which represents the secondary warp
-    col = mix(
-        col,
-        vec3(0.1, 0.6, 0.8), // Electric Cyan
-        clamp(r.x, 0.0, 1.0)
-    );
-    
-    // Warm accent (Fiery orange/pink in the deep folds)
-    col = mix(
-        col, 
-        vec3(0.8, 0.2, 0.5), // Magenta/Pink
-        clamp(r.y * r.y, 0.0, 1.0) * 0.6
-    );
-
-    // Deep brights (White/Silver peaks)
-    float peaks = smoothstep(0.7, 1.2, f + 0.5 * r.x);
-    col += vec3(0.9, 0.95, 1.0) * peaks * 0.4;
-
-    // ── Post Processing ──────────────────────────
-    
-    // Vignette
-    float vig = 1.0 - smoothstep(0.3, 1.5, length(p));
-    col *= vig;
-
-    // Grain
-    float grain = (fract(sin(dot(gl_FragCoord.xy + t * 50.0, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * 0.04;
+    // Dither/Grain
+    float grain = (fract(sin(dot(gl_FragCoord.xy + t * 50.0, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * 0.06;
     col += grain;
 
-    // Soft glow integration
     gl_FragColor = vec4(col, 1.0);
 }
 `
@@ -152,6 +139,22 @@ export function ClosingPlasma({ className }: ClosingPlasmaProps) {
     const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const mouseRef = useRef({ x: 0.5, y: 0.5 })
     const targetMouse = useRef({ x: 0.5, y: 0.5 })
+    const { resolvedTheme } = useTheme()
+
+    // Detect initial theme from HTML class (works before next-themes hydrates)
+    const getIsDark = useCallback(() => {
+        if (resolvedTheme) return resolvedTheme === "dark" ? 1.0 : 0.0
+        if (typeof document !== "undefined") {
+            return document.documentElement.classList.contains("dark") ? 1.0 : 0.0
+        }
+        return 0.0
+    }, [resolvedTheme])
+
+    // Set theme instantly — no transition
+    const isDarkRef = useRef(getIsDark())
+    useEffect(() => {
+        isDarkRef.current = getIsDark()
+    }, [getIsDark])
 
     const handleMouseMove = useCallback((e: MouseEvent) => {
         const canvas = canvasRef.current
@@ -205,6 +208,7 @@ export function ClosingPlasma({ className }: ClosingPlasmaProps) {
         const uRes = gl.getUniformLocation(prog, "u_res")
         const uTime = gl.getUniformLocation(prog, "u_time")
         const uMouse = gl.getUniformLocation(prog, "u_mouse")
+        const uIsDark = gl.getUniformLocation(prog, "u_isDark")
 
         const resize = () => {
             const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
@@ -231,6 +235,7 @@ export function ClosingPlasma({ className }: ClosingPlasmaProps) {
 
             gl.uniform1f(uTime, elapsed)
             gl.uniform2f(uMouse, mouseRef.current.x, mouseRef.current.y)
+            gl.uniform1f(uIsDark, isDarkRef.current)
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
             raf = requestAnimationFrame(render)
         }
