@@ -74,6 +74,14 @@ const docsImportMap: Record<
     import("@/components/docs/dither-prism-hero").then((m) => ({
       default: m.DitherPrismHeroDocs,
     })),
+  "webgl-liquid": () =>
+    import("@/components/docs/webgl-liquid").then((m) => ({
+      default: m.WebGLLiquidDocs,
+    })),
+  "closing-plasma": () =>
+    import("@/components/docs/closing-plasma").then((m) => ({
+      default: m.ClosingPlasmaDocs,
+    })),
   "border-beam": () =>
     import("@/components/docs/border-beam").then((m) => ({
       default: m.BorderBeamDocs,
