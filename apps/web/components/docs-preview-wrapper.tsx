@@ -33,9 +33,9 @@ export function DocsPreviewWrapper({ children, fullWidthPreview, sourceCodeConte
   const [copied, setCopied] = React.useState(false)
   const [isExpanded, setIsExpanded] = React.useState(false)
   const [activeVariant, setActiveVariant] = React.useState(-1) // -1 = default preview
-  
+
   const { setActiveVariantIndex } = useDocStore()
-  
+
   // Sync state with store
   React.useEffect(() => {
     setActiveVariantIndex(activeVariant)
@@ -186,25 +186,18 @@ export function DocsPreviewWrapper({ children, fullWidthPreview, sourceCodeConte
         variants.length > 0 ? "h-[calc(100%-3.5rem)]" : "h-full",
         !fullWidthPreview && "items-center justify-center"
       )}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeVariant === -1 ? "default" : `variant-${activeVariant}`}
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className={cn(
-              "w-full",
-              (activeVariant >= 0 && variants[activeVariant]?.fullWidth) || fullWidthPreview
-                ? "h-full"
-                : "p-10 flex items-center justify-center"
-            )}
-          >
-            <div key={key} className="w-full h-full flex items-center justify-center">
-              {activeVariant === -1 ? children : variants[activeVariant]?.preview}
-            </div>
-          </motion.div>
-        </AnimatePresence>
+        <div
+          className={cn(
+            "w-full",
+            (activeVariant >= 0 && variants[activeVariant]?.fullWidth) || fullWidthPreview
+              ? "h-full"
+              : "p-10 flex items-center justify-center"
+          )}
+        >
+          <div key={key} className="w-full h-full flex items-center justify-center">
+            {activeVariant === -1 ? children : variants[activeVariant]?.preview}
+          </div>
+        </div>
       </div>
 
       {/* Bottom Variant Bar */}
