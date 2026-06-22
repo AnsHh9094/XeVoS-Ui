@@ -1,12 +1,13 @@
 "use client"
 
 import type React from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { components, type ComponentCategory, type ComponentMetadata } from "@/registry"
 import { Logomark } from "@/components/logos/logomark"
 
-
+import { FloatingNavbar } from "@/components/floating-navbar"
 // ─── Component Card ────────────────────────────────────────────────────────
 function ComponentCard({
   component,
@@ -57,15 +58,42 @@ function ComponentCard({
   )
 }
 
+const categoryOrder: ComponentCategory[] = [
+  "Text Animations",
+  "Components",
+  "Hero Backgrounds",
+  "Visual Effects",
+]
+
 // ─── Main Docs Page ─────────────────────────────────────────────────────────
 export default function DocsPage() {
   const allComponents = Object.values(components)
-  const categoryOrder: ComponentCategory[] = [
-    "Text Animations",
-    "Components",
-    "Hero Backgrounds",
-    "Visual Effects",
-  ]
+  const [activeSection, setActiveSection] = useState<string>("")
+
+
+
+  useEffect(() => {
+    const observers = categoryOrder.map((cat) => {
+      const id = cat.toLowerCase().replace(/\s+/g, "-")
+      const element = document.getElementById(id)
+      if (!element) return null
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting) {
+            setActiveSection(cat)
+          }
+        },
+        { rootMargin: "-20% 0px -50% 0px" } // Trigger when section is near center/top
+      )
+      observer.observe(element)
+      return observer
+    })
+
+    return () => {
+      observers.forEach((observer) => observer?.disconnect())
+    }
+  }, [])
 
   const grouped = categoryOrder
     .map(cat => ({
@@ -80,6 +108,40 @@ export default function DocsPage() {
       <div className="fixed top-0 left-0 right-0 z-40 h-24 bg-gradient-to-b from-white via-white/80 to-transparent dark:from-[#080808] dark:via-[#080808]/80 pointer-events-none backdrop-blur-[1px]" />
       <div className="fixed bottom-0 left-0 right-0 z-40 h-24 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#080808] dark:via-[#080808]/80 pointer-events-none backdrop-blur-[1px]" />
 
+      {/* ── Top Floating Header ── */}
+      <FloatingNavbar />
+
+      {/* ── Floating Dock Nav ── */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit px-4 pointer-events-none">
+        <nav className="flex items-center gap-1 p-1.5 rounded-full border border-zinc-800/50 bg-zinc-900/90 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.3)] shadow-black/20 pointer-events-auto ring-1 ring-white/10">
+          {categoryOrder.map((cat) => {
+            const isActive = activeSection === cat
+            return (
+              <a
+                key={cat}
+                href={`#${cat.toLowerCase().replace(/\s+/g, '-')}`}
+                onClick={(e) => {
+                  e.preventDefault()
+                  document.getElementById(cat.toLowerCase().replace(/\s+/g, '-'))?.scrollIntoView({ behavior: 'smooth' })
+                  setActiveSection(cat)
+                }}
+                className={`relative px-4 py-2 text-[13px] font-medium transition-colors duration-300 ${isActive ? "text-white" : "text-zinc-500 hover:text-zinc-300"
+                  }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeSection"
+                    className="absolute inset-0 bg-white/10 rounded-full"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{cat}</span>
+              </a>
+            )
+          })}
+        </nav>
+      </div>
+
       <main className="max-w-[1400px] mx-auto pt-32 pb-32 px-6 sm:px-8 relative z-10">
 
         {/* ── Hero ── */}
@@ -91,6 +153,8 @@ export default function DocsPage() {
             A growing collection of animated primitives for React.
           </p>
         </div>
+
+
 
 
 
@@ -153,7 +217,7 @@ export default function DocsPage() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </main >
+    </div >
   )
 }
