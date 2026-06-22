@@ -113,7 +113,7 @@ export default function DocsPage() {
 
       {/* ── Floating Dock Nav ── */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit px-4 pointer-events-none">
-        <nav className="flex items-center gap-1 p-1.5 rounded-full border border-zinc-800/50 bg-zinc-900/90 backdrop-blur-2xl shadow-[0_8px_30px_rgb(0,0,0,0.3)] shadow-black/20 pointer-events-auto ring-1 ring-white/10">
+        <nav className="flex items-center gap-1 p-1.5 rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/80 dark:bg-zinc-900/90 backdrop-blur-xl shadow-lg shadow-zinc-200/20 dark:shadow-black/20 pointer-events-auto">
           {categoryOrder.map((cat) => {
             const isActive = activeSection === cat
             return (
@@ -125,13 +125,15 @@ export default function DocsPage() {
                   document.getElementById(cat.toLowerCase().replace(/\s+/g, '-'))?.scrollIntoView({ behavior: 'smooth' })
                   setActiveSection(cat)
                 }}
-                className={`relative px-4 py-2 text-[13px] font-medium transition-colors duration-300 ${isActive ? "text-white" : "text-zinc-500 hover:text-zinc-300"
+                className={`relative px-4 py-2 text-[13px] font-medium transition-all duration-300 rounded-lg ${isActive
+                    ? "text-zinc-900 dark:text-zinc-100"
+                    : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50"
                   }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeSection"
-                    className="absolute inset-0 bg-white/10 rounded-full"
+                    className="absolute inset-0 bg-zinc-100 dark:bg-zinc-800/50 rounded-lg shadow-sm"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
