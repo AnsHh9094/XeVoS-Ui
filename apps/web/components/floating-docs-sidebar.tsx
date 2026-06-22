@@ -20,20 +20,20 @@ export function FloatingDocsSidebar() {
 
     return (
         <>
-            {/* Trigger Button - Minimal Floating Icon on the Left */}
+            {/* Trigger Button - Matches Breadcrumbs Style */}
             <div
-                className="fixed top-32 left-6 z-50 hidden xl:block mix-blend-difference"
+                className="hidden xl:block"
                 onMouseEnter={() => setIsOpen(true)}
             >
                 <button
                     onClick={() => setIsOpen(!isOpen)}
                     className={cn(
-                        "p-2.5 rounded-full border border-zinc-200/20 bg-white/10 backdrop-blur-md shadow-sm transition-all duration-300 hover:scale-110 hover:bg-white/20 active:scale-95 group",
-                        isOpen ? "opacity-0 pointer-events-none translate-x-4" : "opacity-100"
+                        "flex items-center justify-center w-8 h-8 rounded-full border border-border/40 bg-white/50 dark:bg-zinc-800/50 text-muted-foreground backdrop-blur-md shadow-sm transition-all duration-300 hover:bg-white/80 dark:hover:bg-zinc-700/80 hover:scale-105 active:scale-95 group",
+                        isOpen ? "opacity-0 pointer-events-none scale-90" : "opacity-100"
                     )}
                     aria-label="Open Navigation"
                 >
-                    <Menu className="w-4 h-4 text-zinc-400 group-hover:text-zinc-200 transition-colors" />
+                    <Menu className="w-3.5 h-3.5 group-hover:text-foreground transition-colors" />
                 </button>
             </div>
 
@@ -48,7 +48,7 @@ export function FloatingDocsSidebar() {
                         className="fixed top-4 bottom-4 left-4 z-50 w-72 hidden xl:flex flex-col"
                         onMouseLeave={() => setIsOpen(false)}
                     >
-                        <div className="flex-1 flex flex-col gap-1 overflow-hidden p-2 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-2xl shadow-2xl shadow-black/10">
+                        <div className="flex-1 flex flex-col gap-1 overflow-hidden p-2 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-[#121212] shadow-2xl shadow-black/40">
 
                             {/* Header */}
                             <div className="flex items-center justify-between px-4 py-4 border-b border-zinc-100 dark:border-zinc-800/50 mb-2">
@@ -81,10 +81,10 @@ export function FloatingDocsSidebar() {
                                                         key={item.href}
                                                         href={item.href}
                                                         className={cn(
-                                                            "group flex items-center justify-between rounded-lg px-3 py-1.5 text-[13px] font-medium transition-all duration-200 border border-transparent",
+                                                            "group flex items-center justify-between rounded-md px-3 py-1 text-[13px] font-medium transition-all duration-200 border border-transparent",
                                                             isActive
-                                                                ? "bg-zinc-100 text-zinc-900 border-zinc-200/50 dark:bg-zinc-800 dark:text-zinc-50 dark:border-zinc-700/50 translate-x-1"
-                                                                : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:translate-x-1"
+                                                                ? "text-zinc-900 dark:text-white font-semibold translate-x-1"
+                                                                : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-300 hover:translate-x-1"
                                                         )}
                                                     >
                                                         <span className="truncate">{item.title}</span>

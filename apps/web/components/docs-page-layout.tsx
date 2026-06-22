@@ -96,8 +96,6 @@ export async function DocsPageLayout({
       data-docs-layout
       className="flex flex-col lg:flex-row w-full h-full min-h-screen lg:h-screen bg-[#f3f4f6] dark:bg-[#080808] text-foreground"
     >
-      <FloatingDocsSidebar />
-
       {/* Left Column: Scrollable Content */}
       <div
         data-docs-left-column
@@ -107,8 +105,9 @@ export async function DocsPageLayout({
         <div className="absolute top-0 left-0 right-0 z-30 h-32 bg-gradient-to-b from-[#f3f4f6] via-[#f3f4f6]/95 to-transparent dark:from-[#080808] dark:via-[#080808]/95 pointer-events-none backdrop-blur-[1px]" />
         <div className="absolute bottom-0 left-0 right-0 z-30 h-32 bg-gradient-to-t from-[#f3f4f6] via-[#f3f4f6]/95 to-transparent dark:from-[#080808] dark:via-[#080808]/95 pointer-events-none backdrop-blur-[1px]" />
 
-        <div className="absolute top-8 left-8 lg:left-16 z-40">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-white/50 dark:bg-white/[0.03] px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-muted-foreground backdrop-blur-md shadow-sm">
+        <div className="absolute top-8 left-8 lg:left-16 z-40 flex items-center gap-3">
+          <FloatingDocsSidebar />
+          <div className="inline-flex h-8 items-center gap-2 rounded-full border border-border/40 bg-white/50 dark:bg-white/[0.03] px-4 text-[10px] font-mono uppercase tracking-widest text-muted-foreground backdrop-blur-md shadow-sm">
             <Link href="/docs" className="hover:text-foreground transition-colors">Docs</Link>
             <span aria-hidden="true" className="text-border">/</span>
             <span className="text-foreground font-medium">{title}</span>
