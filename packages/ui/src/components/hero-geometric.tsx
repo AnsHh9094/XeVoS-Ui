@@ -175,11 +175,10 @@ const GradientPlane = ({
 
 // --- Main Component ---
 
-interface HeroGeometricProps {
+interface HeroGeometricProps extends React.ComponentPropsWithoutRef<"div"> {
     title1?: string;
     title2?: string;
     description?: string;
-    className?: string; // Explicitly included
     color1?: string;
     color2?: string;
     speed?: number;
@@ -193,11 +192,16 @@ export default function HeroGeometric({
     color2 = "#F0F9FF", // Default pale blue
     speed = 1,
     className,
+    ...props
 }: HeroGeometricProps) {
     return (
         <div
             className={cn("relative w-full min-h-screen flex flex-col items-center overflow-hidden bg-white text-black", className)}
-            style={{ containerType: "size" }}
+            style={{
+                containerType: "size",
+                ...props.style
+            }}
+            {...props}
         >
             {/* Background Shader */}
             <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
