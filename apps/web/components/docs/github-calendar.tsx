@@ -30,7 +30,7 @@ export async function GithubCalendarDocs() {
       description="A premium, customizable visualization of GitHub contribution graphs with multiple color schemes and display variants."
       preview={
         <div className="flex items-center justify-center w-full p-4 md:p-8 overflow-hidden">
-          <div className="scale-[0.65] md:scale-[0.85] origin-center">
+          <div className="scale-[0.55] md:scale-[0.7] origin-center">
             <GithubCalendar username="harshjdhv" />
           </div>
         </div>
@@ -45,7 +45,7 @@ export async function GithubCalendarDocs() {
           title: "Grayscale",
           preview: (
             <div className="flex items-center justify-center w-full p-4 md:p-8 overflow-hidden">
-              <div className="scale-[0.65] md:scale-[0.85] origin-center">
+              <div className="scale-[0.55] md:scale-[0.7] origin-center">
                 <GithubCalendar username="harshjdhv" colorSchema="gray" />
               </div>
             </div>
@@ -56,7 +56,7 @@ export async function GithubCalendarDocs() {
           title: "Minimal Variant",
           preview: (
             <div className="flex items-center justify-center w-full p-4 md:p-8 overflow-hidden">
-              <div className="scale-[0.65] md:scale-[0.85] origin-center">
+              <div className="scale-[0.55] md:scale-[0.7] origin-center">
                 <GithubCalendar
                   username="harshjdhv"
                   variant="minimal"
@@ -71,7 +71,7 @@ export async function GithubCalendarDocs() {
           title: "Orange Color Schema",
           preview: (
             <div className="flex items-center justify-center w-full p-4 md:p-8 overflow-hidden">
-              <div className="scale-[0.65] md:scale-[0.85] origin-center">
+              <div className="scale-[0.55] md:scale-[0.7] origin-center">
                 <GithubCalendar
                   username="harshjdhv"
                   colorSchema="orange"

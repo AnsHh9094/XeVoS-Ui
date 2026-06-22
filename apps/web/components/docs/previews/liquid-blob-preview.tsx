@@ -4,10 +4,10 @@ import { LiquidBlob } from "@workspace/ui/components/liquid-blob";
 
 export function LiquidBlobDemo() {
   return (
-    <div className="relative h-full w-full overflow-hidden bg-zinc-900">
+    <div className="relative h-full w-full overflow-hidden bg-white dark:bg-[#121212]">
       <LiquidBlob interactive />
       <div className="relative z-10 flex h-full items-center justify-center pointer-events-none">
-        <h3 className="text-2xl font-bold text-white">Liquid Blob</h3>
+        <h3 className="text-2xl font-bold text-foreground">Liquid Blob</h3>
       </div>
     </div>
   );
@@ -15,7 +15,7 @@ export function LiquidBlobDemo() {
 
 export function LiquidBlobTealDemo() {
   return (
-    <div className="relative h-full w-full overflow-hidden bg-zinc-900">
+    <div className="relative h-full w-full overflow-hidden bg-white dark:bg-[#121212]">
       <LiquidBlob
         color="#10b981"
         secondaryColor="#06b6d4"
@@ -24,7 +24,7 @@ export function LiquidBlobTealDemo() {
         interactive
       />
       <div className="relative z-10 flex h-full items-center justify-center pointer-events-none">
-        <h3 className="text-2xl font-bold text-white">Teal Theme</h3>
+        <h3 className="text-2xl font-bold text-foreground">Teal Theme</h3>
       </div>
     </div>
   );
@@ -32,7 +32,7 @@ export function LiquidBlobTealDemo() {
 
 export function LiquidBlobFastDemo() {
   return (
-    <div className="relative h-full w-full overflow-hidden bg-zinc-900">
+    <div className="relative h-full w-full overflow-hidden bg-white dark:bg-[#121212]">
       <LiquidBlob
         color="#f97316"
         secondaryColor="#ef4444"
@@ -42,7 +42,7 @@ export function LiquidBlobFastDemo() {
         interactive
       />
       <div className="relative z-10 flex h-full items-center justify-center pointer-events-none">
-        <h3 className="text-2xl font-bold text-white">Fast Animation</h3>
+        <h3 className="text-2xl font-bold text-foreground">Fast Animation</h3>
       </div>
     </div>
   );
