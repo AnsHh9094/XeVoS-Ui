@@ -42,6 +42,7 @@ export interface DocsPageLayoutProps {
   unstyledPreview?: boolean
   type?: string
   dependencies?: string[]
+  personalizeContent?: React.ReactNode
 }
 
 function CodeBlockSkeleton({ className }: { className?: string }) {
@@ -67,6 +68,7 @@ export async function DocsPageLayout({
   examples = [],
   props = [],
   fullWidthPreview = false,
+  personalizeContent,
 
 }: DocsPageLayoutProps) {
 
@@ -281,6 +283,7 @@ export async function DocsPageLayout({
           {/* Floating Card Container */}
           <DocsPreviewWrapper
             fullWidthPreview={fullWidthPreview}
+            personalizeContent={personalizeContent}
             sourceCodeFilename={installSourceCode ? (installSourceFilename || `${installPackageName}.tsx`) : undefined}
             sourceCode={installSourceCode}
             sourceCodeContent={

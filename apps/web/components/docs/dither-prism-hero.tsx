@@ -1,5 +1,8 @@
 import React from "react";
-import { DitherPrismHeroPlayground } from "@/components/docs/previews/dither-prism-hero-playground";
+import {
+    DitherPrismHeroPersonalizePanel,
+    DitherPrismHeroPlayground,
+} from "@/components/docs/previews/dither-prism-hero-playground";
 import { LiveCodeBlock } from "@/components/live-code-block";
 import { DocsPageLayout } from "@/components/docs-page-layout";
 import { readComponentSource } from "@/lib/source-code";
@@ -9,7 +12,6 @@ const basicUsageCode = `import { DitherPrismHero } from "@/components/ui/dither-
 <DitherPrismHero 
     title1="Experience" 
     title2="The Future"
-    description="Move your cursor to interact"
 />`;
 
 export async function DitherPrismHeroDocs() {
@@ -20,30 +22,26 @@ export async function DitherPrismHeroDocs() {
     return (
         <DocsPageLayout
             title="Dither Prism Hero"
-            description="A breathtaking WebGL hero background featuring advanced dithering, prismatic refraction, holographic iridescence, and mouse-reactive ripples - rendered in real-time with GLSL."
+            description="A breathtaking WebGL hero background featuring advanced dithering, prismatic refraction, and holographic iridescence rendered in real-time with GLSL."
             preview={<DitherPrismHeroPlayground />}
+            personalizeContent={<DitherPrismHeroPersonalizePanel />}
             previewCode=""
             installPackageName="dither-prism-hero"
             installDependencies="framer-motion @react-three/fiber three"
             installSourceCode={sourceCode}
             usageCode={<LiveCodeBlock defaultCode={basicUsageCode} />}
-            fullWidthPreview={false}
+            fullWidthPreview={true}
             unstyledPreview={true}
             props={[
                 {
                     name: "title1",
                     type: "string",
-                    description: "First line of the main headline (serif, italic font).",
+                    description: "First line of the main metallic headline.",
                 },
                 {
                     name: "title2",
                     type: "string",
-                    description: "Second line of the main headline (sans-serif, bold).",
-                },
-                {
-                    name: "description",
-                    type: "string",
-                    description: "Subtitle text displayed below the headline.",
+                    description: "Second line of the main metallic headline.",
                 },
                 {
                     name: "color1",
@@ -80,12 +78,6 @@ export async function DitherPrismHeroDocs() {
                     type: "number",
                     default: "0.5",
                     description: "Intensity of the prismatic rainbow refraction (0-1).",
-                },
-                {
-                    name: "mouseIntensity",
-                    type: "number",
-                    default: "0.5",
-                    description: "Intensity of mouse-reactive ripple effects (0-1).",
                 },
                 {
                     name: "showParticles",
