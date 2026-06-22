@@ -5,9 +5,11 @@ import { Check, Copy } from "lucide-react"
 
 interface CopyButtonProps {
   code: string
+  className?: string
+  absolute?: boolean
 }
 
-export function CopyButton({ code }: CopyButtonProps) {
+export function CopyButton({ code, className, absolute = true }: CopyButtonProps) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = async () => {
@@ -19,10 +21,10 @@ export function CopyButton({ code }: CopyButtonProps) {
   return (
     <button
       onClick={handleCopy}
-      className={`absolute top-3 right-3 p-2 rounded-lg transition-all duration-200 z-10 ${copied
+      className={`${absolute ? "absolute top-3 right-3" : ""} p-2 rounded-lg transition-all duration-200 z-10 ${copied
         ? "bg-transparent text-zinc-50"
         : "bg-transparent text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50"
-        }`}
+        } ${className || ""}`}
       aria-label={copied ? "Copied" : "Copy code"}
     >
       {copied ? (
