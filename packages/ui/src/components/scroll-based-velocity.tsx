@@ -17,17 +17,19 @@ interface ScrollBasedVelocityProps {
     text: string;
     default_velocity?: number;
     className?: string;
+    containerRef?: React.RefObject<HTMLElement | null>;
 }
 
 interface ParallaxProps {
     children: string;
     baseVelocity: number;
     className?: string;
+    containerRef?: React.RefObject<HTMLElement | null>;
 }
 
-function ParallaxText({ children, baseVelocity = 100, className }: ParallaxProps) {
+function ParallaxText({ children, baseVelocity = 100, className, containerRef }: ParallaxProps) {
     const baseX = useMotionValue(0);
-    const { scrollY } = useScroll();
+    const { scrollY } = useScroll(containerRef ? { container: containerRef } : undefined);
     const scrollVelocity = useVelocity(scrollY);
     const smoothVelocity = useSpring(scrollVelocity, {
         damping: 50,
@@ -81,13 +83,14 @@ export function ScrollBasedVelocity({
     text,
     default_velocity = 5,
     className,
+    containerRef,
 }: ScrollBasedVelocityProps) {
     return (
         <section className="relative w-full">
-            <ParallaxText baseVelocity={default_velocity} className={className}>
+            <ParallaxText baseVelocity={default_velocity} className={className} containerRef={containerRef}>
                 {text}
             </ParallaxText>
-            <ParallaxText baseVelocity={-default_velocity} className={className}>
+            <ParallaxText baseVelocity={-default_velocity} className={className} containerRef={containerRef}>
                 {text}
             </ParallaxText>
         </section>

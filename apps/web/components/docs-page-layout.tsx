@@ -99,7 +99,7 @@ export async function DocsPageLayout({
       {/* Left Column: Scrollable Content */}
       <div
         data-docs-left-column
-        className="w-full lg:basis-1/2 lg:max-w-1/2 h-full flex flex-col relative z-20 bg-[#f3f4f6] dark:bg-[#080808]"
+        className="w-full lg:basis-1/2 lg:max-w-1/2 h-full flex flex-col relative z-10 bg-[#f3f4f6] dark:bg-[#080808]"
       >
         {/* Premium Overlay & Navigation */}
         <div className="absolute top-0 left-0 right-0 z-30 h-32 bg-gradient-to-b from-[#f3f4f6] via-[#f3f4f6]/95 to-transparent dark:from-[#080808] dark:via-[#080808]/95 pointer-events-none backdrop-blur-[1px]" />
@@ -267,7 +267,7 @@ export async function DocsPageLayout({
       {/* Right Column: Sticky Preview */}
       <div
         data-docs-right-column
-        className="flex-1 lg:basis-1/2 lg:max-w-1/2 lg:h-full lg:sticky lg:top-0 order-first lg:order-last bg-[#f3f4f6] dark:bg-[#080808] flex flex-col z-10"
+        className="flex-1 lg:basis-1/2 lg:max-w-1/2 lg:h-full lg:sticky lg:top-0 order-first lg:order-last bg-[#f3f4f6] dark:bg-[#080808] flex flex-col z-20"
       >
         {/* We use a large padding to offset the card from the left side, mimicking the image */}
         <div

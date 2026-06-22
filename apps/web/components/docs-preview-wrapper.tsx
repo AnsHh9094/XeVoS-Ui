@@ -182,7 +182,7 @@ export function DocsPreviewWrapper({ children, fullWidthPreview, sourceCodeConte
 
       {/* Content Area */}
       <div className={cn(
-        "w-full overflow-auto flex bg-white dark:bg-[#121212]",
+        "w-full overflow-auto flex bg-white dark:bg-[#121212] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",
         "h-full",
         !fullWidthPreview && "items-center justify-center"
       )}>
