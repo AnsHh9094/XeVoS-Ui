@@ -7,6 +7,7 @@ import { RotateCcw, Search, Settings2, X, Check, Maximize, Minimize, CodeXml, Ch
 import { ThemeToggle } from "@/components/theme-toggle"
 import { CommandMenu } from "@/components/command-menu"
 import { motion, AnimatePresence, type PanInfo } from "framer-motion"
+import { useDocStore } from "@/hooks/use-doc-store"
 
 export interface VariantItem {
   title: string
@@ -32,6 +33,14 @@ export function DocsPreviewWrapper({ children, fullWidthPreview, sourceCodeConte
   const [copied, setCopied] = React.useState(false)
   const [isExpanded, setIsExpanded] = React.useState(false)
   const [activeVariant, setActiveVariant] = React.useState(-1) // -1 = default preview
+  
+  const { setActiveVariantIndex } = useDocStore()
+  
+  // Sync state with store
+  React.useEffect(() => {
+    setActiveVariantIndex(activeVariant)
+  }, [activeVariant, setActiveVariantIndex])
+
   const previewRef = React.useRef<HTMLDivElement>(null)
   const variantBarRef = React.useRef<HTMLDivElement>(null)
   const iconButtonClass =
@@ -333,21 +342,21 @@ export function DocsPreviewWrapper({ children, fullWidthPreview, sourceCodeConte
               }}
               className="fixed bottom-0 left-0 z-50 flex flex-col outline-none h-[80vh] w-full rounded-t-lg border-t border-border/20 bg-transparent shadow-none pointer-events-none lg:top-0 lg:bottom-0 lg:h-screen lg:max-h-screen lg:w-1/2 lg:rounded-none lg:border-none lg:pt-3 lg:pb-3 lg:pl-3 lg:pr-1.5"
             >
-              <div className="relative h-full bg-[#121212] lg:rounded-2xl overflow-hidden border border-border/20 shadow-2xl pointer-events-auto">
+              <div className="relative h-full bg-[#f3f4f6] dark:bg-[#121212] lg:rounded-2xl overflow-hidden border border-border/20 shadow-2xl pointer-events-auto">
                 {/* Header Overlay */}
                 <div className="absolute top-0 left-0 right-0 z-20 pointer-events-none">
-                  <div className="absolute inset-0 h-40 bg-gradient-to-b from-[#121212] via-[#121212] to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_20%,transparent)]" />
+                  <div className="absolute inset-0 h-40 bg-gradient-to-b from-[#f3f4f6] via-[#f3f4f6] to-transparent dark:from-[#121212] dark:via-[#121212] dark:to-transparent backdrop-blur-sm [mask-image:linear-gradient(to_bottom,black_20%,transparent)]" />
                   <div className="relative z-10 flex flex-col pointer-events-auto">
                     {/* Drag handle - top edge-to-edge */}
                     <div className="flex items-center justify-center pt-2 pb-1">
-                      <div className="w-10 h-1 rounded-full bg-white/[0.08] transition-colors hover:bg-white/[0.15]" />
+                      <div className="w-10 h-1 rounded-full bg-zinc-900/[0.08] dark:bg-white/[0.08] transition-colors hover:bg-zinc-900/[0.15] dark:hover:bg-white/[0.15]" />
                     </div>
 
                     {/* Header row */}
                     <div className="flex items-center justify-between px-4 py-1">
                       <button
                         onClick={() => setShowSource(false)}
-                        className="inline-flex items-center gap-1.5 text-zinc-400 transition-colors hover:text-white focus-visible:outline-none"
+                        className="inline-flex items-center gap-1.5 text-zinc-500 dark:text-zinc-400 transition-colors hover:text-zinc-900 dark:hover:text-white focus-visible:outline-none"
                       >
                         <ChevronLeft className="w-4 h-4" />
                         <span className="text-xs font-mono tracking-wide">Source Code</span>
@@ -370,7 +379,7 @@ export function DocsPreviewWrapper({ children, fullWidthPreview, sourceCodeConte
                               setCopied(true)
                               setTimeout(() => setCopied(false), 2000)
                             }}
-                            className="inline-flex items-center justify-center w-7 h-7 rounded-md text-zinc-500 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                            className="inline-flex items-center justify-center w-7 h-7 rounded-md text-zinc-500 transition-colors hover:text-zinc-900 dark:hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                             aria-label={copied ? "Copied" : "Copy code"}
                           >
                             {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
@@ -399,7 +408,7 @@ export function DocsPreviewWrapper({ children, fullWidthPreview, sourceCodeConte
                     }
                   `}</style>
                   {/* Bottom gradient overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 z-10 h-24 bg-gradient-to-t from-[#121212] via-[#121212]/80 to-transparent pointer-events-none backdrop-blur-sm [mask-image:linear-gradient(to_top,black,transparent)]" />
+                  <div className="absolute bottom-0 left-0 right-0 z-10 h-24 bg-gradient-to-t from-[#f3f4f6] via-[#f3f4f6]/80 to-transparent dark:from-[#121212] dark:via-[#121212]/80 dark:to-transparent pointer-events-none backdrop-blur-sm [mask-image:linear-gradient(to_top,black,transparent)]" />
                   <div data-drawer-code className="h-full overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] [&_>_div]:h-full [&_>_div_>_div]:h-full [&_>_div_>_div]:flex [&_>_div_>_div]:flex-col [&_.relative.group]:flex-1 [&_.relative.group]:min-h-0 [&_.relative.group_>_div]:h-full [&_pre]:min-h-full [&_pre]:!pt-24 [&_.relative.group_>_button]:hidden">
                     <div className="h-full w-full [&_>_*]:h-full [&_>_*]:flex [&_>_*]:flex-col [&_>_*_>_*]:border-none [&_>_*_>_*]:rounded-none [&_>_*_>_*]:bg-transparent">
                       {sourceCodeContent}
