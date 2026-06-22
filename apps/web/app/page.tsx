@@ -1,18 +1,19 @@
 "use client"
 
 import React from "react"
-import { motion } from "framer-motion"
+import { motion, type Variants } from "framer-motion"
 import { FloatingNavbar } from "@/components/floating-navbar"
 import { HeroButtons } from "@/components/landing/hero-buttons"
 import { WebGLLiquid } from "@/components/landing/webgl-liquid"
 export default function Home() {
   const titleLine1 = "PREMIUM UI"
   const titleLine2 = "COMPONENTS"
-  const container = {
+  const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1]
+  const container: Variants = {
     hidden: { opacity: 0 },
     show: { opacity: 1 },
   }
-  const letter = {
+  const letter: Variants = {
     hidden: { y: 28, opacity: 0, filter: "blur(6px)" },
     show: (i: number) => ({
       y: [18, -6, 0],
@@ -21,7 +22,7 @@ export default function Home() {
       transition: {
         delay: 0.2 + i * 0.025,
         duration: 0.9,
-        ease: [0.16, 1, 0.3, 1],
+        ease: easeOut,
       },
     }),
   }
@@ -35,7 +36,6 @@ export default function Home() {
       {/* ── Background Pattern ── */}
       <div className="fixed inset-0 z-30 h-full w-full bg-white dark:bg-[#080808]">
         <WebGLLiquid className="absolute inset-0 h-full w-full pointer-events-none opacity-90 block" />
-        <div className="absolute left-0 right-0 top-0 z-0 m-auto h-[310px] w-[310px] rounded-full bg-zinc-400 opacity-20 blur-[100px] dark:bg-zinc-500"></div>
       </div>
 
       {/* ── Overlay Gradients ── */}
