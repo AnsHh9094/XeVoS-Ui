@@ -85,7 +85,7 @@ export function Section({ title, children, id, step, className }: SectionProps) 
             {step}
           </div>
         )}
-        <h2 className="text-2xl font-semibold tracking-tight">
+        <h2 className="text-2xl font-semibold tracking-tight bg-gradient-to-br from-zinc-900 via-zinc-500 to-zinc-900 dark:from-white dark:via-zinc-400 dark:to-white bg-clip-text text-transparent pb-1">
           {title}
         </h2>
       </div>

@@ -7,6 +7,7 @@ interface CodeBlockProps {
   lang?: string;
   className?: string;
   filename?: string;
+  lineNumbers?: boolean;
 }
 
 /**
@@ -19,7 +20,8 @@ export async function CodeBlock({
   code,
   lang = "tsx",
   className,
-  filename
+  filename,
+  lineNumbers = true
 }: CodeBlockProps) {
   // Use our cached highlighter for instant highlighting
   const html = await highlightCode(code.trim(), lang as BundledLanguage);
@@ -35,6 +37,7 @@ export async function CodeBlock({
         .shiki code {
           display: grid;
         }
+        ${lineNumbers ? `
         .shiki [data-line]::before {
           counter-increment: line;
           content: counter(line);
@@ -49,6 +52,12 @@ export async function CodeBlock({
         .dark .shiki [data-line]::before {
           color: #52525b;
         }
+        ` : `
+        .shiki [data-line]::before {
+          content: none;
+          display: none;
+        }
+        `}
         .shiki,
         .shiki span {
           background-color: transparent !important;
