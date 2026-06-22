@@ -37,3 +37,7 @@ npm-debug.log*
 
 # Scripts
 scripts/migrate-to-r2.py
+scripts/__pycache__/
+
+# Generated preview optimization artifacts
+apps/web/public/preview-videos-recompress/

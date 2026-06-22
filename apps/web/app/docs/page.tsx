@@ -1,13 +1,28 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo, useRef } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { components, type ComponentCategory, type ComponentMetadata } from "@/registry"
 import { Logomark } from "@/components/logos/logomark"
 
 import { FloatingNavbar } from "@/components/floating-navbar"
+
+function getPreviewSources(previewVideo?: string) {
+  if (!previewVideo) return null
+
+  const match = previewVideo.match(/^(.*)\.(mov|mp4|webm)(\?.*)?$/i)
+  if (!match) return null
+
+  const [, base, , query = ""] = match
+  return {
+    mp4: `${base}.mp4${query}`,
+    webm: `${base}.webm${query}`,
+    webp: `${base}.webp${query}`,
+  }
+}
+
 // ─── Component Card ────────────────────────────────────────────────────────
 function ComponentCard({
   component,
@@ -16,8 +31,67 @@ function ComponentCard({
   component: ComponentMetadata
   index: number
 }) {
+  const cardRef = useRef<HTMLDivElement | null>(null)
+  const videoRef = useRef<HTMLVideoElement | null>(null)
+  const [isHovered, setIsHovered] = useState(false)
+  const [isNearViewport, setIsNearViewport] = useState(false)
+  const previewSources = useMemo(
+    () => getPreviewSources(component.previewVideo),
+    [component.previewVideo]
+  )
+
+  useEffect(() => {
+    const element = cardRef.current
+    if (!element) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsNearViewport(Boolean(entry?.isIntersecting)),
+      { rootMargin: "250px 0px 250px 0px", threshold: 0.01 }
+    )
+    observer.observe(element)
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    if (isHovered) {
+      const playPromise = video.play()
+      if (playPromise) {
+        playPromise.catch(() => {})
+      }
+      return
+    }
+
+    video.pause()
+    video.currentTime = 0.01
+  }, [isHovered])
+
+  const shouldRenderVideo = Boolean(previewSources)
+  const startPreview = () => {
+    setIsHovered(true)
+    const video = videoRef.current
+    if (!video) return
+    video.preload = "auto"
+    const playPromise = video.play()
+    if (playPromise) {
+      playPromise.catch(() => {})
+    }
+  }
+
+  const stopPreview = () => {
+    setIsHovered(false)
+    const video = videoRef.current
+    if (!video) return
+    video.pause()
+    video.currentTime = 0.01
+  }
+
   return (
     <motion.div
+      ref={cardRef}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -28,23 +102,50 @@ function ComponentCard({
     >
       <Link
         href={`/docs/components/${component.slug}`}
+        onMouseEnter={startPreview}
+        onMouseLeave={stopPreview}
+        onFocus={startPreview}
+        onBlur={stopPreview}
         className="group relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 overflow-hidden transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:hover:shadow-[0_8px_30px_rgb(255,255,255,0.02)] hover:border-zinc-300 dark:hover:border-zinc-700"
       >
         {/* ── Preview area (Floating) ── */}
         <div className="p-1.5">
           <div className="relative h-[220px] w-full rounded-xl bg-zinc-50 dark:bg-zinc-900/80 group-hover:bg-zinc-100/50 dark:group-hover:bg-zinc-800/80 transition-colors border border-dashed border-zinc-200/50 dark:border-zinc-800/50 overflow-hidden">
-            {component.previewVideo ? (
+            {shouldRenderVideo && previewSources && (
               <video
-                src={component.previewVideo}
-                autoPlay
+                ref={videoRef}
                 loop
                 muted
                 playsInline
+                preload={isHovered || isNearViewport ? "auto" : "metadata"}
+                poster={previewSources.webp}
+                onLoadedData={(e) => {
+                  if (!isHovered) {
+                    const video = e.currentTarget
+                    if (video.currentTime < 0.01) {
+                      video.currentTime = 0.01
+                    }
+                  }
+                }}
+                onCanPlay={() => {
+                  if (isHovered) {
+                    const video = videoRef.current
+                    if (!video) return
+                    const playPromise = video.play()
+                    if (playPromise) {
+                      playPromise.catch(() => {})
+                    }
+                  }
+                }}
                 className="w-full h-full object-cover"
-              />
-            ) : (
-              /* Placeholder for future video/interaction */
-              null
+              >
+                {previewSources.mp4 && (
+                  <source src={previewSources.mp4} type="video/mp4" />
+                )}
+                {previewSources.webm && (
+                  <source src={previewSources.webm} type="video/webm" />
+                )}
+              </video>
             )}
           </div>
         </div>
