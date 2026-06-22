@@ -9,14 +9,139 @@ import { cn } from "@/lib/utils"
 import { docsConfig } from "@/config/docs"
 import { components } from "@/registry"
 
+type PreviewSources = {
+    mp4: string
+    webm: string
+    webp: string
+}
+
+function getPreviewSources(previewVideo?: string) {
+    if (!previewVideo) return null
+    const match = previewVideo.match(/^(.*)\.(mov|mp4|webm)(\?.*)?$/i)
+    if (!match) return null
+    const [, base, , query = ""] = match
+    return {
+        mp4: `${base}.mp4${query}`,
+        webm: `${base}.webm${query}`,
+        webp: `${base}.webp${query}`,
+    }
+}
+
 export function FloatingDocsSidebar() {
     const pathname = usePathname()
     const [isOpen, setIsOpen] = React.useState(false)
+    const [isHoverVideoReady, setIsHoverVideoReady] = React.useState(false)
+    const [hasHoverPosterError, setHasHoverPosterError] = React.useState(false)
+    const [hoverPreview, setHoverPreview] = React.useState<{
+        title: string
+        mp4: string
+        webm: string
+        webp: string
+        x: number
+        y: number
+    } | null>(null)
+    const warmedPreviewKeys = React.useRef(new Set<string>())
+    const warmingVideos = React.useRef(new Map<string, HTMLVideoElement>())
+
+    const warmPreviewAssets = React.useCallback((sources: PreviewSources) => {
+        if (typeof window === "undefined") return
+        if (warmedPreviewKeys.current.has(sources.mp4)) return
+
+        warmedPreviewKeys.current.add(sources.mp4)
+
+        const posterImage = new Image()
+        posterImage.src = sources.webp
+
+        const video = document.createElement("video")
+        video.preload = "auto"
+        video.muted = true
+        video.playsInline = true
+        video.src = sources.mp4
+        video.load()
+        warmingVideos.current.set(sources.mp4, video)
+    }, [])
+
+    const updateHoverPreview = React.useCallback(
+        (
+            item: { title: string; href: string },
+            event: React.MouseEvent<HTMLAnchorElement>
+        ) => {
+            const slug = item.href.split("/").pop()
+            if (!slug) {
+                setHoverPreview(null)
+                return
+            }
+
+            const previewVideo = components[slug]?.previewVideo
+            const sources = getPreviewSources(previewVideo)
+            if (!sources) {
+                setHoverPreview(null)
+                return
+            }
+            warmPreviewAssets(sources)
+
+            const cardWidth = 224
+            const cardHeight = 170
+            const offset = 18
+            const maxX = Math.max(16, window.innerWidth - cardWidth - 16)
+            const maxY = Math.max(16, window.innerHeight - cardHeight - 16)
+
+            const x = Math.max(16, Math.min(event.clientX + offset, maxX))
+            const y = Math.max(16, Math.min(event.clientY + offset, maxY))
+
+            setHoverPreview({
+                title: item.title,
+                mp4: sources.mp4,
+                webm: sources.webm,
+                webp: sources.webp,
+                x,
+                y,
+            })
+        },
+        [warmPreviewAssets]
+    )
 
     // Close when path changes
     React.useEffect(() => {
         setIsOpen(false)
     }, [pathname])
+
+    React.useEffect(() => {
+        if (!isOpen) {
+            setHoverPreview(null)
+            setIsHoverVideoReady(false)
+        }
+    }, [isOpen])
+
+    React.useEffect(() => {
+        if (!hoverPreview) {
+            setIsHoverVideoReady(false)
+            setHasHoverPosterError(false)
+            return
+        }
+        setIsHoverVideoReady(false)
+        setHasHoverPosterError(false)
+    }, [hoverPreview])
+
+    React.useEffect(() => {
+        if (!isOpen) return
+
+        const initialSources: PreviewSources[] = []
+        for (const group of docsConfig.nav) {
+            for (const item of group.items) {
+                const slug = item.href.split("/").pop()
+                if (!slug) continue
+                const previewVideo = components[slug]?.previewVideo
+                const sources = getPreviewSources(previewVideo)
+                if (!sources) continue
+                initialSources.push(sources)
+                if (initialSources.length >= 5) break
+            }
+            if (initialSources.length >= 5) break
+        }
+
+        initialSources.forEach((sources) => warmPreviewAssets(sources))
+    }, [isOpen, warmPreviewAssets])
 
     return (
         <>
@@ -80,6 +205,13 @@ export function FloatingDocsSidebar() {
                                                     <Link
                                                         key={item.href}
                                                         href={item.href}
+                                                        onMouseEnter={(e) => updateHoverPreview(item, e)}
+                                                        onMouseMove={(e) => updateHoverPreview(item, e)}
+                                                        onMouseLeave={() => setHoverPreview(null)}
+                                                        onClick={() => {
+                                                            setHoverPreview(null)
+                                                            setIsOpen(false)
+                                                        }}
                                                         className={cn(
                                                             "group flex items-center justify-between rounded-md px-3 py-1 text-[13px] font-medium transition-all duration-200 border border-transparent",
                                                             isActive
@@ -104,6 +236,57 @@ export function FloatingDocsSidebar() {
                             {/* Bottom Fade Gradient (visual polish) */}
                             <div className="absolute bottom-2 left-2 right-2 h-8 bg-gradient-to-t from-white dark:from-zinc-950 to-transparent pointer-events-none rounded-b-2xl" />
                         </div>
+
+                        <AnimatePresence>
+                            {hoverPreview && (
+                                <motion.div
+                                    key={hoverPreview.mp4}
+                                    initial={{ opacity: 0, scale: 0.98 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.98 }}
+                                    transition={{ duration: 0.08, ease: "easeOut" }}
+                                    className="fixed z-[70] w-56 pointer-events-none"
+                                    style={{
+                                        left: hoverPreview.x,
+                                        top: hoverPreview.y,
+                                    }}
+                                >
+                                    <div className="overflow-hidden rounded-xl border border-zinc-200/70 dark:border-zinc-800/70 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md shadow-2xl">
+                                        <div className="relative h-32 w-full bg-zinc-100 dark:bg-zinc-800/60">
+                                            <img
+                                                src={hoverPreview.webp}
+                                                alt={`${hoverPreview.title} preview`}
+                                                loading="eager"
+                                                onError={() => setHasHoverPosterError(true)}
+                                                className="absolute inset-0 h-full w-full object-cover"
+                                                style={{ display: hasHoverPosterError ? "none" : undefined }}
+                                            />
+                                            <video
+                                                key={hoverPreview.mp4}
+                                                autoPlay
+                                                loop
+                                                muted
+                                                playsInline
+                                                preload="auto"
+                                                onLoadedData={() => setIsHoverVideoReady(true)}
+                                                className={cn(
+                                                    "relative h-full w-full object-cover transition-opacity duration-150",
+                                                    isHoverVideoReady ? "opacity-100" : "opacity-0"
+                                                )}
+                                            >
+                                                <source src={hoverPreview.webm} type="video/webm" />
+                                                <source src={hoverPreview.mp4} type="video/mp4" />
+                                            </video>
+                                        </div>
+                                        <div className="px-2.5 py-2">
+                                            <p className="truncate text-[11px] font-medium text-zinc-800 dark:text-zinc-200">
+                                                {hoverPreview.title}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </motion.div>
                 )}
             </AnimatePresence>
