@@ -9,12 +9,33 @@ import { HeroButtons } from "@/components/landing/hero-buttons"
 import { Logomark } from "@/components/logos/logomark"
 
 import { WebGLLiquid } from "@/components/landing/webgl-liquid"
-import { ClosingPlasma } from "@/components/landing/closing-plasma"
-import HeroGeometric from "@workspace/ui/components/hero-geometric"
-import { ParticleGalaxy } from "@workspace/ui/components/particle-galaxy"
-import { MatrixRain } from "@workspace/ui/components/matrix-rain"
-import { DitherGradient } from "@workspace/ui/components/dither-gradient"
-import { MagnetLines } from "@workspace/ui/components/magnet-lines"
+import dynamic from "next/dynamic"
+
+const HeroGeometric = dynamic(
+  () => import("@workspace/ui/components/hero-geometric"),
+  { ssr: false }
+)
+const ParticleGalaxy = dynamic(
+  () => import("@workspace/ui/components/particle-galaxy").then((mod) => mod.ParticleGalaxy),
+  { ssr: false }
+)
+const MatrixRain = dynamic(
+  () => import("@workspace/ui/components/matrix-rain").then((mod) => mod.MatrixRain),
+  { ssr: false }
+)
+const DitherGradient = dynamic(
+  () => import("@workspace/ui/components/dither-gradient").then((mod) => mod.DitherGradient),
+  { ssr: false }
+)
+const MagnetLines = dynamic(
+  () => import("@workspace/ui/components/magnet-lines").then((mod) => mod.MagnetLines),
+  { ssr: false }
+)
+const ClosingPlasma = dynamic(
+  () => import("@/components/landing/closing-plasma").then((mod) => mod.ClosingPlasma),
+  { ssr: false }
+)
+
 
 import {
   MagneticDock,
@@ -92,7 +113,7 @@ export default function Home() {
       <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pb-24 pt-28 text-center">
         <div className="absolute inset-0 z-0 bg-white dark:bg-[#080808]">
           <div className="absolute bottom-0 left-0 right-0 z-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent backdrop-blur-[1px] pointer-events-none dark:from-[#080808] dark:via-[#080808]/80" />
-          <WebGLLiquid className="absolute inset-0 z-10 block h-full w-full pointer-events-none opacity-90" />
+          <WebGLLiquid delayMs={0} className="absolute inset-0 z-10 block h-full w-full pointer-events-none opacity-90" />
           <div className="absolute left-0 right-0 top-0 z-20 h-24 bg-gradient-to-b from-white via-white/80 to-transparent backdrop-blur-[1px] pointer-events-none dark:from-[#080808] dark:via-[#080808]/80" />
         </div>
 
@@ -191,7 +212,7 @@ export default function Home() {
                 <div className="relative h-[220px] w-full overflow-hidden rounded-[24px] border border-zinc-200/60 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-900/80">
                   <div className="absolute inset-0 bg-zinc-950">
                     <ParticleGalaxy
-                      particleCount={4200}
+                      particleCount={1800}
                       spread={2.1}
                       glow={70}
                       density={0.85}
@@ -199,6 +220,7 @@ export default function Home() {
                       cameraMovement={false}
                       minZoom={2}
                       maxZoom={6}
+                      enableZoom={false}
                     />
                   </div>
                 </div>

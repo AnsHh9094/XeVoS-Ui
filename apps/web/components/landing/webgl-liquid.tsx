@@ -169,7 +169,7 @@ export function WebGLLiquid({ className, delayMs = 2400 }: WebGLLiquidProps) {
     }
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
       const { width, height } = canvas.getBoundingClientRect()
       canvas.width = Math.max(1, Math.floor(width * dpr))
       canvas.height = Math.max(1, Math.floor(height * dpr))
