@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://componentry.fun";
+  const baseUrl = "https://www.componentry.fun";
 
   return {
     rules: [

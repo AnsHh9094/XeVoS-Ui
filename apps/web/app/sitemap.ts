@@ -1,9 +1,10 @@
-import { MetadataRoute } from "next"
+import { MetadataRoute } from "next";
+import { components } from "@/registry";
 
-const baseUrl = "https://componentry.fun"
+const baseUrl = "https://www.componentry.fun";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const currentDate = new Date()
+  const currentDate = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [
     {
@@ -24,25 +25,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.5,
     },
-  ]
+  ];
 
-  const componentPages = [
-    "flight-status-card",
-    "border-beam",
-    "spotlight-card",
-    "circuit-board",
-    "command-menu",
-    "dither-gradient",
-    "liquid-blob",
-    "noise-texture",
-  ]
+  const componentSitemap: MetadataRoute.Sitemap = Object.keys(components).map(
+    (slug) => ({
+      url: `${baseUrl}/docs/components/${slug}`,
+      lastModified: currentDate,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    }),
+  );
 
-  const componentSitemap: MetadataRoute.Sitemap = componentPages.map((component) => ({
-    url: `${baseUrl}/docs/components/${component}`,
-    lastModified: currentDate,
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }))
-
-  return [...staticPages, ...componentSitemap]
+  return [...staticPages, ...componentSitemap];
 }
