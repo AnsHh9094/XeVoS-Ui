@@ -135,7 +135,7 @@ export default function Home() {
               {titleLine1.split("").map((char, i) => (
                 <motion.span
                   key={`l1-${i}`}
-                  className="inline-block bg-gradient-to-br from-zinc-900 via-zinc-600 to-zinc-900 bg-clip-text text-transparent dark:from-white dark:via-zinc-400 dark:to-white"
+                  className="inline-block text-zinc-900 dark:text-white drop-shadow-sm"
                   variants={letter}
                   custom={i}
                   style={{ transformOrigin: "50% 100%" }}
@@ -147,7 +147,7 @@ export default function Home() {
               {titleLine2.split("").map((char, i) => (
                 <motion.span
                   key={`l2-${i}`}
-                  className="inline-block bg-gradient-to-br from-zinc-900 via-zinc-600 to-zinc-900 bg-clip-text text-transparent dark:from-white dark:via-zinc-400 dark:to-white"
+                  className="inline-block text-zinc-900 dark:text-white drop-shadow-sm"
                   variants={letter}
                   custom={titleLine1.length + i}
                   style={{ transformOrigin: "50% 100%" }}
