@@ -114,6 +114,10 @@ const docsImportMap: Record<
     import("@/components/docs/pixel-canvas").then((m) => ({
       default: m.PixelCanvasDocs,
     })),
+  "scrub-input": () =>
+    import("@/components/docs/scrub-input").then((m) => ({
+      default: m.ScrubInputDocs,
+    })),
 };
 
 /**

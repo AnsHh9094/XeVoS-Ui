@@ -132,6 +132,13 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/githubcalendar.mov",
   },
+  "scrub-input": {
+    title: "Scrub Input",
+    description: "An inline interactive slider styled as a pill.",
+    category: "Components",
+    slug: "scrub-input",
+    isNew: true,
+  },
 
   // Hero Backgrounds
   "hero-geometric": {
