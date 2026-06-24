@@ -48,6 +48,9 @@ export const metadata: Metadata = {
   },
   description: "Componentry is a free, open-source React UI component library by Harsh Jadhav. Beautiful, animated, copy-paste components built with Tailwind CSS, TypeScript, and Framer Motion. The best UI components for modern web applications.",
   keywords: [
+    "Componentry",
+    "Componentry UI",
+    "componentry.fun",
     "UI component library",
     "React components",
     "React UI library",
