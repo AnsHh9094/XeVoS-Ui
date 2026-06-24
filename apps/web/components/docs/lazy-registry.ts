@@ -10,6 +10,10 @@ const docsImportMap: Record<
     | { [key: string]: React.ComponentType<Record<string, unknown>> }
   >
 > = {
+  "bouncy-accordion": () =>
+    import("@/components/docs/bouncy-accordion").then((m) => ({
+      default: m.BouncyAccordionDocs,
+    })),
   "sticky-scroll-cards": () =>
     import("@/components/docs/sticky-scroll-cards").then((m) => ({
       default: m.StickyScrollCardsDocs,
