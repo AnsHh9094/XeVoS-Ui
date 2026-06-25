@@ -118,6 +118,10 @@ const docsImportMap: Record<
     import("@/components/docs/scrub-input").then((m) => ({
       default: m.ScrubInputDocs,
     })),
+  "scroll-choreography": () =>
+    import("@/components/docs/scroll-choreography").then((m) => ({
+      default: m.ScrollChoreographyDocs,
+    })),
 };
 
 /**
