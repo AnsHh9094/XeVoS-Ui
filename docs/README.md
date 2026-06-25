@@ -48,5 +48,5 @@ See [CREATING_COMPONENTS.md](./CREATING_COMPONENTS.md) for detailed instructions
 ## 🔗 Useful Links
 
 - **Live Site:** https://componentry.fun
-- **Registry URL:** https://componentry.fun/r/registry.json
-- **Install Example:** `pnpm dlx shadcn@latest add @componentry/showcase-card --registry "https://componentry.fun/r/registry.json"`
+- **Registry URL:** https://componentry.fun/r/{component}.json
+- **Install Example:** `pnpm dlx shadcn@latest add "https://componentry.fun/r/showcase-card.json"`

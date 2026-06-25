@@ -16,8 +16,6 @@ const COMMANDS: Record<PackageManager, string> = {
   bun: "bunx shadcn@latest add",
 }
 
-const REGISTRY_NAMESPACE = "@componentry"
-
 interface InstallCommandProps {
   component: string
 }
@@ -27,9 +25,8 @@ export function InstallCommand({ component }: InstallCommandProps) {
   const [selected, setSelected] = React.useState<PackageManager>("pnpm")
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
-  const registryUrl = `${baseUrl}/r/registry.json`
-  const componentPackage = `${REGISTRY_NAMESPACE}/${component}`
-  const command = `${COMMANDS[selected]} ${componentPackage} --registry "${registryUrl}"`
+  const componentUrl = `${baseUrl}/r/${component}.json`
+  const command = `${COMMANDS[selected]} "${componentUrl}"`
 
   return (
     <div className="w-full max-w-full">
@@ -71,9 +68,7 @@ export function InstallCommand({ component }: InstallCommandProps) {
             <span className="mr-2 text-muted-foreground/40 select-none">$</span>
             <span className="text-zinc-950 dark:text-zinc-100">{COMMANDS[selected]}</span>
             {" "}
-            <span className="text-zinc-950 dark:text-zinc-100">{componentPackage}</span>
-            {" "}
-            <span className="text-muted-foreground">--registry "{registryUrl}"</span>
+            <span className="text-muted-foreground">"{componentUrl}"</span>
           </div>
           
           <div className="absolute right-0 top-0 bottom-0 pl-16 pr-4 flex items-center bg-gradient-to-l from-zinc-100 via-zinc-100/90 to-transparent dark:from-zinc-900 dark:via-zinc-900/90 dark:to-transparent">
