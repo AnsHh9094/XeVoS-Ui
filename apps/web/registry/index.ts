@@ -268,6 +268,15 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/animatedgradient.webm",
   },
+  "liquid-chrome": {
+    title: "Liquid Chrome",
+    description: "Premium fluid liquid metal shader background effect.",
+    category: "Hero Backgrounds",
+    slug: "liquid-chrome",
+    addedAt: "2026-06-24",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/liquidchrome.webm",
+  },
   // Visual Effects
   "image-trail": {
     title: "Image Trail",

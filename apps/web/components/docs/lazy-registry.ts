@@ -78,6 +78,10 @@ const docsImportMap: Record<
     import("@/components/docs/animated-gradient").then((m) => ({
       default: m.AnimatedGradientDocs,
     })),
+  "liquid-chrome": () =>
+    import("@/components/docs/liquid-chrome").then((m) => ({
+      default: m.LiquidChromeDocs,
+    })),
   "dither-gradient": () =>
     import("@/components/docs/dither-gradient").then((m) => ({
       default: m.DitherGradientDocs,

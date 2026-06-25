@@ -79,6 +79,18 @@ export const HERO_GEOMETRIC_DEFAULT_CONFIG: HeroGeometricConfig = {
   speed: 1,
 };
 
+export interface LiquidChromeConfig {
+  baseColor: string;
+  speed: number;
+  amplitude: number;
+}
+
+export const LIQUID_CHROME_DEFAULT_CONFIG: LiquidChromeConfig = {
+  baseColor: "#1a1a1a",
+  speed: 1.0,
+  amplitude: 0.6,
+};
+
 export interface WebGLLiquidConfig {
   title: string;
   subtitle: string;
@@ -199,6 +211,14 @@ interface PlaygroundStore {
   setActiveSplitFlapDisplayPreset: (preset: string) => void;
   resetSplitFlapDisplayPreview: () => void;
   resetSplitFlapDisplayConfig: () => void;
+  liquidChromeConfig: LiquidChromeConfig;
+  activeLiquidChromePreset: string;
+  liquidChromeRenderVersion: number;
+  setLiquidChromeConfig: (config: LiquidChromeConfig) => void;
+  updateLiquidChromeConfig: (updates: Partial<LiquidChromeConfig>) => void;
+  setActiveLiquidChromePreset: (preset: string) => void;
+  resetLiquidChromePreview: () => void;
+  resetLiquidChromeConfig: () => void;
 }
 
 export const usePlaygroundStore = create<PlaygroundStore>((set) => ({
@@ -215,6 +235,9 @@ export const usePlaygroundStore = create<PlaygroundStore>((set) => ({
   closingPlasmaConfig: CLOSING_PLASMA_DEFAULT_CONFIG,
   activeClosingPlasmaPreset: "Default",
   closingPlasmaRenderVersion: 0,
+  liquidChromeConfig: LIQUID_CHROME_DEFAULT_CONFIG,
+  activeLiquidChromePreset: "Default",
+  liquidChromeRenderVersion: 0,
   setCode: (code) => set({ code }),
   setDitherPrismHeroConfig: (config) => set({ ditherPrismHeroConfig: config }),
   updateDitherPrismHeroConfig: (updates) =>
@@ -322,5 +345,22 @@ export const usePlaygroundStore = create<PlaygroundStore>((set) => ({
       splitFlapDisplayConfig: SPLIT_FLAP_DISPLAY_DEFAULT_CONFIG,
       activeSplitFlapDisplayPreset: "Default",
       splitFlapDisplayRenderVersion: state.splitFlapDisplayRenderVersion + 1,
+    })),
+  setLiquidChromeConfig: (config) => set({ liquidChromeConfig: config }),
+  updateLiquidChromeConfig: (updates) =>
+    set((state) => ({
+      liquidChromeConfig: { ...state.liquidChromeConfig, ...updates },
+    })),
+  setActiveLiquidChromePreset: (preset) =>
+    set({ activeLiquidChromePreset: preset }),
+  resetLiquidChromePreview: () =>
+    set((state) => ({
+      liquidChromeRenderVersion: state.liquidChromeRenderVersion + 1,
+    })),
+  resetLiquidChromeConfig: () =>
+    set((state) => ({
+      liquidChromeConfig: LIQUID_CHROME_DEFAULT_CONFIG,
+      activeLiquidChromePreset: "Default",
+      liquidChromeRenderVersion: state.liquidChromeRenderVersion + 1,
     })),
 }));
