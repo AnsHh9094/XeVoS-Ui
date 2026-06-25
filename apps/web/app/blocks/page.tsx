@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, Variants } from "framer-motion"
 import Link from "next/link"
 import { FloatingNavbar } from "@/components/floating-navbar"
 import { ArrowRight, Code, Eye, Search } from "lucide-react"
@@ -28,7 +28,7 @@ export default function BlocksPage() {
     })
 
     // Animation Variants
-    const containerVariants = {
+    const containerVariants: Variants = {
         hidden: { opacity: 0 },
         show: {
             opacity: 1,
@@ -38,7 +38,7 @@ export default function BlocksPage() {
         }
     }
 
-    const cardVariants = {
+    const cardVariants: Variants = {
         hidden: { opacity: 0, y: 15, scale: 0.98 },
         show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", bounce: 0, duration: 0.6 } }
     }
@@ -103,8 +103,8 @@ export default function BlocksPage() {
                                     key={cat}
                                     onClick={() => setActiveCategory(cat)}
                                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeCategory === cat
-                                            ? "bg-zinc-900 text-white shadow-md dark:bg-white dark:text-zinc-900"
-                                            : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                                        ? "bg-zinc-900 text-white shadow-md dark:bg-white dark:text-zinc-900"
+                                        : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800"
                                         }`}
                                 >
                                     {cat}
