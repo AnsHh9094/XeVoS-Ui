@@ -15,8 +15,8 @@ export function ScrollChoreographyPreview({
     className,
 }: ScrollChoreographyPreviewProps) {
     return (
-        <div className={cn("relative w-full h-[600px] md:h-[800px] overflow-hidden rounded-xl border border-border bg-background", className)}>
-            <iframe src={src} className="w-full h-full border-0" title={title} />
+        <div className={cn("relative w-full h-full min-h-[600px] overflow-hidden", className)}>
+            <iframe src={src} className="w-full h-full border-0 bg-transparent" title={title} />
         </div>
     );
 }

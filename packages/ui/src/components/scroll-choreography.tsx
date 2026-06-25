@@ -6,7 +6,7 @@ import { cn } from "@workspace/ui/lib/utils";
 
 interface ScrollChoreographyProps {
   className?: string;
-  images?: {
+  images: {
     topLeft: string;
     topRight: string;
     bottomLeft: string;
@@ -16,12 +16,7 @@ interface ScrollChoreographyProps {
 
 export function ScrollChoreography({
   className,
-  images = {
-    topLeft: "https://images.unsplash.com/photo-1741454570867-4a10f31fc5e3?q=100&w=2832&fm=webp&auto=format&fit=crop",
-    topRight: "https://images.unsplash.com/photo-1755456068400-fbcdce2f795a?q=100&w=2832&fm=webp&auto=format&fit=crop",
-    bottomLeft: "https://images.unsplash.com/photo-1755456068249-13d384440902?q=100&w=2832&fm=webp&auto=format&fit=crop",
-    bottomRight: "https://images.unsplash.com/photo-1741454570904-a22d9d6ea511?q=100&w=2832&fm=webp&auto=format&fit=crop",
-  },
+  images,
 }: ScrollChoreographyProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -75,7 +70,7 @@ export function ScrollChoreography({
 
   return (
     <div ref={containerRef} className={cn("relative h-[300vh] w-full", className)}>
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center">
 
           {/* Top Left Image */}
