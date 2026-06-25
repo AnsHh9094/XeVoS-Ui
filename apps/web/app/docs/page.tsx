@@ -6,6 +6,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { components, isNewComponent, type ComponentCategory, type ComponentMetadata } from "@/registry"
 import { Logomark } from "@/components/logos/logomark"
+import { usePrefetchPreviewVideos } from "@/hooks/use-prefetch-preview-videos"
 
 import { FloatingNavbar } from "@/components/floating-navbar"
 
@@ -61,7 +62,7 @@ function ComponentCard({
     () => (previewSources ? getPreferredPreviewSrc(previewSources) : ""),
     [previewSources]
   )
-  const shouldAutoWarmVideo = index < 4
+  const shouldAutoWarmVideo = index < 9
 
   useEffect(() => {
     const element = cardRef.current
@@ -69,7 +70,7 @@ function ComponentCard({
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsNearViewport(Boolean(entry?.isIntersecting)),
-      { rootMargin: "500px 0px 500px 0px", threshold: 0.01 }
+      { rootMargin: "800px 0px 800px 0px", threshold: 0.01 }
     )
     observer.observe(element)
 
@@ -90,7 +91,7 @@ function ComponentCard({
     }
 
     if (typeof idleApi.requestIdleCallback === "function") {
-      const idleId = idleApi.requestIdleCallback(warmWhenIdle, { timeout: 1500 })
+      const idleId = idleApi.requestIdleCallback(warmWhenIdle, { timeout: 800 })
       return () => idleApi.cancelIdleCallback?.(idleId)
     }
 
@@ -228,6 +229,9 @@ const categoryOrder: ComponentCategory[] = [
 export default function DocsPage() {
   const allComponents = Object.values(components)
   const [activeSection, setActiveSection] = useState<string>("")
+
+  // Continue prefetching any videos not yet cached
+  usePrefetchPreviewVideos()
 
 
 
