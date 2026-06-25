@@ -20,6 +20,8 @@ coverage
 
 # Vercel
 .vercel
+.agents
+.agent
 
 # Build Outputs
 .next/
