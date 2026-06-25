@@ -6,6 +6,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
+    "validate:registry": "node scripts/validate-registry.js",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "screenshot": "node scripts/screenshot.js",
     "optimize:previews": "./scripts/optimize-preview-videos.sh",
