@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import os
 import re
 import shutil
 import subprocess
@@ -11,11 +12,37 @@ from urllib.parse import urlparse
 
 import boto3
 
+# ---------------------------------------------------------------------------
+# Load .env
+# ---------------------------------------------------------------------------
+REPO_ROOT = Path(__file__).resolve().parent.parent
+ENV_FILE = REPO_ROOT / ".env"
 
-ACCOUNT_ID = "eb98cc3f8d05e09105f9f8acc3e35e3f"
-ACCESS_KEY_ID = "808c4b20493b1970fe20d97055cb65e2"
-SECRET_ACCESS_KEY = "ebc2997bd62847e21eb54f7224101c1c8006d0036c3220854afb0f972e2deaf0"
-BUCKET_NAME = "componentry"
+def _load_env(path: Path) -> dict[str, str]:
+    env_vars: dict[str, str] = {}
+    if not path.exists():
+        return env_vars
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        env_vars[key.strip()] = value.strip()
+    return env_vars
+
+_ENV = _load_env(ENV_FILE)
+
+def _env(key: str) -> str:
+    value = _ENV.get(key) or os.environ.get(key)
+    if not value:
+        print(f"Error: {key} is not set in .env or environment")
+        sys.exit(1)
+    return value
+
+ACCOUNT_ID = _env("R2_ACCOUNT_ID")
+ACCESS_KEY_ID = _env("R2_ACCESS_KEY_ID")
+SECRET_ACCESS_KEY = _env("R2_SECRET_ACCESS_KEY")
+BUCKET_NAME = _env("R2_BUCKET_NAME")
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 REGISTRY_FILE = REPO_ROOT / "apps/web/registry/index.ts"
