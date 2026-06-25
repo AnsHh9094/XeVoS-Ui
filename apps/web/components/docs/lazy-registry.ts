@@ -122,6 +122,14 @@ const docsImportMap: Record<
     import("@/components/docs/scroll-choreography").then((m) => ({
       default: m.ScrollChoreographyDocs,
     })),
+  "letter-cascade": () =>
+    import("@/components/docs/letter-cascade").then((m) => ({
+      default: m.LetterCascadeDocs,
+    })),
+  "text-repel": () =>
+    import("@/components/docs/text-repel").then((m) => ({
+      default: m.TextRepelDocs,
+    })),
 };
 
 /**
