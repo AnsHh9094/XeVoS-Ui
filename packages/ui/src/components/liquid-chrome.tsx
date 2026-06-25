@@ -164,7 +164,7 @@ export function LiquidChrome({
     const baseColorLocation = gl.getUniformLocation(program, "u_baseColor");
     const amplitudeLocation = gl.getUniformLocation(program, "u_amplitude");
 
-    let mouse = [0.5, 0.5];
+    let mouse: [number, number] = [0.5, 0.5];
     let animationFrameId: number;
     let startTime = performance.now();
 
