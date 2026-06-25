@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { PanelLeft, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { docsConfig } from "@/config/docs"
-import { components } from "@/registry"
+import { components, isNewComponent } from "@/registry"
 
 type PreviewSources = {
     mp4: string
@@ -214,9 +214,9 @@ export function FloatingDocsSidebar() {
                                             {group.items.map((item) => {
                                                 const isActive = pathname === item.href
 
-                                                // Check if new
                                                 const slug = item.href.split('/').pop()
-                                                const isNew = slug && components[slug]?.isNew
+                                                const comp = slug ? components[slug] : undefined
+                                                const isNew = comp ? isNewComponent(comp) : false
 
                                                 return (
                                                     <Link
