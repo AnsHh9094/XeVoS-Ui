@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { PanelLeft, X } from "lucide-react"
+import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { docsConfig } from "@/config/docs"
 import { components, isNewComponent } from "@/registry"
@@ -175,7 +175,16 @@ export function FloatingDocsSidebar() {
                     )}
                     aria-label="Open Navigation"
                 >
-                    <PanelLeft className="h-3.5 w-3.5" />
+                    <svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <rect x="1" y="2" width="16" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.4" />
+                        <rect x="1" y="2" width="5.5" height="14" rx="2.5" fill="currentColor" />
+                    </svg>
                 </button>
             </div>
 
