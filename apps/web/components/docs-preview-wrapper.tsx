@@ -24,6 +24,7 @@ interface DocsPreviewWrapperProps {
   sourceCodeFilename?: string
   sourceCode?: string
   variants?: VariantItem[]
+  hideDefaultVariant?: boolean
 }
 
 export function DocsPreviewWrapper({
@@ -34,6 +35,7 @@ export function DocsPreviewWrapper({
   sourceCodeFilename,
   sourceCode,
   variants = [],
+  hideDefaultVariant = false,
 }: DocsPreviewWrapperProps) {
   const [key, setKey] = React.useState(0)
   const [showPersonalize, setShowPersonalize] = React.useState(false)
@@ -41,14 +43,18 @@ export function DocsPreviewWrapper({
   const [mounted, setMounted] = React.useState(false)
   const [copied, setCopied] = React.useState(false)
   const [isExpanded, setIsExpanded] = React.useState(false)
-  const [activeVariant, setActiveVariant] = React.useState(-1) // -1 = default preview
+  const [activeVariant, setActiveVariant] = React.useState(
+    hideDefaultVariant && variants.length > 0 ? 0 : -1
+  ) // -1 = default preview
+
+  const resolvedActiveVariant = hideDefaultVariant && activeVariant === -1 ? 0 : activeVariant
 
   const { setActiveVariantIndex } = useDocStore()
 
   // Sync state with store
   React.useEffect(() => {
-    setActiveVariantIndex(activeVariant)
-  }, [activeVariant, setActiveVariantIndex])
+    setActiveVariantIndex(resolvedActiveVariant)
+  }, [resolvedActiveVariant, setActiveVariantIndex])
 
   const previewRef = React.useRef<HTMLDivElement>(null)
   const variantBarRef = React.useRef<HTMLDivElement>(null)
@@ -245,13 +251,13 @@ export function DocsPreviewWrapper({
         <div
           className={cn(
             "w-full",
-            (activeVariant >= 0 && variants[activeVariant]?.fullWidth) || fullWidthPreview
+            (resolvedActiveVariant >= 0 && variants[resolvedActiveVariant]?.fullWidth) || fullWidthPreview
               ? "h-full"
               : "p-10 flex items-center justify-center"
           )}
         >
           <div key={key} className="w-full h-full flex items-center justify-center">
-            {activeVariant === -1 ? children : variants[activeVariant]?.preview}
+            {resolvedActiveVariant === -1 ? children : variants[resolvedActiveVariant]?.preview}
           </div>
         </div>
       </div>
@@ -263,22 +269,23 @@ export function DocsPreviewWrapper({
             ref={variantBarRef}
             className="flex items-center gap-1.5 px-3 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           >
-            {/* Default variant */}
-            <button
-              onClick={() => setActiveVariant(-1)}
-              className={cn(
-                "shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
-                activeVariant === -1
-                  ? "bg-foreground text-background border-foreground shadow-sm"
-                  : "bg-white/90 dark:bg-zinc-900/90 text-zinc-600 dark:text-zinc-400 border-zinc-200/80 dark:border-zinc-700/80 hover:text-zinc-900 dark:hover:text-zinc-100 backdrop-blur-sm shadow-sm"
-              )}
-            >
-              <span className={cn(
-                "w-1.5 h-1.5 rounded-full transition-colors",
-                activeVariant === -1 ? "bg-background" : "bg-zinc-400 dark:bg-zinc-500"
-              )} />
-              Default
-            </button>
+            {!hideDefaultVariant && (
+              <button
+                onClick={() => setActiveVariant(-1)}
+                className={cn(
+                  "shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
+                  resolvedActiveVariant === -1
+                    ? "bg-foreground text-background border-foreground shadow-sm"
+                    : "bg-white/90 dark:bg-zinc-900/90 text-zinc-600 dark:text-zinc-400 border-zinc-200/80 dark:border-zinc-700/80 hover:text-zinc-900 dark:hover:text-zinc-100 backdrop-blur-sm shadow-sm"
+                )}
+              >
+                <span className={cn(
+                  "w-1.5 h-1.5 rounded-full transition-colors",
+                  resolvedActiveVariant === -1 ? "bg-background" : "bg-zinc-400 dark:bg-zinc-500"
+                )} />
+                Default
+              </button>
+            )}
 
             {/* Variant pills */}
             {variants.map((variant, i) => (
@@ -287,14 +294,14 @@ export function DocsPreviewWrapper({
                 onClick={() => setActiveVariant(i)}
                 className={cn(
                   "shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
-                  activeVariant === i
+                  resolvedActiveVariant === i
                     ? "bg-foreground text-background border-foreground shadow-sm"
                     : "bg-white/90 dark:bg-zinc-900/90 text-zinc-600 dark:text-zinc-400 border-zinc-200/80 dark:border-zinc-700/80 hover:text-zinc-900 dark:hover:text-zinc-100 backdrop-blur-sm shadow-sm"
                 )}
               >
                 <span className={cn(
                   "w-1.5 h-1.5 rounded-full transition-colors",
-                  activeVariant === i ? "bg-background" : "bg-zinc-400 dark:bg-zinc-500"
+                  resolvedActiveVariant === i ? "bg-background" : "bg-zinc-400 dark:bg-zinc-500"
                 )} />
                 {variant.title}
               </button>

@@ -34,6 +34,7 @@ export interface DocsPageLayoutProps {
   installDependencies?: string
   installSourceCode?: string
   installSourceFilename?: string
+  importCode?: string | React.ReactNode
   usageCode: string | React.ReactNode
   examples?: ExampleItem[]
   props?: PropItem[]
@@ -43,6 +44,7 @@ export interface DocsPageLayoutProps {
   type?: string
   dependencies?: string[]
   personalizeContent?: React.ReactNode
+  hideDefaultPreviewVariant?: boolean
 }
 
 function CodeBlockSkeleton({ className }: { className?: string }) {
@@ -64,11 +66,13 @@ export async function DocsPageLayout({
   installPackageName,
   installSourceCode,
   installSourceFilename,
+  importCode,
   usageCode,
   examples = [],
   props = [],
   fullWidthPreview = false,
   personalizeContent,
+  hideDefaultPreviewVariant = false,
 
 }: DocsPageLayoutProps) {
 
@@ -151,6 +155,36 @@ export async function DocsPageLayout({
             <Section title="Installation" className="pt-10">
               <InstallCommand component={installPackageName} />
             </Section>
+
+            {/* Import */}
+            {importCode && (
+              <Section title="Import" className="pt-10">
+                <div className="space-y-4 usage-code-scrollbar-none">
+                  <style>{`
+                    .usage-code-scrollbar-none * {
+                      -ms-overflow-style: none;
+                      scrollbar-width: none;
+                    }
+                    .usage-code-scrollbar-none *::-webkit-scrollbar {
+                      display: none;
+                    }
+                  `}</style>
+                  <div className="relative rounded-xl border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
+                    <Suspense fallback={<CodeBlockSkeleton />}>
+                      {typeof importCode === "string" ? (
+                        <CodeBlock
+                          code={importCode}
+                          lang="tsx"
+                          className="border-none !bg-transparent shadow-none !rounded-none [&_pre]:!overflow-x-auto [&_pre]:!overflow-y-hidden"
+                        />
+                      ) : (
+                        importCode
+                      )}
+                    </Suspense>
+                  </div>
+                </div>
+              </Section>
+            )}
 
             {/* Usage */}
             <Section title="Usage" className="pt-10">
@@ -300,6 +334,7 @@ export async function DocsPageLayout({
           <DocsPreviewWrapper
             fullWidthPreview={fullWidthPreview}
             personalizeContent={personalizeContent}
+            hideDefaultVariant={hideDefaultPreviewVariant}
             sourceCodeFilename={installSourceCode ? (installSourceFilename || `${installPackageName}.tsx`) : undefined}
             sourceCode={installSourceCode}
             sourceCodeContent={
