@@ -6,7 +6,7 @@ import { ArrowRight, Terminal } from "lucide-react"
 import { CopyButton } from "@/components/copy-button"
 
 export function HeroButtons() {
-    const installCommand = 'npx shadcn@latest add "https://www.componentry.fun/r/magnetic-dock.json"'
+    const installCommand = "npx shadcn@latest add @componentry/magnetic-dock"
 
     return (
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 pb-2">
