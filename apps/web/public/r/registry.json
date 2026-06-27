@@ -134,6 +134,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "signature",
+      "type": "registry:ui"
+    },
+    {
       "name": "spotlight-card",
       "type": "registry:ui"
     },

@@ -13,6 +13,20 @@ export interface DitherPrismHeroConfig {
   showParticles: boolean;
 }
 
+export interface SignatureConfig {
+  text: string;
+  color: string;
+  fontSize: number;
+  duration: number;
+}
+
+export const SIGNATURE_DEFAULT_CONFIG: SignatureConfig = {
+  text: "Componentry",
+  color: "",
+  fontSize: 48,
+  duration: 1.5,
+};
+
 export const DITHER_PRISM_HERO_DEFAULT_CONFIG: DitherPrismHeroConfig = {
   title1: "Experience",
   title2: "The Future",
@@ -38,7 +52,8 @@ export interface HeroGeometricConfig {
 export const HERO_GEOMETRIC_DEFAULT_CONFIG: HeroGeometricConfig = {
   title1: "Elevate",
   title2: "Your Brand",
-  description: "Scale your product with clarity, precision, and motion-led design.",
+  description:
+    "Scale your product with clarity, precision, and motion-led design.",
   color1: "#3B82F6",
   color2: "#F0F9FF",
   speed: 1,
@@ -63,7 +78,8 @@ export interface WebGLLiquidConfig {
 export const WEBGL_LIQUID_DEFAULT_CONFIG: WebGLLiquidConfig = {
   title: "Fluid Motion",
   subtitle: "Premium Presence",
-  description: "A cinematic liquid field tuned for modern hero sections with polished depth and restrained motion.",
+  description:
+    "A cinematic liquid field tuned for modern hero sections with polished depth and restrained motion.",
   colorDeep: "#04050b",
   colorMid: "#134d93",
   colorHighlight: "#8cecff",
@@ -126,7 +142,9 @@ interface PlaygroundStore {
   closingPlasmaRenderVersion: number;
   setCode: (code: string) => void;
   setDitherPrismHeroConfig: (config: DitherPrismHeroConfig) => void;
-  updateDitherPrismHeroConfig: (updates: Partial<DitherPrismHeroConfig>) => void;
+  updateDitherPrismHeroConfig: (
+    updates: Partial<DitherPrismHeroConfig>,
+  ) => void;
   setActiveDitherPrismHeroPreset: (preset: string) => void;
   resetDitherPrismHeroPreview: () => void;
   resetDitherPrismHeroConfig: () => void;
@@ -145,6 +163,14 @@ interface PlaygroundStore {
   setActiveClosingPlasmaPreset: (preset: string) => void;
   resetClosingPlasmaPreview: () => void;
   resetClosingPlasmaConfig: () => void;
+  signatureConfig: SignatureConfig;
+  activeSignaturePreset: string;
+  signatureRenderVersion: number;
+  setSignatureConfig: (config: SignatureConfig) => void;
+  updateSignatureConfig: (updates: Partial<SignatureConfig>) => void;
+  setActiveSignaturePreset: (preset: string) => void;
+  resetSignaturePreview: () => void;
+  resetSignatureConfig: () => void;
 }
 
 export const usePlaygroundStore = create<PlaygroundStore>((set) => ({
@@ -170,7 +196,9 @@ export const usePlaygroundStore = create<PlaygroundStore>((set) => ({
   setActiveDitherPrismHeroPreset: (preset) =>
     set({ activeDitherPrismHeroPreset: preset }),
   resetDitherPrismHeroPreview: () =>
-    set((state) => ({ ditherPrismHeroRenderVersion: state.ditherPrismHeroRenderVersion + 1 })),
+    set((state) => ({
+      ditherPrismHeroRenderVersion: state.ditherPrismHeroRenderVersion + 1,
+    })),
   resetDitherPrismHeroConfig: () =>
     set((state) => ({
       ditherPrismHeroConfig: DITHER_PRISM_HERO_DEFAULT_CONFIG,
@@ -227,5 +255,24 @@ export const usePlaygroundStore = create<PlaygroundStore>((set) => ({
       closingPlasmaConfig: CLOSING_PLASMA_DEFAULT_CONFIG,
       activeClosingPlasmaPreset: "Default",
       closingPlasmaRenderVersion: state.closingPlasmaRenderVersion + 1,
+    })),
+  signatureConfig: SIGNATURE_DEFAULT_CONFIG,
+  activeSignaturePreset: "Default",
+  signatureRenderVersion: 0,
+  setSignatureConfig: (config) => set({ signatureConfig: config }),
+  updateSignatureConfig: (updates) =>
+    set((state) => ({
+      signatureConfig: { ...state.signatureConfig, ...updates },
+    })),
+  setActiveSignaturePreset: (preset) => set({ activeSignaturePreset: preset }),
+  resetSignaturePreview: () =>
+    set((state) => ({
+      signatureRenderVersion: state.signatureRenderVersion + 1,
+    })),
+  resetSignatureConfig: () =>
+    set((state) => ({
+      signatureConfig: SIGNATURE_DEFAULT_CONFIG,
+      activeSignaturePreset: "Default",
+      signatureRenderVersion: state.signatureRenderVersion + 1,
     })),
 }));
