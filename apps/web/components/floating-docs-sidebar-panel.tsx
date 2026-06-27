@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -9,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { docsConfig } from "@/config/docs"
 import { components, isNewComponent } from "@/registry"
 import { useDocsSidebar } from "@/components/docs-sidebar-context"
+import { LineNav, type LineNavItem } from "@/components/line-nav"
 
 type PreviewSources = {
   mp4: string
@@ -169,52 +169,51 @@ export function FloatingDocsSidebarPanel() {
 
 
             <div className="mask-image-b flex-1 overflow-y-auto px-2 pt-3 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {docsConfig.nav.map((group, index) => (
-                <div key={index} className={index > 0 ? "border-t border-border/40 pt-5 mt-5" : ""}>
-                  <h4 className="mb-2.5 px-3 text-[11px] font-semibold uppercase tracking-widest text-zinc-700 dark:text-zinc-300">
-                    {group.title}
-                  </h4>
-                  <div className="flex flex-col gap-0.5">
-                    {group.items.map((item) => {
-                      const isActive = pathname === item.href
-                      const slug = item.href.split("/").pop()
-                      const comp = slug ? components[slug] : undefined
-                      const isNew = comp ? isNewComponent(comp) : false
+              {docsConfig.nav.map((group, index) => {
+                const lineItems: LineNavItem[] = group.items.map((item) => {
+                  const slug = item.href.split("/").pop()
+                  const comp = slug ? components[slug] : undefined
+                  const isNew = comp ? isNewComponent(comp) : false
+                  return {
+                    title: item.title,
+                    href: item.href,
+                    accessory: isNew ? (
+                      <span className="inline-flex items-center rounded-full bg-blue-500/10 px-1.5 py-0.5 text-[9px] font-bold text-blue-600 dark:text-blue-400">
+                        NEW
+                      </span>
+                    ) : undefined,
+                  }
+                })
 
-                      return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onMouseEnter={(e) => updateHoverPreview(item, e)}
-                          onMouseMove={updateHoverPosition}
-                          onMouseLeave={() => {
-                            setHoverPreview(null)
-                            setHoverPosition(null)
-                          }}
-                          onClick={() => {
-                            setHoverPreview(null)
-                            setHoverPosition(null)
-                            close()
-                          }}
-                          className={cn(
-                            "group flex items-center justify-between rounded-lg px-3 py-1.5 text-sm transition-all duration-200",
-                            isActive
-                              ? "bg-zinc-100 font-semibold text-zinc-900 shadow-sm dark:bg-zinc-800/70 dark:text-white"
-                              : "text-zinc-500 hover:bg-zinc-100/60 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800/40 dark:hover:text-zinc-200"
-                          )}
-                        >
-                          <span className="truncate">{item.title}</span>
-                          {isNew && (
-                            <span className="ml-2 inline-flex items-center rounded-full bg-blue-500/10 px-1.5 py-0.5 text-[9px] font-bold text-blue-600 dark:text-blue-400">
-                              NEW
-                            </span>
-                          )}
-                        </Link>
-                      )
-                    })}
+                return (
+                  <div
+                    key={index}
+                    className={index > 0 ? "border-t border-border/40 pt-5 mt-5" : ""}
+                  >
+                    <h4 className="mb-2.5 px-3 text-[11px] font-semibold uppercase tracking-widest text-zinc-700 dark:text-zinc-300">
+                      {group.title}
+                    </h4>
+                    <LineNav
+                      className="py-2"
+                      items={lineItems}
+                      activeHref={pathname ?? undefined}
+                      onItemClick={() => {
+                        setHoverPreview(null)
+                        setHoverPosition(null)
+                        close()
+                      }}
+                      onItemMouseEnter={(item, event) =>
+                        updateHoverPreview(item, event)
+                      }
+                      onItemMouseMove={updateHoverPosition}
+                      onItemMouseLeave={() => {
+                        setHoverPreview(null)
+                        setHoverPosition(null)
+                      }}
+                    />
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
 
             <div className="pointer-events-none absolute bottom-2 left-2 right-2 h-6 rounded-b-2xl bg-gradient-to-t from-white to-transparent dark:from-zinc-950" />
