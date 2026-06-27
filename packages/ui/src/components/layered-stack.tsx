@@ -1,10 +1,10 @@
 "use client";
 
-import { ComponentProps, useCallback, useEffect, useRef } from "react";
+import { ComponentPropsWithoutRef, useCallback, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { cn } from "@workspace/ui/lib/utils";
 
-export type LayeredStackProps = ComponentProps<"div">;
+export type LayeredStackProps = ComponentPropsWithoutRef<"div">;
 
 export const LayeredStack = ({ children, className, ...props }: LayeredStackProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
