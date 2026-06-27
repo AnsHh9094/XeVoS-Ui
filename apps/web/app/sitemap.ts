@@ -1,41 +1,34 @@
 import { MetadataRoute } from "next";
 import { components } from "@/registry";
-
-const baseUrl = "https://www.componentry.fun";
+import { absoluteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const currentDate = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [
     {
-      url: baseUrl,
+      url: absoluteUrl(),
       lastModified: currentDate,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: `${baseUrl}/docs`,
+      url: absoluteUrl("/docs"),
       lastModified: currentDate,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/changelog`,
+      url: absoluteUrl("/docs/mcp"),
       lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/llms.txt`,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 0.5,
+      changeFrequency: "monthly",
+      priority: 0.6,
     },
   ];
 
   const componentSitemap: MetadataRoute.Sitemap = Object.keys(components).map(
     (slug) => ({
-      url: `${baseUrl}/docs/components/${slug}`,
+      url: absoluteUrl(`/docs/components/${slug}`),
       lastModified: currentDate,
       changeFrequency: "weekly" as const,
       priority: 0.8,
