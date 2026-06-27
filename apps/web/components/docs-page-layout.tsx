@@ -46,6 +46,7 @@ export interface DocsPageLayoutProps {
   personalizeContent?: React.ReactNode
   hideDefaultPreviewVariant?: boolean
   installationNote?: React.ReactNode
+  usageNote?: React.ReactNode
 }
 
 function CodeBlockSkeleton({ className }: { className?: string }) {
@@ -75,6 +76,7 @@ export async function DocsPageLayout({
   personalizeContent,
   hideDefaultPreviewVariant = false,
   installationNote,
+  usageNote,
 }: DocsPageLayoutProps) {
 
   // Generate the page context markdown automatically
@@ -194,6 +196,11 @@ export async function DocsPageLayout({
 
             {/* Usage */}
             <Section title="Usage" className="pt-10">
+              {usageNote && (
+                <div className="mb-4">
+                  {usageNote}
+                </div>
+              )}
               <div className="space-y-4 usage-code-scrollbar-none">
                 <style>{`
                   .usage-code-scrollbar-none * {

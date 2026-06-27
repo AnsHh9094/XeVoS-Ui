@@ -123,7 +123,13 @@ export function MacKeyboard({ className, soundSrc = "/audio/key-press.wav", ...p
   return (
     <KeyboardContext.Provider value={{ activeKeys }}>
       {props.children ? (
-        <div className={cn("inline-flex items-center gap-1.5", className)} {...props}>
+        <div 
+          className={cn(
+            "inline-flex items-center gap-1.5 rounded-[1.5rem] bg-neutral-200 p-3 shadow-2xl dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800", 
+            className
+          )} 
+          {...props}
+        >
           {props.children}
         </div>
       ) : (
@@ -277,27 +283,34 @@ export function MacKeyboard({ className, soundSrc = "/audio/key-press.wav", ...p
            <Option className="absolute top-2 right-2 h-4 w-4" />
         </MacKey>
         
-        {/* Arrow Keys - Taking up 3 slots approx */}
-        
-        <div style={{ flex: 1 }} className="flex h-full items-end gap-1.5 pl-0.5">
-             <MacKey width={1} keyCode="ArrowLeft" className="h-full">
-                <ArrowLeft className="h-4 w-4" />
-             </MacKey>
-        </div>
-        
-        <div style={{ flex: 1 }} className="flex h-full flex-col gap-1.5">
-             <MacKey width={1} noAspectRatio keyCode="ArrowUp" style={{ flex: 1 }} className="h-full !min-h-0 items-center justify-center p-0 !rounded-[4px] shadow-[0_1px_0_1px_rgba(0,0,0,0.1)]">
-                <ArrowUp className="h-3 w-3" />
+        {/* Arrow keys */}
+        <div style={{ flex: 3 }} className="grid h-full grid-cols-3 items-end gap-1.5 pl-0.5">
+          <MacKey width={1} keyCode="ArrowLeft" className="h-full">
+            <ArrowLeft className="h-4 w-4" />
+          </MacKey>
+          <div className="flex h-full min-h-0 flex-col gap-1.5">
+            <MacKey
+              width={1}
+              noAspectRatio
+              keyCode="ArrowUp"
+              style={{ flex: 1 }}
+              className="!min-h-0 items-center justify-center p-0 !rounded-[4px] shadow-[0_1px_0_1px_rgba(0,0,0,0.1)]"
+            >
+              <ArrowUp className="h-3 w-3" />
             </MacKey>
-            <MacKey width={1} noAspectRatio keyCode="ArrowDown" style={{ flex: 1 }} className="h-full !min-h-0 items-center justify-center p-0 !rounded-[4px] shadow-[0_1px_0_1px_rgba(0,0,0,0.1)]">
-                <ArrowDown className="h-3 w-3" />
+            <MacKey
+              width={1}
+              noAspectRatio
+              keyCode="ArrowDown"
+              style={{ flex: 1 }}
+              className="!min-h-0 items-center justify-center p-0 !rounded-[4px] shadow-[0_1px_0_1px_rgba(0,0,0,0.1)]"
+            >
+              <ArrowDown className="h-3 w-3" />
             </MacKey>
-        </div>
-
-        <div style={{ flex: 1 }} className="flex h-full items-end gap-1.5 pl-0.5">
-            <MacKey width={1} keyCode="ArrowRight" className="h-full">
-                <ArrowRight className="h-4 w-4" />
-             </MacKey>
+          </div>
+          <MacKey width={1} keyCode="ArrowRight" className="h-full">
+            <ArrowRight className="h-4 w-4" />
+          </MacKey>
         </div>
       </Row>
         </div>
@@ -371,12 +384,12 @@ export function MacKey({
 
   // For width=1 keys, use aspect-ratio to define the row height.
   // For wider keys, omit aspect-ratio so they stretch to the row height via align-items: stretch.
-  const applyAspectRatio = width === 1 && !noAspectRatio;
+  const applyAspectRatio = !noAspectRatio;
   return (
     <div
       style={{
         flex: width,
-        ...(applyAspectRatio ? { aspectRatio: "1/1" } : {}),
+        ...(applyAspectRatio ? { aspectRatio: `${width}/1` } : {}),
       }}
       className="min-w-0 self-stretch"
     >
