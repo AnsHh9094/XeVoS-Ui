@@ -1,10 +1,5 @@
 import type React from "react"
 import type { Metadata } from "next"
-import Link from "next/link"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { CommandMenu } from "@/components/command-menu"
-import { Logomark } from "@/components/logos/logomark"
-import { GitHubStarButton } from "@/components/github-star-button"
 
 export const metadata: Metadata = {
   title: "Components Documentation",
@@ -18,15 +13,13 @@ export const metadata: Metadata = {
   },
 }
 
-import { MobileNav } from "@/components/mobile-nav"
-
 export default function DocsLayout({
   children,
 }: {
   children: React.ReactNode
 }): React.JSX.Element {
   return (
-    <div className="min-h-svh flex flex-col bg-background">
+    <div data-route-docs className="min-h-svh flex flex-col bg-background">
       <div className="flex-1 flex overflow-hidden">
         {/* Main content - Full screen split view handled by pages */}
         <main className="flex-1 w-full h-full">
