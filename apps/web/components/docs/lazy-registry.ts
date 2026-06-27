@@ -50,6 +50,10 @@ const docsImportMap: Record<
     import("@/components/docs/github-calendar").then((m) => ({
       default: m.GithubCalendarDocs,
     })),
+  "mac-keyboard": () =>
+    import("@/components/docs/mac-keyboard").then((m) => ({
+      default: m.MacKeyboardDocs,
+    })),
   "showcase-card": () =>
     import("@/components/docs/showcase-card").then((m) => ({
       default: m.ShowcaseCardDocs,

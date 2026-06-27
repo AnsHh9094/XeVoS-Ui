@@ -45,6 +45,7 @@ export interface DocsPageLayoutProps {
   dependencies?: string[]
   personalizeContent?: React.ReactNode
   hideDefaultPreviewVariant?: boolean
+  installationNote?: React.ReactNode
 }
 
 function CodeBlockSkeleton({ className }: { className?: string }) {
@@ -73,7 +74,7 @@ export async function DocsPageLayout({
   fullWidthPreview = false,
   personalizeContent,
   hideDefaultPreviewVariant = false,
-
+  installationNote,
 }: DocsPageLayoutProps) {
 
   // Generate the page context markdown automatically
@@ -153,6 +154,11 @@ export async function DocsPageLayout({
 
             {/* Installation */}
             <Section title="Installation" className="pt-10">
+              {installationNote && (
+                <div className="mb-4">
+                  {installationNote}
+                </div>
+              )}
               <InstallCommand component={installPackageName} />
             </Section>
 
