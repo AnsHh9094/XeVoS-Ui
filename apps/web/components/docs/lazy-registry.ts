@@ -146,6 +146,10 @@ const docsImportMap: Record<
     import("@/components/docs/image-trail").then((m) => ({
       default: m.ImageTrailDocs,
     })),
+  "layered-stack": () =>
+    import("@/components/docs/layered-stack").then((m) => ({
+      default: m.LayeredStackDocs,
+    })),
 };
 
 /**
