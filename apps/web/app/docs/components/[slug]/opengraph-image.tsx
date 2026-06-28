@@ -121,6 +121,7 @@ export default async function Image({ params }: Props) {
                 fontSize: titleFontSize,
                 margin: 0,
                 lineHeight: 1.1,
+                paddingBottom: '0.15em',
                 letterSpacing: '-0.05em',
                 fontFamily: 'sans-serif',
                 fontWeight: 900,
