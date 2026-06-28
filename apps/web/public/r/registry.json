@@ -158,10 +158,6 @@
       "type": "registry:ui"
     },
     {
-      "name": "true-focus",
-      "type": "registry:ui"
-    },
-    {
       "name": "webgl-liquid",
       "type": "registry:ui"
     }

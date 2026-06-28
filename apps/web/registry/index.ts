@@ -32,15 +32,6 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/hovereffect1.mov",
   },
-  "true-focus": {
-    title: "True Focus",
-    description:
-      "Applies dynamic blur / clarity based over a series of words in order.",
-    category: "Text Animations",
-    slug: "true-focus",
-    previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/truefocus.mov",
-  },
   "text-animate": {
     title: "Text Animate",
     description: "Animate text characters with staggered delays and effects.",
