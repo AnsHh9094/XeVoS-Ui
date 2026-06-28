@@ -151,7 +151,9 @@ const Slider = ({
 );
 
 function generateCode(config: ImageRipplePlaygroundConfig) {
-  return `const images = [
+  return `import { ImageRippleEffect } from "@/components/ui/image-ripple-effect"
+
+const images = [
   {
     src: "${config.imageSrc}",
     x: ${config.imageX},
