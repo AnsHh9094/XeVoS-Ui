@@ -11,7 +11,7 @@ import { BorderBeam } from "@workspace/ui/components/border-beam"
 import { HyperText } from "@workspace/ui/components/hyper-text"
 import { MatrixRain } from "@workspace/ui/components/matrix-rain"
 import { ScrollBasedVelocity } from "@workspace/ui/components/scroll-based-velocity"
-import { InteractiveHoverButton } from "@workspace/ui/components/interactive-hover-button"
+import { AnimatedGradient } from "@workspace/ui/components/animated-gradient"
 import { DitherGradient } from "@workspace/ui/components/dither-gradient"
 import { MagneticDock, DockIconHome, DockIconSearch, DockIconMail, DockIconSettings, DockIconFolder } from "@workspace/ui/components/magnetic-dock"
 
@@ -100,19 +100,12 @@ export default function Home() {
           {/* Card 2: 2x1 Dark */}
           <div className="md:col-span-2 md:row-span-1 relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/80 bg-white dark:bg-[#1a1a1a] shadow-sm p-2">
             <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden flex flex-col items-center justify-center pt-8">
-                <div className="flex -space-x-3 mb-6 relative z-10">
-                    <div className="size-8 rounded-full border-2 border-zinc-50 dark:border-[#111] bg-zinc-300 dark:bg-zinc-800" />
-                    <div className="size-8 rounded-full border-2 border-zinc-50 dark:border-[#111] bg-zinc-400 dark:bg-zinc-700" />
-                    <div className="size-8 rounded-full border-2 border-zinc-50 dark:border-[#111] bg-zinc-500 dark:bg-zinc-600" />
-                    <div className="size-8 rounded-full border-2 border-zinc-50 dark:border-[#111] bg-zinc-600 dark:bg-zinc-500" />
-                    <div className="size-8 rounded-full border-2 border-zinc-50 dark:border-[#111] bg-zinc-700 dark:bg-[#1a1a1a] flex items-center justify-center text-[10px] text-zinc-800 dark:text-white">+5</div>
-                </div>
                 <div className="w-full flex h-24 overflow-hidden relative" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
                    <ScrollBasedVelocity text="COMPONENTRY" default_velocity={3} className="font-sans font-black text-6xl md:text-8xl tracking-tighter text-zinc-800 dark:text-white" />
                 </div>
             </div>
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
-              Hover members
+              Scroll velocity
             </div>
           </div>
 
@@ -151,13 +144,13 @@ export default function Home() {
 
           {/* Card 5: 1x1 Dark */}
           <div className="md:col-span-1 md:row-span-1 relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/80 bg-white dark:bg-[#1a1a1a] shadow-sm p-2">
-            <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden flex flex-col items-center justify-center p-6">
-                <div className="relative hover:scale-105 transition-transform duration-300 w-full flex justify-center">
-                   <InteractiveHoverButton text="Silent Notification" className="bg-white dark:bg-[#1a1a1a] text-zinc-900 border border-zinc-200/80 dark:border-white/5 dark:text-zinc-300 w-[180px] shadow-sm rounded-full py-3" />
+            <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden flex flex-col items-center justify-center p-0">
+                <div className="relative w-full h-full rounded-xl overflow-hidden">
+                   <AnimatedGradient config={{ preset: "Aurora" }} />
                 </div>
             </div>
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
-              Dynamic island
+              Animated gradient
             </div>
           </div>
 
