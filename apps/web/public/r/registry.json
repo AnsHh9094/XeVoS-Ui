@@ -70,6 +70,14 @@
       "type": "registry:ui"
     },
     {
+      "name": "image-trail",
+      "type": "registry:ui"
+    },
+    {
+      "name": "infinite-image-field",
+      "type": "registry:ui"
+    },
+    {
       "name": "interactive-hover-button",
       "type": "registry:ui"
     },

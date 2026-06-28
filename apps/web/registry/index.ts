@@ -266,6 +266,14 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/imagerippleeffect.webm",
   },
+  "infinite-image-field": {
+    title: "Infinite Image Field",
+    description:
+      "An endless, cursor-driven photo canvas that tiles images infinitely and pans fluidly toward wherever you move your cursor.",
+    category: "Visual Effects",
+    slug: "infinite-image-field",
+    addedAt: "2026-03-20",
+  },
   "border-beam": {
     title: "Border Beam",
     description: "Animated beam of light traveling along the border.",
