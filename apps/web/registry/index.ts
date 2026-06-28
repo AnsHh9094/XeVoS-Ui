@@ -265,6 +265,16 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/imagetrail.webm",
   },
+  "image-ripple-effect": {
+    title: "Image Ripple Effect",
+    description:
+      "WebGL-powered cursor ripples that displace layered image cards in real time.",
+    category: "Visual Effects",
+    slug: "image-ripple-effect",
+    addedAt: "2026-03-19",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/imagerippleeffect.webm",
+  },
   "border-beam": {
     title: "Border Beam",
     description: "Animated beam of light traveling along the border.",
@@ -327,7 +337,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Components",
     slug: "signature",
     addedAt: "2026-03-17",
-    previewVideo: "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/scrubinput.mp4",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/signature.webm",
   },
   "matrix-rain": {
     title: "Matrix Rain",
