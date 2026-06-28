@@ -56,10 +56,10 @@ export default async function Image({ params }: Props) {
         />
 
         {/* 45° hatching in the 4 outer border strips */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 64, backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 1px, transparent 1px, transparent 20px)', display: 'flex' }} />
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 64, backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 1px, transparent 1px, transparent 20px)', display: 'flex' }} />
-        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 64, backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 1px, transparent 1px, transparent 20px)', display: 'flex' }} />
-        <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 64, backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 1px, transparent 1px, transparent 20px)', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 64, backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 1px, transparent 1px, transparent 7px)', display: 'flex' }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 64, backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 1px, transparent 1px, transparent 7px)', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 64, backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 1px, transparent 1px, transparent 7px)', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 64, backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 1px, transparent 1px, transparent 7px)', display: 'flex' }} />
 
         {/* The 4 layout lines */}
         <div style={{ position: 'absolute', left: 64, top: 0, bottom: 0, width: 1, backgroundColor: 'rgba(255,255,255,0.12)', display: 'flex' }} />

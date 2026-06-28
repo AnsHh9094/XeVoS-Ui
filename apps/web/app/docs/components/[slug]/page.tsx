@@ -35,11 +35,24 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
         return {};
     }
 
+    const ogImageUrl = `https://componentry.fun/docs/components/${component.slug}/opengraph-image`;
+
     return {
         title: `${component.title} Component`,
         description: component.description,
         alternates: {
             canonical: `https://componentry.fun/docs/components/${component.slug}`,
+        },
+        openGraph: {
+            title: `${component.title} Component`,
+            description: component.description,
+            images: [{ url: ogImageUrl, width: 1200, height: 630, alt: `${component.title} Component` }],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: `${component.title} Component`,
+            description: component.description,
+            images: [ogImageUrl],
         },
     };
 }
