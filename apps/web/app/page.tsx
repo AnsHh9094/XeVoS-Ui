@@ -4,6 +4,9 @@ import React from "react"
 import { motion } from "framer-motion"
 import { SiteHeader } from "@/components/site-header"
 import { HeroButtons } from "@/components/landing/hero-buttons"
+import { Testimonials } from "@/components/landing/testimonials"
+import { InfiniteIconField } from "@/components/landing/infinite-icon-field"
+import { Footer } from "@/components/footer"
 
 // Componentry Previews for Bento
 import { MagnetLines } from "@workspace/ui/components/magnet-lines"
@@ -51,10 +54,10 @@ export default function Home() {
             className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-100 leading-[1.05]"
           >
             <span className="dark:bg-gradient-to-b dark:from-white/80 dark:via-white dark:to-white/60 dark:bg-clip-text dark:text-transparent inline-block">
-              Craft premium interfaces
+              Animated components
             </span>
             <br className="hidden sm:block" />
-            <span className="text-zinc-400 dark:text-zinc-500">with absolute precision.</span>
+            <span className="text-zinc-400 dark:text-zinc-500">that actually ship.</span>
           </motion.h1>
 
           <motion.p
@@ -63,7 +66,7 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="mt-6 text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto font-medium tracking-tight"
           >
-            An exquisite collection of copy-paste React components. Built for teams that refuse to compromise on design aesthetics or developer experience.
+            A curated collection of 40+ copy-paste React components built with Tailwind CSS, TypeScript & Framer Motion. Drop into any project — zero configuration, zero compromise.
           </motion.p>
         </div>
 
@@ -87,7 +90,7 @@ export default function Home() {
           {/* Card 1: 1x1 Dark */}
           <div className="md:col-span-1 md:row-span-1 relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/80 bg-white dark:bg-[#1a1a1a] shadow-sm p-2">
             <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden flex flex-col items-center justify-center p-6 pb-0 pt-0">
-               <div className="absolute inset-0 opacity-40 mix-blend-screen scale-150">
+               <div className="absolute inset-0 opacity-60 mix-blend-multiply dark:mix-blend-screen scale-150">
                  <MatrixRain speed={30} fontSize={10} variant="cyan" />
                </div>
                <HyperText text="reveal" className="absolute z-10 font-bold text-xl text-zinc-800 dark:text-white tracking-widest uppercase" />
@@ -111,15 +114,11 @@ export default function Home() {
 
           {/* Card 3: 1x2 White */}
           <div className="md:col-span-1 md:row-span-2 relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/80 bg-white dark:bg-[#1a1a1a] shadow-sm p-2">
-            <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden flex flex-col items-center justify-center p-8 gap-6">
-                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-50/80 dark:from-zinc-900/50 to-transparent pointer-events-none z-10" />
-                 <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4 }} className="text-[64px] drop-shadow-2xl grayscale hover:grayscale-0 transition-all">🦁</motion.div>
-                 <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 5 }} className="text-[64px] drop-shadow-2xl grayscale hover:grayscale-0 transition-all">🍷</motion.div>
-                 <motion.div animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 3.5 }} className="text-[64px] drop-shadow-2xl grayscale hover:grayscale-0 transition-all">🍝</motion.div>
-                 <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 4.5 }} className="text-[64px] drop-shadow-2xl grayscale hover:grayscale-0 transition-all">🔫</motion.div>
+            <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden">
+              <InfiniteIconField />
             </div>
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
-              Drag and scroll
+              Infinite icon field
             </div>
           </div>
 
@@ -194,6 +193,8 @@ export default function Home() {
 
       </main>
 
+      <Testimonials />
+      <Footer />
 
     </div>
   )
