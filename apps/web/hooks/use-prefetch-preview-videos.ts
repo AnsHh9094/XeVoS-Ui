@@ -62,8 +62,8 @@ export function usePrefetchPreviewVideos() {
           link.rel = "prefetch";
           link.as = "video";
           link.href = url;
-          // crossOrigin needed for CDN resources
-          link.crossOrigin = "anonymous";
+          // Keep prefetch in no-cors mode so public R2 assets without ACAO
+          // headers don't fail with console CORS errors.
           document.head.appendChild(link);
         }
         i += batchSize;
