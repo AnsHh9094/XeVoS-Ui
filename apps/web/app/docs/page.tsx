@@ -5,8 +5,6 @@ import { useState, useEffect, useMemo, useRef } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { components, isNewComponent, type ComponentCategory, type ComponentMetadata } from "@/registry"
-import { Logomark } from "@/components/logos/logomark"
-import { usePrefetchPreviewVideos } from "@/hooks/use-prefetch-preview-videos"
 
 import { SiteHeader } from "@/components/site-header"
 import { DocsScrollEdgeFade } from "@/components/docs-scroll-edge-fade"
@@ -41,6 +39,16 @@ function getPreviewSources(previewVideo?: string) {
   }
 }
 
+function getPreviewPosterSrc(previewVideo?: string) {
+  if (!previewVideo) return null
+
+  const match = previewVideo.match(/^(.*)\.(mov|mp4|webm)(\?.*)?$/i)
+  if (!match) return null
+
+  const [, base, , query = ""] = match
+  return `${base}.webp${query}`
+}
+
 // ─── Component Card ────────────────────────────────────────────────────────
 function ComponentCard({
   component,
@@ -49,10 +57,8 @@ function ComponentCard({
   component: ComponentMetadata
   index: number
 }) {
-  const cardRef = useRef<HTMLDivElement | null>(null)
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const [isHovered, setIsHovered] = useState(false)
-  const [isNearViewport, setIsNearViewport] = useState(false)
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const [isVideoReady, setIsVideoReady] = useState(false)
   const previewSources = useMemo(
@@ -63,45 +69,14 @@ function ComponentCard({
     () => (previewSources ? getPreferredPreviewSrc(previewSources) : ""),
     [previewSources]
   )
-  const shouldAutoWarmVideo = index < 9
-
-  useEffect(() => {
-    const element = cardRef.current
-    if (!element) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsNearViewport(Boolean(entry?.isIntersecting)),
-      { rootMargin: "800px 0px 800px 0px", threshold: 0.01 }
-    )
-    observer.observe(element)
-
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    if (!isNearViewport) return
-    if (shouldAutoWarmVideo) {
-      setShouldLoadVideo(true)
-      return
-    }
-
-    const warmWhenIdle = () => setShouldLoadVideo(true)
-    const idleApi = window as Window & {
-      requestIdleCallback?: (cb: IdleRequestCallback, options?: IdleRequestOptions) => number
-      cancelIdleCallback?: (handle: number) => void
-    }
-
-    if (typeof idleApi.requestIdleCallback === "function") {
-      const idleId = idleApi.requestIdleCallback(warmWhenIdle, { timeout: 800 })
-      return () => idleApi.cancelIdleCallback?.(idleId)
-    }
-
-    const timeoutId = setTimeout(warmWhenIdle, 400)
-    return () => clearTimeout(timeoutId)
-  }, [isNearViewport, shouldAutoWarmVideo])
+  const previewPosterSrc = useMemo(
+    () => getPreviewPosterSrc(component.previewVideo),
+    [component.previewVideo]
+  )
 
   useEffect(() => {
     setIsVideoReady(false)
+    setShouldLoadVideo(false)
   }, [component.slug, previewVideoSrc])
 
   useEffect(() => {
@@ -122,7 +97,7 @@ function ComponentCard({
     video.currentTime = 0.01
   }, [isHovered, shouldLoadVideo])
 
-  const shouldRenderVideo = Boolean(previewSources)
+  const shouldRenderVideo = Boolean(previewSources && shouldLoadVideo)
   const startPreview = () => {
     setIsHovered(true)
     setShouldLoadVideo(true)
@@ -145,7 +120,6 @@ function ComponentCard({
 
   return (
     <motion.div
-      ref={cardRef}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -211,14 +185,25 @@ function ComponentCard({
             }}
             className="relative w-full rounded-xl bg-zinc-50 dark:bg-zinc-900/80 group-hover:bg-zinc-100/50 dark:group-hover:bg-zinc-800/80 transition-colors border border-dashed border-border shadow-surface-inset overflow-hidden"
           >
+            {previewPosterSrc && (
+              <img
+                src={previewPosterSrc}
+                alt=""
+                aria-hidden="true"
+                loading={component.category === "Text Animations" ? "eager" : "lazy"}
+                decoding="async"
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-200 ${isVideoReady && isHovered ? "opacity-0" : "opacity-100"}`}
+              />
+            )}
             {shouldRenderVideo && previewSources && (
               <video
                 ref={videoRef}
-                src={shouldLoadVideo ? previewVideoSrc : undefined}
+                src={previewVideoSrc}
                 loop
                 muted
                 playsInline
-                preload={shouldLoadVideo ? "auto" : "metadata"}
+                preload="metadata"
+                poster={previewPosterSrc ?? undefined}
                 onLoadedData={(e) => {
                   setIsVideoReady(true)
                   if (!isHovered) {
@@ -238,7 +223,7 @@ function ComponentCard({
                     }
                   }
                 }}
-                className={`w-full h-full object-cover transition-opacity duration-200 ${isVideoReady ? "opacity-100" : "opacity-0"}`}
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-200 ${isVideoReady && isHovered ? "opacity-100" : "opacity-0"}`}
               />
             )}
           </motion.div>
@@ -276,11 +261,6 @@ const categoryOrder: ComponentCategory[] = [
 export default function DocsPage() {
   const allComponents = Object.values(components)
   const [activeSection, setActiveSection] = useState<string>("")
-
-  // Continue prefetching any videos not yet cached
-  usePrefetchPreviewVideos()
-
-
 
   useEffect(() => {
     const observers = categoryOrder.map((cat) => {
