@@ -50,6 +50,9 @@ export function SiteHeader({ sidebarToggle, landingGutter }: SiteHeaderProps) {
                         <Link href="/docs" className="text-foreground/60 transition-colors hover:text-foreground">
                             Docs
                         </Link>
+                        <Link href="/blocks" className="text-foreground/60 transition-colors hover:text-foreground">
+                            Blocks
+                        </Link>
                         <Link href="/docs/mcp" className="text-foreground/60 transition-colors hover:text-foreground">
                             MCP
                         </Link>

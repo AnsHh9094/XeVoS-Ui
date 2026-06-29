@@ -1,0 +1,82 @@
+{
+  "categories": [
+    {
+      "name": "marketing",
+      "title": "Marketing",
+      "description": "Landing sections, proof bands, and polished launch pages for high-signal product sites."
+    },
+    {
+      "name": "application",
+      "title": "Application",
+      "description": "Dashboards, command centers, settings pages, and dense product surfaces."
+    },
+    {
+      "name": "ecommerce",
+      "title": "Ecommerce",
+      "description": "Product grids, merchandising sections, carts, and checkout-adjacent UI."
+    }
+  ],
+  "blocks": [
+    {
+      "name": "hero-product",
+      "title": "Product Hero",
+      "description": "A full-width launch hero with layered media, proof metrics, and a focused call to action.",
+      "type": "registry:block",
+      "categories": ["marketing"],
+      "registryDependencies": ["@componentry/hero-geometric"],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "blocks/hero-product/hero-product.tsx",
+          "target": "components/hero-product.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-06-29",
+        "iframeHeight": 760,
+        "previewClassName": "min-h-screen"
+      }
+    },
+    {
+      "name": "metrics-command-center",
+      "title": "Metrics Command Center",
+      "description": "A compact analytics surface with status cards, a highlighted chart rail, and live activity.",
+      "type": "registry:block",
+      "categories": ["application"],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "blocks/metrics-command-center/metrics-command-center.tsx",
+          "target": "components/metrics-command-center.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-06-29",
+        "iframeHeight": 760,
+        "previewClassName": "min-h-screen"
+      }
+    },
+    {
+      "name": "commerce-product-grid",
+      "title": "Commerce Product Grid",
+      "description": "A responsive product grid with filter chips, editorial merchandising, and cart-ready product cards.",
+      "type": "registry:block",
+      "categories": ["ecommerce"],
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "blocks/commerce-product-grid/commerce-product-grid.tsx",
+          "target": "components/commerce-product-grid.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-06-29",
+        "iframeHeight": 820,
+        "previewClassName": "min-h-screen"
+      }
+    }
+  ]
+}

@@ -5,14 +5,28 @@ const ROOT = path.join(__dirname, "..")
 const REGISTRY_DIR = path.join(ROOT, "apps/web/public/r")
 const REGISTRY_INDEX_PATH = path.join(REGISTRY_DIR, "registry.json")
 const DOCS_REGISTRY_PATH = path.join(ROOT, "apps/web/registry/index.ts")
+const BLOCKS_REGISTRY_PATH = path.join(ROOT, "apps/web/registry/generated/blocks.json")
 
 const REQUIRED_ALIASES = ["componentry", "componentryui", "ui", "cmp"]
 const REGISTRY_SCHEMA_URL = "https://ui.shadcn.com/schema/registry.json"
 const REGISTRY_ITEM_SCHEMA_URL = "https://ui.shadcn.com/schema/registry-item.json"
 const LEGACY_UNDOCUMENTED_ITEMS = new Set([
+  "auth-modal",
+  "border-beam",
+  "command-menu",
+  "hyper-text",
   "interactive-hover-button",
+  "liquid-blob",
+  "noise-texture",
+  "particle-galaxy",
   "pulsating-button",
+  "scrub-input",
   "shimmer-button",
+  "showcase-card",
+  "signature",
+  "spotlight-card",
+  "testimonial-marquee",
+  "text-animate",
 ])
 
 function fail(message) {
@@ -32,6 +46,23 @@ function readDocsRegistrySlugs() {
   const source = fs.readFileSync(DOCS_REGISTRY_PATH, "utf8")
   const matches = [...source.matchAll(/^\s*"([a-z0-9-]+)"\s*:\s*{/gm)]
   return new Set(matches.map((match) => match[1]))
+}
+
+function readBlockRegistrySlugs() {
+  if (!fs.existsSync(BLOCKS_REGISTRY_PATH)) {
+    return new Set()
+  }
+
+  const blocks = readJson(BLOCKS_REGISTRY_PATH)
+  if (!Array.isArray(blocks)) {
+    fail(`${BLOCKS_REGISTRY_PATH} must contain an array.`)
+  }
+
+  return new Set(
+    blocks
+      .filter((block) => block && typeof block.name === "string")
+      .map((block) => block.name)
+  )
 }
 
 function normalizeIndexItems(rawItems) {
@@ -146,6 +177,7 @@ function main() {
   }
 
   const docsSlugs = readDocsRegistrySlugs()
+  const blockSlugs = readBlockRegistrySlugs()
 
   for (const slug of docsSlugs) {
     if (!uniqueItemNames.has(slug)) {
@@ -154,7 +186,11 @@ function main() {
   }
 
   for (const slug of uniqueItemNames) {
-    if (!docsSlugs.has(slug) && !LEGACY_UNDOCUMENTED_ITEMS.has(slug)) {
+    if (
+      !docsSlugs.has(slug) &&
+      !blockSlugs.has(slug) &&
+      !LEGACY_UNDOCUMENTED_ITEMS.has(slug)
+    ) {
       fail(
         `registry.json item "${slug}" is not present in apps/web/registry/index.ts. Add metadata or allowlist it.`
       )

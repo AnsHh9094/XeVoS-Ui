@@ -36,6 +36,7 @@
   --warning: var(--color-amber-500);
   --warning-foreground: var(--color-amber-700);
   --border: --alpha(var(--color-black) / 8%);
+  --line: --alpha(var(--color-black) / 10%);
   --input: --alpha(var(--color-black) / 10%);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -93,6 +94,7 @@
   --warning: var(--color-amber-500);
   --warning-foreground: var(--color-amber-400);
   --border: --alpha(var(--color-white) / 6%);
+  --line: --alpha(var(--color-white) / 8%);
   --input: --alpha(var(--color-white) / 8%);
   --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
@@ -147,6 +149,7 @@
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
   --color-border: var(--border);
+  --color-line: var(--line);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-chart-1: var(--chart-1);
@@ -235,6 +238,33 @@
   }
 }
 
+@utility screen-line-top {
+  @apply relative;
+
+  &:before {
+    content: "";
+    @apply absolute top-0 left-[-100vw] -z-1 h-px w-[200vw] bg-line;
+  }
+}
+
+@utility screen-line-bottom {
+  @apply relative;
+
+  &:after {
+    content: "";
+    @apply absolute bottom-0 left-[-100vw] -z-1 h-px w-[200vw] bg-line;
+  }
+}
+
+@utility diagonal-stripes {
+  @apply [--pattern-foreground:var(--color-line)]/60;
+  @apply bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px];
+}
+
+@utility stripe-divider {
+  @apply h-8 border-y border-line diagonal-stripes;
+}
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -252,6 +282,23 @@ body.route-hide-scrollbar {
 
 html.route-hide-scrollbar::-webkit-scrollbar,
 body.route-hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+html:has([data-blocks-layout]),
+body:has([data-blocks-layout]),
+[data-blocks-layout],
+[data-blocks-layout] * {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html:has([data-blocks-layout])::-webkit-scrollbar,
+body:has([data-blocks-layout])::-webkit-scrollbar,
+[data-blocks-layout]::-webkit-scrollbar,
+[data-blocks-layout] *::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;

@@ -1,33 +1,44 @@
-"use client"
+import type { Metadata } from "next"
+import { Fragment } from "react"
 
-import React from "react"
-import { motion } from "framer-motion"
-import { SiteHeader } from "@/components/site-header"
+import { BlockDisplay } from "@/components/blocks/block-display"
+import { BlocksNav } from "@/components/blocks/blocks-nav"
+import { getAllBlocks } from "@/lib/blocks/registry"
+import type { BlockRegistryItem } from "@/lib/blocks/types"
 
-export default function BlocksComingSoon() {
+export const dynamic = "force-static"
+
+export const metadata: Metadata = {
+  title: "Blocks | Componentry",
+  description:
+    "Production-ready Componentry blocks with live previews, source code, themes, and shadcn install commands.",
+}
+
+export default function BlocksPage() {
+  const blocks = getAllBlocks() as BlockRegistryItem[]
+
   return (
-    <div className="relative flex min-h-screen w-full flex-col bg-white dark:bg-[#111] text-foreground">
-      <SiteHeader />
+    <>
+      <BlocksNav />
 
-      <main className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-100"
-        >
-          Coming Soon
-        </motion.h1>
+      <div>
+        <div className="stripe-divider" />
+      </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-4 max-w-md text-sm sm:text-base text-zinc-500 dark:text-zinc-400"
-        >
-          Pre-built blocks. Infinite possibilities.
-        </motion.p>
-      </main>
+      {blocks.map((block) => (
+        <Fragment key={block.name}>
+          <BlockDisplay item={block} />
+          <BlockSeparator />
+        </Fragment>
+      ))}
+    </>
+  )
+}
+
+function BlockSeparator() {
+  return (
+    <div>
+      <div className="stripe-divider" />
     </div>
   )
 }

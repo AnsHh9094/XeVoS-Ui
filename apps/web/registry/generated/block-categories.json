@@ -1,0 +1,17 @@
+[
+  {
+    "name": "marketing",
+    "title": "Marketing",
+    "description": "Landing sections, proof bands, and polished launch pages for high-signal product sites."
+  },
+  {
+    "name": "application",
+    "title": "Application",
+    "description": "Dashboards, command centers, settings pages, and dense product surfaces."
+  },
+  {
+    "name": "ecommerce",
+    "title": "Ecommerce",
+    "description": "Product grids, merchandising sections, carts, and checkout-adjacent UI."
+  }
+]
