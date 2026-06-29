@@ -206,6 +206,13 @@ export const components: Record<string, ComponentMetadata> = {
     slug: "split-flap-display",
     addedAt: "2026-03-27",
   },
+  "eye-tracking": {
+    title: "Eye Tracking",
+    description: "Hyper-realistic eyes that follow your cursor with smooth spring physics, reactive pupils, blinking, and multiple stunning variants.",
+    category: "Components",
+    slug: "eye-tracking",
+    addedAt: "2026-03-28",
+  },
   // Hero Backgrounds
   "hero-geometric": {
     title: "Hero Geometric",
