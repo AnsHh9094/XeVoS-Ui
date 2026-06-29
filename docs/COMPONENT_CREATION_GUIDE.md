@@ -309,6 +309,38 @@ export async function MyComponentDocs() {
 }
 ```
 
+### ⚠️ CRITICAL: Always Include the Import in Every Code Block
+
+This is a **very common mistake**. Every code string — `usageCode`, `previewCode`, and every `examples[].code` — **must include the import statement** at the top.
+
+**❌ Wrong — missing import in examples:**
+```tsx
+const cartoonCode = `<MyComponent variant="cartoon" />`
+
+usageCode={`import { MyComponent } from "@/components/ui/my-component"`}
+```
+
+**✅ Correct — import included everywhere:**
+```tsx
+const defaultCode = `import { MyComponent } from "@/components/ui/my-component"
+
+<MyComponent />`
+
+const cartoonCode = `import { MyComponent } from "@/components/ui/my-component"
+
+<MyComponent variant="cartoon" />`
+
+// usageCode shows the full default usage, NOT just the bare import line
+usageCode={defaultCode}
+```
+
+**Rules:**
+- `usageCode` = the full default usage snippet (import + component JSX), **not** a bare `import` line
+- Every `examples[].code` string must start with the import statement
+- `previewCode` must also include the import statement
+
+---
+
 ### Props for DocsPageLayout
 
 | Prop | Type | Required | Description |
@@ -316,13 +348,13 @@ export async function MyComponentDocs() {
 | `title` | `string` | ✅ | Component name |
 | `description` | `string` | ✅ | What the component does |
 | `preview` | `ReactNode` | ✅ | Live component preview |
-| `previewCode` | `string` | ✅ | Code for the preview |
+| `previewCode` | `string` | ✅ | Code for the preview (must include import) |
 | `installPackageName` | `string` | ✅ | Slug for CLI install |
 | `installDependencies` | `string` | ❌ | Space-separated npm packages |
 | `installSourceCode` | `string` | ❌ | Source code for manual install |
 | `installSourceFilename` | `string` | ❌ | Target filename |
-| `usageCode` | `string` | ✅ | Import statement example |
-| `examples` | `ExampleItem[]` | ❌ | Additional examples |
+| `usageCode` | `string` | ✅ | Full default usage snippet (import + JSX, **not** just the import line) |
+| `examples` | `ExampleItem[]` | ❌ | Additional examples (each `code` must include import) |
 | `props` | `PropItem[]` | ❌ | Props table data |
 | `fullWidthPreview` | `boolean` | ❌ | Remove padding from preview |
 

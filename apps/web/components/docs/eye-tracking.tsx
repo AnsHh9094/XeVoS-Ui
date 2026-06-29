@@ -10,13 +10,13 @@ import {
 import { DocsPageLayout } from "@/components/docs-page-layout"
 import { readComponentSource } from "@/lib/source-code"
 
-const importCode = `import { EyeTracking } from "@/components/ui/eye-tracking"`
-
 const defaultCode = `import { EyeTracking } from "@/components/ui/eye-tracking"
 
 <EyeTracking eyeSize={140} gap={50} />`
 
-const cartoonCode = `<EyeTracking
+const cartoonCode = `import { EyeTracking } from "@/components/ui/eye-tracking"
+
+<EyeTracking
   variant="cartoon"
   eyeSize={160}
   gap={30}
@@ -25,13 +25,17 @@ const cartoonCode = `<EyeTracking
   pupilRange={0.8}
 />`
 
-const cyberCode = `<EyeTracking
+const cyberCode = `import { EyeTracking } from "@/components/ui/eye-tracking"
+
+<EyeTracking
   variant="cyber"
   eyeSize={130}
   gap={60}
 />`
 
-const minimalCode = `<EyeTracking
+const minimalCode = `import { EyeTracking } from "@/components/ui/eye-tracking"
+
+<EyeTracking
   variant="minimal"
   eyeSize={100}
   gap={30}
@@ -41,7 +45,9 @@ const minimalCode = `<EyeTracking
   showEyelids={false}
 />`
 
-const tripleEyeCode = `<EyeTracking
+const tripleEyeCode = `import { EyeTracking } from "@/components/ui/eye-tracking"
+
+<EyeTracking
   eyeCount={3}
   eyeSize={100}
   gap={30}
@@ -49,7 +55,9 @@ const tripleEyeCode = `<EyeTracking
   irisColorSecondary="#A78BFA"
 />`
 
-const brownEyeCode = `<EyeTracking
+const brownEyeCode = `import { EyeTracking } from "@/components/ui/eye-tracking"
+
+<EyeTracking
   eyeSize={150}
   gap={45}
   irisColor="#6B3A1F"
@@ -71,7 +79,7 @@ export async function EyeTrackingDocs() {
       installPackageName="eye-tracking"
       installDependencies="framer-motion clsx tailwind-merge"
       installSourceCode={sourceCode}
-      usageCode={importCode}
+      usageCode={defaultCode}
       examples={[
         {
           title: "Cartoon Variant",
