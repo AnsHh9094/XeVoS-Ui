@@ -150,6 +150,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "split-flap-display",
+      "type": "registry:ui"
+    },
+    {
       "name": "spotlight-card",
       "type": "registry:ui"
     },

@@ -27,6 +27,26 @@ export const SIGNATURE_DEFAULT_CONFIG: SignatureConfig = {
   duration: 1.5,
 };
 
+export interface SplitFlapDisplayConfig {
+  text: string;
+  columns: number;
+  size: "sm" | "md" | "lg";
+  accentColor: string;
+  showIndicators: boolean;
+  staggerDelay: number;
+  flipSpeed: number;
+}
+
+export const SPLIT_FLAP_DISPLAY_DEFAULT_CONFIG: SplitFlapDisplayConfig = {
+  text: "COMPONENTRY",
+  columns: 14,
+  size: "lg",
+  accentColor: "#22c55e",
+  showIndicators: true,
+  staggerDelay: 30,
+  flipSpeed: 35,
+};
+
 export const DITHER_PRISM_HERO_DEFAULT_CONFIG: DitherPrismHeroConfig = {
   title1: "Experience",
   title2: "The Future",
@@ -171,6 +191,14 @@ interface PlaygroundStore {
   setActiveSignaturePreset: (preset: string) => void;
   resetSignaturePreview: () => void;
   resetSignatureConfig: () => void;
+  splitFlapDisplayConfig: SplitFlapDisplayConfig;
+  activeSplitFlapDisplayPreset: string;
+  splitFlapDisplayRenderVersion: number;
+  setSplitFlapDisplayConfig: (config: SplitFlapDisplayConfig) => void;
+  updateSplitFlapDisplayConfig: (updates: Partial<SplitFlapDisplayConfig>) => void;
+  setActiveSplitFlapDisplayPreset: (preset: string) => void;
+  resetSplitFlapDisplayPreview: () => void;
+  resetSplitFlapDisplayConfig: () => void;
 }
 
 export const usePlaygroundStore = create<PlaygroundStore>((set) => ({
@@ -274,5 +302,25 @@ export const usePlaygroundStore = create<PlaygroundStore>((set) => ({
       signatureConfig: SIGNATURE_DEFAULT_CONFIG,
       activeSignaturePreset: "Default",
       signatureRenderVersion: state.signatureRenderVersion + 1,
+    })),
+  splitFlapDisplayConfig: SPLIT_FLAP_DISPLAY_DEFAULT_CONFIG,
+  activeSplitFlapDisplayPreset: "Default",
+  splitFlapDisplayRenderVersion: 0,
+  setSplitFlapDisplayConfig: (config) => set({ splitFlapDisplayConfig: config }),
+  updateSplitFlapDisplayConfig: (updates) =>
+    set((state) => ({
+      splitFlapDisplayConfig: { ...state.splitFlapDisplayConfig, ...updates },
+    })),
+  setActiveSplitFlapDisplayPreset: (preset) =>
+    set({ activeSplitFlapDisplayPreset: preset }),
+  resetSplitFlapDisplayPreview: () =>
+    set((state) => ({
+      splitFlapDisplayRenderVersion: state.splitFlapDisplayRenderVersion + 1,
+    })),
+  resetSplitFlapDisplayConfig: () =>
+    set((state) => ({
+      splitFlapDisplayConfig: SPLIT_FLAP_DISPLAY_DEFAULT_CONFIG,
+      activeSplitFlapDisplayPreset: "Default",
+      splitFlapDisplayRenderVersion: state.splitFlapDisplayRenderVersion + 1,
     })),
 }));
