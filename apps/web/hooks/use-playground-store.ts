@@ -39,8 +39,8 @@ export interface SplitFlapDisplayConfig {
 
 export const SPLIT_FLAP_DISPLAY_DEFAULT_CONFIG: SplitFlapDisplayConfig = {
   text: "COMPONENTRY",
-  columns: 14,
-  size: "lg",
+  columns: 11,
+  size: "md",
   accentColor: "#22c55e",
   showIndicators: true,
   staggerDelay: 30,

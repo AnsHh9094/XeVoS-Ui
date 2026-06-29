@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { SplitFlapDisplay } from "@workspace/ui/components/split-flap-display";
 import { cn } from "@/lib/utils";
 import {
@@ -174,6 +174,8 @@ const ColorPicker = ({
 
 function generateCode(config: SplitFlapDisplayConfig) {
   const lines: string[] = [];
+  lines.push(`import { SplitFlapDisplay } from "@/components/ui/split-flap-display"`);
+  lines.push(``);
   lines.push(`<SplitFlapDisplay`);
   lines.push(`  text="${config.text}"`);
   lines.push(`  columns={${config.columns}}`);
@@ -226,11 +228,6 @@ export function SplitFlapDisplayPersonalizePanel() {
   const updateConfig = usePlaygroundStore((s) => s.updateSplitFlapDisplayConfig);
   const resetPreview = usePlaygroundStore((s) => s.resetSplitFlapDisplayPreview);
   const resetConfig = usePlaygroundStore((s) => s.resetSplitFlapDisplayConfig);
-
-  const selectedPresetConfig = useMemo(
-    () => PRESETS.find((p) => p.name === activePreset)?.config,
-    [activePreset],
-  );
 
   const handleChange = (key: keyof SplitFlapDisplayConfig, value: string | number | boolean) => {
     updateConfig({ [key]: value } as Partial<SplitFlapDisplayConfig>);
