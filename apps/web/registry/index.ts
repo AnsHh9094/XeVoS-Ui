@@ -205,6 +205,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Components",
     slug: "split-flap-display",
     addedAt: "2026-03-27",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/splitflapdisplay.webm",
   },
   "eye-tracking": {
     title: "Eye Tracking",
@@ -212,6 +214,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Components",
     slug: "eye-tracking",
     addedAt: "2026-03-28",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/eyetracking.webm",
   },
   // Hero Backgrounds
   "hero-geometric": {
@@ -287,6 +291,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Visual Effects",
     slug: "infinite-image-field",
     addedAt: "2026-03-20",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/visual-effects/infiniteimagefield.webm",
   },
   "border-beam": {
     title: "Border Beam",
