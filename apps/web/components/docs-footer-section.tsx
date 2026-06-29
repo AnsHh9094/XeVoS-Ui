@@ -46,21 +46,25 @@ export function DocsFooterSection() {
         licenses and implementation details before using in production.
       </DocsFooterNote>
 
-      <div className="flex flex-col gap-3 rounded-xl border border-border bg-zinc-100 px-4 py-3.5 dark:bg-zinc-900/50 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-[13px] font-medium text-zinc-700 dark:text-zinc-300">
-          Have any questions?
-        </p>
+      <div className="rounded-xl border border-border/50 bg-gradient-to-br from-zinc-50 to-white px-4 py-4 dark:from-zinc-900/60 dark:to-zinc-900/30 sm:flex sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <div className="space-y-0.5">
+          <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 tracking-tight">
+            Need a custom component?
+          </p>
+          <p className="text-[13px] text-muted-foreground leading-relaxed">
+            I build bespoke UI components &amp; websites tailored to your brand.
+          </p>
+        </div>
         <Link
           href="https://x.com/harshjdhv"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex w-fit items-center gap-2 rounded-lg border border-border bg-white px-3 py-1.5 text-[13px] font-medium text-zinc-900 transition-colors hover:bg-zinc-50 active:scale-[0.98] dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900"
+          className="mt-3 inline-flex w-fit items-center gap-2 rounded-lg border border-border bg-white px-3 py-1.5 text-[13px] font-medium text-zinc-900 transition-colors hover:bg-zinc-50 active:scale-[0.98] sm:mt-0 sm:shrink-0 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900"
         >
-          <span>Contact on</span>
-          <svg role="img" viewBox="0 0 24 24" fill="currentColor" className="size-3" aria-hidden>
+          <svg role="img" viewBox="0 0 24 24" fill="currentColor" className="size-3.5" aria-hidden>
             <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
           </svg>
-          <span>@harshjdhv</span>
+          <span>DM me on X</span>
         </Link>
       </div>
     </div>

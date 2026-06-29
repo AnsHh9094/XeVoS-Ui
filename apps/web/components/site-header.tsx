@@ -57,18 +57,31 @@ export function SiteHeader({ sidebarToggle, landingGutter }: SiteHeaderProps) {
                             MCP
                         </Link>
                         <Link
-                            href="https://github.com/sponsors/harshjdhv"
-                            target="_blank"
-                            rel="noreferrer"
+                            href="/sponsors"
                             className="text-foreground/60 transition-colors hover:text-foreground"
                         >
-                            Sponsor
+                            Sponsors
                         </Link>
                     </nav>
                 </div>
                 <div className="ml-auto flex items-center gap-2 sm:gap-4">
+                    <Link
+                        href="https://shadcnblocks.com/?utm_source=componentry&utm_medium=sponsor&utm_campaign=header_badge"
+                        target="_blank"
+                        data-umami-event="click-sponsor-shadcnblocks"
+                        className="hidden md:inline-flex items-center gap-2 border border-input/50 hover:border-input hover:bg-accent/50 pl-2 pr-3 h-9 rounded-md bg-muted/30 text-sm font-normal transition-colors"
+                    >
+                        <span className="text-[10px] font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">Sponsor</span>
+                        <span className="w-px h-4 bg-border/40" />
+                        <img
+                            src="https://cdn.shadcnblocks.com/shadcnblocks/images/logo/shadcnblocks-logo.svg"
+                            className="w-4 dark:invert"
+                            alt="Shadcnblocks Logo"
+                        />
+                        <span className="text-foreground/80 hover:text-foreground">Shadcnblocks.com</span>
+                    </Link>
                     <CommandMenu />
-                    <div className="flex items-center gap-1 sm:gap-2 border-l border-border/40 pl-2 sm:pl-4">
+                    <div className="flex items-center gap-1 sm:gap-2">
                         <Link
                             href="https://github.com/harshjdhv/componentry"
                             target="_blank"

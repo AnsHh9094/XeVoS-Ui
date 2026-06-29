@@ -398,7 +398,7 @@ export function DocsPreviewWrapper({
             ref={variantBarRef}
             role="tablist"
             aria-label="Preview variants"
-            className="pointer-events-auto flex max-w-[min(100vw-2rem,28rem)] items-center gap-0.5 overflow-x-auto rounded-2xl border border-border/40 bg-white/75 p-1 shadow-[0_8px_32px_rgba(0,0,0,0.08)] backdrop-blur-xl dark:border-white/[0.06] dark:bg-[#121212]/80 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            className="pointer-events-auto flex max-w-[min(100vw-2rem,36rem)] items-center gap-0.5 overflow-x-auto rounded-2xl border border-border/40 bg-white/75 p-1 shadow-[0_8px_32px_rgba(0,0,0,0.08)] backdrop-blur-xl dark:border-white/[0.06] dark:bg-[#121212]/80 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           >
             {!hideDefaultVariant && (
               <PreviewVariantTab

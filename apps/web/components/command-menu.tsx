@@ -13,6 +13,9 @@ import {
   Laptop,
   Moon,
   Sun,
+  Cog,
+  BookOpen,
+  CircleArrowOutUpRight,
   CornerDownLeft
 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -34,8 +37,33 @@ function XIcon(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
+function smartFilter(value: string, search: string): number {
+  const v = value.toLowerCase().trim()
+  const s = search.toLowerCase().trim()
+
+  if (!s) return 1
+  if (v === s) return 4
+  if (v.startsWith(s)) return 3
+
+  for (const word of v.split(/\s+/)) {
+    if (word.startsWith(s)) return 2.5
+  }
+
+  if (v.includes(s)) return 2
+
+  let si = 0
+  for (let i = 0; i < v.length && si < s.length; i++) {
+    if (v[i] === s[si]) si++
+  }
+
+  return si === s.length ? 1 : 0
+}
+
 // Pre-compute nav groups at module level
 const navGroups = docsConfig.nav
+const gettingStartedGroup = navGroups.find(g => g.title === "Getting Started")
+const componentGroups = navGroups.filter(g => g.title !== "Getting Started")
+const allComponentItems = componentGroups.flatMap(g => g.items).sort((a, b) => a.title.localeCompare(b.title))
 
 const mainPages = [
   {
@@ -47,7 +75,12 @@ const mainPages = [
     title: "Documentation",
     href: "/docs",
     icon: ArrowRight
-  }
+  },
+  ...(gettingStartedGroup ? gettingStartedGroup.items.map(item => ({
+    title: item.title,
+    href: item.href,
+    icon: ArrowRight
+  })) : [])
 ]
 
 const socialPages = [
@@ -63,6 +96,24 @@ const socialPages = [
   }
 ]
 
+const getStartedPages = [
+  {
+    title: "Terms of Service",
+    href: "/docs/terms",
+    icon: BookOpen
+  },
+  {
+    title: "Privacy Policy",
+    href: "/docs/privacy",
+    icon: BookOpen
+  },
+  {
+    title: "Visit Founder",
+    href: "https://harshjdhv.com",
+    icon: CircleArrowOutUpRight
+  }
+]
+
 // Memoized Pages group
 const PagesGroup = React.memo(function PagesGroup({
   items,
@@ -74,10 +125,33 @@ const PagesGroup = React.memo(function PagesGroup({
   return (
     <Command.Group
       heading="Pages"
-      className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-muted-foreground/60"
+      className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[13px] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground/50"
     >
       {items.map((page) => (
         <React.Fragment key={page.href}>
+          <SearchItem
+            title={page.title}
+            icon={<page.icon className="h-5 w-5" />}
+            onSelect={() => onSelect(page.href)}
+          />
+        </React.Fragment>
+      ))}
+    </Command.Group>
+  )
+})
+
+const GetStartedGroup = React.memo(function GetStartedGroup({
+  onSelect
+}: {
+  onSelect: (href: string) => void
+}) {
+  return (
+    <Command.Group
+      heading="Get started"
+      className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[13px] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground/50"
+    >
+      {getStartedPages.map((page) => (
+        <React.Fragment key={page.title}>
           <SearchItem
             title={page.title}
             icon={<page.icon className="h-4 w-4" />}
@@ -100,13 +174,13 @@ const SocialsGroup = React.memo(function SocialsGroup({
   return (
     <Command.Group
       heading="Socials"
-      className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-muted-foreground/60"
+      className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[13px] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground/50"
     >
       {items.map((page) => (
         <React.Fragment key={page.href}>
           <SearchItem
             title={page.title}
-            icon={<page.icon className="h-4 w-4" />}
+            icon={<page.icon className="h-5 w-5" />}
             onSelect={() => onSelect(page.href)}
           />
         </React.Fragment>
@@ -126,27 +200,27 @@ const SettingsGroup = React.memo(function SettingsGroup({
   return (
     <Command.Group
       heading="Settings"
-      className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-muted-foreground/60"
+      className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[13px] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground/50"
     >
       <SearchItem
-        title="Light"
-        icon={<Sun className="h-4 w-4" />}
+        title="Use Light Theme"
+        icon={<Cog className="h-5 w-5" />}
         onSelect={() => {
           setTheme("light")
           setOpen(false)
         }}
       />
       <SearchItem
-        title="Dark"
-        icon={<Moon className="h-4 w-4" />}
+        title="Use Dark Theme"
+        icon={<Cog className="h-5 w-5" />}
         onSelect={() => {
           setTheme("dark")
           setOpen(false)
         }}
       />
       <SearchItem
-        title="System"
-        icon={<Laptop className="h-4 w-4" />}
+        title="Use System Theme"
+        icon={<Cog className="h-5 w-5" />}
         onSelect={() => {
           setTheme("system")
           setOpen(false)
@@ -173,21 +247,16 @@ const SearchItem = React.memo(function SearchItem({
     <Command.Item
       value={`${subtitle ?? ""} ${title}`}
       onSelect={onSelect}
-      className="group/item relative flex cursor-pointer select-none items-center gap-2 rounded-md px-2 py-1.5 text-[13px] outline-none data-[selected=true]:bg-black/5 dark:data-[selected=true]:bg-white/10 data-[selected=true]:text-accent-foreground data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50"
+      className="group/item relative flex cursor-pointer select-none items-center gap-3 rounded-md px-3 py-2 text-sm outline-none transition-[background-color,box-shadow,scale] duration-150 ease-out-strong hover:bg-accent data-[selected=true]:bg-accent data-[selected=true]:shadow-sm data-[selected=true]:text-accent-foreground active:scale-[0.98] data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50"
     >
-      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded text-muted-foreground/70 group-data-[selected=true]/item:text-primary">
+      <div className="flex h-7 w-7 shrink-0 items-center justify-center bg-transparent text-muted-foreground/70 transition-[color,scale] duration-150 ease-out-strong group-hover/item:scale-110 group-hover/item:text-foreground group-data-[selected=true]/item:text-foreground group-data-[selected=true]/item:scale-110">
         {icon}
       </div>
       <div className="flex flex-1 flex-col gap-0.5">
-        <span className="font-medium truncate">{title}</span>
+        <span className="font-medium truncate transition-colors duration-150 ease-out-strong group-hover/item:text-foreground group-data-[selected=true]/item:text-foreground">{title}</span>
         {subtitle && <span className="text-xs text-muted-foreground/60 truncate">{subtitle}</span>}
       </div>
       {rightContent}
-      {!rightContent && (
-        <ArrowRight
-          className="h-4 w-4 text-muted-foreground opacity-0 -translate-x-1 transition-all duration-200 ease-out group-data-[selected=true]/item:opacity-100 group-data-[selected=true]/item:translate-x-0"
-        />
-      )}
     </Command.Item>
   )
 
@@ -204,18 +273,16 @@ const SearchGroup = React.memo(function SearchGroup({
   items: readonly { title: string; href: string }[]
   onSelect: (href: string) => void
 }) {
-  const isGettingStarted = title === "Getting Started"
-
   return (
     <Command.Group
       heading={title}
-      className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-muted-foreground/60"
+      className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[13px] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground/50"
     >
       {items.map((navItem) => (
         <React.Fragment key={navItem.href}>
           <SearchItem
             title={navItem.title}
-            icon={isGettingStarted ? <FileText className="h-4 w-4" /> : <CircleDashed className="h-4 w-4" />}
+            icon={<CircleDashed className="h-5 w-5" />}
             onSelect={() => onSelect(navItem.href)}
           />
         </React.Fragment>
@@ -294,11 +361,10 @@ export function CommandMenu({ trigger }: { trigger?: React.ReactNode }) {
       ) : (
         <button
           onClick={() => setOpen(true)}
-          className="group inline-flex items-center justify-center md:justify-start gap-2 whitespace-nowrap transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 border-0 md:border md:border-input/50 md:hover:border-input hover:bg-accent/50 md:px-3 md:py-2 relative h-9 w-9 md:w-40 lg:w-56 rounded-md md:rounded-lg bg-transparent md:bg-muted/30 text-sm font-normal text-muted-foreground"
+          className="group inline-flex items-center xl:justify-start justify-center gap-2 whitespace-nowrap transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 border-0 xl:border xl:border-input/50 xl:hover:border-input hover:bg-accent/50 xl:px-3 xl:py-2 relative h-9 w-9 xl:w-36 rounded-md xl:rounded-lg bg-transparent xl:bg-muted/30 text-sm font-normal text-muted-foreground"
         >
-          <Search className="h-[1.2rem] w-[1.2rem] md:h-4 md:w-4 opacity-70 group-hover:opacity-100 md:opacity-50 md:group-hover:opacity-70 transition-opacity" />
-          <span className="hidden lg:inline-flex">Search...</span>
-          <span className="hidden md:inline-flex lg:hidden">Search</span>
+          <Search className="h-[1.2rem] w-[1.2rem] xl:h-4 xl:w-4 opacity-70 group-hover:opacity-100 xl:opacity-50 xl:group-hover:opacity-70 transition-opacity" />
+          <span className="hidden xl:inline-flex">Search...</span>
           <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-6 select-none items-center gap-0.5 rounded-md border bg-background/80 px-1.5 font-mono text-[10px] font-medium text-muted-foreground/70 sm:flex">
             <span className="text-xs">⌘</span>K
           </kbd>
@@ -325,83 +391,84 @@ export function CommandMenu({ trigger }: { trigger?: React.ReactNode }) {
                   duration: 0.25,
                   ease: [0.16, 1, 0.3, 1]
                 }}
-                className="fixed left-1/2 top-1/2 z-[101] w-full max-w-[680px] -translate-x-1/2 -translate-y-1/2 p-4"
+                className="fixed left-1/2 top-1/2 z-[101] w-full max-w-[780px] -translate-x-1/2 -translate-y-1/2 p-4"
               >
                 <Command
                   label="Spotlight Search"
-                  className="relative overflow-hidden rounded-2xl border border-zinc-200/60 dark:border-zinc-800/60 bg-[#F5F4F3] dark:bg-[#121212] backdrop-blur-xl [box-shadow:0_0_0_1px_rgba(255,255,255,0.8)_inset,0_0_24px_4px_rgba(255,255,255,0.09)_inset,0_24px_64px_-12px_rgba(0,0,0,0.12),0_8px_24px_-4px_rgba(0,0,0,0.08)] dark:[box-shadow:0_0_0_1px_rgba(255,255,255,0.06)_inset,0_0_24px_4px_rgba(255,255,255,0.02)_inset,0_24px_64px_-12px_rgba(0,0,0,0.6),0_8px_24px_-4px_rgba(0,0,0,0.4)] tracking-tight"
+                  className="relative overflow-hidden rounded-2xl border border-zinc-200/70 dark:border-white/[0.05] bg-[#F5F4F3] dark:bg-[#121212] [box-shadow:0_8px_32px_-4px_rgba(0,0,0,0.1)] dark:[box-shadow:0_16px_48px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.04)_inset] tracking-tight"
                   shouldFilter={true}
+                  filter={smartFilter}
                 >
-                  {/* Top sheen */}
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white dark:via-white/20 to-transparent" />
-
                   <div className="p-2">
-                    <div className="flex items-center gap-2 rounded-xl border border-zinc-200/80 dark:border-zinc-700/40 bg-zinc-100/70 dark:bg-zinc-800/50 px-3 py-2.5 [box-shadow:inset_0_1px_2px_rgba(0,0,0,0.04)] dark:[box-shadow:inset_0_1px_2px_rgba(0,0,0,0.2)]">
-                      <Search className="h-4 w-4 text-muted-foreground/50" />
+                    <div className="flex items-center gap-2 rounded-xl border border-zinc-200/50 dark:border-white/[0.04] bg-white/50 dark:bg-white/[0.03] px-3 py-2.5 shadow-sm transition-colors">
+                      <Search className="h-5 w-5 text-muted-foreground/60" />
                       <Command.Input
                         ref={inputRef}
                         value={query}
                         onValueChange={setQuery}
                         placeholder="Search Anything"
-                        className="flex-1 bg-transparent text-sm font-normal outline-none placeholder:text-muted-foreground/60"
+                        className="flex-1 bg-transparent text-[13px] font-normal outline-none placeholder:text-muted-foreground/60"
                         autoFocus
                       />
-                      {query && (
-                        <button
-                          onClick={handleClearQuery}
-                          className="rounded-md px-2 py-1 text-xs text-muted-foreground hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50 transition-colors"
-                        >
-                          Clear
-                        </button>
-                      )}
+                      <button
+                        onClick={handleClearQuery}
+                        className="shrink-0 rounded-md px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground/60 hover:text-foreground transition-colors"
+                      >
+                        Clear
+                      </button>
                     </div>
                   </div>
 
-                  <Command.List className="max-h-[400px] overflow-y-auto overscroll-contain p-2 scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_bottom,transparent,black_2rem,black_calc(100%-2rem),transparent)]">
-                    <Command.Empty className="flex flex-col items-center justify-center py-14 text-center">
-                      <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted/50">
-                        <Search className="h-5 w-5 text-muted-foreground/50" />
-                      </div>
-                      <p className="text-sm text-muted-foreground">No results found</p>
-                      <p className="text-xs text-muted-foreground/60">Try searching for something else</p>
+                  <Command.List className="h-[400px] overflow-y-auto overscroll-contain p-2 scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ">
+                    <Command.Empty className="flex items-center justify-center py-14">
+                      <span className="text-sm font-medium">No results found</span>
                     </Command.Empty>
 
                     <PagesGroup items={mainPages} onSelect={handleSelect} />
 
+                    <GetStartedGroup onSelect={handleSelect} />
+
                     <SocialsGroup items={socialPages} onSelect={handleSelect} />
 
-                    {navGroups.map((group) => (
+                    {allComponentItems.length > 0 && (
                       <SearchGroup
-                        key={group.title}
-                        title={group.title}
-                        items={group.items}
+                        title="Components"
+                        items={allComponentItems}
                         onSelect={handleSelect}
                       />
-                    ))}
+                    )}
 
                     <SettingsGroup setTheme={setTheme} setOpen={setOpen} />
 
                     <Command.Group
                       heading="Resources"
-                      className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-muted-foreground/60"
+                      className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[13px] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground/50"
                     >
                       <SearchItem
                         title="llms.txt"
                         subtitle="AI Context"
-                        icon={<FileText className="h-4 w-4" />}
+                        icon={<FileText className="h-5 w-5" />}
                         onSelect={handleOpenLlms}
                       />
                     </Command.Group>
                   </Command.List>
 
-                  <div className="flex items-center justify-between border-t border-zinc-200/60 dark:border-zinc-800/60 bg-zinc-50/60 dark:bg-zinc-900/40 px-4 py-2.5">
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <kbd className="flex h-5 w-5 items-center justify-center rounded border bg-background font-mono text-[10px] text-muted-foreground shadow-sm">
+                  <div className="flex items-center justify-between border-t border-zinc-200/40 dark:border-white/[0.04] bg-zinc-50/60 dark:bg-transparent px-4 py-3">
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground/70">
+                      <kbd className="flex h-5 w-5 items-center justify-center rounded border border-zinc-200/60 dark:border-white/[0.05] bg-background/50 dark:bg-white/5 font-mono text-[10px] text-muted-foreground shadow-sm">
                         <CornerDownLeft className="h-3 w-3" />
                       </kbd>
-                      <span>Go To Page</span>
+                      <span className="font-medium text-[11px]">Go To Page</span>
                     </div>
-                    <span className="text-xs text-muted-foreground/40">Componentry</span>
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground/70">
+                      <kbd className="flex h-5 w-5 items-center justify-center rounded border border-zinc-200/60 dark:border-white/[0.05] bg-background/50 dark:bg-white/5 font-mono text-[10px] text-muted-foreground shadow-sm">
+                        ↑
+                      </kbd>
+                      <span className="text-muted-foreground/40">/</span>
+                      <kbd className="flex h-5 w-5 items-center justify-center rounded border border-zinc-200/60 dark:border-white/[0.05] bg-background/50 dark:bg-white/5 font-mono text-[10px] text-muted-foreground shadow-sm">
+                        ↓
+                      </kbd>
+                    </div>
                   </div>
                 </Command>
               </motion.div>
