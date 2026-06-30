@@ -51,10 +51,10 @@ export default function McpDocsPage() {
       <main className="max-w-3xl mx-auto pt-32 pb-32 px-6 sm:px-8 relative z-10">
         {/* ── Hero (match /docs) ── */}
         <div className="mb-12">
-          <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 leading-[1.1] mb-2 inline-block">
+          <h1 className="inline-block text-3xl font-semibold leading-[1.05] tracking-[-0.04em] text-zinc-900 dark:text-white sm:text-4xl">
             MCP
           </h1>
-          <p className="text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          <p className="mt-3 max-w-2xl text-sm font-medium tracking-tight text-zinc-400 sm:text-base dark:text-zinc-600">
             Integrating MCP with Componentry lets you control it via AI.
           </p>
         </div>
