@@ -3,10 +3,10 @@
 
 import blocks from "./blocks.json"
 
-import Block0 from "@/registry/blocks/social-links-01/social-links-01"
+import Block0 from "@/registry/blocks/gradient-hero-01/gradient-hero-01"
 
 export const blockIndex = {
-  "social-links-01": {
+  "gradient-hero-01": {
     ...blocks[0],
     component: Block0,
   },
