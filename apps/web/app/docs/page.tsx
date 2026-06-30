@@ -8,7 +8,11 @@ import { components, isNewComponent, type ComponentCategory, type ComponentMetad
 
 import { SiteHeader } from "@/components/site-header"
 import { DocsScrollEdgeFade } from "@/components/docs-scroll-edge-fade"
-import { LandingGuideLines } from "@/components/landing/landing-frame"
+import {
+  LandingGuideLines,
+  landingGutterClass,
+} from "@/components/landing/landing-frame"
+import { cn } from "@/lib/utils"
 
 type PreviewSources = {
   mp4: string
@@ -350,8 +354,8 @@ export default function DocsPage() {
         </nav>
       </div>
 
-      <main className="relative z-10 px-4 pt-32 pb-32 md:px-20">
-        <div className="mx-auto w-full max-w-[1240px]">
+      <main className={cn("relative z-10 pt-32 pb-32", landingGutterClass)}>
+        <div className="mx-auto w-full max-w-[1360px]">
 
         {/* ── Hero ── */}
         <div className="mb-12 max-w-3xl">

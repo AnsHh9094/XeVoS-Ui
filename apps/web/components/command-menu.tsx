@@ -362,11 +362,10 @@ export function CommandMenu({ trigger }: { trigger?: React.ReactNode }) {
         <button
           data-slot="command-menu-trigger"
           onClick={() => setOpen(true)}
-          className="group/button inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-[min(var(--radius-lg),10px)] border-none px-1.5 text-sm font-medium whitespace-nowrap text-foreground/80 outline-none transition-all will-change-[scale] select-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.98] dark:hover:bg-muted/50"
+          className="group/button inline-flex size-8 shrink-0 items-center justify-center gap-1.5 rounded-[min(var(--radius-lg),10px)] border-none text-sm font-medium whitespace-nowrap text-foreground/80 outline-none transition-all will-change-[scale] select-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.98] sm:w-auto sm:px-1.5 dark:hover:bg-muted/50"
           aria-label="Open search"
         >
           <Search className="size-4" />
-          <span className="font-sans text-sm/4 font-medium sm:hidden">Search...</span>
           <kbd data-slot="kbd-group" className="hidden items-center gap-1 sm:flex">
             <kbd className="pointer-events-none inline-flex h-5 w-5 min-w-auto select-none items-center justify-center rounded-sm bg-black/5 px-1 font-sans text-sm/none font-normal tracking-tight text-foreground/70 shadow-[inset_0_0_1px] shadow-black/10 dark:bg-white/10 dark:shadow-white/20">
               ⌘

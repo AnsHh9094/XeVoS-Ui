@@ -37,7 +37,7 @@ export function DocsClientLayout({
                 {/* Top Navbar */}
                 <SiteHeader sidebarToggle={<FloatingDocsSidebar />} />
 
-                <div className="flex-1 w-full max-w-[95rem] mx-auto flex pt-14">
+                <div className="mx-auto flex w-full max-w-[1360px] flex-1 pt-14">
                     {/* Fixed Sidebar for desktop */}
                     <DocsSidebar />
 

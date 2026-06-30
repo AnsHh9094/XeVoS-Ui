@@ -2,6 +2,10 @@
 
 import React from "react"
 import Link from "next/link"
+import {
+  LandingContent,
+  landingGutterClass,
+} from "@/components/landing/landing-frame"
 import { ComponentryLogomark } from "@/components/logos/componentry-logomark"
 
 const links = {
@@ -26,18 +30,19 @@ const links = {
 
 export function Footer() {
   return (
-    <footer className="relative w-full overflow-hidden border-t border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-[#09090B] pt-16 text-sm flex flex-col">
-      <div className="w-full max-w-[95rem] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 xl:gap-12 w-full z-10 pb-16">
+    <footer className="relative flex w-full flex-col overflow-hidden border-t border-zinc-200/60 bg-white pt-18 text-[15px] dark:border-zinc-800/60 dark:bg-[#09090B]">
+      <div className={`mx-auto w-full ${landingGutterClass}`}>
+        <LandingContent>
+        <div className="z-10 grid w-full grid-cols-1 gap-12 pb-18 md:grid-cols-12 lg:gap-8 xl:gap-12">
           {/* Brand and Description */}
-          <div className="md:col-span-12 lg:col-span-4 xl:col-span-4 flex flex-col items-start px-4 sm:px-6 lg:px-8">
-            <Link href="/" className="flex items-center gap-2 group w-fit mb-6">
-              <ComponentryLogomark className="size-6 text-zinc-900 dark:text-white transition-transform group-hover:scale-105 duration-300" />
-              <span className="text-base font-semibold tracking-tight text-zinc-900 dark:text-white">
+          <div className="flex flex-col items-start md:col-span-12 lg:col-span-5 xl:col-span-5">
+            <Link href="/" className="group mb-6 flex w-fit items-center gap-2.5">
+              <ComponentryLogomark className="size-7 text-zinc-900 transition-transform duration-300 group-hover:scale-105 dark:text-white" />
+              <span className="text-lg font-semibold tracking-tight text-zinc-900 dark:text-white">
                 Componentry
               </span>
             </Link>
-            <p className="text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-sm mb-6">
+            <p className="mb-7 max-w-md text-base leading-7 text-zinc-500 dark:text-zinc-400">
               Beautiful animated React components. Copy, paste, ship. Built for modern web applications with a focus on motion and usability.
             </p>
             <div className="flex items-center gap-3">
@@ -65,15 +70,15 @@ export function Footer() {
           </div>
 
           {/* Links - Pushed to the right using col-start */}
-          <div className="col-span-2 md:col-span-12 lg:col-span-6 lg:col-start-7 xl:col-span-6 xl:col-start-7 grid grid-cols-2 sm:grid-cols-3 gap-8 px-4 sm:px-6 lg:px-8">
+          <div className="col-span-2 grid grid-cols-2 gap-9 sm:grid-cols-3 md:col-span-12 lg:col-span-6 lg:col-start-7 xl:col-span-6 xl:col-start-7">
             <div className="flex flex-col gap-4">
-              <h3 className="font-medium text-zinc-900 dark:text-zinc-100">Product</h3>
-              <ul className="flex flex-col gap-3">
+              <h3 className="text-[15px] font-semibold text-zinc-900 dark:text-zinc-100">Product</h3>
+              <ul className="flex flex-col gap-3.5">
                 {links.product.map((l) => (
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors inline-flex items-center gap-1"
+                      className="inline-flex items-center gap-1 text-[15px] leading-6 text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
                     >
                       {l.label}
                     </Link>
@@ -82,14 +87,14 @@ export function Footer() {
               </ul>
             </div>
             <div className="flex flex-col gap-4">
-              <h3 className="font-medium text-zinc-900 dark:text-zinc-100">Resources</h3>
-              <ul className="flex flex-col gap-3">
+              <h3 className="text-[15px] font-semibold text-zinc-900 dark:text-zinc-100">Resources</h3>
+              <ul className="flex flex-col gap-3.5">
                 {links.resources.map((l) => (
                   <li key={l.label}>
                     <Link
                       href={l.href}
                       {...(l.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                      className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors inline-flex items-center gap-1 group"
+                      className="group inline-flex items-center gap-1 text-[15px] leading-6 text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
                     >
                       {l.label}
                       {l.external && (
@@ -104,14 +109,14 @@ export function Footer() {
               </ul>
             </div>
             <div className="flex flex-col gap-4">
-              <h3 className="font-medium text-zinc-900 dark:text-zinc-100">Connect</h3>
-              <ul className="flex flex-col gap-3">
+              <h3 className="text-[15px] font-semibold text-zinc-900 dark:text-zinc-100">Connect</h3>
+              <ul className="flex flex-col gap-3.5">
                 {links.connect.map((l) => (
                   <li key={l.label}>
                     <Link
                       href={l.href}
                       {...(l.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                      className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors inline-flex items-center gap-1 group"
+                      className="group inline-flex items-center gap-1 text-[15px] leading-6 text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
                     >
                       {l.label}
                       {l.external && (
@@ -128,7 +133,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 z-10 pb-8 px-4 sm:px-6 lg:px-8">
+        <div className="z-10 flex flex-col items-center justify-between gap-4 pb-8 text-sm md:flex-row">
           <p className="text-zinc-500 dark:text-zinc-400">
             © {new Date().getFullYear()} Componentry. Created by{" "}
             <a
@@ -147,12 +152,13 @@ export function Footer() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </div>
-              <span className="text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">
+              <span className="text-zinc-500 transition-colors group-hover:text-zinc-900 dark:text-zinc-400 dark:group-hover:text-zinc-100">
                 All systems normal
               </span>
             </div>
           </div>
         </div>
+        </LandingContent>
       </div>
 
       {/* Massive Half-Cut Text */}
