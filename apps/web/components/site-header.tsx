@@ -2,13 +2,15 @@
 
 import React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { ComponentryLogomark } from "@/components/logos/componentry-logomark"
 import { CommandMenu } from "@/components/command-menu"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { cn } from "@/lib/utils"
 
 interface SiteHeaderProps {
     sidebarToggle?: React.ReactNode
-    /** Match landing page column gutters (px-4 / md:px-20). */
+    /** Kept for existing call sites; the header rail stays consistent across pages. */
     landingGutter?: boolean
 }
 
@@ -20,56 +22,126 @@ function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
     )
 }
 
-function XIcon(props: React.SVGProps<SVGSVGElement>) {
-    return (
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-            <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.847h-7.406l-5.8-7.585-6.638 7.585H.474l8.6-9.83L0 1.153h7.594l5.243 6.932L18.901 1.153Zm-1.291 19.491h2.039L6.486 3.24H4.298L17.61 20.644Z" />
-        </svg>
-    )
-}
+export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
+    const pathname = usePathname()
+    const [stars, setStars] = React.useState<number | null>(null)
 
-export function SiteHeader({ sidebarToggle, landingGutter }: SiteHeaderProps) {
+    React.useEffect(() => {
+        const fetchStars = async () => {
+            try {
+                const cacheKey = "github-stars-cache"
+                const cacheExpiry = 15 * 60 * 1000
+                const cached = localStorage.getItem(cacheKey)
+
+                if (cached) {
+                    const { count, timestamp } = JSON.parse(cached) as {
+                        count?: unknown
+                        timestamp?: unknown
+                    }
+
+                    if (typeof count === "number") {
+                        setStars(count)
+
+                        if (typeof timestamp === "number" && Date.now() - timestamp < cacheExpiry) {
+                            return
+                        }
+                    }
+                }
+
+                const response = await fetch("https://api.github.com/repos/harshjdhv/componentry")
+                if (!response.ok) return
+
+                const data = (await response.json()) as { stargazers_count?: number }
+                if (typeof data.stargazers_count === "number") {
+                    setStars(data.stargazers_count)
+                    localStorage.setItem(
+                        cacheKey,
+                        JSON.stringify({ count: data.stargazers_count, timestamp: Date.now() })
+                    )
+                }
+            } catch {
+                // Keep the header quiet if GitHub rate-limits or localStorage is unavailable.
+            }
+        }
+
+        fetchStars()
+    }, [])
+
+    const formattedStars =
+        stars === null
+            ? null
+            : new Intl.NumberFormat("en-US", {
+                notation: "compact",
+                compactDisplay: "short",
+            })
+                .format(stars)
+                .toLowerCase()
+    const fullStars = stars === null ? "GitHub" : `${new Intl.NumberFormat("en-US").format(stars)} stars`
+    const navItems = [
+        {
+            href: "/docs",
+            label: "Docs",
+            active: pathname === "/docs" || (pathname.startsWith("/docs/") && !pathname.startsWith("/docs/mcp")),
+        },
+        {
+            href: "/blocks",
+            label: "Blocks",
+            active: pathname === "/blocks" || pathname.startsWith("/blocks/"),
+        },
+        {
+            href: "/docs/mcp",
+            label: "MCP",
+            active: pathname === "/docs/mcp",
+        },
+        {
+            href: "/sponsors",
+            label: "Sponsors",
+            active: pathname === "/sponsors",
+        },
+    ]
+
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 w-full backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-[#111]/60 border-b border-border/40">
+        <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-line bg-white dark:bg-[#09090B]">
             <div
-                className={`mx-auto flex h-14 w-full max-w-[95rem] items-center ${
-                    landingGutter ? "px-4 md:px-20" : "px-4 sm:px-6 lg:px-8"
-                }`}
+                className="mx-auto flex h-14 w-full max-w-[95rem] items-center px-6 md:px-24"
             >
-                <div className="flex flex-1 items-center gap-2 sm:gap-4">
+                <div className="flex flex-1 items-center gap-1.5">
                     {sidebarToggle && (
                         <div className="md:hidden">
                             {sidebarToggle}
                         </div>
                     )}
-                    <Link href="/" className="flex items-center gap-1.5 group">
+                    <Link
+                        href="/"
+                        className="group inline-flex h-8 items-center gap-1.5 rounded-md px-1 transition-colors duration-200 hover:bg-muted/60 dark:hover:bg-muted/40"
+                    >
                         <ComponentryLogomark className="size-5 text-zinc-900 dark:text-white transition-opacity group-hover:opacity-80" />
-                        <span className="text-sm font-bold font-display tracking-tight text-zinc-900 dark:text-white">COMPONENTRY</span>
+                        <span className="text-[16px] font-bold font-display tracking-tight text-zinc-900 dark:text-white">COMPONENTRY</span>
                     </Link>
-                    <nav className="hidden sm:flex items-center gap-4 text-sm font-medium ml-4">
-                        <Link href="/docs" className="text-foreground/60 transition-colors hover:text-foreground">
-                            Docs
-                        </Link>
-                        <Link href="/blocks" className="text-foreground/60 transition-colors hover:text-foreground">
-                            Blocks
-                        </Link>
-                        <Link href="/docs/mcp" className="text-foreground/60 transition-colors hover:text-foreground">
-                            MCP
-                        </Link>
-                        <Link
-                            href="/sponsors"
-                            className="text-foreground/60 transition-colors hover:text-foreground"
-                        >
-                            Sponsors
-                        </Link>
+                    <nav className="hidden items-center gap-0.5 text-sm font-medium sm:flex">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                aria-current={item.active ? "page" : undefined}
+                                className={cn(
+                                    "inline-flex h-8 items-center rounded-md px-1.5 transition-[background-color,color,opacity] duration-200 ease-out",
+                                    item.active
+                                        ? "bg-muted/60 text-foreground/85 dark:bg-muted/40 dark:text-foreground/85"
+                                        : "text-foreground/55 hover:bg-muted/45 hover:text-foreground/85 dark:hover:bg-muted/30"
+                                )}
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
                     </nav>
                 </div>
-                <div className="ml-auto flex items-center gap-2 sm:gap-4">
+                <div className="ml-auto flex items-center gap-1">
                     <Link
                         href="https://shadcnblocks.com/?utm_source=componentry&utm_medium=sponsor&utm_campaign=header_badge"
                         target="_blank"
                         data-umami-event="click-sponsor-shadcnblocks"
-                        className="hidden md:inline-flex items-center gap-2 border border-input/50 hover:border-input hover:bg-accent/50 pl-2 pr-3 h-9 rounded-md bg-muted/30 text-sm font-normal transition-colors"
+                        className="hidden h-8 items-center gap-1.5 rounded-md border border-input/50 bg-muted/30 pl-2 pr-2.5 text-sm font-normal transition-colors hover:border-input hover:bg-accent/50 md:inline-flex"
                     >
                         <span className="text-[10px] font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">Sponsor</span>
                         <span className="w-px h-4 bg-border/40" />
@@ -80,26 +152,26 @@ export function SiteHeader({ sidebarToggle, landingGutter }: SiteHeaderProps) {
                         />
                         <span className="text-foreground/80 hover:text-foreground">Shadcnblocks.com</span>
                     </Link>
+                    <div className="hidden h-4 w-px bg-foreground/15 dark:bg-foreground/20 md:block" />
                     <CommandMenu />
-                    <div className="flex items-center gap-1 sm:gap-2">
+                    <div className="hidden h-4 w-px bg-foreground/15 dark:bg-foreground/20 sm:block" />
+                    <div className="flex items-center gap-1">
                         <Link
                             href="https://github.com/harshjdhv/componentry"
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:bg-accent group"
+                            title={fullStars}
+                            className="group inline-flex h-8 items-center justify-center gap-1 rounded-md px-1.5 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-foreground dark:hover:bg-muted/50"
                         >
-                            <GitHubIcon className="h-4 w-4 opacity-70 group-hover:opacity-100 transition-opacity" />
+                            <GitHubIcon className="size-4 transition-opacity group-hover:opacity-100" />
+                            {formattedStars && (
+                                <span className="hidden tabular-nums leading-none sm:inline" style={{ textBox: "trim-end cap alphabetic" }}>
+                                    {formattedStars}
+                                </span>
+                            )}
                             <span className="sr-only">GitHub</span>
                         </Link>
-                        <Link
-                            href="https://x.com/harshjdhv"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:bg-accent group"
-                        >
-                            <XIcon className="h-4 w-4 opacity-70 group-hover:opacity-100 transition-opacity" />
-                            <span className="sr-only">X (Twitter)</span>
-                        </Link>
+                        <div className="hidden h-4 w-px bg-foreground/15 dark:bg-foreground/20 sm:block" />
                         <div className="hidden sm:block">
                             <ThemeToggle />
                         </div>

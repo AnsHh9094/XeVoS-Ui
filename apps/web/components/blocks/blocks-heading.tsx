@@ -4,36 +4,26 @@ import { cn } from "@/lib/utils"
 
 const geist = Geist({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "500", "600"],
   variable: "--font-blocks-geist",
   display: "swap",
 })
 
 export function BlocksHeading({
-  eyebrow = "Blocks",
   title,
-  description,
 }: {
-  eyebrow?: string
   title: string
-  description: string
 }) {
   return (
     <section
       className={cn(
         geist.variable,
-        "screen-line-bottom px-8 py-7 font-[family-name:var(--font-blocks-geist)] md:py-8"
+        "px-3 py-9 font-[family-name:var(--font-blocks-geist)] md:px-4 md:py-12"
       )}
     >
-      <p className="text-xs font-normal uppercase tracking-[0.18em] text-muted-foreground">
-        {eyebrow}
-      </p>
-      <h1 className="mt-3 max-w-3xl text-balance text-2xl font-normal tracking-normal md:text-3xl">
+      <h1 className="max-w-none text-balance text-[1.875rem] font-medium leading-[1.12] tracking-normal md:whitespace-nowrap md:text-[2.5rem] lg:text-[2.75rem]">
         {title}
       </h1>
-      <p className="mt-3 max-w-2xl text-pretty text-sm font-normal leading-6 text-muted-foreground">
-        {description}
-      </p>
     </section>
   )
 }

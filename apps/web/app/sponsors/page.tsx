@@ -20,7 +20,7 @@ const sponsorCardClass =
 export default function SponsorsPage() {
   return (
     <div
-      className="relative min-h-screen w-full overflow-x-hidden bg-white dark:bg-[#111] text-foreground transition-colors duration-300 selection:bg-zinc-200 dark:selection:bg-zinc-800"
+      className="relative min-h-screen w-full overflow-x-hidden bg-white dark:bg-[#09090B] text-foreground transition-colors duration-300 selection:bg-zinc-200 dark:selection:bg-zinc-800"
     >
       <LandingGuideLines />
       <SiteHeader landingGutter />

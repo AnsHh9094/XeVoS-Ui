@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer"
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen w-full bg-white dark:bg-[#111] text-zinc-900 dark:text-zinc-100 flex flex-col">
+    <div className="min-h-screen w-full bg-white dark:bg-[#09090B] text-zinc-900 dark:text-zinc-100 flex flex-col">
       <SiteHeader />
       
       <main className="flex-grow w-full max-w-3xl mx-auto px-6 py-32 md:py-40">

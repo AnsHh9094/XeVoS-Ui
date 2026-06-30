@@ -360,13 +360,20 @@ export function CommandMenu({ trigger }: { trigger?: React.ReactNode }) {
         <div onClick={() => setOpen(true)}>{trigger}</div>
       ) : (
         <button
+          data-slot="command-menu-trigger"
           onClick={() => setOpen(true)}
-          className="group inline-flex items-center xl:justify-start justify-center gap-2 whitespace-nowrap transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 border-0 xl:border xl:border-input/50 xl:hover:border-input hover:bg-accent/50 xl:px-3 xl:py-2 relative h-9 w-9 xl:w-36 rounded-md xl:rounded-lg bg-transparent xl:bg-muted/30 text-sm font-normal text-muted-foreground"
+          className="group/button inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-[min(var(--radius-lg),10px)] border-none px-1.5 text-sm font-medium whitespace-nowrap text-foreground/80 outline-none transition-all will-change-[scale] select-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.98] dark:hover:bg-muted/50"
+          aria-label="Open search"
         >
-          <Search className="h-[1.2rem] w-[1.2rem] xl:h-4 xl:w-4 opacity-70 group-hover:opacity-100 xl:opacity-50 xl:group-hover:opacity-70 transition-opacity" />
-          <span className="hidden xl:inline-flex">Search...</span>
-          <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-6 select-none items-center gap-0.5 rounded-md border bg-background/80 px-1.5 font-mono text-[10px] font-medium text-muted-foreground/70 sm:flex">
-            <span className="text-xs">⌘</span>K
+          <Search className="size-4" />
+          <span className="font-sans text-sm/4 font-medium sm:hidden">Search...</span>
+          <kbd data-slot="kbd-group" className="hidden items-center gap-1 sm:flex">
+            <kbd className="pointer-events-none inline-flex h-5 w-5 min-w-auto select-none items-center justify-center rounded-sm bg-black/5 px-1 font-sans text-sm/none font-normal tracking-tight text-foreground/70 shadow-[inset_0_0_1px] shadow-black/10 dark:bg-white/10 dark:shadow-white/20">
+              ⌘
+            </kbd>
+            <kbd className="pointer-events-none inline-flex h-5 w-5 min-w-auto select-none items-center justify-center rounded-sm bg-black/5 px-1 font-sans text-sm/none font-normal tracking-tight text-foreground/70 shadow-[inset_0_0_1px] shadow-black/10 dark:bg-white/10 dark:shadow-white/20">
+              K
+            </kbd>
           </kbd>
         </button>
       )}

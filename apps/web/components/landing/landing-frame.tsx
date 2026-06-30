@@ -16,10 +16,10 @@ const shaderBandStyle: React.CSSProperties = {
 export function LandingGuideLines() {
   return (
     <>
-      <div className="pointer-events-none fixed inset-y-0 left-4 z-[1] w-px bg-zinc-200/60 md:left-20 dark:bg-zinc-800/60" />
-      <div className="pointer-events-none fixed inset-y-0 right-4 z-[1] w-px bg-zinc-200/60 md:right-20 dark:bg-zinc-800/60" />
-      <div className="pointer-events-none fixed left-4 top-0 z-[1] h-6 w-px bg-zinc-300 md:left-20 dark:bg-zinc-600" />
-      <div className="pointer-events-none fixed right-4 top-0 z-[1] h-6 w-px bg-zinc-300 md:right-20 dark:bg-zinc-600" />
+      <div className="pointer-events-none fixed inset-y-0 left-4 z-[60] w-px bg-line md:left-20" />
+      <div className="pointer-events-none fixed inset-y-0 right-4 z-[60] w-px bg-line md:right-20" />
+      <div className="pointer-events-none fixed left-4 top-14 z-[61] size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-[2px] border border-line bg-white md:left-20 dark:bg-[#09090B]" />
+      <div className="pointer-events-none fixed right-4 top-14 z-[61] size-2.5 translate-x-1/2 -translate-y-1/2 rounded-[2px] border border-line bg-white md:right-20 dark:bg-[#09090B]" />
     </>
   )
 }

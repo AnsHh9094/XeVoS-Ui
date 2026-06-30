@@ -21,24 +21,11 @@ export default function BlocksPage() {
     <>
       <BlocksNav />
 
-      <div>
-        <div className="stripe-divider" />
-      </div>
-
       {blocks.map((block) => (
         <Fragment key={block.name}>
           <BlockDisplay item={block} />
-          <BlockSeparator />
         </Fragment>
       ))}
     </>
-  )
-}
-
-function BlockSeparator() {
-  return (
-    <div>
-      <div className="stripe-divider" />
-    </div>
   )
 }
