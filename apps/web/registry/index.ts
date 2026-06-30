@@ -22,6 +22,13 @@ export function isNewComponent(component: ComponentMetadata): boolean {
 }
 
 export const components: Record<string, ComponentMetadata> = {
+  "music-player": {
+    title: "Music Player",
+    description: "A fun interactive vinyl record music player with swinging tonearm.",
+    category: "Components",
+    slug: "music-player",
+    addedAt: "2026-04-03",
+  },
   "scroll-split-card": {
     title: "Scroll Split Card",
     description: "A scroll-driven interactive card that splits into three panels and flips.",
