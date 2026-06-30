@@ -12,7 +12,7 @@ export function ScrollSplitCardPreview() {
         containerRef={containerRef}
         className="h-[250vh]" // Giving enough height to scroll
 
-        imageSrc="https://images.unsplash.com/photo-1590859209179-b35f61a7b60f?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        imageSrc="https://framerusercontent.com/images/RCwmbu2vbsKf5a5D7OchNhir3Y.png?scale-down-to=1024&width=3072&height=2048"
         cards={[
           {
             title: "Going Zero to One",
