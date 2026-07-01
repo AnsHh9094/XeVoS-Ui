@@ -22,6 +22,13 @@ export function isNewComponent(component: ComponentMetadata): boolean {
 }
 
 export const components: Record<string, ComponentMetadata> = {
+  "sticky-scroll-cards": {
+    title: "Sticky Scroll Cards",
+    description: "A scroll-driven card stack where images pin and scale as you scroll, creating a layered depth effect.",
+    category: "Components",
+    slug: "sticky-scroll-cards",
+    addedAt: "2026-04-10",
+  },
   "music-player": {
     title: "Music Player",
     description: "A fun interactive vinyl record music player with swinging tonearm.",
