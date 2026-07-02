@@ -254,7 +254,6 @@ The `@source` directives scan the *entire* monorepo, generating utility classes 
 
 ```tsx
 // Root layout:
-<Script src="https://cdn.databuddy.cc/databuddy.js" strategy="afterInteractive" />
 <Analytics />       // @vercel/analytics
 <SpeedInsights />   // @vercel/speed-insights
 ```
