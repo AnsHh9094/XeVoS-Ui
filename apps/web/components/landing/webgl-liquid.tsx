@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface WebGLLiquidProps {
   className?: string
@@ -101,16 +101,21 @@ void main() {
 
 export function WebGLLiquid({ className, delayMs = 2400 }: WebGLLiquidProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const [hasWebGLError, setHasWebGLError] = useState(false)
 
   useEffect(() => {
+    if (hasWebGLError) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const gl = canvas.getContext("webgl", { antialias: true, alpha: true })
-    if (!gl) {
-      console.warn("[WebGLLiquid] WebGL context not available")
-      return
-    }
+    try {
+      const gl = canvas.getContext("webgl", { antialias: true, alpha: true })
+      if (!gl) {
+        console.warn("[WebGLLiquid] WebGL context not available")
+        setHasWebGLError(true)
+        return
+      }
 
     const compile = (type: number, source: string) => {
       const shader = gl.createShader(type)
@@ -128,78 +133,92 @@ export function WebGLLiquid({ className, delayMs = 2400 }: WebGLLiquidProps) {
       return shader
     }
 
-    const vs = compile(gl.VERTEX_SHADER, VERTEX_SHADER)
-    const fs = compile(gl.FRAGMENT_SHADER, FRAGMENT_SHADER)
-    if (!vs || !fs) return
+      const vs = compile(gl.VERTEX_SHADER, VERTEX_SHADER)
+      const fs = compile(gl.FRAGMENT_SHADER, FRAGMENT_SHADER)
+      if (!vs || !fs) {
+        setHasWebGLError(true)
+        return
+      }
 
-    const program = gl.createProgram()
-    if (!program) {
-      console.warn("[WebGLLiquid] Program creation failed")
-      return
-    }
-    gl.attachShader(program, vs)
-    gl.attachShader(program, fs)
-    gl.linkProgram(program)
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.warn(
-        "[WebGLLiquid] Program link failed:",
-        gl.getProgramInfoLog(program)
+      const program = gl.createProgram()
+      if (!program) {
+        console.warn("[WebGLLiquid] Program creation failed")
+        setHasWebGLError(true)
+        return
+      }
+      gl.attachShader(program, vs)
+      gl.attachShader(program, fs)
+      gl.linkProgram(program)
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.warn(
+          "[WebGLLiquid] Program link failed:",
+          gl.getProgramInfoLog(program)
+        )
+        setHasWebGLError(true)
+        return
+      }
+
+      gl.useProgram(program)
+
+      const position = gl.getAttribLocation(program, "position")
+      const buffer = gl.createBuffer()
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+        gl.STATIC_DRAW
       )
-      return
-    }
+      gl.enableVertexAttribArray(position)
+      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
 
-    gl.useProgram(program)
+      const uRes = gl.getUniformLocation(program, "u_res")
+      const uTime = gl.getUniformLocation(program, "u_time")
+      if (!uRes || !uTime) {
+        console.warn("[WebGLLiquid] Uniforms not found")
+        setHasWebGLError(true)
+        return
+      }
 
-    const position = gl.getAttribLocation(program, "position")
-    const buffer = gl.createBuffer()
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-      gl.STATIC_DRAW
-    )
-    gl.enableVertexAttribArray(position)
-    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
+      const resize = () => {
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
+        const { width, height } = canvas.getBoundingClientRect()
+        canvas.width = Math.max(1, Math.floor(width * dpr))
+        canvas.height = Math.max(1, Math.floor(height * dpr))
+        gl.viewport(0, 0, canvas.width, canvas.height)
+        gl.uniform2f(uRes, canvas.width, canvas.height)
+      }
 
-    const uRes = gl.getUniformLocation(program, "u_res")
-    const uTime = gl.getUniformLocation(program, "u_time")
-    if (!uRes || !uTime) {
-      console.warn("[WebGLLiquid] Uniforms not found")
-      return
-    }
+      resize()
+      const onResize = () => resize()
+      window.addEventListener("resize", onResize)
 
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
-      const { width, height } = canvas.getBoundingClientRect()
-      canvas.width = Math.max(1, Math.floor(width * dpr))
-      canvas.height = Math.max(1, Math.floor(height * dpr))
-      gl.viewport(0, 0, canvas.width, canvas.height)
-      gl.uniform2f(uRes, canvas.width, canvas.height)
-    }
+      let raf = 0
+      const start = performance.now()
 
-    resize()
-    const onResize = () => resize()
-    window.addEventListener("resize", onResize)
+      const render = (now: number) => {
+        const t = Math.max(0, (now - start - delayMs) / 1000)
+        gl.clearColor(0, 0, 0, 0)
+        gl.clear(gl.COLOR_BUFFER_BIT)
+        gl.uniform1f(uTime, t)
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+        raf = requestAnimationFrame(render)
+      }
 
-    let raf = 0
-    const start = performance.now()
-
-    const render = (now: number) => {
-      const t = Math.max(0, (now - start - delayMs) / 1000)
-      gl.clearColor(0, 0, 0, 0)
-      gl.clear(gl.COLOR_BUFFER_BIT)
-      gl.uniform1f(uTime, t)
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
       raf = requestAnimationFrame(render)
-    }
 
-    raf = requestAnimationFrame(render)
-
-    return () => {
-      window.removeEventListener("resize", onResize)
-      cancelAnimationFrame(raf)
+      return () => {
+        window.removeEventListener("resize", onResize)
+        cancelAnimationFrame(raf)
+      }
+    } catch {
+      setHasWebGLError(true)
+      return
     }
-  }, [delayMs])
+  }, [delayMs, hasWebGLError])
+
+  if (hasWebGLError) {
+    return <div className={className} style={{ width: "100%", height: "100%" }} aria-hidden="true" />
+  }
 
   return (
     <canvas

@@ -7,6 +7,8 @@ const REGISTRY_ITEM_SCHEMA = 'https://ui.shadcn.com/schema/registry-item.json';
 const COMPONENT_DIR = path.join(__dirname, '../packages/ui/src/components');
 const REGISTRY_DIR = path.join(__dirname, '../apps/web/public/r');
 const REGISTRY_INDEX_PATH = path.join(REGISTRY_DIR, 'registry.json');
+const WEBGL_ERROR_BOUNDARY_FILENAME = 'webgl-error-boundary.tsx';
+const WEBGL_ERROR_BOUNDARY_SOURCE_PATH = path.join(COMPONENT_DIR, WEBGL_ERROR_BOUNDARY_FILENAME);
 
 const args = process.argv.slice(2);
 
@@ -38,7 +40,12 @@ function toTitleCase(slug) {
 }
 
 function normalizeRegistryContent(content) {
-  return content.replace(/@workspace\/ui\/lib\/utils/g, '@/lib/utils');
+  return content
+    .replace(/@workspace\/ui\/lib\/utils/g, '@/lib/utils')
+    .replace(
+      /@workspace\/ui\/components\/webgl-error-boundary/g,
+      './webgl-error-boundary'
+    );
 }
 
 // Prepare registry data
@@ -104,6 +111,28 @@ if (existingFileIndex >= 0) {
     content: normalizeRegistryContent(sourceContent),
     type: 'registry:ui'
   });
+}
+
+// Include shared helper file when the component uses the WebGL error boundary.
+const usesWebGLErrorBoundary = sourceContent.includes('webgl-error-boundary');
+if (usesWebGLErrorBoundary && fs.existsSync(WEBGL_ERROR_BOUNDARY_SOURCE_PATH)) {
+  const boundaryContent = normalizeRegistryContent(
+    fs.readFileSync(WEBGL_ERROR_BOUNDARY_SOURCE_PATH, 'utf8')
+  );
+  const boundaryTargetPath = `components/ui/${WEBGL_ERROR_BOUNDARY_FILENAME}`;
+  const boundaryIndex = registryData.files.findIndex(
+    (f) => f.path === boundaryTargetPath || f.path.endsWith(WEBGL_ERROR_BOUNDARY_FILENAME)
+  );
+
+  if (boundaryIndex >= 0) {
+    registryData.files[boundaryIndex].content = boundaryContent;
+  } else {
+    registryData.files.push({
+      path: boundaryTargetPath,
+      content: boundaryContent,
+      type: 'registry:ui'
+    });
+  }
 }
 
 // Write back to registry file

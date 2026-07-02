@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@workspace/ui/lib/utils";
+import { WebGLErrorBoundary, WebGLFallback } from "@workspace/ui/components/webgl-error-boundary";
 
 const VERTEX_SHADER = `
 attribute vec2 position;
@@ -161,6 +162,7 @@ export function WebGLLiquid({
 }: WebGLLiquidProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const hostRef = useRef<HTMLDivElement | null>(null);
+  const [hasWebGLError, setHasWebGLError] = useState(false);
 
   const settings = useMemo(
     () => ({
@@ -192,158 +194,171 @@ export function WebGLLiquid({
   );
 
   useEffect(() => {
+    if (hasWebGLError) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     const host = hostRef.current;
     if (!canvas || !host) {
       return;
     }
 
-    const gl = canvas.getContext("webgl", { antialias: true, alpha: true });
-    if (!gl) {
-      return;
-    }
-
-    const compileShader = (type: number, source: string) => {
-      const shader = gl.createShader(type);
-      if (!shader) {
-        return null;
+    try {
+      const gl = canvas.getContext("webgl", { antialias: true, alpha: true });
+      if (!gl) {
+        setHasWebGLError(true);
+        return;
       }
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        gl.deleteShader(shader);
-        return null;
+
+      const compileShader = (type: number, source: string) => {
+        const shader = gl.createShader(type);
+        if (!shader) {
+          return null;
+        }
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      };
+
+      const vertexShader = compileShader(gl.VERTEX_SHADER, VERTEX_SHADER);
+      const fragmentShader = compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
+      if (!vertexShader || !fragmentShader) {
+        setHasWebGLError(true);
+        return;
       }
-      return shader;
-    };
 
-    const vertexShader = compileShader(gl.VERTEX_SHADER, VERTEX_SHADER);
-    const fragmentShader = compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
-    if (!vertexShader || !fragmentShader) {
-      return;
-    }
+      const program = gl.createProgram();
+      if (!program) {
+        gl.deleteShader(vertexShader);
+        gl.deleteShader(fragmentShader);
+        setHasWebGLError(true);
+        return;
+      }
 
-    const program = gl.createProgram();
-    if (!program) {
-      gl.deleteShader(vertexShader);
-      gl.deleteShader(fragmentShader);
-      return;
-    }
+      gl.attachShader(program, vertexShader);
+      gl.attachShader(program, fragmentShader);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        gl.deleteProgram(program);
+        gl.deleteShader(vertexShader);
+        gl.deleteShader(fragmentShader);
+        setHasWebGLError(true);
+        return;
+      }
 
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      gl.deleteProgram(program);
-      gl.deleteShader(vertexShader);
-      gl.deleteShader(fragmentShader);
-      return;
-    }
+      gl.useProgram(program);
 
-    gl.useProgram(program);
+      const positionLocation = gl.getAttribLocation(program, "position");
+      const quadBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, quadBuffer);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+        gl.STATIC_DRAW,
+      );
+      gl.enableVertexAttribArray(positionLocation);
+      gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
-    const positionLocation = gl.getAttribLocation(program, "position");
-    const quadBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, quadBuffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-      gl.STATIC_DRAW,
-    );
-    gl.enableVertexAttribArray(positionLocation);
-    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+      const uRes = gl.getUniformLocation(program, "u_res");
+      const uTime = gl.getUniformLocation(program, "u_time");
+      const uColorDeep = gl.getUniformLocation(program, "u_colorDeep");
+      const uColorMid = gl.getUniformLocation(program, "u_colorMid");
+      const uColorHighlight = gl.getUniformLocation(program, "u_colorHighlight");
+      const uSpeed = gl.getUniformLocation(program, "u_speed");
+      const uFlowStrength = gl.getUniformLocation(program, "u_flowStrength");
+      const uGrain = gl.getUniformLocation(program, "u_grain");
+      const uContrast = gl.getUniformLocation(program, "u_contrast");
+      const uOpacity = gl.getUniformLocation(program, "u_opacity");
+      const uReveal = gl.getUniformLocation(program, "u_reveal");
 
-    const uRes = gl.getUniformLocation(program, "u_res");
-    const uTime = gl.getUniformLocation(program, "u_time");
-    const uColorDeep = gl.getUniformLocation(program, "u_colorDeep");
-    const uColorMid = gl.getUniformLocation(program, "u_colorMid");
-    const uColorHighlight = gl.getUniformLocation(program, "u_colorHighlight");
-    const uSpeed = gl.getUniformLocation(program, "u_speed");
-    const uFlowStrength = gl.getUniformLocation(program, "u_flowStrength");
-    const uGrain = gl.getUniformLocation(program, "u_grain");
-    const uContrast = gl.getUniformLocation(program, "u_contrast");
-    const uOpacity = gl.getUniformLocation(program, "u_opacity");
-    const uReveal = gl.getUniformLocation(program, "u_reveal");
+      if (
+        !uRes ||
+        !uTime ||
+        !uColorDeep ||
+        !uColorMid ||
+        !uColorHighlight ||
+        !uSpeed ||
+        !uFlowStrength ||
+        !uGrain ||
+        !uContrast ||
+        !uOpacity ||
+        !uReveal
+      ) {
+        gl.deleteBuffer(quadBuffer);
+        gl.deleteProgram(program);
+        gl.deleteShader(vertexShader);
+        gl.deleteShader(fragmentShader);
+        setHasWebGLError(true);
+        return;
+      }
 
-    if (
-      !uRes ||
-      !uTime ||
-      !uColorDeep ||
-      !uColorMid ||
-      !uColorHighlight ||
-      !uSpeed ||
-      !uFlowStrength ||
-      !uGrain ||
-      !uContrast ||
-      !uOpacity ||
-      !uReveal
-    ) {
-      gl.deleteBuffer(quadBuffer);
-      gl.deleteProgram(program);
-      gl.deleteShader(vertexShader);
-      gl.deleteShader(fragmentShader);
-      return;
-    }
+      const resize = () => {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const { width, height } = host.getBoundingClientRect();
+        canvas.width = Math.max(1, Math.floor(width * dpr));
+        canvas.height = Math.max(1, Math.floor(height * dpr));
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+      };
 
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const { width, height } = host.getBoundingClientRect();
-      canvas.width = Math.max(1, Math.floor(width * dpr));
-      canvas.height = Math.max(1, Math.floor(height * dpr));
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-    };
+      resize();
+      const resizeObserver = new ResizeObserver(resize);
+      resizeObserver.observe(host);
 
-    resize();
-    const resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(host);
+      let rafId = 0;
+      const start = performance.now();
 
-    let rafId = 0;
-    const start = performance.now();
+      const render = (now: number) => {
+        const elapsedSec = Math.max(0, (now - start - settings.delayMs) / 1000);
+        const revealProgress = settings.reveal
+          ? Math.min(1, elapsedSec / Math.max(settings.revealDuration, 0.05))
+          : 1;
 
-    const render = (now: number) => {
-      const elapsedSec = Math.max(0, (now - start - settings.delayMs) / 1000);
-      const revealProgress = settings.reveal
-        ? Math.min(1, elapsedSec / Math.max(settings.revealDuration, 0.05))
-        : 1;
+        const deep = hexToRgb01(settings.colorDeep);
+        const mid = hexToRgb01(settings.colorMid);
+        const highlight = hexToRgb01(settings.colorHighlight);
 
-      const deep = hexToRgb01(settings.colorDeep);
-      const mid = hexToRgb01(settings.colorMid);
-      const highlight = hexToRgb01(settings.colorHighlight);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
 
-      gl.clearColor(0, 0, 0, 0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.uniform1f(uTime, elapsedSec);
+        gl.uniform3f(uColorDeep, deep[0], deep[1], deep[2]);
+        gl.uniform3f(uColorMid, mid[0], mid[1], mid[2]);
+        gl.uniform3f(uColorHighlight, highlight[0], highlight[1], highlight[2]);
+        gl.uniform1f(uSpeed, settings.speed);
+        gl.uniform1f(uFlowStrength, settings.flowStrength);
+        gl.uniform1f(uGrain, settings.grain);
+        gl.uniform1f(uContrast, settings.contrast);
+        gl.uniform1f(uOpacity, settings.opacity);
+        gl.uniform1f(uReveal, revealProgress);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-      gl.uniform1f(uTime, elapsedSec);
-      gl.uniform3f(uColorDeep, deep[0], deep[1], deep[2]);
-      gl.uniform3f(uColorMid, mid[0], mid[1], mid[2]);
-      gl.uniform3f(uColorHighlight, highlight[0], highlight[1], highlight[2]);
-      gl.uniform1f(uSpeed, settings.speed);
-      gl.uniform1f(uFlowStrength, settings.flowStrength);
-      gl.uniform1f(uGrain, settings.grain);
-      gl.uniform1f(uContrast, settings.contrast);
-      gl.uniform1f(uOpacity, settings.opacity);
-      gl.uniform1f(uReveal, revealProgress);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        rafId = requestAnimationFrame(render);
+      };
 
       rafId = requestAnimationFrame(render);
-    };
 
-    rafId = requestAnimationFrame(render);
+      return () => {
+        cancelAnimationFrame(rafId);
+        resizeObserver.disconnect();
+        gl.deleteBuffer(quadBuffer);
+        gl.deleteProgram(program);
+        gl.deleteShader(vertexShader);
+        gl.deleteShader(fragmentShader);
+      };
+    } catch {
+      setHasWebGLError(true);
+      return;
+    }
+  }, [hasWebGLError, settings]);
 
-    return () => {
-      cancelAnimationFrame(rafId);
-      resizeObserver.disconnect();
-      gl.deleteBuffer(quadBuffer);
-      gl.deleteProgram(program);
-      gl.deleteShader(vertexShader);
-      gl.deleteShader(fragmentShader);
-    };
-  }, [settings]);
-
-  return (
+  const fallbackContent = (
     <div
-      ref={hostRef}
       className={cn(
         "relative flex min-h-screen w-full items-center overflow-hidden bg-[#02040b] text-white",
         className,
@@ -351,16 +366,7 @@ export function WebGLLiquid({
       style={{ containerType: "size", ...style }}
       {...props}
     >
-      <canvas
-        ref={canvasRef}
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        style={{ width: "100%", height: "100%", display: "block" }}
-      />
-
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/35 via-black/15 to-transparent" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_65%_40%,rgba(255,255,255,0.16),transparent_45%)]" />
-
+      <WebGLFallback className="absolute inset-0 h-full w-full" />
       {(title || subtitle || description || children) && (
         <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 py-20 md:px-10 md:py-28">
           <div className="max-w-[760px]">
@@ -380,6 +386,53 @@ export function WebGLLiquid({
         </div>
       )}
     </div>
+  );
+
+  if (hasWebGLError) {
+    return fallbackContent;
+  }
+
+  return (
+    <WebGLErrorBoundary fallback={fallbackContent}>
+      <div
+        ref={hostRef}
+        className={cn(
+          "relative flex min-h-screen w-full items-center overflow-hidden bg-[#02040b] text-white",
+          className,
+        )}
+        style={{ containerType: "size", ...style }}
+        {...props}
+      >
+        <canvas
+          ref={canvasRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          style={{ width: "100%", height: "100%", display: "block" }}
+        />
+
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/35 via-black/15 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_65%_40%,rgba(255,255,255,0.16),transparent_45%)]" />
+
+        {(title || subtitle || description || children) && (
+          <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 py-20 md:px-10 md:py-28">
+            <div className="max-w-[760px]">
+              {title && <h1 className={LIQUID_HEADLINE_CLASS}>{title}</h1>}
+              {subtitle && (
+                <h2 className="mt-2 text-[11cqi] md:text-[7cqi] lg:text-[5.5cqi] leading-[0.9] tracking-[-0.03em] font-bold text-white/95">
+                  {subtitle}
+                </h2>
+              )}
+              {description && (
+                <p className="mt-6 max-w-[620px] text-base leading-relaxed text-white/75 md:text-xl">
+                  {description}
+                </p>
+              )}
+              {children && <div className="mt-10">{children}</div>}
+            </div>
+          </div>
+        )}
+      </div>
+    </WebGLErrorBoundary>
   );
 }
 
