@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Componentry",
-  url: "https://componentry.fun",
+  url: "https://componentry.dev",
   title: "Componentry — Animated React UI Components for Modern Apps",
   description:
     "Beautiful, animated, copy-paste React UI components built with Tailwind CSS, TypeScript, and Framer Motion. Free and open-source.",

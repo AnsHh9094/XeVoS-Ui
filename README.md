@@ -13,8 +13,8 @@
 </p>
 
 <p align="center">
-  <a href="https://componentry.fun">Documentation</a> ·
-  <a href="https://componentry.fun/docs/components">Components</a> ·
+  <a href="https://componentry.dev">Documentation</a> ·
+  <a href="https://componentry.dev/docs/components">Components</a> ·
   <a href="https://github.com/harshjdhv/componentry/issues">Report Bug</a> ·
   <a href="https://github.com/harshjdhv/componentry/issues">Request Feature</a>
 </p>

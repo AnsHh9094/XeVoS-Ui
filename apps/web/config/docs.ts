@@ -60,7 +60,7 @@ const getComponentNav = (): NavGroup[] => {
 };
 
 const getLlmsText = () => {
-  const baseUrl = "https://componentry.fun";
+  const baseUrl = "https://componentry.dev";
   let text = `# Componentry
 
 > Componentry is a collection of beautifully-designed, accessible components and visual effects. It is built with TypeScript, Tailwind CSS, and Framer Motion. Open Source. Copy and paste into your apps.

@@ -77,7 +77,7 @@ export function buildDocsPageMarkdown(props: DocsPageMarkdownInput): string {
 
   lines.push("---")
   lines.push("")
-  lines.push(`_Component from [Componentry](https://componentry.fun/docs/components/${props.installPackageName})_`)
+  lines.push(`_Component from [Componentry](https://componentry.dev/docs/components/${props.installPackageName})_`)
 
   return lines.join("\n")
 }
