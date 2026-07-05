@@ -18,6 +18,12 @@ import { AnimatedGradient } from "@workspace/ui/components/animated-gradient"
 import { DitherGradient } from "@workspace/ui/components/dither-gradient"
 import { MagneticDock, DockIconHome, DockIconSearch, DockIconMail, DockIconSettings, DockIconFolder } from "@workspace/ui/components/magnetic-dock"
 
+const showcaseCardClass =
+  "relative flex flex-col rounded-2xl border border-border bg-white dark:bg-[#1a1a1a] p-2 shadow-card transition-all duration-300 hover:border-input hover:shadow-card-hover"
+
+const showcasePreviewClass =
+  "relative flex-1 w-full overflow-hidden rounded-xl border border-dashed border-border bg-zinc-50 dark:bg-[#111] shadow-surface-inset transition-colors"
+
 export default function Home() {
   return (
     <div
@@ -36,7 +42,7 @@ export default function Home() {
           transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="mb-8"
         >
-          <div className="group inline-flex cursor-pointer items-center rounded-full border border-zinc-200/60 bg-white/40 dark:border-zinc-800/60 dark:bg-zinc-900/30 px-3 py-1.5 text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-300 backdrop-blur-xl shadow-sm transition-colors hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50">
+          <div className="group inline-flex cursor-pointer items-center rounded-full border border-border bg-white/40 dark:bg-zinc-900/30 px-3 py-1.5 text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-300 backdrop-blur-xl shadow-panel transition-colors hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50">
             <span className="flex size-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)] mr-2.5 animate-pulse" />
             100% free and open source
             <svg className="ml-2 size-3.5 opacity-60 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -53,7 +59,7 @@ export default function Home() {
             transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-100 leading-[1.05]"
           >
-            <span className="dark:bg-gradient-to-b dark:from-white/80 dark:via-white dark:to-white/60 dark:bg-clip-text dark:text-transparent inline-block">
+            <span className="inline-block dark:bg-gradient-to-b dark:from-white/80 dark:via-white dark:to-white/60 dark:bg-clip-text dark:text-transparent">
               Animated components
             </span>
             <br className="hidden sm:block" />
@@ -88,8 +94,8 @@ export default function Home() {
           className="mt-20 w-full max-w-[1240px] mx-auto grid grid-cols-1 md:grid-cols-4 md:grid-rows-3 gap-3 md:gap-4 auto-rows-[300px] mb-20 px-4"
         >
           {/* Card 1: 1x1 Dark */}
-          <div className="md:col-span-1 md:row-span-1 relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/80 bg-white dark:bg-[#1a1a1a] shadow-sm p-2">
-            <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden flex flex-col items-center justify-center p-6 pb-0 pt-0">
+          <div className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
+            <div className={`${showcasePreviewClass} flex flex-col items-center justify-center p-6 pb-0 pt-0`}>
                <div className="absolute inset-0 opacity-60 mix-blend-multiply dark:mix-blend-screen scale-150">
                  <MatrixRain speed={30} fontSize={10} variant="cyan" />
                </div>
@@ -101,8 +107,8 @@ export default function Home() {
           </div>
 
           {/* Card 2: 2x1 Dark */}
-          <div className="md:col-span-2 md:row-span-1 relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/80 bg-white dark:bg-[#1a1a1a] shadow-sm p-2">
-            <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden flex flex-col items-center justify-center pt-8">
+          <div className={`md:col-span-2 md:row-span-1 ${showcaseCardClass}`}>
+            <div className={`${showcasePreviewClass} flex flex-col items-center justify-center pt-8`}>
                 <div className="w-full flex h-24 overflow-hidden relative" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
                    <ScrollBasedVelocity text="COMPONENTRY" default_velocity={3} className="font-sans font-black text-6xl md:text-8xl tracking-tighter text-zinc-800 dark:text-white" />
                 </div>
@@ -113,8 +119,8 @@ export default function Home() {
           </div>
 
           {/* Card 3: 1x2 White */}
-          <div className="md:col-span-1 md:row-span-2 relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/80 bg-white dark:bg-[#1a1a1a] shadow-sm p-2">
-            <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden">
+          <div className={`md:col-span-1 md:row-span-2 ${showcaseCardClass}`}>
+            <div className={showcasePreviewClass}>
               <InfiniteIconField />
             </div>
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
@@ -123,8 +129,8 @@ export default function Home() {
           </div>
 
           {/* Card 4: 2x1 White */}
-          <div className="md:col-span-2 md:row-span-1 relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/80 bg-white dark:bg-[#1a1a1a] shadow-sm p-2">
-            <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden flex flex-col items-center justify-center p-0">
+          <div className={`md:col-span-2 md:row-span-1 ${showcaseCardClass}`}>
+            <div className={`${showcasePreviewClass} flex flex-col items-center justify-center p-0`}>
                  <MagnetLines 
                     rows={5} 
                     columns={22} 
@@ -142,8 +148,8 @@ export default function Home() {
           </div>
 
           {/* Card 5: 1x1 Dark */}
-          <div className="md:col-span-1 md:row-span-1 relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/80 bg-white dark:bg-[#1a1a1a] shadow-sm p-2">
-            <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden flex flex-col items-center justify-center p-0">
+          <div className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
+            <div className={`${showcasePreviewClass} flex flex-col items-center justify-center p-0`}>
                 <div className="relative w-full h-full rounded-xl overflow-hidden">
                    <AnimatedGradient config={{ preset: "Aurora" }} />
                 </div>
@@ -154,8 +160,8 @@ export default function Home() {
           </div>
 
           {/* Card 6: 1x1 Dither Gradient */}
-          <div className="md:col-span-1 md:row-span-1 relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/80 bg-white dark:bg-[#1a1a1a] shadow-sm p-2">
-            <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden flex flex-col items-center justify-center">
+          <div className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
+            <div className={`${showcasePreviewClass} flex flex-col items-center justify-center`}>
               <div className="absolute inset-0 z-0 opacity-100 rounded-xl overflow-hidden">
                  <DitherGradient colorFrom="#ffaa40" colorTo="#9c40ff" colorMid="#ff00cc" intensity={0.5} speed={2} />
               </div>
@@ -166,8 +172,8 @@ export default function Home() {
           </div>
 
           {/* Card 7: 3x1 Magnetic Dock */}
-          <div className="md:col-span-3 md:row-span-1 relative flex flex-col rounded-2xl border border-zinc-200/60 dark:border-zinc-800/80 bg-white dark:bg-[#1a1a1a] shadow-sm p-2">
-            <div className="relative flex-1 w-full rounded-xl bg-zinc-50 dark:bg-[#111] border border-dashed border-zinc-200/50 dark:border-zinc-800/80 overflow-hidden flex flex-col items-center justify-center p-10 text-black">
+          <div className={`md:col-span-3 md:row-span-1 ${showcaseCardClass}`}>
+            <div className={`${showcasePreviewClass} flex flex-col items-center justify-center p-10 text-black`}>
               <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px] opacity-70 dark:opacity-60" />
               
               <div className="z-10 w-full flex justify-center items-center relative translate-y-2">

@@ -172,10 +172,13 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body
-        className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} ${fontDisplay.variable} font-sans antialiased`}
+        className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} ${fontDisplay.variable} relative font-sans antialiased`}
+        style={{ "--font-heading": "var(--font-display)" } as React.CSSProperties}
       >
-        <RouteScrollbarController />
-        <Providers>{children}</Providers>
+        <div className="isolate relative flex min-h-svh flex-col">
+          <RouteScrollbarController />
+          <Providers>{children}</Providers>
+        </div>
         <SpeedInsights />
       </body>
     </html>
