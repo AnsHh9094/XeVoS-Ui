@@ -1,7 +1,9 @@
 export function BlocksStripeDivider() {
   return (
-    <div className="screen-line-top screen-line-bottom">
-      <div className="stripe-divider" />
+    <div className="mx-auto w-full max-w-[1360px] border-x border-line">
+      <div className="relative h-12 overflow-hidden border-t border-line bg-muted/25 dark:bg-[#070707]">
+        <div className="diagonal-stripes absolute inset-x-0 top-px bottom-0 [--pattern-foreground:var(--color-line)]/70" />
+      </div>
     </div>
   );
 }

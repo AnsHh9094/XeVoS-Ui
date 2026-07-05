@@ -1,52 +1,52 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { ArrowLeft } from "lucide-react"
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
-import { BlockDisplay } from "@/components/blocks/block-display"
+import { BlockDisplay } from "@/components/blocks/block-display";
+import { BlocksStripeDivider } from "@/components/blocks/blocks-list-decor";
 import {
   getAllBlockStaticParams,
   getAllBlocks,
   getBlockCategoryHref,
-} from "@/lib/blocks/registry"
-import type { BlockRegistryItem } from "@/lib/blocks/types"
-import categories from "@/registry/generated/block-categories.json"
+} from "@/lib/blocks/registry";
+import categories from "@/registry/generated/block-categories.json";
 
-export const dynamic = "force-static"
-export const dynamicParams = false
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllBlockStaticParams()
+  return getAllBlockStaticParams();
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ name: string }>
+  params: Promise<{ name: string }>;
 }): Promise<Metadata> {
-  const { name } = await params
-  const item = getAllBlocks().find((block) => block.name === name)
+  const { name } = await params;
+  const item = getAllBlocks().find((block) => block.name === name);
 
-  if (!item) return {}
+  if (!item) return {};
 
   return {
     title: `${item.title} Block | Componentry`,
     description: item.description,
-  }
+  };
 }
 
 export default async function BlockDetailPage({
   params,
 }: {
-  params: Promise<{ category: string; name: string }>
+  params: Promise<{ category: string; name: string }>;
 }) {
-  const { category, name } = await params
+  const { category, name } = await params;
   const block = getAllBlocks().find(
-    (item) => item.name === name && item.categories.includes(category)
-  ) as BlockRegistryItem | undefined
-  const categoryItem = categories.find((item) => item.name === category)
+    (item) => item.name === name && item.categories.includes(category),
+  );
+  const categoryItem = categories.find((item) => item.name === category);
 
-  if (!block || !categoryItem) notFound()
+  if (!block || !categoryItem) notFound();
 
   return (
     <>
@@ -67,10 +67,8 @@ export default async function BlockDetailPage({
           </Link>
         </div>
       </section>
-      <BlockDisplay item={block} />
-      <div>
-        <div className="stripe-divider" />
-      </div>
+      <BlockDisplay name={block.name} />
+      <BlocksStripeDivider />
     </>
-  )
+  );
 }

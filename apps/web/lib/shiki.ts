@@ -10,7 +10,7 @@ let highlighterPromise: Promise<Highlighter> | null = null;
 
 // Pre-load only the languages we actually use
 const LANGS: BundledLanguage[] = ["tsx", "typescript", "bash", "json"];
-const THEMES: BundledTheme[] = ["github-light", "github-dark"];
+const THEMES: BundledTheme[] = ["github-light", "github-dark", "dark-plus"];
 
 /**
  * Get or create a cached Shiki highlighter instance.
@@ -41,8 +41,14 @@ const htmlCache = new Map<string, string>();
 export async function highlightCode(
   code: string,
   lang: BundledLanguage = "tsx",
+  options: {
+    lightTheme?: BundledTheme;
+    darkTheme?: BundledTheme;
+  } = {},
 ): Promise<string> {
-  const cacheKey = `${lang}:${code}`;
+  const lightTheme = options.lightTheme ?? "github-light";
+  const darkTheme = options.darkTheme ?? "github-dark";
+  const cacheKey = `${lang}:${lightTheme}:${darkTheme}:${code}`;
 
   const cached = htmlCache.get(cacheKey);
   if (cached) {
@@ -54,8 +60,8 @@ export async function highlightCode(
   const html = highlighter.codeToHtml(code.trim(), {
     lang,
     themes: {
-      light: "github-light",
-      dark: "github-dark",
+      light: lightTheme,
+      dark: darkTheme,
     },
     transformers: [
       {
