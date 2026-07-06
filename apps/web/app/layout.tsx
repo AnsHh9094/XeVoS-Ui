@@ -1,49 +1,53 @@
-import type React from "react"
-import type { Metadata, Viewport } from "next"
-import { Albert_Sans, JetBrains_Mono, Instrument_Serif } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import Script from "next/script"
-import "@workspace/ui/globals.css"
-import { Providers } from "@/components/providers"
-import { JsonLd } from "@/components/seo/json-ld"
-import { RouteScrollbarController } from "@/components/route-scrollbar-controller"
-import { absoluteUrl, siteConfig } from "@/lib/site"
+import type React from "react";
+import type { Metadata, Viewport } from "next";
+import {
+  Albert_Sans,
+  JetBrains_Mono,
+  Instrument_Serif,
+} from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
+import "@workspace/ui/globals.css";
+import { Providers } from "@/components/providers";
+import { JsonLd } from "@/components/seo/json-ld";
+import { RouteScrollbarController } from "@/components/route-scrollbar-controller";
+import { absoluteUrl, siteConfig } from "@/lib/site";
 
 const fontSans = Albert_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
-})
+});
 
 const fontMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
-})
+});
 
 const fontSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-serif",
   display: "swap",
-})
+});
 
 const fontDisplay = Albert_Sans({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
-})
+});
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#09090B" },
+    { media: "(prefers-color-scheme: light)", color: "#1A61EC" },
+    { media: "(prefers-color-scheme: dark)", color: "#051A24" },
   ],
-}
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -104,7 +108,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: absoluteUrl("/opengraph-image"),
+        url: absoluteUrl("/opengraph-image.png"),
         width: 1200,
         height: 630,
         alt: "Componentry - Premium React UI Component Library",
@@ -118,7 +122,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [
       {
-        url: absoluteUrl("/opengraph-image"),
+        url: absoluteUrl("/opengraph-image.png"),
         width: 1200,
         height: 630,
         alt: "Componentry - Premium React UI Component Library",
@@ -149,17 +153,18 @@ export const metadata: Metadata = {
   category: "technology",
   classification: "UI Component Library",
   other: {
-    "msapplication-TileImage": "/opengraph-image",
+    "msapplication-TileImage": "/opengraph-image.png",
     ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
-      "google-site-verification": process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+      "google-site-verification":
+        process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
     }),
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>): React.JSX.Element {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -169,7 +174,9 @@ export default function RootLayout({
       </head>
       <body
         className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} ${fontDisplay.variable} relative font-sans antialiased`}
-        style={{ "--font-heading": "var(--font-display)" } as React.CSSProperties}
+        style={
+          { "--font-heading": "var(--font-display)" } as React.CSSProperties
+        }
       >
         <div className="isolate relative flex min-h-svh flex-col">
           <RouteScrollbarController />
@@ -183,5 +190,5 @@ export default function RootLayout({
         />
       </body>
     </html>
-  )
+  );
 }

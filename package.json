@@ -8,6 +8,7 @@
     "lint": "turbo lint",
     "registry:blocks": "node scripts/build-blocks-registry.js",
     "validate:registry": "node scripts/validate-registry.js",
+    "generate:og": "node scripts/generate-og-image.mjs",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "screenshot": "node scripts/screenshot.js",
     "optimize:previews": "./scripts/optimize-preview-videos.sh",
