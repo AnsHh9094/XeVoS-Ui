@@ -28,6 +28,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Components",
     slug: "sticky-scroll-cards",
     addedAt: "2026-04-10",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/stickyscrollcards.webm",
   },
   "music-player": {
     title: "Music Player",
@@ -35,6 +37,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Components",
     slug: "music-player",
     addedAt: "2026-04-03",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/musicplayer.webm",
   },
   "scroll-split-card": {
     title: "Scroll Split Card",
@@ -42,6 +46,8 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Components",
     slug: "scroll-split-card",
     addedAt: "2026-04-03",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/scrollsplitcard.webm",
   },
   // Text Animations
   "hyper-text": {
