@@ -4,6 +4,7 @@ import * as React from "react"
 import { Terminal } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { DocsCodePanel } from "@/components/docs-code-panel"
+import { useSmoothCodeHeight } from "@/hooks/use-smooth-code-height"
 
 export const PACKAGE_MANAGERS = ["bun", "npm", "pnpm", "yarn"] as const
 export type PackageManager = (typeof PACKAGE_MANAGERS)[number]
@@ -48,41 +49,61 @@ export function PackageManagerCommand({
 }: PackageManagerCommandProps) {
   const [selected, setSelected] = React.useState<PackageManager>(defaultPm)
   const command = getCommand(selected)
-  const [highlightedHtml, setHighlightedHtml] = React.useState("")
-  const [isHighlighting, setIsHighlighting] = React.useState(false)
+  const [htmlMap, setHtmlMap] = React.useState<Partial<Record<PackageManager, string>>>({})
+  const [visibleHtml, setVisibleHtml] = React.useState("")
+  const [visiblePlain, setVisiblePlain] = React.useState(command)
+  const [isSwitching, setIsSwitching] = React.useState(false)
+
+  const targetHtml = htmlMap[selected]
+  const displayHtml = targetHtml ?? visibleHtml
+  const { contentRef, wrapperProps } = useSmoothCodeHeight([displayHtml, visiblePlain, selected])
 
   React.useEffect(() => {
     let cancelled = false
 
-    const loadHighlight = async () => {
-      const cached = highlightCache.get(command)
-      if (cached) {
-        setHighlightedHtml(cached)
-        return
-      }
+    const prefetchAll = async () => {
+      const entries = await Promise.all(
+        PACKAGE_MANAGERS.map(async (pm) => {
+          const cmd = getCommand(pm)
+          if (highlightCache.has(cmd)) {
+            return { pm, html: highlightCache.get(cmd)! }
+          }
+          try {
+            const html = await fetchHighlightedBash(cmd)
+            return { pm, html }
+          } catch {
+            return null
+          }
+        })
+      )
 
-      setIsHighlighting(true)
-      try {
-        const html = await fetchHighlightedBash(command)
-        if (!cancelled) {
-          setHighlightedHtml(html)
+      if (cancelled) return
+
+      setHtmlMap((prev) => {
+        const next = { ...prev }
+        for (const entry of entries) {
+          if (entry) next[entry.pm] = entry.html
         }
-      } catch {
-        if (!cancelled) {
-          setHighlightedHtml("")
-        }
-      } finally {
-        if (!cancelled) {
-          setIsHighlighting(false)
-        }
-      }
+        return next
+      })
     }
 
-    loadHighlight()
+    prefetchAll()
     return () => {
       cancelled = true
     }
-  }, [command])
+  }, [getCommand])
+
+  React.useEffect(() => {
+    setVisiblePlain(command)
+    if (targetHtml) {
+      setIsSwitching(true)
+      setVisibleHtml(targetHtml)
+      const timer = window.setTimeout(() => setIsSwitching(false), 200)
+      return () => window.clearTimeout(timer)
+    }
+    return undefined
+  }, [command, targetHtml])
 
   const tabs = PACKAGE_MANAGERS.map((pm) => ({ id: pm, label: pm }))
 
@@ -95,23 +116,26 @@ export function PackageManagerCommand({
       onTabChange={(id) => setSelected(id as PackageManager)}
       tabListAriaLabel="Package manager"
     >
-      {highlightedHtml ? (
+      <div {...wrapperProps}>
         <div
-          className="[&_pre]:overflow-x-auto [&_pre]:p-4 [&_pre]:whitespace-pre"
-          dangerouslySetInnerHTML={{ __html: highlightedHtml }}
-        />
-      ) : (
-        <pre className="overflow-x-auto whitespace-pre p-4 no-scrollbar">
-          <code
-            className={cn(
-              "text-zinc-950 dark:text-zinc-100",
-              isHighlighting && "opacity-50"
-            )}
-          >
-            {command}
-          </code>
-        </pre>
-      )}
+          ref={contentRef}
+          className={cn(
+            "transition-opacity duration-150",
+            (isSwitching || !targetHtml) && "opacity-70"
+          )}
+        >
+          {displayHtml ? (
+            <div
+              className="[&_pre]:overflow-x-auto [&_pre]:p-4 [&_pre]:whitespace-pre"
+              dangerouslySetInnerHTML={{ __html: displayHtml }}
+            />
+          ) : (
+            <pre className="overflow-x-auto whitespace-pre p-4 no-scrollbar">
+              <code className="text-zinc-950 dark:text-zinc-100">{visiblePlain}</code>
+            </pre>
+          )}
+        </div>
+      </div>
     </DocsCodePanel>
   )
 }

@@ -54,6 +54,39 @@ function PreviewToolbarCell({
 const previewToolbarIconClass =
   "flex size-full items-center justify-center rounded-2xl text-current transition-all ease-in-out active:scale-95"
 
+function PreviewVariantTab({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean
+  onClick: () => void
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      type="button"
+      role="tab"
+      aria-selected={active}
+      onClick={onClick}
+      className={cn(
+        "relative shrink-0 rounded-lg px-2.5 py-1 text-[13px] font-medium outline-none transition-colors",
+        "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
+        active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+      )}
+    >
+      {active && (
+        <motion.span
+          layoutId="preview-variant-pill"
+          className="absolute inset-0 rounded-lg bg-zinc-200/90 shadow-sm dark:bg-zinc-800/90"
+          transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+        />
+      )}
+      <span className="relative">{children}</span>
+    </button>
+  )
+}
+
 const PREVIEW_EXPAND_MS = 420
 const PREVIEW_EXPAND_EASING = "cubic-bezier(0.22, 1, 0.36, 1)"
 
@@ -360,47 +393,30 @@ export function DocsPreviewWrapper({
 
       {/* Bottom Variant Bar */}
       {variants.length > 0 && (
-        <div className="absolute bottom-0 left-0 right-0 z-10 h-14 flex items-center">
+        <div className="pointer-events-none absolute bottom-0 left-0 z-10 p-3 sm:p-4">
           <div
             ref={variantBarRef}
-            className="flex items-center gap-1.5 px-3 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            role="tablist"
+            aria-label="Preview variants"
+            className="pointer-events-auto flex max-w-[min(100vw-2rem,28rem)] items-center gap-0.5 overflow-x-auto rounded-2xl border border-border/40 bg-white/75 p-1 shadow-[0_8px_32px_rgba(0,0,0,0.08)] backdrop-blur-xl dark:border-white/[0.06] dark:bg-[#121212]/80 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           >
             {!hideDefaultVariant && (
-              <button
+              <PreviewVariantTab
+                active={resolvedActiveVariant === -1}
                 onClick={() => setActiveVariant(-1)}
-                className={cn(
-                  "shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
-                  resolvedActiveVariant === -1
-                    ? "bg-foreground text-background border-foreground shadow-sm"
-                    : "bg-white/90 dark:bg-zinc-900/90 text-zinc-600 dark:text-zinc-400 border-zinc-200/80 dark:border-zinc-700/80 hover:text-zinc-900 dark:hover:text-zinc-100 backdrop-blur-sm shadow-sm"
-                )}
               >
-                <span className={cn(
-                  "w-1.5 h-1.5 rounded-full transition-colors",
-                  resolvedActiveVariant === -1 ? "bg-background" : "bg-zinc-400 dark:bg-zinc-500"
-                )} />
                 Default
-              </button>
+              </PreviewVariantTab>
             )}
 
-            {/* Variant pills */}
             {variants.map((variant, i) => (
-              <button
+              <PreviewVariantTab
                 key={i}
+                active={resolvedActiveVariant === i}
                 onClick={() => setActiveVariant(i)}
-                className={cn(
-                  "shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border",
-                  resolvedActiveVariant === i
-                    ? "bg-foreground text-background border-foreground shadow-sm"
-                    : "bg-white/90 dark:bg-zinc-900/90 text-zinc-600 dark:text-zinc-400 border-zinc-200/80 dark:border-zinc-700/80 hover:text-zinc-900 dark:hover:text-zinc-100 backdrop-blur-sm shadow-sm"
-                )}
               >
-                <span className={cn(
-                  "w-1.5 h-1.5 rounded-full transition-colors",
-                  resolvedActiveVariant === i ? "bg-background" : "bg-zinc-400 dark:bg-zinc-500"
-                )} />
                 {variant.title}
-              </button>
+              </PreviewVariantTab>
             ))}
           </div>
         </div>
