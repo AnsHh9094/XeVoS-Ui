@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif, Syne } from "next/font/google"
+import { Albert_Sans, JetBrains_Mono, Instrument_Serif } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import "@workspace/ui/globals.css"
@@ -8,7 +8,7 @@ import { Providers } from "@/components/providers"
 import { JsonLd } from "@/components/seo/json-ld"
 import { RouteScrollbarController } from "@/components/route-scrollbar-controller"
 
-const fontSans = Plus_Jakarta_Sans({
+const fontSans = Albert_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
@@ -27,7 +27,7 @@ const fontSerif = Instrument_Serif({
   display: "swap",
 })
 
-const fontDisplay = Syne({
+const fontDisplay = Albert_Sans({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
