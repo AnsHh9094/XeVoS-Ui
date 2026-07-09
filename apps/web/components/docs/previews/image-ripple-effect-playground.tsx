@@ -5,6 +5,10 @@ import { create } from "zustand";
 import { ImageRippleEffect } from "@workspace/ui/components/image-ripple-effect";
 import { cn } from "@/lib/utils";
 import { usePlaygroundStore } from "@/hooks/use-playground-store";
+import {
+  PlaygroundSectionTitle,
+  PlaygroundSlider,
+} from "@/components/playground-primitives";
 
 interface ImageRipplePlaygroundConfig {
   imageSrc: string;
@@ -111,44 +115,7 @@ const useImageRipplePlaygroundStore = create<ImageRipplePlaygroundStore>((set) =
     })),
 }));
 
-const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <div className="mb-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{children}</div>
-);
 
-const Slider = ({
-  value,
-  min,
-  max,
-  step,
-  onChange,
-  label,
-}: {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  onChange: (val: number) => void;
-  label: string;
-}) => (
-  <div className="space-y-2">
-    <div className="flex items-center justify-between text-sm">
-      <span className="text-foreground/90">{label}</span>
-      <span className="font-mono text-muted-foreground">
-        {Number(value).toFixed(step < 0.1 ? 3 : 1)}
-      </span>
-    </div>
-    <input
-      type="range"
-      min={min}
-      max={max}
-      step={step}
-      value={value}
-      onChange={(e) => onChange(parseFloat(e.target.value))}
-      className="h-2 w-full cursor-pointer appearance-none rounded-full bg-zinc-300/70 dark:bg-zinc-700/70
-      [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-white dark:[&::-webkit-slider-thumb]:bg-zinc-100"
-    />
-  </div>
-);
 
 function generateCode(config: ImageRipplePlaygroundConfig) {
   return `import { ImageRippleEffect } from "@/components/ui/image-ripple-effect"
@@ -280,7 +247,7 @@ export function ImageRippleEffectPersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Presets</SectionTitle>
+          <PlaygroundSectionTitle>Presets</PlaygroundSectionTitle>
           <div className="grid grid-cols-4 gap-1.5">
             {PRESETS.map((preset) => {
               const isActive =
@@ -307,8 +274,8 @@ export function ImageRippleEffectPersonalizePanel() {
         </div>
 
         <div className="space-y-3">
-          <SectionTitle>Ripple</SectionTitle>
-          <Slider
+          <PlaygroundSectionTitle>Ripple</PlaygroundSectionTitle>
+          <PlaygroundSlider
             label="Distortion Strength"
             min={0.01}
             max={0.2}
@@ -316,7 +283,7 @@ export function ImageRippleEffectPersonalizePanel() {
             value={config.distortionStrength}
             onChange={(val) => handleChange("distortionStrength", val)}
           />
-          <Slider
+          <PlaygroundSlider
             label="Wave Count"
             min={20}
             max={220}
@@ -324,7 +291,7 @@ export function ImageRippleEffectPersonalizePanel() {
             value={config.waveCount}
             onChange={(val) => handleChange("waveCount", val)}
           />
-          <Slider
+          <PlaygroundSlider
             label="Wave Size"
             min={20}
             max={120}
@@ -332,7 +299,7 @@ export function ImageRippleEffectPersonalizePanel() {
             value={config.waveSize}
             onChange={(val) => handleChange("waveSize", val)}
           />
-          <Slider
+          <PlaygroundSlider
             label="Rotation Speed"
             min={0.005}
             max={0.06}
@@ -340,7 +307,7 @@ export function ImageRippleEffectPersonalizePanel() {
             value={config.waveRotationSpeed}
             onChange={(val) => handleChange("waveRotationSpeed", val)}
           />
-          <Slider
+          <PlaygroundSlider
             label="Fade Multiplier"
             min={0.85}
             max={0.995}
@@ -348,7 +315,7 @@ export function ImageRippleEffectPersonalizePanel() {
             value={config.waveFadeMultiplier}
             onChange={(val) => handleChange("waveFadeMultiplier", val)}
           />
-          <Slider
+          <PlaygroundSlider
             label="Wave Growth"
             min={0.05}
             max={0.3}
@@ -356,7 +323,7 @@ export function ImageRippleEffectPersonalizePanel() {
             value={config.waveGrowth}
             onChange={(val) => handleChange("waveGrowth", val)}
           />
-          <Slider
+          <PlaygroundSlider
             label="Spawn Threshold"
             min={0.01}
             max={1}

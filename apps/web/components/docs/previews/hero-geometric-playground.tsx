@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import HeroGeometric from "@workspace/ui/components/hero-geometric";
 import { cn } from "@/lib/utils";
 import {
@@ -8,6 +8,13 @@ import {
   type HeroGeometricConfig,
   usePlaygroundStore,
 } from "@/hooks/use-playground-store";
+import {
+  PlaygroundSectionTitle,
+  PlaygroundInput,
+  PlaygroundTextArea,
+  PlaygroundSlider,
+  PlaygroundColorPicker,
+} from "@/components/playground-primitives";
 
 const PRESETS: Array<{ name: string; config: HeroGeometricConfig }> = [
   {
@@ -64,124 +71,7 @@ const PRESETS: Array<{ name: string; config: HeroGeometricConfig }> = [
   },
 ];
 
-const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <div className="mb-3 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{children}</div>
-);
 
-const Input = ({ className, ...props }: React.InputHTMLAttributes<HTMLInputElement>) => (
-  <input
-    className={cn(
-      "h-10 w-full rounded-md border border-border/70 bg-transparent px-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25",
-      className,
-    )}
-    {...props}
-  />
-);
-
-const TextArea = ({ className, ...props }: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
-  <textarea
-    className={cn(
-      "min-h-24 w-full resize-none rounded-md border border-border/70 bg-transparent px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25",
-      className,
-    )}
-    {...props}
-  />
-);
-
-const Slider = ({
-  value,
-  min,
-  max,
-  step,
-  onChange,
-  label,
-  unit = "",
-}: {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  onChange: (val: number) => void;
-  label: string;
-  unit?: string;
-}) => (
-  <div className="space-y-2">
-    <div className="flex items-center justify-between text-sm">
-      <span className="text-foreground/90">{label}</span>
-      <span className="font-mono text-muted-foreground">
-        {Number(value).toFixed(step < 0.1 ? 2 : 1)}
-        {unit}
-      </span>
-    </div>
-    <input
-      type="range"
-      min={min}
-      max={max}
-      step={step}
-      value={value}
-      onChange={(e) => onChange(parseFloat(e.target.value))}
-      className="h-2 w-full cursor-pointer appearance-none rounded-full bg-zinc-300/70 dark:bg-zinc-700/70
-      [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-white dark:[&::-webkit-slider-thumb]:bg-zinc-100"
-    />
-  </div>
-);
-
-function normalizeHexColor(value: string) {
-  const trimmed = value.trim();
-  if (!/^#?[0-9a-fA-F]{6}$/.test(trimmed)) {
-    return null;
-  }
-
-  return `#${trimmed.replace("#", "").toLowerCase()}`;
-}
-
-const ColorPicker = ({
-  value,
-  onChange,
-  label,
-}: {
-  value: string;
-  onChange: (val: string) => void;
-  label: string;
-}) => {
-  const [draft, setDraft] = useState(value);
-
-  useEffect(() => {
-    setDraft(value);
-  }, [value]);
-
-  return (
-    <label className="flex items-center gap-3 rounded-md border border-border/70 p-2.5">
-      <span className="relative h-8 w-8 overflow-hidden rounded border border-border">
-        <span aria-hidden="true" className="absolute inset-0" style={{ backgroundColor: value }} />
-        <input
-          type="color"
-          value={value}
-          onInput={(e) => onChange((e.target as HTMLInputElement).value)}
-          onChange={(e) => onChange(e.target.value)}
-          aria-label={`${label} color picker`}
-          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-        />
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="mb-1 block text-xs font-semibold text-foreground/90">{label}</span>
-        <input
-          value={draft}
-          onChange={(e) => {
-            const next = e.target.value;
-            setDraft(next);
-            const normalized = normalizeHexColor(next);
-            if (normalized) {
-              onChange(normalized);
-            }
-          }}
-          placeholder="#000000"
-          className="h-8 w-full rounded border border-border/70 bg-transparent px-2.5 font-mono text-xs text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/25"
-        />
-      </span>
-    </label>
-  );
-};
 
 function generateCode(config: HeroGeometricConfig) {
   const props = Object.entries(config)
@@ -287,7 +177,7 @@ export function HeroGeometricPersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Presets</SectionTitle>
+          <PlaygroundSectionTitle>Presets</PlaygroundSectionTitle>
           <div className="grid grid-cols-5 gap-1.5">
             {PRESETS.map((preset) => {
               const isActive =
@@ -322,21 +212,21 @@ export function HeroGeometricPersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Typography</SectionTitle>
+          <PlaygroundSectionTitle>Typography</PlaygroundSectionTitle>
           <div className="grid grid-cols-2 gap-2.5">
-            <Input
+            <PlaygroundInput
               value={config.title1}
               onChange={(e) => handleChange("title1", e.target.value)}
               placeholder="Primary headline"
             />
-            <Input
+            <PlaygroundInput
               value={config.title2}
               onChange={(e) => handleChange("title2", e.target.value)}
               placeholder="Secondary headline"
             />
           </div>
           <div className="mt-2.5">
-            <TextArea
+            <PlaygroundTextArea
               value={config.description}
               onChange={(e) => handleChange("description", e.target.value)}
               placeholder="Narrative subheadline"
@@ -345,17 +235,17 @@ export function HeroGeometricPersonalizePanel() {
         </div>
 
         <div>
-          <SectionTitle>Palette</SectionTitle>
+          <PlaygroundSectionTitle>Palette</PlaygroundSectionTitle>
           <div className="grid grid-cols-2 gap-2.5">
-            <ColorPicker label="Primary" value={config.color1} onChange={(v) => handleChange("color1", v)} />
-            <ColorPicker label="Secondary" value={config.color2} onChange={(v) => handleChange("color2", v)} />
+            <PlaygroundColorPicker label="Primary" value={config.color1} onChange={(v) => handleChange("color1", v)} />
+            <PlaygroundColorPicker label="Secondary" value={config.color2} onChange={(v) => handleChange("color2", v)} />
           </div>
         </div>
 
         <div>
-          <SectionTitle>Motion</SectionTitle>
+          <PlaygroundSectionTitle>Motion</PlaygroundSectionTitle>
           <div className="grid grid-cols-1 gap-3">
-            <Slider
+            <PlaygroundSlider
               label="Speed"
               min={0.2}
               max={3}

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePlaygroundStore } from "@/hooks/use-playground-store";
-import { CodeBlock } from "@/components/code-block";
+import { CopyButton } from "@/components/copy-button";
 
 interface LiveCodeBlockProps {
     defaultCode: string;
@@ -12,6 +12,7 @@ interface LiveCodeBlockProps {
 export function LiveCodeBlock({ defaultCode, lang = "tsx" }: LiveCodeBlockProps) {
     const { code } = usePlaygroundStore();
     const [displayCode, setDisplayCode] = useState(defaultCode);
+    const [html, setHtml] = useState("");
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
@@ -26,13 +27,35 @@ export function LiveCodeBlock({ defaultCode, lang = "tsx" }: LiveCodeBlockProps)
         }
     }, [code]);
 
+    useEffect(() => {
+        let active = true;
+        const fetchHtml = async () => {
+            try {
+                const response = await fetch("/api/docs/source", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ code: displayCode, lang }),
+                });
+                if (!response.ok) return;
+                const data = await response.json();
+                if (active && data.html) {
+                    setHtml(data.html);
+                }
+            } catch (e) {
+                console.error("Failed to fetch highlighted code", e);
+            }
+        };
+        fetchHtml();
+        return () => { active = false; };
+    }, [displayCode, lang]);
+
     if (!isMounted) {
         return (
-            <CodeBlock
-                code={defaultCode}
-                lang={lang}
-                className="min-h-[200px] border-none !rounded-none !bg-transparent [&_pre]:!overflow-x-auto [&_pre]:!overflow-y-hidden"
-            />
+            <div className="relative text-sm w-full border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50 rounded-xl min-h-[200px]">
+                <div className="h-full flex items-center justify-center p-4">
+                    <pre className="text-muted-foreground w-full overflow-x-auto"><code>{defaultCode}</code></pre>
+                </div>
+            </div>
         );
     }
 
@@ -41,11 +64,14 @@ export function LiveCodeBlock({ defaultCode, lang = "tsx" }: LiveCodeBlockProps)
             <div className="absolute top-0 right-0 p-2 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-zinc-100/90 dark:bg-zinc-900/90 rounded-bl-md border-l border-b border-border">
                 Real-time
             </div>
-            <CodeBlock
-                code={displayCode}
-                lang={lang}
-                className="min-h-[200px] border-none !rounded-none !bg-transparent [&_pre]:!overflow-x-auto [&_pre]:!overflow-y-hidden"
-            />
+            
+            <div className="relative text-sm w-full border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50 rounded-xl min-h-[200px] flex flex-col">
+                <CopyButton code={displayCode.trim()} />
+                <div
+                    className="flex-1 min-h-[200px] [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:!overflow-y-hidden overflow-auto"
+                    dangerouslySetInnerHTML={{ __html: html || `<pre><code>${displayCode.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>` }}
+                />
+            </div>
         </div>
     );
 }
