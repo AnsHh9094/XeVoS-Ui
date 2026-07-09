@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Terminal } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { CopyButton } from "@/components/copy-button"
+import { DocsCodePanel } from "@/components/docs-code-panel"
 
 export const PACKAGE_MANAGERS = ["bun", "npm", "pnpm", "yarn"] as const
 export type PackageManager = (typeof PACKAGE_MANAGERS)[number]
@@ -84,67 +84,34 @@ export function PackageManagerCommand({
     }
   }, [command])
 
+  const tabs = PACKAGE_MANAGERS.map((pm) => ({ id: pm, label: pm }))
+
   return (
-    <div
-      data-code-block
-      data-line-numbers="false"
-      className="relative w-full max-w-full overflow-hidden rounded-xl border border-border bg-zinc-100 text-sm dark:bg-zinc-900/50"
+    <DocsCodePanel
+      icon={Terminal}
+      copyCode={command}
+      tabs={tabs}
+      activeTab={selected}
+      onTabChange={(id) => setSelected(id as PackageManager)}
+      tabListAriaLabel="Package manager"
     >
-      <div className="flex items-center justify-between gap-3 border-b border-border/50 px-4 py-2">
-        <div className="flex min-w-0 items-center gap-2">
-          <Terminal className="size-3.5 shrink-0 text-muted-foreground" aria-hidden />
-
-          <div
-            role="tablist"
-            aria-label="Package manager"
-            className="flex items-center gap-1"
+      {highlightedHtml ? (
+        <div
+          className="[&_pre]:overflow-x-auto [&_pre]:p-4 [&_pre]:whitespace-pre"
+          dangerouslySetInnerHTML={{ __html: highlightedHtml }}
+        />
+      ) : (
+        <pre className="overflow-x-auto whitespace-pre p-4 no-scrollbar">
+          <code
+            className={cn(
+              "text-zinc-950 dark:text-zinc-100",
+              isHighlighting && "opacity-50"
+            )}
           >
-            {PACKAGE_MANAGERS.map((pm) => {
-              const isSelected = selected === pm
-              return (
-                <button
-                  key={pm}
-                  type="button"
-                  role="tab"
-                  aria-selected={isSelected}
-                  onClick={() => setSelected(pm)}
-                  className={cn(
-                    "rounded-md px-2.5 py-1 text-[13px] font-medium outline-none transition-colors",
-                    "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
-                    isSelected
-                      ? "bg-zinc-200/80 text-foreground dark:bg-zinc-800/80"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  {pm}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        <CopyButton code={command} absolute={false} className="shrink-0 p-1.5" />
-      </div>
-
-      <div className="relative group">
-        {highlightedHtml ? (
-          <div
-            className="[&_pre]:overflow-x-auto [&_pre]:p-4 [&_pre]:whitespace-pre"
-            dangerouslySetInnerHTML={{ __html: highlightedHtml }}
-          />
-        ) : (
-          <pre className="overflow-x-auto whitespace-pre p-4 no-scrollbar">
-            <code
-              className={cn(
-                "text-zinc-950 dark:text-zinc-100",
-                isHighlighting && "opacity-50"
-              )}
-            >
-              {command}
-            </code>
-          </pre>
-        )}
-      </div>
-    </div>
+            {command}
+          </code>
+        </pre>
+      )}
+    </DocsCodePanel>
   )
 }
