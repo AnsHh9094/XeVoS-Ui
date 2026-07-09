@@ -9,7 +9,6 @@ import { GitHubStarButton } from "@/components/github-star-button"
 
 // Lazy load heavy WebGL/Canvas components - they won't block initial render
 const MagnetLines = lazy(() => import("@workspace/ui/components/magnet-lines").then(m => ({ default: m.MagnetLines })))
-const LiquidBlob = lazy(() => import("@workspace/ui/components/liquid-blob").then(m => ({ default: m.LiquidBlob })))
 const PixelCanvas = lazy(() => import("@workspace/ui/components/pixel-canvas").then(m => ({ default: m.PixelCanvas })))
 const MatrixRain = lazy(() => import("@workspace/ui/components/matrix-rain").then(m => ({ default: m.MatrixRain })))
 const MagneticDock = lazy(() => import("@workspace/ui/components/magnetic-dock").then(m => ({ default: m.MagneticDock })))
@@ -221,33 +220,7 @@ export default function LandingPage() {
                                 </div>
                             </motion.div>
 
-                            {/* Card 2: Liquid Blob */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 30, rotateX: 8 }}
-                                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                                className="lg:col-span-5 group relative h-[380px] md:h-[450px] lg:h-[500px] rounded-3xl overflow-hidden"
-                                style={{ transformStyle: 'preserve-3d' }}
-                            >
-                                <div className="absolute inset-0 rounded-3xl overflow-hidden border border-slate-800 bg-neutral-950" />
-                                <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-neutral-950 via-neutral-950/80 to-transparent z-10 pointer-events-none" />
-                                <div className="absolute inset-0 z-20">
-                                    <Suspense fallback={<ComponentPlaceholder className="h-full w-full" />}>
-                                        <LiquidBlob interactive className="h-full w-full" />
-                                    </Suspense>
-                                </div>
-                                <div className="absolute bottom-0 left-0 right-0 p-8 z-30">
-                                    <span className="text-[10px] font-mono text-white/40 uppercase tracking-wider mb-2 block">Visual Effect</span>
-                                    <h3 className="text-2xl font-bold text-white tracking-tight">Liquid Blob</h3>
-                                    <p className="text-sm text-white/50 mt-2">Organic animated shape that responds to cursor movement.</p>
-                                </div>
-                                <motion.div
-                                    animate={{ scale: [1, 1.1, 1] }}
-                                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                                    className="absolute top-6 right-6 w-3 h-3 bg-purple-500 rounded-full shadow-lg shadow-purple-500/50 z-30"
-                                />
-                            </motion.div>
+
 
                             {/* Card 3: Magnetic Dock - Full width */}
                             <motion.div
