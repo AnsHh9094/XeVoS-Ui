@@ -29,6 +29,40 @@ interface DocsPreviewWrapperProps {
   hideDefaultVariant?: boolean
 }
 
+function PreviewToolbarCell({
+  children,
+  active,
+  className,
+}: {
+  children: React.ReactNode
+  active?: boolean
+  className?: string
+}) {
+  return (
+    <div
+      className={cn(
+        "flex size-8 shrink-0 items-center justify-center rounded-2xl bg-zinc-200/65 text-foreground/65 dark:bg-zinc-800/75",
+        active && "bg-foreground text-background dark:bg-zinc-100 dark:text-zinc-900",
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+
+const previewToolbarIconClass =
+  "flex size-full items-center justify-center rounded-2xl text-current transition-all ease-in-out active:scale-95"
+
+const PREVIEW_EXPAND_MS = 420
+const PREVIEW_EXPAND_EASING = "cubic-bezier(0.22, 1, 0.36, 1)"
+
+type PreviewRect = { top: number; left: number; width: number; height: number }
+
+function toPreviewRect(rect: DOMRect | PreviewRect): PreviewRect {
+  return { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
+}
+
 export function DocsPreviewWrapper({
   children,
   fullWidthPreview,
@@ -64,12 +98,22 @@ export function DocsPreviewWrapper({
 
   const previewRef = React.useRef<HTMLDivElement>(null)
   const variantBarRef = React.useRef<HTMLDivElement>(null)
-  const iconButtonClass = "inline-flex h-7 w-7 items-center justify-center rounded-md border border-transparent text-foreground/60 transition-all duration-150 hover:border-border/70 hover:bg-muted/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 active:scale-[0.97]"
+  const splitPreviewRectRef = React.useRef<PreviewRect | null>(null)
   const hasSourceCode = Boolean(sourceCodeKey)
 
+  const cacheSplitPreviewRect = React.useCallback(() => {
+    const layout = previewRef.current?.closest("[data-docs-layout]")
+    const previewShell = layout?.querySelector<HTMLElement>("[data-docs-preview-shell]")
+    if (!previewShell || previewShell.style.position === "fixed") return
+    splitPreviewRectRef.current = toPreviewRect(previewShell.getBoundingClientRect())
+  }, [])
+
   const handleSourceOpen = React.useCallback(async () => {
-    setShowSource(true)
     setShowPersonalize(false)
+    if (isExpanded) {
+      setIsExpanded(false)
+    }
+    setShowSource(true)
 
     if (!sourceCodeKey || sourceHtml || isSourceLoading) {
       return
@@ -96,172 +140,203 @@ export function DocsPreviewWrapper({
     } finally {
       setIsSourceLoading(false)
     }
-  }, [isSourceLoading, sourceCodeKey, sourceHtml])
+  }, [isExpanded, isSourceLoading, sourceCodeKey, sourceHtml])
+
+  const handleToggleExpanded = React.useCallback(() => {
+    setIsExpanded((prev) => {
+      const next = !prev
+      if (next) {
+        setShowSource(false)
+        setShowPersonalize(false)
+      }
+      return next
+    })
+  }, [])
 
   React.useEffect(() => {
     setMounted(true)
   }, [])
 
   React.useEffect(() => {
+    cacheSplitPreviewRect()
+    if (!isExpanded) return
+    const onResize = () => cacheSplitPreviewRect()
+    window.addEventListener("resize", onResize)
+    return () => window.removeEventListener("resize", onResize)
+  }, [isExpanded, cacheSplitPreviewRect, showSource, showPersonalize])
+
+  React.useEffect(() => {
     const layout = previewRef.current?.closest("[data-docs-layout]")
-    const leftColumn = layout?.querySelector<HTMLElement>("[data-docs-left-column]")
-    const rightColumn = layout?.querySelector<HTMLElement>("[data-docs-right-column]")
     const previewShell = layout?.querySelector<HTMLElement>("[data-docs-preview-shell]")
+    if (!previewShell) return
 
-    if (!leftColumn || !rightColumn || !previewShell) return
+    const isMobile = window.matchMedia("(max-width: 1023px)").matches
+    const fullPadding = isMobile ? "0px" : "12px"
+    const splitPadding = isMobile ? "16px" : "12px 12px 12px 6px"
+    const transition = `top ${PREVIEW_EXPAND_MS}ms ${PREVIEW_EXPAND_EASING}, left ${PREVIEW_EXPAND_MS}ms ${PREVIEW_EXPAND_EASING}, width ${PREVIEW_EXPAND_MS}ms ${PREVIEW_EXPAND_EASING}, height ${PREVIEW_EXPAND_MS}ms ${PREVIEW_EXPAND_EASING}, padding ${PREVIEW_EXPAND_MS}ms ${PREVIEW_EXPAND_EASING}`
 
-    // Set up transitions and base styles
-    const easing = "cubic-bezier(0.22, 1, 0.36, 1)"
-    leftColumn.style.transition = `flex-basis 420ms ${easing}, max-width 420ms ${easing}, opacity 280ms ease, border-color 220ms ease`
-    rightColumn.style.transition = `flex-basis 420ms ${easing}, max-width 420ms ${easing}`
-    previewShell.style.transition = `padding 340ms ${easing}`
-    leftColumn.style.overflow = "hidden"
-    leftColumn.style.minWidth = "0"
-    rightColumn.style.minWidth = "0"
+    const applyFixedRect = (rect: PreviewRect, padding: string) => {
+      previewShell.style.position = "fixed"
+      previewShell.style.top = `${rect.top}px`
+      previewShell.style.left = `${rect.left}px`
+      previewShell.style.width = `${rect.width}px`
+      previewShell.style.height = `${rect.height}px`
+      previewShell.style.zIndex = "60"
+      previewShell.style.padding = padding
+      previewShell.classList.add("bg-[#f3f4f6]", "dark:bg-[#080808]")
+    }
 
-    const handleResize = () => {
-      const isMobile = window.matchMedia("(max-width: 1023px)").matches
+    const clearFixedStyles = () => {
+      delete previewShell.dataset.previewExpanded
+      for (const prop of ["position", "top", "left", "width", "height", "zIndex", "padding", "transition"] as const) {
+        previewShell.style.removeProperty(prop)
+      }
+      previewShell.classList.remove("bg-[#f3f4f6]", "dark:bg-[#080808]")
+      cacheSplitPreviewRect()
+    }
 
-      if (isMobile) {
-        // Mobile Logic
-        if (isExpanded) {
-          leftColumn.style.display = "none"
-          rightColumn.style.flex = "1 1 100%"
-          previewShell.style.height = "100dvh"
-          previewShell.style.padding = "0"
-        } else {
-          leftColumn.style.display = ""
-          rightColumn.style.flex = ""
-          previewShell.style.height = ""
-          previewShell.style.padding = ""
-        }
+    let onTransitionEnd: ((event: TransitionEvent) => void) | undefined
 
-        // Reset Desktop Specific Styles
-        leftColumn.style.maxWidth = ""
-        leftColumn.style.opacity = ""
-        leftColumn.style.pointerEvents = ""
-        leftColumn.style.borderRightColor = ""
-        rightColumn.style.maxWidth = ""
-      } else {
-        // Desktop Logic
-        // Reset Mobile Specific Styles
-        leftColumn.style.display = ""
-        previewShell.style.height = ""
+    if (isExpanded) {
+      const from = toPreviewRect(previewShell.getBoundingClientRect())
+      splitPreviewRectRef.current = from
 
-        if (isExpanded) {
-          leftColumn.style.flex = "0 0 0%"
-          leftColumn.style.maxWidth = "0"
-          leftColumn.style.opacity = "0"
-          leftColumn.style.pointerEvents = "none"
-          leftColumn.style.borderRightColor = "transparent"
-          rightColumn.style.flex = "1 1 100%"
-          rightColumn.style.maxWidth = "100%"
-          previewShell.style.paddingLeft = "1rem"
-          previewShell.style.paddingRight = "1rem"
-        } else {
-          leftColumn.style.flex = "0 0 50%"
-          leftColumn.style.maxWidth = "50%"
-          leftColumn.style.opacity = ""
-          leftColumn.style.pointerEvents = ""
-          leftColumn.style.borderRightColor = ""
-          rightColumn.style.flex = "1 1 50%"
-          rightColumn.style.maxWidth = "50%"
-          previewShell.style.paddingLeft = ""
-          previewShell.style.paddingRight = ""
-        }
+      applyFixedRect(from, splitPadding)
+      void previewShell.offsetHeight
+
+      previewShell.style.transition = transition
+      requestAnimationFrame(() => {
+        applyFixedRect(
+          { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight },
+          fullPadding
+        )
+        previewShell.dataset.previewExpanded = "true"
+      })
+    } else if (previewShell.style.position === "fixed") {
+      const rightColumn = layout.querySelector<HTMLElement>("[data-docs-right-column]")
+      const col = rightColumn?.getBoundingClientRect()
+      const targetFromLayout: PreviewRect | null = col
+        ? isMobile
+          ? { top: col.top, left: col.left, width: col.width, height: Math.min(col.height, window.innerHeight * 0.55) }
+          : { top: col.top + 12, left: col.left + 6, width: col.width - 18, height: col.height - 24 }
+        : null
+      const target = targetFromLayout ?? splitPreviewRectRef.current
+      if (!target) {
+        clearFixedStyles()
+        return
+      }
+
+      previewShell.style.transition = transition
+      requestAnimationFrame(() => {
+        applyFixedRect(target, splitPadding)
+      })
+
+      onTransitionEnd = (event: TransitionEvent) => {
+        if (event.target !== previewShell || event.propertyName !== "width") return
+        clearFixedStyles()
+      }
+      previewShell.addEventListener("transitionend", onTransitionEnd)
+    } else {
+      clearFixedStyles()
+    }
+
+    return () => {
+      if (onTransitionEnd) {
+        previewShell.removeEventListener("transitionend", onTransitionEnd)
       }
     }
-
-    // Initial call
-    handleResize()
-
-    // Add listener
-    window.addEventListener("resize", handleResize)
-    return () => {
-      window.removeEventListener("resize", handleResize)
-
-      // Cleanup
-      leftColumn.style.display = ""
-      leftColumn.style.flex = ""
-      leftColumn.style.maxWidth = ""
-      leftColumn.style.opacity = ""
-      leftColumn.style.pointerEvents = ""
-      leftColumn.style.borderRightColor = ""
-      leftColumn.style.transition = ""
-      leftColumn.style.overflow = ""
-      leftColumn.style.minWidth = ""
-
-      rightColumn.style.flex = ""
-      rightColumn.style.maxWidth = ""
-      rightColumn.style.transition = ""
-      rightColumn.style.minWidth = ""
-
-      previewShell.style.paddingLeft = ""
-      previewShell.style.paddingRight = ""
-      previewShell.style.padding = ""
-      previewShell.style.height = ""
-      previewShell.style.transition = ""
-    }
-  }, [isExpanded])
+  }, [isExpanded, cacheSplitPreviewRect])
 
   return (
     <div className={cn(
       "relative w-full h-full rounded-xl lg:rounded-2xl border border-border/50 overflow-hidden bg-white dark:bg-[#121212] flex flex-col"
     )} ref={previewRef}>
-      {/* Toolbar */}
-      <div className="absolute top-4 right-4 z-20">
-        <div className="flex items-center gap-0.5 rounded-lg border border-border/70 bg-white/95 dark:bg-[#121212] px-1 py-1">
-          {/* Search */}
-          <React.Suspense fallback={
-            <button className={iconButtonClass} aria-label="Search"><Search className="w-4 h-4" /></button>
-          }>
-            <CommandMenu trigger={
-              <button className={iconButtonClass} aria-label="Search"><Search className="w-4 h-4" /></button>
-            } />
+      {/* Toolbar — glass dock, fixed top-right */}
+      <section
+        aria-label="Preview controls"
+        className="fixed right-6 top-6 z-[99] flex select-none items-center gap-1 rounded-2xl border border-border/40 bg-white/70 p-1.5 shadow-card backdrop-blur-xl dark:border-white/[0.06] dark:bg-[#121212]/75"
+      >
+        <PreviewToolbarCell>
+          <React.Suspense
+            fallback={
+              <button type="button" className={previewToolbarIconClass} aria-label="Search">
+                <Search className="size-4 opacity-60" />
+              </button>
+            }
+          >
+            <CommandMenu
+              trigger={
+                <button type="button" className={previewToolbarIconClass} aria-label="Search">
+                  <Search className="size-4" />
+                </button>
+              }
+            />
           </React.Suspense>
+        </PreviewToolbarCell>
 
-          {/* View Source */}
-          {hasSourceCode && (
+        {hasSourceCode && (
+          <PreviewToolbarCell active={showSource}>
             <button
+              type="button"
               onClick={handleSourceOpen}
-              className={cn(iconButtonClass, showSource && "border-primary/30 bg-primary/90 text-primary-foreground")}
+              className={previewToolbarIconClass}
               aria-label="View Source"
             >
-              <CodeXml className="w-4 h-4" />
+              <CodeXml className="size-4" />
             </button>
-          )}
+          </PreviewToolbarCell>
+        )}
 
-          {/* Personalize */}
-          {personalizeContent && (
+        {personalizeContent && (
+          <PreviewToolbarCell active={showPersonalize}>
             <button
-              onClick={() => { setShowPersonalize(true); setShowSource(false) }}
-              className={cn(iconButtonClass, showPersonalize && "border-primary/30 bg-primary/90 text-primary-foreground")}
+              type="button"
+              onClick={() => {
+                if (isExpanded) {
+                  setIsExpanded(false)
+                }
+                setShowPersonalize(true)
+                setShowSource(false)
+              }}
+              className={previewToolbarIconClass}
               aria-label="Personalize"
             >
-              <SlidersHorizontal className="w-4 h-4" />
+              <SlidersHorizontal className="size-4" />
             </button>
-          )}
+          </PreviewToolbarCell>
+        )}
 
-          {/* Reload */}
-          <button onClick={() => setKey(k => k + 1)} className={iconButtonClass} aria-label="Reload preview">
-            <RotateCcw className="w-4 h-4" />
-          </button>
-
-          {/* Expand Preview Pane */}
+        <PreviewToolbarCell>
           <button
-            onClick={() => setIsExpanded(prev => !prev)}
-            className={iconButtonClass}
+            type="button"
+            onClick={() => setKey((k) => k + 1)}
+            className={previewToolbarIconClass}
+            aria-label="Reload preview"
+          >
+            <RotateCcw className="size-4" />
+          </button>
+        </PreviewToolbarCell>
+
+        <PreviewToolbarCell active={isExpanded}>
+          <button
+            type="button"
+            onClick={handleToggleExpanded}
+            className={previewToolbarIconClass}
             aria-label={isExpanded ? "Collapse preview pane" : "Expand preview pane"}
           >
-            {isExpanded ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+            {isExpanded ? <Minimize className="size-4" /> : <Maximize className="size-4" />}
           </button>
+        </PreviewToolbarCell>
 
-          {/* Theme */}
-          <div className="[&_button]:h-7 [&_button]:w-7 [&_button]:rounded-md [&_button]:border [&_button]:border-transparent [&_button]:text-foreground/60 [&_button]:transition-all [&_button]:duration-150 hover:[&_button]:border-border/70 hover:[&_button]:bg-muted/70 hover:[&_button]:text-foreground [&_button]:focus-visible:outline-none [&_button]:focus-visible:ring-2 [&_button]:focus-visible:ring-ring/40">
-            <ThemeToggle className="inline-flex items-center justify-center" />
-          </div>
-        </div>
-      </div>
+        <PreviewToolbarCell>
+          <ThemeToggle
+            className={cn(
+              previewToolbarIconClass,
+              "!size-full !rounded-2xl !border-0 !bg-transparent shadow-none hover:!bg-transparent"
+            )}
+          />
+        </PreviewToolbarCell>
+      </section>
 
       {/* Content Area */}
       <div className={cn(

@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Terminal } from "lucide-react"
 import { SiteHeader } from "@/components/site-header"
+import { DocsScrollEdgeFade } from "@/components/docs-scroll-edge-fade"
 import { CodeInline, Section } from "@/components/component-layout"
 import { CopyButton } from "@/components/copy-button"
 
@@ -84,9 +85,7 @@ export default function McpDocsPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#111] text-zinc-900 dark:text-zinc-100 font-sans overflow-x-hidden">
-      {/* ── Overlays (match /docs) ── */}
-      <div className="fixed top-0 left-0 right-0 z-40 h-24 bg-gradient-to-b from-white via-white/80 to-transparent dark:from-[#111] dark:via-[#111]/80 pointer-events-none backdrop-blur-[1px]" />
-      <div className="fixed bottom-0 left-0 right-0 z-40 h-24 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#111] dark:via-[#111]/80 pointer-events-none backdrop-blur-[1px]" />
+      <DocsScrollEdgeFade position="bottom" />
 
       <SiteHeader />
 
