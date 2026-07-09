@@ -134,7 +134,7 @@ export async function DocsPageLayout({
         <div className="pointer-events-auto shrink-0">
           <FloatingDocsSidebarLazy />
         </div>
-        <div className="inline-flex min-h-8 min-w-0 items-center gap-2 font-[family-name:var(--font-inter)] text-[15px] font-normal tracking-[-0.02em] leading-none text-black/45 pointer-events-auto dark:text-white/45">
+          <div className="inline-flex min-h-8 min-w-0 items-center gap-2 font-[family-name:var(--font-inter)] text-[15px] font-normal tracking-[-0.02em] leading-normal text-black/45 pointer-events-auto dark:text-white/45">
           <Link
             href="/docs"
             className="shrink-0 font-normal transition-colors hover:text-black/70 dark:hover:text-white/70"

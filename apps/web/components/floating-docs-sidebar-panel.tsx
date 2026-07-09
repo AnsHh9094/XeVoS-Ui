@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { X } from "lucide-react"
+
 import { cn } from "@/lib/utils"
 import { docsConfig } from "@/config/docs"
 import { components, isNewComponent } from "@/registry"
@@ -158,31 +158,20 @@ export function FloatingDocsSidebarPanel() {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ x: -320, opacity: 0, filter: "blur(10px)" }}
-          animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
-          exit={{ x: -60, opacity: 0, filter: "blur(5px)" }}
-          transition={{ type: "spring", stiffness: 350, damping: 35, mass: 0.8 }}
-          className="fixed top-4 bottom-4 left-6 z-50 flex w-72 flex-col"
+          initial={{ x: -320, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: -40, opacity: 0 }}
+          transition={{ type: "spring", duration: 0.35, bounce: 0 }}
+          className="fixed top-3 left-3 z-50 flex w-72 flex-col"
           onMouseLeave={close}
         >
-          <div className="flex flex-1 flex-col gap-1 overflow-hidden rounded-3xl border border-zinc-200/60 bg-white p-2 shadow-2xl shadow-black/40 dark:border-zinc-800/60 dark:bg-[#121212]">
-            <div className="mb-2 flex items-center justify-between border-b border-zinc-100 px-4 py-4 dark:border-zinc-800/50">
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500">
-                Documentation
-              </span>
-              <button
-                type="button"
-                onClick={close}
-                className="rounded-full p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            </div>
+          <div className="flex max-h-[calc(100vh-24px)] flex-col gap-1 overflow-hidden rounded-xl lg:rounded-2xl border border-border/50 bg-white p-2 shadow-card dark:bg-[#121212]">
 
-            <div className="mask-image-b flex-1 overflow-y-auto px-2 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+
+            <div className="mask-image-b flex-1 overflow-y-auto px-2 pt-3 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {docsConfig.nav.map((group, index) => (
-                <div key={index} className="mb-6 last:mb-0">
-                  <h4 className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-zinc-900/40 dark:text-zinc-100/30">
+                <div key={index} className={index > 0 ? "border-t border-border/40 pt-5 mt-5" : ""}>
+                  <h4 className="mb-2.5 px-3 text-[11px] font-semibold uppercase tracking-widest text-zinc-700 dark:text-zinc-300">
                     {group.title}
                   </h4>
                   <div className="flex flex-col gap-0.5">
@@ -208,10 +197,10 @@ export function FloatingDocsSidebarPanel() {
                             close()
                           }}
                           className={cn(
-                            "group flex items-center justify-between rounded-md border border-transparent px-3 py-1 text-[13px] font-medium transition-all duration-200",
+                            "group flex items-center justify-between rounded-lg px-3 py-1.5 text-sm transition-all duration-200",
                             isActive
-                              ? "translate-x-1 font-semibold text-zinc-900 dark:text-white"
-                              : "text-zinc-500 hover:translate-x-1 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-zinc-300"
+                              ? "bg-zinc-100 font-semibold text-zinc-900 shadow-sm dark:bg-zinc-800/70 dark:text-white"
+                              : "text-zinc-500 hover:bg-zinc-100/60 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800/40 dark:hover:text-zinc-200"
                           )}
                         >
                           <span className="truncate">{item.title}</span>
