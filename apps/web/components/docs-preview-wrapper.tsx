@@ -213,7 +213,7 @@ export function DocsPreviewWrapper({
         previewShell.dataset.previewExpanded = "true"
       })
     } else if (previewShell.style.position === "fixed") {
-      const rightColumn = layout.querySelector<HTMLElement>("[data-docs-right-column]")
+      const rightColumn = layout?.querySelector<HTMLElement>("[data-docs-right-column]")
       const col = rightColumn?.getBoundingClientRect()
       const targetFromLayout: PreviewRect | null = col
         ? isMobile
