@@ -92,19 +92,19 @@ export async function DocsPageLayout({
       className="flex flex-col lg:flex-row w-full h-full min-h-screen lg:h-screen bg-[#f3f4f6] dark:bg-[#080808] text-foreground"
     >
       {/* Minimal Navigation Cluster */}
-      <div className="fixed left-1 top-3 z-50 flex items-center gap-2 pointer-events-none sm:left-3 lg:absolute lg:left-6 lg:top-6">
-        <div className="pointer-events-auto">
+      <div className="fixed left-1 top-3 z-50 flex items-center gap-2.5 pointer-events-none sm:left-3 lg:absolute lg:left-6 lg:top-6">
+        <div className="pointer-events-auto shrink-0">
           <FloatingDocsSidebarLazy />
         </div>
-        <div className="inline-flex h-5 min-w-0 items-center gap-2 text-[15px] font-semibold leading-none text-black/50 [font-family:ui-sans-serif,system-ui,sans-serif] pointer-events-auto dark:text-white/50 mix-blend-multiply dark:mix-blend-lighten">
+        <div className="inline-flex min-h-8 min-w-0 items-center gap-2 font-[family-name:var(--font-inter)] text-[15px] font-normal tracking-[-0.02em] leading-none text-black/45 pointer-events-auto dark:text-white/45">
           <Link
             href="/docs"
-            className="shrink-0 transition-colors hover:text-black/80 dark:hover:text-white/80"
+            className="shrink-0 font-normal transition-colors hover:text-black/70 dark:hover:text-white/70"
           >
             Docs
           </Link>
-          <span className="shrink-0 select-none opacity-40">·</span>
-          <span className="max-w-[130px] truncate sm:max-w-[220px] font-bold text-black/70 dark:text-white/70">
+          <span className="shrink-0 select-none font-light opacity-50">·</span>
+          <span className="max-w-[130px] truncate font-medium text-black/60 sm:max-w-[220px] dark:text-white/60">
             {title}
           </span>
         </div>
