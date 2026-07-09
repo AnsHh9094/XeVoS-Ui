@@ -1,14 +1,13 @@
 "use client"
 
-import { useState } from "react"
-import { Terminal } from "lucide-react"
 import { SiteHeader } from "@/components/site-header"
 import { DocsScrollEdgeFade } from "@/components/docs-scroll-edge-fade"
 import { CodeInline, Section } from "@/components/component-layout"
 import { CopyButton } from "@/components/copy-button"
-
-const PACKAGE_MANAGERS = ["pnpm", "npm", "yarn", "bun"] as const
-type PackageManager = (typeof PACKAGE_MANAGERS)[number]
+import {
+  PackageManagerCommand,
+  type PackageManager,
+} from "@/components/package-manager-command"
 
 const MCP_INIT_COMMANDS: Record<PackageManager, string> = {
   pnpm: "pnpm dlx shadcn@latest mcp init",
@@ -36,48 +35,6 @@ function CodeBlock({ code }: { code: string }) {
   )
 }
 
-function CommandTabs({ selected, onSelect }: { selected: PackageManager; onSelect: (pm: PackageManager) => void }) {
-  return (
-    <div className="w-full max-w-full">
-      <div className="relative rounded-xl border border-border overflow-hidden bg-zinc-100 dark:bg-zinc-900/50 font-mono text-sm leading-relaxed text-foreground">
-        <div className="flex items-center border-b border-border/40 bg-zinc-50/50 dark:bg-zinc-900/20 overflow-x-auto no-scrollbar">
-          {PACKAGE_MANAGERS.map((pm) => (
-            <button
-              key={pm}
-              onClick={() => onSelect(pm)}
-              className={[
-                "flex items-center gap-2 border-r border-border/40 px-4 py-2.5 text-xs font-medium transition-all min-w-fit outline-none hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50",
-                selected === pm
-                  ? "bg-transparent text-zinc-950 dark:text-zinc-50 font-semibold"
-                  : "bg-zinc-100/30 dark:bg-zinc-800/10 text-muted-foreground/80 hover:text-foreground",
-              ].join(" ")}
-            >
-              <Terminal
-                className={[
-                  "h-3.5 w-3.5",
-                  selected === pm ? "text-zinc-950 dark:text-zinc-50" : "text-muted-foreground/70",
-                ].join(" ")}
-              />
-              <span>{pm}</span>
-            </button>
-          ))}
-          <div className="flex-1" />
-        </div>
-
-        <div className="relative flex items-center p-4">
-          <div className="flex-1 overflow-x-auto whitespace-nowrap no-scrollbar pr-12">
-            <span className="mr-2 text-muted-foreground/40 select-none">$</span>
-            <span className="text-zinc-950 dark:text-zinc-100">{MCP_INIT_COMMANDS[selected]}</span>
-          </div>
-
-          <div className="absolute right-0 top-0 bottom-0 pl-16 pr-4 flex items-center bg-gradient-to-l from-zinc-100/90 to-transparent dark:from-zinc-900/90 dark:to-transparent">
-            <CopyButton code={MCP_INIT_COMMANDS[selected]} />
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 export default function McpDocsPage() {
   const registryNamespace = process.env.NEXT_PUBLIC_REGISTRY_NAMESPACE || "@componentry"
@@ -142,7 +99,8 @@ export default function McpDocsPage() {
 }
 
 function McpInitTabs() {
-  const [selected, setSelected] = useState<PackageManager>("pnpm")
-  return <CommandTabs selected={selected} onSelect={setSelected} />
+  return (
+    <PackageManagerCommand getCommand={(pm) => MCP_INIT_COMMANDS[pm]} />
+  )
 }
 
