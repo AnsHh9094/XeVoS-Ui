@@ -98,6 +98,10 @@ const docsImportMap: Record<
     import("@/components/docs/text-repel").then((m) => ({
       default: m.TextRepelDocs,
     })),
+  "kinetic-text-reveal": () =>
+    import("@/components/docs/kinetic-text-reveal").then((m) => ({
+      default: m.KineticTextRevealDocs,
+    })),
   "cursor-driven-particle-typography": () =>
     import("@/components/docs/cursor-driven-particle-typography").then((m) => ({
       default: m.CursorDrivenParticleTypographyDocs,

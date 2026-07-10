@@ -86,6 +86,14 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/textrepel.webm",
   },
+  "kinetic-text-reveal": {
+    title: "Kinetic Text Reveal",
+    description:
+      "Directional text reveal with soft blur and configurable word, character, or line stagger timing.",
+    category: "Text Animations",
+    slug: "kinetic-text-reveal",
+    addedAt: "2026-06-07",
+  },
   "cursor-driven-particle-typography": {
     title: "Particle Typography",
     description:
