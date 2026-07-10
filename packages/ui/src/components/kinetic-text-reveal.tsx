@@ -255,7 +255,7 @@ export const KineticTextReveal = forwardRef<
             <span
               key={`${run}-${index}`}
               className={cn(
-                "inline-block overflow-hidden align-baseline",
+                "inline-block overflow-hidden align-baseline pb-1",
                 maskClassName,
               )}
               aria-hidden="true"
