@@ -155,9 +155,9 @@ const HEADLINE_CLASS =
   "max-w-[820px] text-[13cqi] font-semibold leading-[0.86] tracking-normal text-white md:text-[8cqi] lg:text-[6.4cqi]";
 
 export function SilkAurora({
-  title = "Silk Aurora",
-  subtitle = "Premium Atmosphere",
-  description = "A satin-dark WebGL background with aurora ribbons, pearlescent highlights, fine grain, and cursor-driven depth.",
+  title,
+  subtitle,
+  description,
   baseColor = DEFAULT_BASE,
   midColor = DEFAULT_MID,
   sheenColor = DEFAULT_SHEEN,
