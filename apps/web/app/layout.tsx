@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import { Albert_Sans, JetBrains_Mono, Instrument_Serif } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import Script from "next/script"
 import "@workspace/ui/globals.css"
 import { Providers } from "@/components/providers"
 import { JsonLd } from "@/components/seo/json-ld"
@@ -180,6 +181,11 @@ export default function RootLayout({
           <Providers>{children}</Providers>
         </div>
         <SpeedInsights />
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="26f17963-74a5-48ce-8d5c-6cebb2ca2baa"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
