@@ -62,6 +62,10 @@ const docsImportMap: Record<
     import("@/components/docs/webgl-liquid").then((m) => ({
       default: m.WebGLLiquidDocs,
     })),
+  "silk-aurora": () =>
+    import("@/components/docs/silk-aurora").then((m) => ({
+      default: m.SilkAuroraDocs,
+    })),
   "closing-plasma": () =>
     import("@/components/docs/closing-plasma").then((m) => ({
       default: m.ClosingPlasmaDocs,
@@ -126,7 +130,7 @@ const docsImportMap: Record<
     import("@/components/docs/orbit-card-stack").then((m) => ({
       default: m.OrbitCardStackDocs,
     })),
-  "signature": () =>
+  signature: () =>
     import("@/components/docs/signature").then((m) => ({
       default: m.SignatureDocs,
     })),
