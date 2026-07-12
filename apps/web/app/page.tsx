@@ -23,10 +23,15 @@ import { DitherGradient } from "@workspace/ui/components/dither-gradient"
 import { MagneticDock, DockIconHome, DockIconSearch, DockIconMail, DockIconSettings, DockIconFolder } from "@workspace/ui/components/magnetic-dock"
 
 const showcaseCardClass =
-  "relative flex flex-col rounded-2xl border border-border bg-white dark:bg-[#1a1a1a] p-2 shadow-card transition-all duration-300 hover:border-input hover:shadow-card-hover"
+  "relative flex flex-col rounded-2xl border border-border bg-white dark:bg-[#1a1a1a] p-2 shadow-card transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:scale-[1.02] hover:border-input hover:shadow-card-hover active:scale-[0.98]"
 
 const showcasePreviewClass =
-  "relative flex-1 w-full overflow-hidden rounded-xl border border-dashed border-border bg-zinc-50 dark:bg-[#111] shadow-surface-inset transition-colors"
+  "relative flex-1 w-full overflow-hidden rounded-xl border border-dashed border-border bg-zinc-50 dark:bg-[#111] shadow-surface-inset"
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] as const } },
+}
 
 export default function Home() {
   return (
@@ -43,7 +48,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
           >
             <a
               href="https://vercel.com/open-source-program"
@@ -63,7 +68,7 @@ export default function Home() {
           <motion.h1
             initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
             className="mt-6 text-4xl font-semibold leading-[1.05] tracking-[-0.04em] text-zinc-900 dark:text-white sm:text-5xl md:text-6xl lg:text-[3.35rem]"
           >
             Components with motion.
@@ -74,7 +79,7 @@ export default function Home() {
           <motion.p
             initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, delay: 0.35, ease: [0.23, 1, 0.32, 1] }}
             className="mt-4 text-base sm:text-lg md:text-xl text-zinc-400 dark:text-zinc-600 max-w-xl font-medium tracking-tight"
           >
             Animated React components, ready to ship.
@@ -83,7 +88,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, delay: 0.5, ease: [0.23, 1, 0.32, 1] }}
             className="mt-2"
           >
             <HeroButtons />
@@ -94,13 +99,17 @@ export default function Home() {
 
           <LandingContent>
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.06 } },
+          }}
           className="mb-20 mt-20 grid w-full min-w-0 auto-rows-[min(300px,70vw)] grid-cols-1 gap-3 md:auto-rows-[300px] md:grid-cols-4 md:grid-rows-3 md:gap-4"
         >
           {/* Card 1: 1x1 Dark */}
-          <div className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
+          <motion.div variants={cardVariants} className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
             <div className={`${showcasePreviewClass} flex flex-col items-center justify-center p-6 pb-0 pt-0`}>
                <div className="absolute inset-0 opacity-60 mix-blend-multiply dark:mix-blend-screen scale-150">
                  <MatrixRain speed={30} fontSize={10} variant="cyan" />
@@ -109,10 +118,10 @@ export default function Home() {
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
               Matrix rain
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 2: 2x1 Dark */}
-          <div className={`md:col-span-2 md:row-span-1 ${showcaseCardClass}`}>
+          <motion.div variants={cardVariants} className={`md:col-span-2 md:row-span-1 ${showcaseCardClass}`}>
             <div className={`${showcasePreviewClass} flex flex-col items-center justify-center pt-8`}>
                 <div className="relative flex h-24 w-full min-w-0 overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
                    <ScrollBasedVelocity text="COMPONENTRY" default_velocity={3} className="font-sans text-4xl font-black tracking-tighter text-zinc-800 dark:text-white sm:text-6xl md:text-8xl" />
@@ -121,20 +130,20 @@ export default function Home() {
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
               Scroll velocity
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 3: 1x2 White */}
-          <div className={`md:col-span-1 md:row-span-2 ${showcaseCardClass}`}>
+          <motion.div variants={cardVariants} className={`md:col-span-1 md:row-span-2 ${showcaseCardClass}`}>
             <div className={showcasePreviewClass}>
               <InfiniteIconField />
             </div>
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
               Infinite icon field
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 4: 2x1 White */}
-          <div className={`md:col-span-2 md:row-span-1 ${showcaseCardClass}`}>
+          <motion.div variants={cardVariants} className={`md:col-span-2 md:row-span-1 ${showcaseCardClass}`}>
             <div className={`${showcasePreviewClass} flex flex-col items-center justify-center p-0`}>
                  <ResponsiveMagnetLines
                     rows={5}
@@ -148,10 +157,10 @@ export default function Home() {
               Magnet lines
               <span className="hidden shrink-0 font-mono text-xs tracking-wider text-zinc-400 opacity-60 sm:inline">[ hover over me ]</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 5: 1x1 Dither Gradient */}
-          <div className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
+          <motion.div variants={cardVariants} className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
             <div className={`${showcasePreviewClass} flex flex-col items-center justify-center`}>
               <div className="absolute inset-0 z-0 opacity-100 rounded-xl overflow-hidden">
                  <DitherGradient colorFrom="#ffaa40" colorTo="#9c40ff" colorMid="#ff00cc" intensity={0.5} speed={2} />
@@ -160,10 +169,10 @@ export default function Home() {
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
               Dither gradient
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 6: 1x1 Dark */}
-          <div className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
+          <motion.div variants={cardVariants} className={`md:col-span-1 md:row-span-1 ${showcaseCardClass}`}>
             <div className={`${showcasePreviewClass} flex flex-col items-center justify-center p-0`}>
                 <div className="relative w-full h-full rounded-xl overflow-hidden">
                    <AnimatedGradient config={{ preset: "Aurora" }} />
@@ -172,10 +181,10 @@ export default function Home() {
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
               Animated gradient
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 7: 3x1 Magnetic Dock */}
-          <div className={`md:col-span-3 md:row-span-1 ${showcaseCardClass}`}>
+          <motion.div variants={cardVariants} className={`md:col-span-3 md:row-span-1 ${showcaseCardClass}`}>
             <div className={`${showcasePreviewClass} flex max-h-[260px] items-center justify-center overflow-hidden p-6 text-black sm:p-10`}>
               <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px] opacity-70 dark:opacity-60" />
               
@@ -197,7 +206,7 @@ export default function Home() {
             <div className="shrink-0 pt-3 pb-1 px-3 text-sm font-medium text-zinc-700 dark:text-zinc-400">
               Magnetic dock
             </div>
-          </div>
+          </motion.div>
         </motion.div>
           </LandingContent>
 
