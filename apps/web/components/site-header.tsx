@@ -67,6 +67,7 @@ export function SiteHeader({ sidebarToggle, landingGutter }: SiteHeaderProps) {
                     <Link
                         href="https://shadcnblocks.com"
                         target="_blank"
+                        data-umami-event="click-sponsor-shadcnblocks"
                         className="hidden md:inline-flex items-center gap-2 border border-input/50 hover:border-input hover:bg-accent/50 pl-2 pr-3 h-9 rounded-md bg-muted/30 text-sm font-normal transition-colors"
                     >
                         <span className="text-[10px] font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">Sponsor</span>
