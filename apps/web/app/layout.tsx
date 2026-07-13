@@ -49,10 +49,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Componentry - Premium React UI Component Library by Harsh Jadhav",
+    default: "Componentry — Animated React UI Components for Modern Apps",
     template: "%s | Componentry - UI Component Library",
   },
-  description: "Componentry is a free, open-source React UI component library by Harsh Jadhav. Beautiful, animated, copy-paste components built with Tailwind CSS, TypeScript, and Framer Motion. The best UI components for modern web applications.",
+  description: "Beautiful, animated, copy-paste React UI components built with Tailwind CSS, TypeScript, and Framer Motion. Free and open-source.",
   keywords: [
     "Componentry",
     "Componentry UI",
@@ -74,10 +74,6 @@ export const metadata: Metadata = {
     "web components",
     "frontend components",
     "design system",
-    "Harsh Jadhav",
-    "Harsh Jadhav developer",
-    "Harsh Jadhav portfolio",
-    "harshjdhv",
     "React developer",
     "frontend developer",
     "shadcn alternative",
@@ -104,8 +100,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    title: "Componentry - Premium React UI Component Library by Harsh Jadhav",
-    description: "Free, open-source React UI components. Beautiful, animated, copy-paste components built with Tailwind CSS, TypeScript & Framer Motion by Harsh Jadhav.",
+    title: "Componentry — Animated React UI Components for Modern Apps",
+    description: "Beautiful, animated, copy-paste React UI components built with Tailwind CSS, TypeScript, and Framer Motion. Free and open-source.",
     siteName: "Componentry",
     images: [
       {
@@ -120,7 +116,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Componentry - Premium React UI Component Library",
-    description: "Free, open-source React UI components by Harsh Jadhav. Beautiful, animated, copy-paste components.",
+    description: "Beautiful, animated, copy-paste React UI components built with Tailwind CSS, TypeScript, and Framer Motion. Free and open-source.",
     images: [
       {
         url: `${siteUrl}/opengraph-image`,

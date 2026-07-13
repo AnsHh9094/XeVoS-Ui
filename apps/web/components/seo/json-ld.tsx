@@ -29,7 +29,7 @@ export function JsonLd() {
     alternateName: ["Componentry UI", "Componentry Components"],
     url: siteUrl,
     description:
-      "Free, open-source React UI component library by Harsh Jadhav. Beautiful, animated, copy-paste components.",
+      "Beautiful, animated, copy-paste React UI components built with Tailwind CSS, TypeScript, and Framer Motion. Free and open-source.",
     publisher: {
       "@type": "Person",
       name: "Harsh Jadhav",
