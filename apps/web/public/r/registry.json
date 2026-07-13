@@ -106,6 +106,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "liquid-chrome",
+      "type": "registry:ui"
+    },
+    {
       "name": "mac-keyboard",
       "type": "registry:ui"
     },
