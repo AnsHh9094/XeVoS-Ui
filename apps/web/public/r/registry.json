@@ -2,7 +2,12 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "componentry",
   "homepage": "https://componentry.fun",
-  "aliases": ["componentry", "componentryui", "ui", "cmp"],
+  "aliases": [
+    "componentry",
+    "componentryui",
+    "ui",
+    "cmp"
+  ],
   "items": [
     {
       "name": "animated-gradient",
@@ -14,6 +19,10 @@
     },
     {
       "name": "border-beam",
+      "type": "registry:ui"
+    },
+    {
+      "name": "bouncy-accordion",
       "type": "registry:ui"
     },
     {
