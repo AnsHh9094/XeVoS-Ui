@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import { absoluteUrl } from "@/lib/site"
 
 const fontInter = Inter({
   subsets: ["latin"],
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
     description: "Browse all React UI components. Copy-paste ready code with Tailwind CSS and Framer Motion.",
   },
   alternates: {
-    canonical: "https://componentry.fun/docs",
+    canonical: absoluteUrl("/docs"),
   },
 }
 

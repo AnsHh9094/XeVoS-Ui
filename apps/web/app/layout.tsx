@@ -8,6 +8,7 @@ import "@workspace/ui/globals.css"
 import { Providers } from "@/components/providers"
 import { JsonLd } from "@/components/seo/json-ld"
 import { RouteScrollbarController } from "@/components/route-scrollbar-controller"
+import { absoluteUrl, siteConfig } from "@/lib/site"
 
 const fontSans = Albert_Sans({
   subsets: ["latin"],
@@ -34,8 +35,6 @@ const fontDisplay = Albert_Sans({
   display: "swap",
 })
 
-const siteUrl = "https://www.componentry.fun"
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -47,12 +46,12 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Componentry — Animated React UI Components for Modern Apps",
+    default: siteConfig.title,
     template: "%s | Componentry - UI Component Library",
   },
-  description: "Beautiful, animated, copy-paste React UI components built with Tailwind CSS, TypeScript, and Framer Motion. Free and open-source.",
+  description: siteConfig.description,
   keywords: [
     "Componentry",
     "Componentry UI",
@@ -83,29 +82,29 @@ export const metadata: Metadata = {
     "handcrafted components",
   ],
   authors: [
-    { name: "Harsh Jadhav", url: "https://twitter.com/harshjdhv" },
-    { name: "Harsh Jadhav", url: "https://github.com/harshjdhv" },
+    { name: siteConfig.author.name, url: siteConfig.author.twitter },
+    { name: siteConfig.author.name, url: siteConfig.author.github },
   ],
-  creator: "Harsh Jadhav",
-  publisher: "Harsh Jadhav",
+  creator: siteConfig.author.name,
+  publisher: siteConfig.author.name,
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
   alternates: {
-    canonical: siteUrl,
+    canonical: siteConfig.url,
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: siteUrl,
-    title: "Componentry — Animated React UI Components for Modern Apps",
-    description: "Beautiful, animated, copy-paste React UI components built with Tailwind CSS, TypeScript, and Framer Motion. Free and open-source.",
-    siteName: "Componentry",
+    url: siteConfig.url,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
     images: [
       {
-        url: `${siteUrl}/opengraph-image`,
+        url: absoluteUrl("/opengraph-image"),
         width: 1200,
         height: 630,
         alt: "Componentry - Premium React UI Component Library",
@@ -116,17 +115,17 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Componentry - Premium React UI Component Library",
-    description: "Beautiful, animated, copy-paste React UI components built with Tailwind CSS, TypeScript, and Framer Motion. Free and open-source.",
+    description: siteConfig.description,
     images: [
       {
-        url: `${siteUrl}/opengraph-image`,
+        url: absoluteUrl("/opengraph-image"),
         width: 1200,
         height: 630,
         alt: "Componentry - Premium React UI Component Library",
       },
     ],
-    creator: "@harshjdhv",
-    site: "@harshjdhv",
+    creator: siteConfig.author.handle,
+    site: siteConfig.author.handle,
   },
   robots: {
     index: true,
