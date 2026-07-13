@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@workspace/ui/lib/utils";
+import { cn } from "../lib/utils";
 import { useEffect, useRef } from "react";
 
 interface LiquidChromeProps {
@@ -33,7 +33,7 @@ const fragmentShaderSource = `
   uniform float u_amplitude;
 
   // Simple 2D noise
-  mat2 m = mat2( 0.80,  0.60, -0.60,  0.80 );
+  const mat2 m = mat2( 0.80,  0.60, -0.60,  0.80 );
 
   float hash( vec2 p ) {
       float h = dot(p,vec2(127.1,311.7));
@@ -62,15 +62,23 @@ const fragmentShaderSource = `
   void main() {
     vec2 uv = gl_FragCoord.xy / u_resolution.xy;
     vec2 p = -1.0 + 2.0 * uv;
-    p.x *= u_resolution.x / u_resolution.y;
+    if (u_resolution.y > 0.0) {
+        p.x *= u_resolution.x / u_resolution.y;
+    }
 
     // Mouse interaction
     vec2 mouse = (u_mouse - 0.5) * 2.0;
-    mouse.x *= u_resolution.x / u_resolution.y;
+    if (u_resolution.y > 0.0) {
+        mouse.x *= u_resolution.x / u_resolution.y;
+    }
     
     // Distort based on distance to mouse
-    float dist = length(p - mouse);
-    vec2 distortion = normalize(p - mouse) * exp(-dist * 3.0) * 0.1;
+    vec2 diff = p - mouse;
+    float dist = length(diff);
+    vec2 distortion = vec2(0.0);
+    if (dist > 0.0) {
+        distortion = (diff / dist) * exp(-dist * 3.0) * 0.1;
+    }
     p += distortion;
 
     float time = u_time * 0.5;
@@ -99,20 +107,29 @@ const fragmentShaderSource = `
     col = mix(col, vec3(1.0, 1.0, 1.0), highlight2); // add bright white specular
     
     // Vignette
-    col *= 0.5 + 0.5 * pow(16.0 * uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y), 0.2);
+    float v = 16.0 * uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y);
+    col *= 0.5 + 0.5 * pow(max(0.0, v), 0.2);
 
     gl_FragColor = vec4(col, 1.0);
   }
-`;
+`;;
 
 export function LiquidChrome({
   className,
-  baseColor = [0.1, 0.1, 0.1], // Dark gray base for chrome
+  baseColor = [0.1, 0.1, 0.1],
   speed = 1.0,
   amplitude = 0.6,
   interactive = true,
 }: LiquidChromeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const colorRef = useRef(baseColor);
+  colorRef.current = baseColor;
+  const speedRef = useRef(speed);
+  speedRef.current = speed;
+  const amplitudeRef = useRef(amplitude);
+  amplitudeRef.current = amplitude;
+  const interactiveRef = useRef(interactive);
+  interactiveRef.current = interactive;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -124,27 +141,32 @@ export function LiquidChrome({
       return;
     }
 
-    // Setup shaders
     const vertexShader = gl.createShader(gl.VERTEX_SHADER)!;
     gl.shaderSource(vertexShader, vertexShaderSource);
     gl.compileShader(vertexShader);
+    if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
+      console.error("Vertex shader error:", gl.getShaderInfoLog(vertexShader));
+      return;
+    }
 
     const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER)!;
     gl.shaderSource(fragmentShader, fragmentShaderSource);
     gl.compileShader(fragmentShader);
-    
-    // Check for compilation errors
     if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
-      console.error("Fragment shader compilation error:", gl.getShaderInfoLog(fragmentShader));
+      console.error("Fragment shader error:", gl.getShaderInfoLog(fragmentShader));
+      return;
     }
 
     const program = gl.createProgram()!;
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
     gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error("Program link error:", gl.getProgramInfoLog(program));
+      return;
+    }
     gl.useProgram(program);
 
-    // Setup full-screen quad
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.bufferData(
@@ -157,7 +179,6 @@ export function LiquidChrome({
     gl.enableVertexAttribArray(positionLocation);
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
-    // Uniforms
     const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
     const timeLocation = gl.getUniformLocation(program, "u_time");
     const mouseLocation = gl.getUniformLocation(program, "u_mouse");
@@ -170,7 +191,6 @@ export function LiquidChrome({
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      // Use devicePixelRatio for sharp rendering on retina displays
       const dpr = window.devicePixelRatio || 1;
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
@@ -179,28 +199,24 @@ export function LiquidChrome({
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!interactive) return;
+      if (!interactiveRef.current) return;
       const rect = canvas.getBoundingClientRect();
       mouse[0] = (e.clientX - rect.left) / rect.width;
-      mouse[1] = 1.0 - (e.clientY - rect.top) / rect.height; // Flip Y for WebGL
+      mouse[1] = 1.0 - (e.clientY - rect.top) / rect.height;
     };
 
     window.addEventListener("resize", resize);
-    if (interactive) {
-      window.addEventListener("mousemove", handleMouseMove);
-    }
-    
-    // Initial resize
+    window.addEventListener("mousemove", handleMouseMove);
+
     resize();
 
-    // Render loop
     const render = (time: number) => {
-      const elapsedTime = (time - startTime) * 0.001 * speed;
+      const elapsedTime = (time - startTime) * 0.001 * speedRef.current;
 
       gl.uniform1f(timeLocation, elapsedTime);
       gl.uniform2f(mouseLocation, mouse[0], mouse[1]);
-      gl.uniform3f(baseColorLocation, baseColor[0], baseColor[1], baseColor[2]);
-      gl.uniform1f(amplitudeLocation, amplitude);
+      gl.uniform3f(baseColorLocation, colorRef.current[0], colorRef.current[1], colorRef.current[2]);
+      gl.uniform1f(amplitudeLocation, amplitudeRef.current);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       animationFrameId = requestAnimationFrame(render);
@@ -210,12 +226,10 @@ export function LiquidChrome({
 
     return () => {
       window.removeEventListener("resize", resize);
-      if (interactive) {
-        window.removeEventListener("mousemove", handleMouseMove);
-      }
+      window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [baseColor, speed, amplitude, interactive]);
+  }, []);
 
   return (
     <canvas
