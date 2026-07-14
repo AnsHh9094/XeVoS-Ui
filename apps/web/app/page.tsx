@@ -217,10 +217,9 @@ export default function Home() {
       <LandingGutter>
         <Testimonials />
         <LandingShaderBand />
-        <LandingContent>
-          <Footer />
-        </LandingContent>
       </LandingGutter>
+
+      <Footer />
 
     </div>
   )

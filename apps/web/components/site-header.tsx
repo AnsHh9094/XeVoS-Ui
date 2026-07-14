@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ComponentryLogomark } from "@/components/logos/componentry-logomark"
 import { CommandMenu } from "@/components/command-menu"
+import { landingGutterClass } from "@/components/landing/landing-frame"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { cn } from "@/lib/utils"
 
@@ -25,6 +26,11 @@ function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
 export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
     const pathname = usePathname()
     const [stars, setStars] = React.useState<number | null>(null)
+    const [mobileNavOpen, setMobileNavOpen] = React.useState(false)
+
+    React.useEffect(() => {
+        setMobileNavOpen(false)
+    }, [pathname])
 
     React.useEffect(() => {
         const fetchStars = async () => {
@@ -103,8 +109,12 @@ export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
     return (
         <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-line bg-white dark:bg-[#09090B]">
             <div
-                className="mx-auto flex h-14 w-full max-w-[95rem] items-center px-6 md:px-24"
+                className={cn(
+                    "h-14 w-full",
+                    landingGutterClass
+                )}
             >
+                <div className="mx-auto flex h-full w-full max-w-[1360px] items-center">
                 <div className="flex flex-1 items-center gap-1.5">
                     {sidebarToggle && (
                         <div className="md:hidden">
@@ -175,9 +185,46 @@ export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
                         <div className="hidden sm:block">
                             <ThemeToggle />
                         </div>
+                        <button
+                            type="button"
+                            className="group relative flex size-8 touch-manipulation flex-col items-center justify-center gap-1 rounded-md border-none transition-colors before:absolute before:-inset-x-2 before:-top-8 before:-bottom-1 active:scale-none aria-expanded:bg-accent sm:hidden"
+                            aria-label={mobileNavOpen ? "Close navigation" : "Open navigation"}
+                            aria-expanded={mobileNavOpen}
+                            onClick={() => setMobileNavOpen((open) => !open)}
+                        >
+                            <span
+                                className={cn(
+                                    "h-0.5 w-4 rounded-[1px] bg-foreground transition-transform",
+                                    mobileNavOpen && "translate-y-[3px] rotate-45"
+                                )}
+                            />
+                            <span
+                                className={cn(
+                                    "h-0.5 w-4 rounded-[1px] bg-foreground transition-transform",
+                                    mobileNavOpen && "-translate-y-[3px] -rotate-45"
+                                )}
+                            />
+                        </button>
                     </div>
                 </div>
+                </div>
             </div>
+            {mobileNavOpen && (
+                <div className="absolute right-4 top-[calc(100%+0.5rem)] z-50 flex w-48 origin-top-right flex-col gap-4 rounded-xl bg-popover p-1 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden sm:hidden dark:ring-foreground/20">
+                    <nav className="flex flex-col" aria-label="Mobile navigation">
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                aria-current={item.active ? "page" : undefined}
+                                className="rounded-lg px-3 py-1.5 text-base aria-[current=page]:bg-accent"
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
+                    </nav>
+                </div>
+            )}
         </header>
     )
 }

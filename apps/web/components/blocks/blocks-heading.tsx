@@ -1,29 +1,18 @@
-import { Geist } from "next/font/google"
-
-import { cn } from "@/lib/utils"
-
-const geist = Geist({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-blocks-geist",
-  display: "swap",
-})
-
 export function BlocksHeading({
   title,
+  description,
 }: {
   title: string
+  description: string
 }) {
   return (
-    <section
-      className={cn(
-        geist.variable,
-        "px-3 py-9 font-[family-name:var(--font-blocks-geist)] md:px-4 md:py-12"
-      )}
-    >
-      <h1 className="max-w-none text-balance text-[1.875rem] font-medium leading-[1.12] tracking-normal md:whitespace-nowrap md:text-[2.5rem] lg:text-[2.75rem]">
+    <section className="px-4 py-12 md:px-0 lg:py-16">
+      <h1 className="mb-2 inline-block text-4xl font-semibold leading-[1.1] tracking-tight text-zinc-900 lg:text-5xl dark:text-zinc-100">
         {title}
       </h1>
+      <p className="mt-1 max-w-2xl text-pretty text-lg font-normal leading-relaxed text-muted-foreground/90">
+        {description}
+      </p>
     </section>
   )
 }

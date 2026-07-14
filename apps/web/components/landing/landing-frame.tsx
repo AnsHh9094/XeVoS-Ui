@@ -1,7 +1,9 @@
 import { cn } from "@/lib/utils"
 
-/** Horizontal inset for column lines, shaded bands, and page content (16px → 80px). */
-export const landingGutterClass = "px-4 md:px-20"
+/** Horizontal inset for column lines, shaded bands, and page content. */
+export const landingGutterClass = "px-[max(1rem,calc((100vw-1440px)/2))]"
+const landingGuideLeftClass = "left-[max(1rem,calc((100vw-1440px)/2))]"
+const landingGuideRightClass = "right-[max(1rem,calc((100vw-1440px)/2))]"
 
 const shaderBandStyle: React.CSSProperties = {
   backgroundImage: `repeating-linear-gradient(
@@ -16,10 +18,30 @@ const shaderBandStyle: React.CSSProperties = {
 export function LandingGuideLines() {
   return (
     <>
-      <div className="pointer-events-none fixed inset-y-0 left-4 z-[60] w-px bg-line md:left-20" />
-      <div className="pointer-events-none fixed inset-y-0 right-4 z-[60] w-px bg-line md:right-20" />
-      <div className="pointer-events-none fixed left-4 top-14 z-[61] size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-[2px] border border-line bg-white md:left-20 dark:bg-[#09090B]" />
-      <div className="pointer-events-none fixed right-4 top-14 z-[61] size-2.5 translate-x-1/2 -translate-y-1/2 rounded-[2px] border border-line bg-white md:right-20 dark:bg-[#09090B]" />
+      <div
+        className={cn(
+          "pointer-events-none fixed inset-y-0 z-[60] hidden w-px bg-line md:block",
+          landingGuideLeftClass
+        )}
+      />
+      <div
+        className={cn(
+          "pointer-events-none fixed inset-y-0 z-[60] hidden w-px bg-line md:block",
+          landingGuideRightClass
+        )}
+      />
+      <div
+        className={cn(
+          "pointer-events-none fixed top-14 z-[61] hidden size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-[2px] border border-line bg-white md:block dark:bg-[#09090B]",
+          landingGuideLeftClass
+        )}
+      />
+      <div
+        className={cn(
+          "pointer-events-none fixed top-14 z-[61] hidden size-2.5 translate-x-1/2 -translate-y-1/2 rounded-[2px] border border-line bg-white md:block dark:bg-[#09090B]",
+          landingGuideRightClass
+        )}
+      />
     </>
   )
 }
@@ -51,6 +73,6 @@ export function LandingContent({
   className?: string
 }) {
   return (
-    <div className={cn("mx-auto w-full min-w-0 max-w-[1240px]", className)}>{children}</div>
+    <div className={cn("mx-auto w-full min-w-0 max-w-[1360px]", className)}>{children}</div>
   )
 }

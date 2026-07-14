@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 
 export function BlocksNav({ active }: { active?: string }) {
   return (
-    <nav className="sticky top-14 z-30 bg-background/85 px-2 pb-3 backdrop-blur">
+    <nav className="bg-background px-2 pb-3">
       <div className="flex gap-1 overflow-x-auto">
         <Link
           href="/blocks"

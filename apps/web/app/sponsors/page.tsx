@@ -192,10 +192,9 @@ export default function SponsorsPage() {
 
       <LandingGutter>
         <LandingShaderBand />
-        <LandingContent>
-          <Footer />
-        </LandingContent>
       </LandingGutter>
+
+      <Footer />
     </div>
   )
 }
