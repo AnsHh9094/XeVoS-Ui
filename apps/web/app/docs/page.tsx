@@ -359,10 +359,10 @@ export default function DocsPage() {
 
         {/* ── Hero ── */}
         <div className="mb-12 max-w-3xl">
-          <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 leading-[1.1] mb-2 inline-block">
+          <h1 className="inline-block text-3xl font-semibold leading-[1.05] tracking-[-0.04em] text-zinc-900 dark:text-white sm:text-4xl">
             Crafted Components.
           </h1>
-          <p className="text-lg text-zinc-500 dark:text-zinc-400 max-w-xl leading-relaxed">
+          <p className="mt-3 max-w-2xl text-sm font-medium tracking-tight text-zinc-400 sm:text-base dark:text-zinc-600">
             A growing collection of animated primitives for React.
           </p>
         </div>
