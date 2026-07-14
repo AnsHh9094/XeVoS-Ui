@@ -26,7 +26,7 @@ const showcaseCardClass =
   "relative flex flex-col rounded-2xl border border-border bg-white dark:bg-[#1a1a1a] p-2 shadow-card transform-gpu will-change-transform"
 
 const showcasePreviewClass =
-  "relative flex-1 w-full overflow-hidden rounded-xl border border-dashed border-border bg-zinc-50 dark:bg-[#111] shadow-surface-inset"
+  "relative flex-1 w-full overflow-hidden rounded-xl border border-dashed border-border bg-zinc-50 dark:bg-[#09090B] shadow-surface-inset"
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <div
       data-route-home
-      className="relative min-h-screen w-full overflow-x-hidden bg-white dark:bg-[#111] text-foreground transition-colors duration-300 selection:bg-zinc-200 dark:selection:bg-zinc-800"
+      className="relative min-h-screen w-full overflow-x-hidden bg-white dark:bg-[#09090B] text-foreground transition-colors duration-300 selection:bg-zinc-200 dark:selection:bg-zinc-800"
     >
       <LandingGuideLines />
       <SiteHeader landingGutter />

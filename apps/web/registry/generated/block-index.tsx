@@ -3,22 +3,12 @@
 
 import blocks from "./blocks.json"
 
-import Block0 from "@/registry/blocks/hero-product/hero-product"
-import Block1 from "@/registry/blocks/metrics-command-center/metrics-command-center"
-import Block2 from "@/registry/blocks/commerce-product-grid/commerce-product-grid"
+import Block0 from "@/registry/blocks/social-links-01/social-links-01"
 
 export const blockIndex = {
-  "hero-product": {
+  "social-links-01": {
     ...blocks[0],
     component: Block0,
-  },
-  "metrics-command-center": {
-    ...blocks[1],
-    component: Block1,
-  },
-  "commerce-product-grid": {
-    ...blocks[2],
-    component: Block2,
   },
 } as const
 

@@ -8,6 +8,7 @@ import { components, isNewComponent, type ComponentCategory, type ComponentMetad
 
 import { SiteHeader } from "@/components/site-header"
 import { DocsScrollEdgeFade } from "@/components/docs-scroll-edge-fade"
+import { LandingGuideLines } from "@/components/landing/landing-frame"
 
 type PreviewSources = {
   mp4: string
@@ -308,7 +309,8 @@ export default function DocsPage() {
     .filter(g => g.items.length > 0)
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#111] text-zinc-900 dark:text-zinc-100 font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#09090B] text-zinc-900 dark:text-zinc-100 font-sans overflow-x-hidden">
+      <LandingGuideLines />
       <DocsScrollEdgeFade position="bottom" />
 
       {/* ── Top Floating Header ── */}
@@ -348,7 +350,8 @@ export default function DocsPage() {
         </nav>
       </div>
 
-      <main className="max-w-[1400px] mx-auto pt-32 pb-32 px-6 sm:px-8 relative z-10">
+      <main className="relative z-10 px-4 pt-32 pb-32 md:px-20">
+        <div className="mx-auto w-full max-w-[1240px]">
 
         {/* ── Hero ── */}
         <div className="mb-12 max-w-3xl">
@@ -387,6 +390,7 @@ export default function DocsPage() {
         </div>
 
 
+        </div>
       </main >
     </div >
   )

@@ -5,9 +5,7 @@ import {
   Check,
   Code2,
   Copy,
-  ExternalLink,
   Monitor,
-  RefreshCcw,
   Smartphone,
   Tablet,
   Terminal,
@@ -38,6 +36,42 @@ const sizeIcons = {
 
 function copyText(text: string) {
   return navigator.clipboard.writeText(text)
+}
+
+function getRegistryItemNamespace(item: string) {
+  return `@componentry/${item}`
+}
+
+function FullScreenIcon(props: React.ComponentProps<"svg">) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
+      <path
+        d="M15.5 21C16.8956 21 17.5933 21 18.1611 20.8278C19.4395 20.44 20.44 19.4395 20.8278 18.1611C21 17.5933 21 16.8956 21 15.5M21 8.5C21 7.10444 21 6.40666 20.8278 5.83886C20.44 4.56046 19.4395 3.56004 18.1611 3.17224C17.5933 3 16.8956 3 15.5 3M8.5 21C7.10444 21 6.40666 21 5.83886 20.8278C4.56046 20.44 3.56004 19.4395 3.17224 18.1611C3 17.5933 3 16.8956 3 15.5M3 8.5C3 7.10444 3 6.40666 3.17224 5.83886C3.56004 4.56046 4.56046 3.56004 5.83886 3.17224C6.40666 3 7.10444 3 8.5 3"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function RefreshIcon(props: React.ComponentProps<"svg">) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      {...props}
+    >
+      <path d="M20.4879 15C19.2524 18.4956 15.9187 21 12 21C7.02943 21 3 16.9706 3 12C3 7.02943 7.02943 3 12 3C15.7292 3 18.9286 5.26806 20.2941 8.5" />
+      <path d="M15 9H18C19.4142 9 20.1213 9 20.5607 8.56066C21 8.12132 21 7.41421 21 6V3" />
+    </svg>
+  )
 }
 
 function CopyIconButton({
@@ -73,11 +107,12 @@ function CopyIconButton({
 
 function CopyCommandButton({ command }: { command: string }) {
   const [copied, setCopied] = React.useState(false)
+  const registryItem = command.replace("npx shadcn@latest add ", "")
 
   return (
     <button
       type="button"
-      className="inline-flex h-8 w-fit items-center gap-1.5 rounded-md border border-line bg-background px-2 font-mono text-[0.8125rem] font-normal text-foreground transition hover:bg-muted active:scale-[0.99]"
+      className="inline-flex h-8 w-fit items-center gap-1.5 rounded-md border border-line bg-background px-2 font-mono text-[0.8125rem] font-normal text-foreground transition hover:bg-muted"
       onClick={async () => {
         await copyText(command)
         setCopied(true)
@@ -91,7 +126,7 @@ function CopyCommandButton({ command }: { command: string }) {
       )}
       <span className="hidden sm:inline">
         <span className="text-muted-foreground">npx shadcn add</span>{" "}
-        https://componentry.fun/r/{command.match(/\/r\/([^/]+\.json)$/)?.[1] ?? ""}
+        {registryItem}
       </span>
       <span className="sm:hidden">Install</span>
     </button>
@@ -116,13 +151,13 @@ export function BlockViewer({
   const file =
     highlightedFiles.find((candidate) => candidate.target === activeFile) ??
     highlightedFiles[0]
-  const installCommand = `npx shadcn@latest add https://componentry.fun/r/${item.name}.json`
+  const installCommand = `npx shadcn@latest add ${getRegistryItemNamespace(item.name)}`
   const previewUrl = `/preview/${item.name}?theme=${theme}`
 
   return (
     <section
       id={item.name}
-      className="screen-line-top screen-line-bottom scroll-mt-20 bg-background"
+      className="scroll-mt-20 overflow-x-clip bg-background"
     >
       <div>
         <Rule />
@@ -187,9 +222,11 @@ export function BlockViewer({
                 aria-label="Open preview in new tab"
                 title="Open preview in new tab"
                 className="inline-flex size-6 items-center justify-center rounded-sm text-muted-foreground transition hover:bg-muted hover:text-foreground"
-                onClick={() => window.open(previewUrl, "_blank", "noopener,noreferrer")}
+                onClick={() =>
+                  window.open(previewUrl, "_blank", "noopener,noreferrer")
+                }
               >
-                <ExternalLink className="size-4" />
+                <FullScreenIcon className="size-4" />
               </button>
               <div className="mx-0.5 h-4 w-px bg-line" />
               <button
@@ -202,7 +239,7 @@ export function BlockViewer({
                   setIframeKey((key) => key + 1)
                 }}
               >
-                <RefreshCcw className="size-4" />
+                <RefreshIcon className="size-4" />
               </button>
             </div>
 
@@ -215,10 +252,10 @@ export function BlockViewer({
         <Rule />
 
         {view === "preview" ? (
-          <div className="relative overflow-hidden bg-muted/20 p-2">
+          <div className="relative max-w-full overflow-hidden bg-muted/20 p-2">
             <div
               className={cn(
-                "relative mx-auto overflow-hidden rounded-xl border border-line bg-background transition-[max-width] duration-300",
+                "relative mx-auto max-w-full overflow-hidden rounded-xl border border-line bg-background transition-[max-width] duration-300",
                 sizeClass[size]
               )}
             >

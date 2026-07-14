@@ -26,7 +26,7 @@ const links = {
 
 export function Footer() {
   return (
-    <footer className="relative w-full overflow-hidden border-t border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-[#111] pt-16 text-sm flex flex-col">
+    <footer className="relative w-full overflow-hidden border-t border-zinc-200/60 dark:border-zinc-800/60 bg-white dark:bg-[#09090B] pt-16 text-sm flex flex-col">
       <div className="w-full max-w-[95rem] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 xl:gap-12 w-full z-10 pb-16">
           {/* Brand and Description */}

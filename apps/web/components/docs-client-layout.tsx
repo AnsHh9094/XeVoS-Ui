@@ -32,7 +32,7 @@ export function DocsClientLayout({
 
     return (
         <div
-            className="flex flex-col w-full min-h-screen bg-[#f3f4f6] dark:bg-[#111] text-foreground transition-colors duration-300"
+            className="flex flex-col w-full min-h-screen bg-[#f3f4f6] dark:bg-[#09090B] text-foreground transition-colors duration-300"
         >
                 {/* Top Navbar */}
                 <SiteHeader sidebarToggle={<FloatingDocsSidebar />} />
@@ -42,7 +42,7 @@ export function DocsClientLayout({
                     <DocsSidebar />
 
                     {/* Main Content Area */}
-                    <main className="flex-1 w-full min-w-0 px-6 sm:px-12 lg:px-16 xl:px-24 py-16 space-y-16 lg:space-y-20 pb-40 dark:bg-[#141414]">
+                    <main className="flex-1 w-full min-w-0 px-6 sm:px-12 lg:px-16 xl:px-24 py-16 space-y-16 lg:space-y-20 pb-40 dark:bg-[#09090B]">
                         <header className="space-y-10">
                             <div className="space-y-6">
                                 <AnimatePresence mode="popLayout">
