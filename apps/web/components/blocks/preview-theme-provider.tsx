@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useSearchParams } from "next/navigation"
 
 import { getBlockTheme } from "@/lib/blocks/theme"
 
@@ -11,7 +12,8 @@ export function PreviewThemeProvider({
   theme?: string | null
   children: React.ReactNode
 }) {
-  const selectedTheme = getBlockTheme(theme)
+  const searchParams = useSearchParams()
+  const selectedTheme = getBlockTheme(searchParams.get("theme") ?? theme)
 
   React.useEffect(() => {
     document.documentElement.classList.toggle(

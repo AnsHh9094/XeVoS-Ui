@@ -8,27 +8,22 @@
   ],
   "blocks": [
     {
-      "name": "social-links-01",
-      "title": "Social Links 01",
-      "description": "A responsive social link grid with crisp editorial rails and compact icon tiles.",
+      "name": "gradient-hero-01",
+      "title": "Gradient Hero 01",
+      "description": "A simple centered hero with a warm cinematic gradient, compact badge, short copy, and two actions.",
       "type": "registry:block",
       "categories": ["marketing"],
       "files": [
         {
-          "path": "blocks/social-links-01/social-links-01.tsx",
-          "target": "components/social-links-01.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "icons/icon-placeholder.tsx",
-          "target": "registry/icons/icon-placeholder.tsx",
+          "path": "blocks/gradient-hero-01/gradient-hero-01.tsx",
+          "target": "components/gradient-hero-01.tsx",
           "type": "registry:component"
         }
       ],
       "meta": {
         "createdAt": "2026-06-30",
-        "iframeHeight": 360,
-        "previewClassName": "flex items-center py-10 [&>*]:w-full"
+        "iframeHeight": 760,
+        "previewClassName": "min-h-screen"
       }
     }
   ]
