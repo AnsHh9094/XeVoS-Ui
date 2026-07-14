@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getComponent } from "@/registry";
 import { getDocsImporter, getDocsSlugs } from "@/components/docs/lazy-registry";
 import { DocsPageLayout } from "@/components/docs-page-layout";
+import { absoluteUrl, siteConfig } from "@/lib/site";
 
 // -----------------------------------------------------------------------------
 // PERFORMANCE OPTIMIZATIONS:
@@ -17,6 +18,8 @@ interface PageProps {
         slug: string;
     }>;
 }
+
+export const dynamicParams = false;
 
 /**
  * Pre-generate all component pages at build time.
@@ -35,24 +38,50 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
         return {};
     }
 
-    const ogImageUrl = `https://componentry.fun/docs/components/${component.slug}/opengraph-image`;
+    const componentUrl = absoluteUrl(`/docs/components/${component.slug}`);
+    const ogImageUrl = absoluteUrl(`/docs/components/${component.slug}/opengraph-image`);
 
     return {
-        title: `${component.title} Component`,
+        title: `${component.title} React Component`,
         description: component.description,
+        keywords: [
+            component.title,
+            `${component.title} component`,
+            `${component.title} React component`,
+            `${component.title} Tailwind component`,
+            component.category,
+            "Componentry",
+            "React UI component",
+            "animated UI component",
+            "copy paste component",
+        ],
         alternates: {
-            canonical: `https://componentry.fun/docs/components/${component.slug}`,
+            canonical: componentUrl,
         },
         openGraph: {
-            title: `${component.title} Component`,
+            title: `${component.title} React Component | Componentry`,
             description: component.description,
+            url: componentUrl,
+            type: "article",
+            siteName: siteConfig.name,
             images: [{ url: ogImageUrl, width: 1200, height: 630, alt: `${component.title} Component` }],
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${component.title} Component`,
+            title: `${component.title} React Component | Componentry`,
             description: component.description,
             images: [ogImageUrl],
+        },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                "max-video-preview": -1,
+                "max-image-preview": "large",
+                "max-snippet": -1,
+            },
         },
     };
 }
@@ -134,10 +163,48 @@ export default async function ComponentPage(props: PageProps) {
 
     // If we have a dedicated docs component, render it with Suspense
     if (importer) {
+        const componentUrl = absoluteUrl(`/docs/components/${component.slug}`);
+        const componentJsonLd = {
+            "@context": "https://schema.org",
+            "@type": "SoftwareSourceCode",
+            name: `${component.title} React Component`,
+            description: component.description,
+            url: componentUrl,
+            codeRepository: siteConfig.repository,
+            programmingLanguage: ["TypeScript", "React", "CSS"],
+            runtimePlatform: "React",
+            applicationCategory: "DeveloperApplication",
+            isPartOf: {
+                "@type": "SoftwareSourceCode",
+                name: siteConfig.name,
+                url: siteConfig.url,
+            },
+            author: {
+                "@type": "Person",
+                name: siteConfig.author.name,
+                url: siteConfig.author.twitter,
+            },
+            license: "https://opensource.org/licenses/MIT",
+            keywords: [
+                component.title,
+                component.category,
+                "React component",
+                "Tailwind CSS",
+                "Framer Motion",
+                "Componentry",
+            ].join(", "),
+        };
+
         return (
-            <Suspense fallback={<DocsPageSkeleton />}>
-                <DocsContent slug={params.slug} />
-            </Suspense>
+            <>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(componentJsonLd) }}
+                />
+                <Suspense fallback={<DocsPageSkeleton />}>
+                    <DocsContent slug={params.slug} />
+                </Suspense>
+            </>
         );
     }
 

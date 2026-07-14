@@ -22,6 +22,10 @@
       "type": "registry:ui"
     },
     {
+      "name": "bouncy-accordion",
+      "type": "registry:ui"
+    },
+    {
       "name": "circuit-board",
       "type": "registry:ui"
     },
@@ -99,6 +103,10 @@
     },
     {
       "name": "liquid-blob",
+      "type": "registry:ui"
+    },
+    {
+      "name": "liquid-chrome",
       "type": "registry:ui"
     },
     {

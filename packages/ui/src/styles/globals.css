@@ -60,6 +60,8 @@
     0 1px 1px --alpha(var(--color-black) / 4%),
     0 14px 36px --alpha(var(--color-black) / 7%);
   --shadow-panel: var(--surface-inset), 0 1px 2px --alpha(var(--color-black) / 4%);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 .dark {
@@ -173,6 +175,8 @@
   --shadow-card-hover: var(--shadow-card-hover);
   --shadow-panel: var(--shadow-panel);
   --shadow-surface-inset: var(--surface-inset);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
 
   --animate-border-beam: border-beam calc(var(--duration) * 1s) infinite linear;
   --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite

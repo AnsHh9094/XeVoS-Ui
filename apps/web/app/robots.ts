@@ -1,27 +1,26 @@
 import { MetadataRoute } from "next";
+import { absoluteUrl, siteConfig } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://www.componentry.fun";
-
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/", "/preview/"],
+        disallow: ["/api/", "/_next/", "/demo/", "/preview/", "/sample/"],
       },
       {
         userAgent: "Googlebot",
         allow: "/",
-        disallow: ["/api/", "/_next/"],
+        disallow: ["/api/", "/_next/", "/demo/", "/preview/", "/sample/"],
       },
       {
         userAgent: "Bingbot",
         allow: "/",
-        disallow: ["/api/", "/_next/"],
+        disallow: ["/api/", "/_next/", "/demo/", "/preview/", "/sample/"],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
+    sitemap: absoluteUrl("/sitemap.xml"),
+    host: siteConfig.url,
   };
 }

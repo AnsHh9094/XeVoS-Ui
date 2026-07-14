@@ -110,6 +110,15 @@ export const components: Record<string, ComponentMetadata> = {
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/text-animations/cursordrivenparticletypography.webm",
   },
+  "bouncy-accordion": {
+    title: "Bouncy Accordion",
+    description: "An animated accordion with a playful spring bounce on expand and collapse.",
+    category: "Components",
+    slug: "bouncy-accordion",
+    addedAt: "2026-06-24",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/bouncyaccordion_v2.webm",
+  },
 
   // Components
   "circuit-board": {
@@ -127,7 +136,7 @@ export const components: Record<string, ComponentMetadata> = {
     category: "Components",
     slug: "flight-status-card",
     previewVideo:
-      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/flightstuatscard.mov",
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/component-animations/flightstatuscard.webm",
   },
   "magnetic-dock": {
     title: "Magnetic Dock",
@@ -258,6 +267,15 @@ export const components: Record<string, ComponentMetadata> = {
     slug: "animated-gradient",
     previewVideo:
       "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/animatedgradient.webm",
+  },
+  "liquid-chrome": {
+    title: "Liquid Chrome",
+    description: "Premium fluid liquid metal shader background effect.",
+    category: "Hero Backgrounds",
+    slug: "liquid-chrome",
+    addedAt: "2026-06-24",
+    previewVideo:
+      "https://pub-a50e7f4ea75a4970a1738e50d53b6eb1.r2.dev/preview-videos/hero-backgrounds/liquidchrome.webm",
   },
   // Visual Effects
   "image-trail": {

@@ -3,10 +3,12 @@ import type { Metadata, Viewport } from "next"
 import { Albert_Sans, JetBrains_Mono, Instrument_Serif } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import Script from "next/script"
 import "@workspace/ui/globals.css"
 import { Providers } from "@/components/providers"
 import { JsonLd } from "@/components/seo/json-ld"
 import { RouteScrollbarController } from "@/components/route-scrollbar-controller"
+import { absoluteUrl, siteConfig } from "@/lib/site"
 
 const fontSans = Albert_Sans({
   subsets: ["latin"],
@@ -33,8 +35,6 @@ const fontDisplay = Albert_Sans({
   display: "swap",
 })
 
-const siteUrl = "https://www.componentry.fun"
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -46,12 +46,12 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Componentry - Premium React UI Component Library by Harsh Jadhav",
+    default: siteConfig.title,
     template: "%s | Componentry - UI Component Library",
   },
-  description: "Componentry is a free, open-source React UI component library by Harsh Jadhav. Beautiful, animated, copy-paste components built with Tailwind CSS, TypeScript, and Framer Motion. The best UI components for modern web applications.",
+  description: siteConfig.description,
   keywords: [
     "Componentry",
     "Componentry UI",
@@ -73,10 +73,6 @@ export const metadata: Metadata = {
     "web components",
     "frontend components",
     "design system",
-    "Harsh Jadhav",
-    "Harsh Jadhav developer",
-    "Harsh Jadhav portfolio",
-    "harshjdhv",
     "React developer",
     "frontend developer",
     "shadcn alternative",
@@ -86,29 +82,29 @@ export const metadata: Metadata = {
     "handcrafted components",
   ],
   authors: [
-    { name: "Harsh Jadhav", url: "https://twitter.com/harshjdhv" },
-    { name: "Harsh Jadhav", url: "https://github.com/harshjdhv" },
+    { name: siteConfig.author.name, url: siteConfig.author.twitter },
+    { name: siteConfig.author.name, url: siteConfig.author.github },
   ],
-  creator: "Harsh Jadhav",
-  publisher: "Harsh Jadhav",
+  creator: siteConfig.author.name,
+  publisher: siteConfig.author.name,
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
   alternates: {
-    canonical: siteUrl,
+    canonical: siteConfig.url,
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: siteUrl,
-    title: "Componentry - Premium React UI Component Library by Harsh Jadhav",
-    description: "Free, open-source React UI components. Beautiful, animated, copy-paste components built with Tailwind CSS, TypeScript & Framer Motion by Harsh Jadhav.",
-    siteName: "Componentry",
+    url: siteConfig.url,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
     images: [
       {
-        url: `${siteUrl}/opengraph-image.png`,
+        url: absoluteUrl("/opengraph-image"),
         width: 1200,
         height: 630,
         alt: "Componentry - Premium React UI Component Library",
@@ -119,17 +115,17 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Componentry - Premium React UI Component Library",
-    description: "Free, open-source React UI components by Harsh Jadhav. Beautiful, animated, copy-paste components.",
+    description: siteConfig.description,
     images: [
       {
-        url: `${siteUrl}/opengraph-image.png`,
+        url: absoluteUrl("/opengraph-image"),
         width: 1200,
         height: 630,
         alt: "Componentry - Premium React UI Component Library",
       },
     ],
-    creator: "@harshjdhv",
-    site: "@harshjdhv",
+    creator: siteConfig.author.handle,
+    site: siteConfig.author.handle,
   },
   robots: {
     index: true,
@@ -153,7 +149,7 @@ export const metadata: Metadata = {
   category: "technology",
   classification: "UI Component Library",
   other: {
-    "msapplication-TileImage": "/opengraph-image.png",
+    "msapplication-TileImage": "/opengraph-image",
     ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
       "google-site-verification": process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
     }),
@@ -180,6 +176,11 @@ export default function RootLayout({
           <Providers>{children}</Providers>
         </div>
         <SpeedInsights />
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="26f17963-74a5-48ce-8d5c-6cebb2ca2baa"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )

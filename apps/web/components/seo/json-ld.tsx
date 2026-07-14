@@ -1,23 +1,23 @@
-export function JsonLd() {
-  const siteUrl = "https://componentry.fun"
+import { absoluteUrl, siteConfig } from "@/lib/site"
 
+export function JsonLd() {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Componentry",
-    url: siteUrl,
-    logo: `${siteUrl}/icon.svg`,
+    name: siteConfig.name,
+    url: siteConfig.url,
+    logo: absoluteUrl("/icon.svg"),
     sameAs: [
-      "https://github.com/harshjdhv/componentry",
-      "https://twitter.com/harshjdhv",
+      siteConfig.repository,
+      siteConfig.author.twitter,
     ],
     founder: {
       "@type": "Person",
-      name: "Harsh Jadhav",
-      url: "https://twitter.com/harshjdhv",
+      name: siteConfig.author.name,
+      url: siteConfig.author.twitter,
       sameAs: [
-        "https://twitter.com/harshjdhv",
-        "https://github.com/harshjdhv",
+        siteConfig.author.twitter,
+        siteConfig.author.github,
       ],
     },
   }
@@ -25,21 +25,20 @@ export function JsonLd() {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Componentry",
+    name: siteConfig.name,
     alternateName: ["Componentry UI", "Componentry Components"],
-    url: siteUrl,
-    description:
-      "Free, open-source React UI component library by Harsh Jadhav. Beautiful, animated, copy-paste components.",
+    url: siteConfig.url,
+    description: siteConfig.description,
     publisher: {
       "@type": "Person",
-      name: "Harsh Jadhav",
-      url: "https://twitter.com/harshjdhv",
+      name: siteConfig.author.name,
+      url: siteConfig.author.twitter,
     },
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: `${siteUrl}/docs?search={search_term_string}`,
+        urlTemplate: `${siteConfig.url}/docs?search={search_term_string}`,
       },
       "query-input": "required name=search_term_string",
     },
@@ -48,17 +47,16 @@ export function JsonLd() {
   const softwareApplicationSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareSourceCode",
-    name: "Componentry",
-    description:
-      "Premium React UI component library with beautiful animations. Copy-paste components built with Tailwind CSS, TypeScript, and Framer Motion.",
-    url: siteUrl,
-    codeRepository: "https://github.com/harshjdhv/componentry",
+    name: siteConfig.name,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    codeRepository: siteConfig.repository,
     programmingLanguage: ["TypeScript", "JavaScript", "React", "CSS"],
     runtimePlatform: "Node.js",
     author: {
       "@type": "Person",
-      name: "Harsh Jadhav",
-      url: "https://twitter.com/harshjdhv",
+      name: siteConfig.author.name,
+      url: siteConfig.author.twitter,
     },
     license: "https://opensource.org/licenses/MIT",
     operatingSystem: "Cross-platform",
@@ -70,9 +68,9 @@ export function JsonLd() {
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Harsh Jadhav",
+    name: siteConfig.author.name,
     alternateName: ["harshjdhv", "Harsh"],
-    url: "https://twitter.com/harshjdhv",
+    url: siteConfig.author.twitter,
     jobTitle: "Frontend Developer",
     knowsAbout: [
       "React",
@@ -85,13 +83,13 @@ export function JsonLd() {
       "Frontend Development",
     ],
     sameAs: [
-      "https://twitter.com/harshjdhv",
-      "https://github.com/harshjdhv",
-      siteUrl,
+      siteConfig.author.twitter,
+      siteConfig.author.github,
+      siteConfig.url,
     ],
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": siteUrl,
+      "@id": siteConfig.url,
     },
   }
 
@@ -103,13 +101,13 @@ export function JsonLd() {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: siteUrl,
+        item: siteConfig.url,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Components",
-        item: `${siteUrl}/docs`,
+        item: absoluteUrl("/docs"),
       },
     ],
   }
