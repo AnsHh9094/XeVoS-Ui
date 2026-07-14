@@ -2,7 +2,12 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "componentry",
   "homepage": "https://componentry.fun",
-  "aliases": ["componentry", "componentryui", "ui", "cmp"],
+  "aliases": [
+    "componentry",
+    "componentryui",
+    "ui",
+    "cmp"
+  ],
   "items": [
     {
       "name": "animated-gradient",
@@ -195,6 +200,18 @@
     {
       "name": "webgl-liquid",
       "type": "registry:ui"
+    },
+    {
+      "name": "hero-product",
+      "type": "registry:block"
+    },
+    {
+      "name": "metrics-command-center",
+      "type": "registry:block"
+    },
+    {
+      "name": "commerce-product-grid",
+      "type": "registry:block"
     }
   ]
 }
