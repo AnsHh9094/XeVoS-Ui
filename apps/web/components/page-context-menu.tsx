@@ -98,7 +98,7 @@ export function PageContextMenu({ content, className }: PageContextMenuProps) {
   }
 
   const openLink = async (assistant: (typeof AI_ASSISTANTS)[number]) => {
-    const url = new URL(window.location.pathname, "https://componentry.fun").toString()
+    const url = new URL(window.location.pathname, "https://componentry.dev").toString()
     const prompt = getPrompt(url)
 
     await navigator.clipboard.writeText(content)

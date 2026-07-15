@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   keywords: [
     "Componentry",
     "Componentry UI",
-    "componentry.fun",
+    "componentry.dev",
     "UI component library",
     "React components",
     "React UI library",
