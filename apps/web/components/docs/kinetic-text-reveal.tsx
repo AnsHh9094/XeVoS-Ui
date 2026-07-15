@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 import React from "react";
 import { KineticTextReveal } from "@workspace/ui/components/kinetic-text-reveal";
 import { DocsPageLayout } from "@/components/docs-page-layout";

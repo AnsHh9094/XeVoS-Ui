@@ -1,8 +1,8 @@
 <div align="center">
-  <img src="apps/web/public/banner.png" alt="Componentry Banner" width="100%" />
+  <img src="apps/web/public/banner.png" alt="Xevos UI Banner" width="100%" />
 </div>
 
-<h1 align="center">Componentry</h1>
+<h1 align="center">Xevos UI</h1>
 
 <p align="center">
   <strong>Beautiful, interactive UI components you can copy and paste into your apps.</strong>
@@ -13,10 +13,10 @@
 </p>
 
 <p align="center">
-  <a href="https://componentry.dev">Documentation</a> ·
-  <a href="https://componentry.dev/docs/components">Components</a> ·
-  <a href="https://github.com/harshjdhv/componentry/issues">Report Bug</a> ·
-  <a href="https://github.com/harshjdhv/componentry/issues">Request Feature</a>
+  <a href="https://xevos-ui.dev">Documentation</a> ·
+  <a href="https://xevos-ui.dev/docs/components">Components</a> ·
+  <a href="https://github.com/AnsHh9094/xevos-ui/issues">Report Bug</a> ·
+  <a href="https://github.com/AnsHh9094/xevos-ui/issues">Request Feature</a>
 </p>
 
 <p align="center">
@@ -26,11 +26,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/harshjdhv/componentry/blob/main/LICENSE">
+  <a href="https://github.com/AnsHh9094/xevos-ui/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
   </a>
-  <a href="https://twitter.com/harshjdhv">
-    <img src="https://img.shields.io/twitter/follow/harshjdhv?style=social" alt="Twitter" />
+  <a href="https://twitter.com/AnsHh9094">
+    <img src="https://img.shields.io/twitter/follow/AnsHh9094?style=social" alt="Twitter" />
   </a>
 </p>
 
@@ -38,9 +38,9 @@
 
 ## Introduction
 
-Componentry is a collection of beautifully designed, interactive UI components built with React and Tailwind CSS. Just run the CLI command, add the component to your project, and start building.
+Xevos UI is a collection of beautifully designed, interactive UI components built with React and Tailwind CSS. Just run the CLI command, add the component to your project, and start building.
 
-### Why Componentry?
+### Why Xevos UI?
 
 - **Copy & Paste** - Not a dependency. You own the code.
 - **Interactive** - Cursor-following effects, 3D transforms, and smooth animations.
@@ -58,7 +58,7 @@ Componentry is a collection of beautifully designed, interactive UI components b
 The fastest way to add components is using the shadcn CLI:
 
 ```bash
-npx shadcn@latest add @componentry/spotlight-card
+npx shadcn@latest add @xevos-ui/spotlight-card
 ```
 
 
@@ -75,8 +75,8 @@ This project uses [Turborepo](https://turbo.build/repo) for monorepo management.
 
 ```bash
 # Clone the repository
-git clone https://github.com/harshjdhv/componentry.git
-cd componentry
+git clone https://github.com/AnsHh9094/xevos-ui.git
+cd xevos-ui
 
 # Install dependencies
 pnpm install
@@ -88,7 +88,7 @@ pnpm dev
 ### Project Structure
 
 ```
-componentry/
+xevos-ui/
 ├── apps/
 │   └── web/                 # Documentation site (Next.js)
 ├── packages/
@@ -164,19 +164,19 @@ See [LICENSE](./LICENSE) for more information.
 - Powered by [Vercel](https://vercel.com/)
 
 <p align="center">
-  <a href="https://star-history.com/#harshjdhv/componentry&Date">
+  <a href="https://star-history.com/#AnsHh9094/xevos-ui&Date">
     <picture>
       <source
         media="(prefers-color-scheme: dark)"
-        srcset="https://api.star-history.com/svg?repos=harshjdhv/componentry&type=Date&theme=dark&legend=top-left"
+        srcset="https://api.star-history.com/svg?repos=AnsHh9094/xevos-ui&type=Date&theme=dark&legend=top-left"
       />
       <source
         media="(prefers-color-scheme: light)"
-        srcset="https://api.star-history.com/svg?repos=harshjdhv/componentry&type=Date&legend=top-left"
+        srcset="https://api.star-history.com/svg?repos=AnsHh9094/xevos-ui&type=Date&legend=top-left"
       />
       <img
         alt="Star History Chart"
-        src="https://api.star-history.com/svg?repos=harshjdhv/componentry&type=Date&legend=top-left"
+        src="https://api.star-history.com/svg?repos=AnsHh9094/xevos-ui&type=Date&legend=top-left"
       />
     </picture>
   </a>
@@ -185,5 +185,5 @@ See [LICENSE](./LICENSE) for more information.
 ---
 
 <p align="center">
-  Made with care by <a href="https://twitter.com/harshjdhv">Harsh Jadhav</a>
+  Made with care by <a href="https://twitter.com/AnsHh9094">ansh anand</a>
 </p>

@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 export default function GradientHero01() {
   return (
     <section className="relative min-h-screen overflow-hidden bg-background font-[system-ui,-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-foreground">
@@ -32,7 +38,7 @@ export default function GradientHero01() {
 
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-24 text-center">
         <div className="rounded-full border border-border bg-background/50 px-4 py-1.5 text-sm font-medium text-muted-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_40px_rgba(0,0,0,0.08)] backdrop-blur-md">
-          Previewing Componentry Blocks
+          Previewing Xevos UI Blocks
         </div>
 
         <h1 className="mt-8 max-w-5xl text-balance text-5xl font-medium leading-[0.96] tracking-normal md:text-6xl lg:text-7xl">

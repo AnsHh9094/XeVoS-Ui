@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import React, { useEffect, useState } from "react"
@@ -42,7 +48,7 @@ export function GitHubStarButton({ className, theme = "default" }: GitHubStarBut
 
                 if (shouldUseCache) return
 
-                const res = await fetch("https://api.github.com/repos/harshjdhv/componentry")
+                const res = await fetch("https://api.github.com/repos/AnsHh9094/xevos-ui")
                 if (!res.ok) throw new Error("Failed to fetch")
 
                 const data = await res.json()
@@ -66,8 +72,8 @@ export function GitHubStarButton({ className, theme = "default" }: GitHubStarBut
 
     return (
         <Link
-            href="https://github.com/harshjdhv/componentry"
-            target="_blank"
+            href="https://github.com/AnsHh9094/xevos-ui"
+            
             className={cn(
                 "group relative inline-flex items-center gap-2.5 border text-sm font-semibold transition-all",
                 isLanding

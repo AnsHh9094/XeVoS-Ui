@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 import { components } from "@/registry";
 
 type NavItem = {
@@ -60,15 +66,15 @@ const getComponentNav = (): NavGroup[] => {
 };
 
 const getLlmsText = () => {
-  const baseUrl = "https://componentry.dev";
-  let text = `# Componentry
+  const baseUrl = "https://xevos-ui.dev";
+  let text = `# Xevos UI
 
-> Componentry is a collection of beautifully-designed, accessible components and visual effects. It is built with TypeScript, Tailwind CSS, and Framer Motion. Open Source. Copy and paste into your apps.
+> Xevos UI is a collection of beautifully-designed, accessible components and visual effects. It is built with TypeScript, Tailwind CSS, and Framer Motion. Open Source. Copy and paste into your apps.
 
 ## Overview`;
 
   gettingStarted.items.forEach((item) => {
-    text += `\n- [${item.title}](${baseUrl}${item.href}): Getting started with Componentry.`;
+    text += `\n- [${item.title}](${baseUrl}${item.href}): Getting started with Xevos UI.`;
   });
 
   text += `\n\n## Components`;

@@ -44,3 +44,7 @@ scripts/__pycache__/
 # Generated preview optimization artifacts
 apps/web/public/preview-videos-recompress/
 scripts/upload-single-preview.py
+
+# Local-only artifacts
+.old_project/
+apps/web/eslint-errors.txt

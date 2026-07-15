@@ -38,7 +38,7 @@ flowchart TD
 
 **Impact: ~40-50% of total FCP delay**
 
-The `sourceCodeContent` prop in [DocsPageLayout](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/components/docs-page-layout.tsx#64-374) pre-highlights the *entire component source code* with Shiki and inlines it into the server-rendered HTML/RSC payload. This highlighted HTML is enormous because Shiki wraps every token in styled `<span>` elements.
+The `sourceCodeContent` prop in [DocsPageLayout](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/components/docs-page-layout.tsx#64-374) pre-highlights the *entire component source code* with Shiki and inlines it into the server-rendered HTML/RSC payload. This highlighted HTML is enormous because Shiki wraps every token in styled `<span>` elements.
 
 | Page | HTML Size | Source Code Highlight Size | % of Page |
 |------|-----------|---------------------------|-----------|
@@ -49,7 +49,7 @@ The `sourceCodeContent` prop in [DocsPageLayout](file:///Users/harshjadhav/Docum
 
 **Where this happens:**
 
-In [docs-page-layout.tsx](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/components/docs-page-layout.tsx#L354-L362):
+In [docs-page-layout.tsx](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/components/docs-page-layout.tsx#L354-L362):
 
 ```tsx
 sourceCodeContent={
@@ -65,7 +65,7 @@ sourceCodeContent={
 }
 ```
 
-The [CodeBlock](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/components/code-block.tsx#13-92) is a **server component** that calls [highlightCode()](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/lib/shiki.ts#37-84), which runs Shiki on the full source. The resulting highlighted HTML (352KB for flight-status-card!) is serialized into the RSC payload which is inlined as `<script>` tags in the HTML document.
+The [CodeBlock](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/components/code-block.tsx#13-92) is a **server component** that calls [highlightCode()](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/lib/shiki.ts#37-84), which runs Shiki on the full source. The resulting highlighted HTML (352KB for flight-status-card!) is serialized into the RSC payload which is inlined as `<script>` tags in the HTML document.
 
 **Additionally**, the raw source code string is *also* serialized into the payload (for the copy button), so the source code exists **twice** in the HTML — once raw (~21KB) and once highlighted (~352KB).
 
@@ -95,7 +95,7 @@ The root layout loads **4 separate Google Fonts** via `next/font/google`:
 | Instrument Serif | 400 | ~16 KB |
 | Syne | Full variable | ~28 KB |
 
-From [layout.tsx](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/app/layout.tsx#L11-L30):
+From [layout.tsx](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/app/layout.tsx#L11-L30):
 
 ```tsx
 const fontSans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans" })
@@ -135,9 +135,9 @@ The docs component pages load substantial client-side JavaScript:
 | `next-themes` | ~5 KB | ThemeToggle |
 | `zustand` | ~5 KB | useDocStore |
 
-**Critical finding:** The [CommandMenu](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/components/command-menu.tsx#213-399) component is loaded on *every* docs page (it's in the DocsPreviewWrapper toolbar), bringing in `cmdk`, `@fortawesome`, and `framer-motion` — all for a search dialog that most users never open.
+**Critical finding:** The [CommandMenu](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/components/command-menu.tsx#213-399) component is loaded on *every* docs page (it's in the DocsPreviewWrapper toolbar), bringing in `cmdk`, `@fortawesome`, and `framer-motion` — all for a search dialog that most users never open.
 
-From [docs-preview-wrapper.tsx](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/components/docs-preview-wrapper.tsx#L8):
+From [docs-preview-wrapper.tsx](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/components/docs-preview-wrapper.tsx#L8):
 ```tsx
 import { CommandMenu } from "@/components/command-menu"  // ← Pulls in cmdk, @fortawesome, framer-motion
 ```
@@ -181,7 +181,7 @@ The same CSS rules are duplicated across components via inline `<style>` tags:
 
 Each docs page has **3 duplicate `<style>` blocks** embedded in the HTML. These styles should be in the global CSS file.
 
-**Fix:** Move all Shiki/scrollbar styles to [globals.css](file:///Users/harshjadhav/Documents/Code/products/componentry/packages/ui/src/styles/globals.css) and remove inline `<style>` tags.
+**Fix:** Move all Shiki/scrollbar styles to [globals.css](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/packages/ui/src/styles/globals.css) and remove inline `<style>` tags.
 
 ---
 
@@ -189,7 +189,7 @@ Each docs page has **3 duplicate `<style>` blocks** embedded in the HTML. These 
 
 **Impact: Slows build time, increases HTML payload**
 
-From [source-code.ts](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/lib/source-code.ts#L22):
+From [source-code.ts](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/lib/source-code.ts#L22):
 
 ```tsx
 const registry = await import(`@/public/r/${componentName}.json`)
@@ -205,7 +205,7 @@ The raw source code string (e.g., 21KB for flight-status-card) is loaded at buil
 
 **Impact: 5-15KB extra per variant in HTML**
 
-From [docs-page-layout.tsx](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/components/docs-page-layout.tsx#L85-L98):
+From [docs-page-layout.tsx](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/components/docs-page-layout.tsx#L85-L98):
 
 ```tsx
 let usageHtml = ""
@@ -232,7 +232,7 @@ ALL variant code blocks are pre-highlighted and embedded in the HTML, even thoug
 
 The global CSS file is 190KB. This is the single CSS file for the entire site.
 
-From [globals.css](file:///Users/harshjadhav/Documents/Code/products/componentry/packages/ui/src/styles/globals.css):
+From [globals.css](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/packages/ui/src/styles/globals.css):
 ```css
 @source "../../../apps/**/*.{ts,tsx}";
 @source "../../../components/**/*.{ts,tsx}";
@@ -313,7 +313,7 @@ export async function POST(req: NextRequest) {
 }
 ```
 
-2. **Modify [DocsPreviewWrapper](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/components/docs-preview-wrapper.tsx#30-464)** to lazy-load source code:
+2. **Modify [DocsPreviewWrapper](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/components/docs-preview-wrapper.tsx#30-464)** to lazy-load source code:
 
 ```tsx
 // Instead of receiving pre-rendered sourceCodeContent, receive raw source code
@@ -337,13 +337,13 @@ const handleViewSource = async () => {
 }
 ```
 
-3. **Remove `sourceCodeContent` prop** from [DocsPageLayout](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/components/docs-page-layout.tsx#64-374). Only pass `sourceCode` (raw string) and `sourceCodeFilename`. The wrapper handles highlighting on click.
+3. **Remove `sourceCodeContent` prop** from [DocsPageLayout](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/components/docs-page-layout.tsx#64-374). Only pass `sourceCode` (raw string) and `sourceCodeFilename`. The wrapper handles highlighting on click.
 
-4. **Remove the [readComponentSource()](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/lib/source-code.ts#4-45) call** from individual docs components if source code is no longer needed at build time. Instead, pass the registry path and let the client fetch it.
+4. **Remove the [readComponentSource()](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/lib/source-code.ts#4-45) call** from individual docs components if source code is no longer needed at build time. Instead, pass the registry path and let the client fetch it.
 
 ### Fix 2: Remove Unused Fonts from Docs (P0)
 
-In [app/docs/layout.tsx](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/app/docs/layout.tsx) or by creating a separate font configuration:
+In [app/docs/layout.tsx](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/app/docs/layout.tsx) or by creating a separate font configuration:
 
 ```tsx
 // Option A: Create a docs-specific layout that only loads needed fonts
@@ -405,7 +405,7 @@ function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
 ## What's Working Well ✅
 
 - **TTFB is excellent** at 0.26s — server response is fast
-- **[generateStaticParams](file:///Users/harshjadhav/Documents/Code/products/componentry/apps/web/app/docs/components/%5Bslug%5D/page.tsx#21-29)** pre-builds all pages at build time (SSG)
+- **[generateStaticParams](file:///Users/harshjadhav/Documents/Code/products/xevos-ui/apps/web/app/docs/components/%5Bslug%5D/page.tsx#21-29)** pre-builds all pages at build time (SSG)
 - **Lazy registry** (`docsImportMap`) correctly code-splits per-component
 - **Shiki singleton** avoids re-creating the highlighter
 - **INP (88ms)** and **CLS (0)** are good — interactions are responsive once loaded

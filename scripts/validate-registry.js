@@ -7,7 +7,7 @@ const REGISTRY_INDEX_PATH = path.join(REGISTRY_DIR, "registry.json")
 const DOCS_REGISTRY_PATH = path.join(ROOT, "apps/web/registry/index.ts")
 const BLOCKS_REGISTRY_PATH = path.join(ROOT, "apps/web/registry/generated/blocks.json")
 
-const REQUIRED_ALIASES = ["componentry", "componentryui", "ui", "cmp"]
+const REQUIRED_ALIASES = ["xevos-ui", "xevos-uiui", "ui", "cmp"]
 const REGISTRY_SCHEMA_URL = "https://ui.shadcn.com/schema/registry.json"
 const REGISTRY_ITEM_SCHEMA_URL = "https://ui.shadcn.com/schema/registry-item.json"
 const LEGACY_UNDOCUMENTED_ITEMS = new Set([
@@ -137,8 +137,8 @@ function main() {
     )
   }
 
-  if (registryIndex.name !== "componentry") {
-    fail(`registry.json name must be "componentry", found "${registryIndex.name ?? "undefined"}".`)
+  if (registryIndex.name !== "xevos-ui") {
+    fail(`registry.json name must be "xevos-ui", found "${registryIndex.name ?? "undefined"}".`)
   }
 
   if (!Array.isArray(registryIndex.aliases)) {

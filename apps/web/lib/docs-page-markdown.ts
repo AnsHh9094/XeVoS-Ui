@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 export interface DocsPageMarkdownInput {
   title: string
   description: string
@@ -21,7 +27,7 @@ export function buildDocsPageMarkdown(props: DocsPageMarkdownInput): string {
   lines.push("## Installation")
   lines.push("")
   lines.push(`\`\`\`bash`)
-  lines.push(`npx componentry@latest add ${props.installPackageName}`)
+  lines.push(`npx xevos-ui@latest add ${props.installPackageName}`)
   lines.push(`\`\`\``)
   if (props.installDependencies) {
     lines.push("")
@@ -77,7 +83,7 @@ export function buildDocsPageMarkdown(props: DocsPageMarkdownInput): string {
 
   lines.push("---")
   lines.push("")
-  lines.push(`_Component from [Componentry](https://componentry.dev/docs/components/${props.installPackageName})_`)
+  lines.push(`_Component from [Xevos UI](https://xevos-ui.dev/docs/components/${props.installPackageName})_`)
 
   return lines.join("\n")
 }

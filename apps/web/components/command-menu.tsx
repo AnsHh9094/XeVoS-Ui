@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import * as React from "react"
@@ -10,9 +16,6 @@ import {
   FileText,
   ArrowRight,
   CircleDashed,
-  Laptop,
-  Moon,
-  Sun,
   Cog,
   BookOpen,
   CircleArrowOutUpRight,
@@ -31,8 +34,12 @@ function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
 
 function XIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.847h-7.406l-5.8-7.585-6.638 7.585H.474l8.6-9.83L0 1.153h7.594l5.243 6.932L18.901 1.153Zm-1.291 19.491h2.039L6.486 3.24H4.298L17.61 20.644Z" />
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
+      <rect x="0" y="0" width="24" height="24" rx="5" fill="currentColor" fillOpacity="0.08" />
+      <g fill="currentColor" transform="translate(3,3) scale(0.75)">
+        <path d="M1 0 L6 0 L13 7 L20 0 L25 0 L13 12 L25 24 L20 24 L13 17 L6 24 L1 24 L12 12 Z" />
+        <path d="M30 4 H42 V8 H34 V14 H42 V18 H34 V24 H42 V28 H30 Z" transform="translate(-18,0)" />
+      </g>
     </svg>
   )
 }
@@ -86,12 +93,12 @@ const mainPages = [
 const socialPages = [
   {
     title: "GitHub",
-    href: "https://github.com/harshjdhv/componentry",
+    href: "https://github.com/AnsHh9094/xevos-ui",
     icon: GitHubIcon
   },
   {
     title: "X",
-    href: "https://x.com/harshjdhv",
+    href: "https://x.com/AnsHh9094",
     icon: XIcon
   }
 ]
@@ -109,7 +116,7 @@ const getStartedPages = [
   },
   {
     title: "Visit Founder",
-    href: "https://harshjdhv.com",
+    href: "https://AnsHh9094.com",
     icon: CircleArrowOutUpRight
   }
 ]

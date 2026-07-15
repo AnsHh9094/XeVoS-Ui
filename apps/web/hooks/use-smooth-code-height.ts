@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import * as React from "react"
@@ -25,6 +31,7 @@ export function useSmoothCodeHeight(deps: React.DependencyList) {
     const observer = new ResizeObserver(measureHeight)
     observer.observe(el)
     return () => observer.disconnect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [measureHeight, ...deps])
 
   return {

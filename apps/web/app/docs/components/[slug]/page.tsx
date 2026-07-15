@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
@@ -50,7 +56,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
             `${component.title} React component`,
             `${component.title} Tailwind component`,
             component.category,
-            "Componentry",
+            "Xevos UI",
             "React UI component",
             "animated UI component",
             "copy paste component",
@@ -59,7 +65,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
             canonical: componentUrl,
         },
         openGraph: {
-            title: `${component.title} React Component | Componentry`,
+            title: `${component.title} React Component | Xevos UI`,
             description: component.description,
             url: componentUrl,
             type: "article",
@@ -68,7 +74,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${component.title} React Component | Componentry`,
+            title: `${component.title} React Component | Xevos UI`,
             description: component.description,
             images: [ogImageUrl],
         },
@@ -191,7 +197,7 @@ export default async function ComponentPage(props: PageProps) {
                 "React component",
                 "Tailwind CSS",
                 "Framer Motion",
-                "Componentry",
+                "Xevos UI",
             ].join(", "),
         };
 

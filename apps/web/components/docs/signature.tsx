@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 import React from "react"
 import { DocsPageLayout } from "@/components/docs-page-layout"
 import { readComponentSource } from "@/lib/source-code"
@@ -11,7 +17,7 @@ import {
 
 const defaultCode = `import { Signature } from "@/components/ui/signature"
 
-<Signature text="Componentry" />`
+<Signature text="Xevos UI" />`
 
 export async function SignatureDocs() {
   const sourceCode = (await readComponentSource("signature")) || "// Unable to load source code"

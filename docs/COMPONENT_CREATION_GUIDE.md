@@ -1,13 +1,13 @@
-# 🧩 Componentry - Complete Component Creation Guide
+# 🧩 Xevos UI - Complete Component Creation Guide
 
-This guide documents the **complete workflow** for adding a new component to the Componentry library. Follow each step in order.
+This guide documents the **complete workflow** for adding a new component to the Xevos UI library. Follow each step in order.
 
 ---
 
 ## 📁 Project Structure Overview
 
 ```
-componentry/
+xevos-ui/
 ├── packages/ui/                          # The shared UI library
 │   └── src/
 │       └── components/                   # ← STEP 1: Component source code
@@ -96,7 +96,7 @@ export function MyComponent({
 
 This file allows users to install the component via CLI:
 ```bash
-npx shadcn@latest add @componentry/{component-name}
+npx shadcn@latest add @xevos-ui/{component-name}
 ```
 
 ### 🛠️ Automatic Generation (Recommended)
@@ -597,7 +597,7 @@ import { cn } from "@/lib/utils"  // NOTE: Different path!
 To have an AI create a new component, use this prompt:
 
 ```
-Create a new Componentry UI component called "[COMPONENT_NAME]".
+Create a new Xevos UI UI component called "[COMPONENT_NAME]".
 
 ## Requirements
 - Purpose: [WHAT IT DOES]

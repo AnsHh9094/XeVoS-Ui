@@ -263,9 +263,9 @@ function main() {
     path.join(PUBLIC_REGISTRY_DIR, "registry.json"),
     {
       $schema: "https://ui.shadcn.com/schema/registry.json",
-      name: "componentry",
-      homepage: "https://componentry.fun",
-      aliases: ["componentry", "componentryui", "ui", "cmp"],
+      name: "xevos-ui",
+      homepage: "https://xevos-ui.fun",
+      aliases: ["xevos-ui", "xevos-uiui", "ui", "cmp"],
       items: [],
     },
   );

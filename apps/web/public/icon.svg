@@ -1,13 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="380 350 500 520" fill="currentColor">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
   <style>
-    g { fill: #09090b; }
+    path { fill: #09090b; }
     @media (prefers-color-scheme: dark) {
-      g { fill: #ffffff; }
+      path { fill: #ffffff; }
     }
   </style>
-  <g>
-    <path d="M493 376 C467 383 448 394 430 411 C417 432 409 454 409 460 L409 749 C414 769 421 785 431 800 C447 816 464 827 478 833 C489 836 501 838 586 838 C603 828 610 817 610 813 L610 695 C610 651 584 614 543 600 C531 596 525 591 525 584 C525 576 531 571 544 567 C586 554 610 519 610 474 L610 401 C610 389 601 379 589 376 Z"/>
-    <rect x="634" y="376" width="210" height="206" rx="42"/>
-    <rect x="634" y="633" width="210" height="205" rx="42"/>
-  </g>
+  <path d="M22.5 15L50 48L77.5 15L85 22.5L57.5 50L85 77.5L77.5 85L50 57.5L22.5 85L15 77.5L42.5 50L15 22.5Z"/>
 </svg>

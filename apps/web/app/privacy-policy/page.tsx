@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import React from "react"
@@ -17,7 +23,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-xl font-medium text-zinc-900 dark:text-zinc-100 mb-4">1. Introduction</h2>
             <p>
-              Welcome to Componentry. We respect your privacy and are committed to protecting it. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website (componentry.com).
+              Welcome to Xevos UI. We respect your privacy and are committed to protecting it. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website (xevos-ui.com).
             </p>
           </section>
 
@@ -54,7 +60,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-xl font-medium text-zinc-900 dark:text-zinc-100 mb-4">5. Cookies</h2>
             <p>
-              Componentry uses minimal cookies essential for the functionality of the site (such as saving your theme preferences). We do not use tracking cookies for advertising purposes.
+              Xevos UI uses minimal cookies essential for the functionality of the site (such as saving your theme preferences). We do not use tracking cookies for advertising purposes.
             </p>
           </section>
 
@@ -75,7 +81,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-xl font-medium text-zinc-900 dark:text-zinc-100 mb-4">8. Contact Us</h2>
             <p>
-              If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at hello@componentry.fun or via Twitter/X at @harshjdhv.
+              If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at hello@xevos-ui.fun or via Twitter/X at @AnsHh9094.
             </p>
           </section>
         </div>

@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import Link from "next/link"
@@ -6,7 +12,7 @@ import { ArrowRight, Terminal } from "lucide-react"
 import { CopyButton } from "@/components/copy-button"
 
 export function HeroButtons() {
-    const installCommand = "npx shadcn@latest add @componentry/magnetic-dock"
+    const installCommand = "npx shadcn@latest add @xevos-ui/magnetic-dock"
 
     return (
         <div className="flex w-full min-w-0 flex-col items-stretch justify-start gap-4 pt-6 pb-2 sm:flex-row sm:items-start">

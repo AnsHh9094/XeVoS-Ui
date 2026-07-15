@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 import React from "react";
 import { GithubCalendar } from "@workspace/ui/components/github-calendar";
 import { DocsPageLayout } from "@/components/docs-page-layout";
@@ -5,19 +11,19 @@ import { readComponentSource } from "@/lib/source-code";
 
 const basicUsageCode = `import { GithubCalendar } from "@/components/ui/github-calendar"
 
-<GithubCalendar username="harshjdhv" />`;
+<GithubCalendar username="AnsHh9094" />`;
 
 const grayscaleCode = `import { GithubCalendar } from "@/components/ui/github-calendar"
 
-<GithubCalendar username="harshjdhv" colorSchema="gray" />`;
+<GithubCalendar username="AnsHh9094" colorSchema="gray" />`;
 
 const minimalCode = `import { GithubCalendar } from "@/components/ui/github-calendar"
 
-<GithubCalendar username="harshjdhv" variant="minimal" colorSchema="blue" />`;
+<GithubCalendar username="AnsHh9094" variant="minimal" colorSchema="blue" />`;
 
 const colorSchemaCode = `import { GithubCalendar } from "@/components/ui/github-calendar"
 
-<GithubCalendar username="harshjdhv" colorSchema="orange" />`;
+<GithubCalendar username="AnsHh9094" colorSchema="orange" />`;
 
 export async function GithubCalendarDocs() {
   const sourceCode =
@@ -31,7 +37,7 @@ export async function GithubCalendarDocs() {
       preview={
         <div className="flex items-center justify-center w-full p-4 md:p-8 overflow-hidden">
           <div className="scale-[0.55] md:scale-[0.7] origin-center">
-            <GithubCalendar username="harshjdhv" />
+            <GithubCalendar username="AnsHh9094" />
           </div>
         </div>
       }
@@ -46,7 +52,7 @@ export async function GithubCalendarDocs() {
           preview: (
             <div className="flex items-center justify-center w-full p-4 md:p-8 overflow-hidden">
               <div className="scale-[0.55] md:scale-[0.7] origin-center">
-                <GithubCalendar username="harshjdhv" colorSchema="gray" />
+                <GithubCalendar username="AnsHh9094" colorSchema="gray" />
               </div>
             </div>
           ),
@@ -58,7 +64,7 @@ export async function GithubCalendarDocs() {
             <div className="flex items-center justify-center w-full p-4 md:p-8 overflow-hidden">
               <div className="scale-[0.55] md:scale-[0.7] origin-center">
                 <GithubCalendar
-                  username="harshjdhv"
+                  username="AnsHh9094"
                   variant="minimal"
                   colorSchema="blue"
                 />
@@ -73,7 +79,7 @@ export async function GithubCalendarDocs() {
             <div className="flex items-center justify-center w-full p-4 md:p-8 overflow-hidden">
               <div className="scale-[0.55] md:scale-[0.7] origin-center">
                 <GithubCalendar
-                  username="harshjdhv"
+                  username="AnsHh9094"
                   colorSchema="orange"
                   showTotal={false}
                 />

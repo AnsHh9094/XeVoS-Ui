@@ -1,9 +1,15 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Github, Search } from "lucide-react"
-import { ComponentryLogomark } from "@/components/logos/componentry-logomark"
+import { XevosUILogomark } from "@/components/logos/xevos-ui-logomark"
 import { CommandMenu } from "@/components/command-menu"
 import { cn } from "@/lib/utils"
 
@@ -18,8 +24,8 @@ export function FloatingNavbar() {
                 {/* Logo & Brand */}
                 <div className="flex items-center gap-3">
                     <Link href="/" className="flex items-center gap-2 group">
-                        <ComponentryLogomark className="size-6 text-zinc-900 dark:text-white transition-opacity group-hover:opacity-80" />
-                        <span className="text-sm font-bold tracking-wide text-zinc-900 dark:text-white">COMPONENTRY</span>
+                        <XevosUILogomark className="size-6 text-zinc-900 dark:text-white transition-opacity group-hover:opacity-80" />
+                        <span className="text-sm font-bold tracking-wide text-zinc-900 dark:text-white">XEVOS UI</span>
                     </Link>
                 </div>
 
@@ -60,8 +66,8 @@ export function FloatingNavbar() {
 
                         {/* GitHub */}
                         <Link
-                            href="https://github.com/harshjdhv/componentry"
-                            target="_blank"
+                            href="https://github.com/AnsHh9094/xevos-ui"
+                            
                             className="flex size-9 items-center justify-center rounded-[12px] bg-zinc-100/80 dark:bg-zinc-800/50 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition-colors group"
                         >
                             <Github className="size-4 text-zinc-500 group-hover:text-zinc-900 dark:text-zinc-400 dark:group-hover:text-zinc-100 transition-colors" />
