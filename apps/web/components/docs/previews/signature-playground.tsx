@@ -256,4 +256,4 @@ export function SignaturePersonalizePanel() {
       </div>
     </div>
   );
-} 
+}

@@ -3,4 +3,4 @@ const nextConfig = {
   transpilePackages: ["@workspace/ui"],
 }
 
-export default nextConfig 
+export default nextConfig

@@ -23,4 +23,4 @@ export function ResponsiveMagnetLines(props: Omit<MagnetLinesProps, "columns">) 
   }, [])
 
   return <MagnetLines {...props} columns={columns} />
-} 
+}

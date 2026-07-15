@@ -54,4 +54,4 @@ It uses a single dynamic route `CategoryPage.jsx` that catches `/:category/:subc
 
 *   **Why it matters:** You currently have `app/docs/components/hyper-text/page.tsx`. If you add 50 components, you'll create 50 folders and 50 page files.
 *   **Adoption for Xevos UI:**
-    Switch to a dynamic route `app/docs/components/[slug]/page.tsx`. Use your new `registry.ts` to look up the component metadata and render the standard layout. This eliminates 90% of your boilerplate code. 
+    Switch to a dynamic route `app/docs/components/[slug]/page.tsx`. Use your new `registry.ts` to look up the component metadata and render the standard layout. This eliminates 90% of your boilerplate code.

@@ -100,4 +100,4 @@ export function GitHubStarButton({ className, theme = "default" }: GitHubStarBut
             )}
         </Link>
     )
-} 
+}

@@ -317,4 +317,4 @@ export function SplitFlapDisplayPersonalizePanel() {
       </div>
     </div>
   );
-} 
+}

@@ -82,4 +82,4 @@ export function HeroGeometricSpeedDemo() {
   return (
     <HeroGeometricPreviewWrapper speed={2} title1="High" title2="Velocity" />
   );
-} 
+}

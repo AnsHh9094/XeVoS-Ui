@@ -133,4 +133,4 @@ export async function ImageRippleEffectDocs() {
       ]}
     />
   );
-} 
+}

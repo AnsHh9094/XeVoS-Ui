@@ -4,4 +4,4 @@
  * SPDX-License-Identifier: MIT
  * This notice must be retained in all copies or substantial portions (MIT License).
  */
-export { cn } from "@workspace/ui/lib/utils"; 
+export { cn } from "@workspace/ui/lib/utils";

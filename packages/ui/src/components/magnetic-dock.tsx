@@ -440,4 +440,4 @@ export {
     DockIconTrash,
     type MagneticDockProps,
     type DockItemData,
-} 
+}

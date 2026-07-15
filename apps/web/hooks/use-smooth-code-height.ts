@@ -42,4 +42,4 @@ export function useSmoothCodeHeight(deps: React.DependencyList) {
       style: { height: contentHeight !== undefined ? contentHeight : ("auto" as const) },
     },
   }
-} 
+}

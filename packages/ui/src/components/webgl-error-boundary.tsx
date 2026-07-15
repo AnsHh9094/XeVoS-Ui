@@ -62,4 +62,4 @@ export function WebGLFallback({
       <p>{message}</p>
     </div>
   );
-} 
+}

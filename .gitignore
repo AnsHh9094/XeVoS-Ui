@@ -47,4 +47,4 @@ scripts/upload-single-preview.py
 
 # Local-only artifacts
 .old_project/
-apps/web/eslint-errors.txt 
+apps/web/eslint-errors.txt

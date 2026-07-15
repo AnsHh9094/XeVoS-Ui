@@ -37,4 +37,4 @@ export function HeroButtons() {
             </motion.div>
         </div>
     )
-} 
+}

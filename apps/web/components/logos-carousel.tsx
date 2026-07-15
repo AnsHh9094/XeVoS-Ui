@@ -192,4 +192,4 @@ function distributeLogos(logos: ReactNode[], columnCount: number): ReactNode[][]
   })
 
   return columns
-} 
+}

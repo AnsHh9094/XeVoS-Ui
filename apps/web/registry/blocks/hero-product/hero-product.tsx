@@ -99,4 +99,4 @@ export default function HeroProductBlock() {
       </div>
     </section>
   )
-} 
+}

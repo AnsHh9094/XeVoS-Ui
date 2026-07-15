@@ -31,4 +31,4 @@ export function AnimatedGradientPreview({
             </div>
         </div>
     );
-} 
+}

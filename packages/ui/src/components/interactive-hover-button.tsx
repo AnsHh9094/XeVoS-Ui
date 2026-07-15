@@ -42,4 +42,4 @@ const InteractiveHoverButton = React.forwardRef<
 
 InteractiveHoverButton.displayName = "InteractiveHoverButton"
 
-export { InteractiveHoverButton } 
+export { InteractiveHoverButton }

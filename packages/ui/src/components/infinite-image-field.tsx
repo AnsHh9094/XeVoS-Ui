@@ -227,4 +227,4 @@ export function InfiniteImageField({
       <canvas ref={canvasRef} className="block w-full h-full bg-transparent" />
     </div>
   );
-} 
+}

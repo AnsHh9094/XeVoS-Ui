@@ -172,4 +172,4 @@ export function InfiniteImageFieldPersonalizePanel() {
       </div>
     </div>
   );
-} 
+}

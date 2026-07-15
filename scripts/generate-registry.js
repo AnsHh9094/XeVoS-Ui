@@ -170,4 +170,4 @@ if (fs.existsSync(REGISTRY_INDEX_PATH)) {
   } catch (error) {
     console.error('Warning: could not sync apps/web/public/r/registry.json:', error.message);
   }
-} 
+}

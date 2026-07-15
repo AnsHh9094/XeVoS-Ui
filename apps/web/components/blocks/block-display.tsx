@@ -32,4 +32,4 @@ export async function BlockDisplay({ name }: { name: string }) {
   return (
     <BlockViewer item={item} tree={tree} highlightedFiles={highlightedFiles} />
   );
-} 
+}

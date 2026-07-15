@@ -280,4 +280,4 @@ export function ClosingPlasmaPersonalizePanel() {
       </div>
     </div>
   );
-} 
+}

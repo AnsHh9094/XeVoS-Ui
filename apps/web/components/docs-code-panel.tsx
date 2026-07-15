@@ -89,4 +89,4 @@ export function DocsCodePanel({
       <div className="relative">{children}</div>
     </div>
   )
-} 
+}

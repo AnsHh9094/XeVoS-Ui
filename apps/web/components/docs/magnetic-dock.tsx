@@ -126,4 +126,4 @@ export async function MagneticDockDocs() {
       ]}
     />
   );
-} 
+}

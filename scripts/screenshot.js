@@ -29,4 +29,4 @@ async function takeScreenshot() {
   await browser.close();
 }
 
-takeScreenshot().catch(console.error); 
+takeScreenshot().catch(console.error);

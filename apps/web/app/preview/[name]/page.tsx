@@ -47,4 +47,4 @@ export default async function BlockPreviewPage({
       </main>
     </PreviewThemeProvider>
   )
-} 
+}

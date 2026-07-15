@@ -74,4 +74,4 @@ export function LiveCodeBlock({ defaultCode, lang = "tsx" }: LiveCodeBlockProps)
             />
         </div>
     );
-} 
+}

@@ -163,4 +163,4 @@ export function StickyScrollCards({
       </main>
     </ReactLenis>
   );
-} 
+}

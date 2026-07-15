@@ -40,4 +40,4 @@ export function CopyButton({ code, className, absolute = true }: CopyButtonProps
       )}
     </button>
   )
-} 
+}

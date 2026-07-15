@@ -341,4 +341,4 @@ export function ImageRippleEffectPersonalizePanel() {
       </div>
     </div>
   );
-} 
+}

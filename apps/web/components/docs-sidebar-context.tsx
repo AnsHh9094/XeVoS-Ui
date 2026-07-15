@@ -41,4 +41,4 @@ export function useDocsSidebar() {
     throw new Error("useDocsSidebar must be used within DocsSidebarProvider")
   }
   return context
-} 
+}

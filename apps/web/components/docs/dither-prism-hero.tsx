@@ -116,4 +116,4 @@ export async function DitherPrismHeroDocs() {
             ]}
         />
     );
-} 
+}

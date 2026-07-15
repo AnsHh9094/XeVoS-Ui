@@ -12,4 +12,4 @@ export function FloatingLinesBackground() {
   // Floating lines background removed in favor of GhostCursor.
   // Keep a no-op component to avoid import errors in other modules.
   return null;
-} 
+}

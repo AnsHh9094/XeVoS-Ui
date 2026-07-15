@@ -86,4 +86,4 @@ export function buildDocsPageMarkdown(props: DocsPageMarkdownInput): string {
   lines.push(`_Component from [Xevos UI](https://xevos-ui.dev/docs/components/${props.installPackageName})_`)
 
   return lines.join("\n")
-} 
+}

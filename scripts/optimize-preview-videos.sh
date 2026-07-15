@@ -54,4 +54,4 @@ for input in "${FILES[@]}"; do
     "$poster"
 done
 
-echo "Done. Generated .webm, .mp4, and .webp files." 
+echo "Done. Generated .webm, .mp4, and .webp files."

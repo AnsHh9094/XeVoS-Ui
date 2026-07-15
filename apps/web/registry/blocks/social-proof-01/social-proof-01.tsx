@@ -86,4 +86,4 @@ export default function SocialProof01() {
       </div>
     </div>
   )
-} 
+}

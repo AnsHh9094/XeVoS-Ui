@@ -59,4 +59,4 @@ export type BlockThemeName = (typeof blockThemes)[number]["name"]
 
 export function getBlockTheme(name?: string | null) {
   return blockThemes.find((theme) => theme.name === name) ?? blockThemes[0]
-} 
+}

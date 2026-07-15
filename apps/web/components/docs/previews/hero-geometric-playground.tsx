@@ -265,4 +265,4 @@ export function HeroGeometricPersonalizePanel() {
       </div>
     </div>
   );
-} 
+}

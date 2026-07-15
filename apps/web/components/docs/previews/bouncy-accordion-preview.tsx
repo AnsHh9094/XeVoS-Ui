@@ -63,4 +63,4 @@ export function BouncyAccordionPreview() {
       </div>
     </div>
   );
-} 
+}

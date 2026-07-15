@@ -78,4 +78,4 @@ export function DocsClientLayout({
                 </div>
             </div>
         )
-} 
+}

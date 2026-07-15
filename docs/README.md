@@ -49,4 +49,4 @@ See [CREATING_COMPONENTS.md](./CREATING_COMPONENTS.md) for detailed instructions
 
 - **Live Site:** https://xevos-ui.dev
 - **Registry URL:** https://xevos-ui.fun/r/{component}.json
-- **Install Example:** `pnpm dlx shadcn@latest add @xevos-ui/showcase-card` 
+- **Install Example:** `pnpm dlx shadcn@latest add @xevos-ui/showcase-card`

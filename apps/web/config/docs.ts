@@ -103,4 +103,4 @@ export const docsConfig = {
   llms: {
     text: llmsText,
   },
-} as const; 
+} as const;

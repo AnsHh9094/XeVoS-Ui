@@ -17,4 +17,4 @@ export function FloatingDocsSidebar() {
       <FloatingDocsSidebarPanel />
     </DocsSidebarProvider>
   )
-} 
+}

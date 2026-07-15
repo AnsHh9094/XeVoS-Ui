@@ -54,4 +54,4 @@ export function InstallationTabs({ cliContent, manualContent }: InstallationTabs
             </div>
         </div>
     )
-} 
+}

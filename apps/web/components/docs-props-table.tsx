@@ -80,4 +80,4 @@ export function DocsPropsTable({ props, className }: DocsPropsTableProps) {
       </div>
     </div>
   )
-} 
+}

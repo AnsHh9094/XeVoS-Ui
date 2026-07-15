@@ -16,4 +16,4 @@ export function LogoSquare({ className, ...props }: React.HTMLAttributes<HTMLDiv
       <Logomark className="h-2/3 w-2/3" />
     </div>
   )
-} 
+}

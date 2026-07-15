@@ -360,4 +360,4 @@ export const components: Record<string, ComponentMetadata> = {
 
 export function getComponent(slug: string) {
   return components[slug];
-} 
+}

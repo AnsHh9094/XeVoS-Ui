@@ -309,4 +309,4 @@ export function TableOfContents(): React.JSX.Element | null {
       </div>
     </aside>
   )
-} 
+}

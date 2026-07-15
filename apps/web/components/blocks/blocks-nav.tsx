@@ -39,4 +39,4 @@ export function BlocksNav({ active }: { active?: string }) {
       </div>
     </nav>
   )
-} 
+}

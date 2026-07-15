@@ -436,4 +436,4 @@ export function ClosingPlasma({
   );
 }
 
-export default ClosingPlasma; 
+export default ClosingPlasma;

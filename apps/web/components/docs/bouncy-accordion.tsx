@@ -71,4 +71,4 @@ export async function BouncyAccordionDocs() {
       ]}
     />
   )
-} 
+}

@@ -22,4 +22,4 @@ export const siteConfig = {
 export function absoluteUrl(path = "") {
   if (!path) return siteConfig.url
   return `${siteConfig.url}${path.startsWith("/") ? path : `/${path}`}`
-} 
+}

@@ -248,4 +248,4 @@ export function ClosingAurora({ className }: ClosingAuroraProps) {
             aria-hidden="true"
         />
     )
-} 
+}

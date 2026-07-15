@@ -54,4 +54,4 @@ const PulsatingButton = React.forwardRef<
 
 PulsatingButton.displayName = "PulsatingButton"
 
-export { PulsatingButton } 
+export { PulsatingButton }

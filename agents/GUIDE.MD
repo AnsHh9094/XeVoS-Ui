@@ -92,4 +92,4 @@ Treat this repo like a sketchbook:
 * components can be opinionated
 * experiments are welcome
 
-Progress > polish. 
+Progress > polish.

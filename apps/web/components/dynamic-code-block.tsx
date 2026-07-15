@@ -184,4 +184,4 @@ export function DynamicCodeBlock({
       </div>
     </DocsCodePanel>
   )
-} 
+}

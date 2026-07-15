@@ -25,4 +25,4 @@ export function CollectionSurferPreview({
       <iframe src={src} className="w-full h-full border-0" title={title} />
     </div>
   );
-} 
+}

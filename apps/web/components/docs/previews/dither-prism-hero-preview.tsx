@@ -147,4 +147,4 @@ export function DitherPrismHeroIntenseDemo() {
             title2="Impact"
         />
     );
-} 
+}
