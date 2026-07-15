@@ -530,4 +530,4 @@ const GhostCursor = ({
   return <div ref={containerRef} className={`ghost-cursor ${className ?? ''}`} style={mergedStyle} />
 }
 
-export default GhostCursor
+export default GhostCursor 

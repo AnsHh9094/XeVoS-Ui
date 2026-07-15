@@ -36,4 +36,4 @@ export const blocks = [
       previewClassName: "min-h-screen",
     },
   },
-] satisfies BlockRegistryItem[];
+] satisfies BlockRegistryItem[]; 

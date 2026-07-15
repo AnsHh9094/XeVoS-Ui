@@ -291,4 +291,4 @@ export const KineticTextReveal = forwardRef<
   },
 );
 
-KineticTextReveal.displayName = "KineticTextReveal";
+KineticTextReveal.displayName = "KineticTextReveal"; 

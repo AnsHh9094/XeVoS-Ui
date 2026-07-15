@@ -92,4 +92,4 @@ export async function highlightCode(
   htmlCache.set(cacheKey, html);
 
   return html;
-}
+} 

@@ -263,4 +263,4 @@ export function ClosingPlasma({ className }: ClosingPlasmaProps) {
             aria-hidden="true"
         />
     )
-}
+} 

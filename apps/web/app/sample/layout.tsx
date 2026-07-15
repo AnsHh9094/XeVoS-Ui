@@ -19,4 +19,4 @@ export default function SampleLayout({
   children: React.ReactNode
 }) {
   return children
-}
+} 

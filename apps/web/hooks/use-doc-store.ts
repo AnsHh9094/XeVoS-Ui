@@ -14,4 +14,4 @@ interface DocStore {
 export const useDocStore = create<DocStore>((set) => ({
   activeVariantIndex: -1,
   setActiveVariantIndex: (index) => set({ activeVariantIndex: index }),
-}))
+})) 

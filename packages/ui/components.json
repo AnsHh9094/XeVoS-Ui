@@ -17,4 +17,4 @@
     "lib": "@workspace/ui/lib",
     "ui": "@workspace/ui/components"
   }
-}
+} 

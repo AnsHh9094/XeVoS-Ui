@@ -17,4 +17,4 @@ export const blockIndex = {
   (typeof blocks)[number] & { component: React.ComponentType }
 >
 
-export type BlockIndexName = keyof typeof blockIndex
+export type BlockIndexName = keyof typeof blockIndex 

@@ -37,4 +37,4 @@ export function ImageTrailDemo() {
             />
         </div>
     );
-}
+} 

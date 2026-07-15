@@ -29,4 +29,4 @@ export function InstallCommand({ component }: InstallCommandProps) {
   )
 
   return <PackageManagerCommand getCommand={getCommand} />
-}
+} 

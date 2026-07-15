@@ -181,4 +181,4 @@ export function ScrollSplitCard({
       </div>
     </div>
   );
-}
+} 

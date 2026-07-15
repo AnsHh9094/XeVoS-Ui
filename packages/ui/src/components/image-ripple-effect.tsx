@@ -472,4 +472,4 @@ export function ImageRippleEffect({
       ) : null}
     </div>
   );
-}
+} 

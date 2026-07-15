@@ -33,4 +33,4 @@ export default function CollectionSurferUpliftDemoPage() {
             <CollectionSurfer items={DEMO_ITEMS} variant="uplift" />
         </div>
     )
-}
+} 

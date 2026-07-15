@@ -21,4 +21,4 @@ export function BlocksHeading({
       </p>
     </section>
   )
-}
+} 

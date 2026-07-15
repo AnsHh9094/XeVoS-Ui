@@ -38,4 +38,4 @@ export const config = [
       "react/prop-types": "off",
     },
   },
-]
+] 

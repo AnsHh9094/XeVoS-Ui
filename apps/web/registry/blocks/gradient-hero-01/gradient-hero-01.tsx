@@ -61,4 +61,4 @@ export default function GradientHero01() {
       </div>
     </section>
   )
-}
+} 

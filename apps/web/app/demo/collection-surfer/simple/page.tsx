@@ -33,4 +33,4 @@ export default function CollectionSurferSimpleDemoPage() {
             <CollectionSurfer items={DEMO_ITEMS} variant="simple" />
         </div>
     )
-}
+} 

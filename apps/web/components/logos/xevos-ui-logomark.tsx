@@ -24,4 +24,4 @@ export function XevosUILogomark({ className, ...props }: React.SVGProps<SVGSVGEl
             </g>
         </svg>
     )
-}
+} 

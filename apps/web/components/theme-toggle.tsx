@@ -45,4 +45,4 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       <span className="sr-only">Toggle theme</span>
     </button>
   )
-}
+} 

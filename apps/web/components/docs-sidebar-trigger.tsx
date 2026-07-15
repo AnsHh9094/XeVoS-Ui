@@ -32,4 +32,4 @@ export function DocsSidebarTrigger() {
       </button>
     </div>
   )
-}
+} 

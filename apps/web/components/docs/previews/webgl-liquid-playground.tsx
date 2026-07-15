@@ -324,4 +324,4 @@ export function WebGLLiquidPersonalizePanel() {
       </div>
     </div>
   );
-}
+} 

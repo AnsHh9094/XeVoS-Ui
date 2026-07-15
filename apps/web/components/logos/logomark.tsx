@@ -26,4 +26,4 @@ export function Logomark({ className, ...props }: React.SVGProps<SVGSVGElement>)
       <path d="m3 21 6-6" />
     </svg>
   )
-}
+} 

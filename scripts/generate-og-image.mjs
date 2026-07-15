@@ -35,4 +35,4 @@ await page.waitForTimeout(1800);
 await page.screenshot({ path: outputPath, type: "png" });
 await browser.close();
 
-console.log(`Generated ${outputPath}`);
+console.log(`Generated ${outputPath}`); 

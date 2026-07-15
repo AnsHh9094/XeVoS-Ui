@@ -87,4 +87,4 @@ Then upload the resulting file as:
 preview-videos/<category-folder>/<asset-name>.webp
 ```
 
-You're done when the `.webm`, `.mp4`, and `.webp` URLs all return `200`.
+You're done when the `.webm`, `.mp4`, and `.webp` URLs all return `200`. 

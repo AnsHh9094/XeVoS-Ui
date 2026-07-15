@@ -92,4 +92,4 @@ export function splitImportAndUsage(code: string): {
 export function stripImportFromCode(code: string): string {
   const { usageCode } = splitImportAndUsage(code)
   return usageCode || code.trim()
-}
+} 

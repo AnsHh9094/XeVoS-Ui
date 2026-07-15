@@ -101,4 +101,4 @@ export function ScrollBasedVelocity({
             </ParallaxText>
         </section>
     );
-}
+} 

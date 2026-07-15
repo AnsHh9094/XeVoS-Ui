@@ -234,4 +234,4 @@ export function LiquidChromePersonalizePanel() {
       </div>
     </div>
   );
-}
+} 

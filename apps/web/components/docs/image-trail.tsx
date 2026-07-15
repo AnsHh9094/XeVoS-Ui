@@ -84,4 +84,4 @@ export async function ImageTrailDocs() {
             ]}
         />
     );
-}
+} 

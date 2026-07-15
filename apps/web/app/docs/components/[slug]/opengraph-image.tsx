@@ -190,4 +190,4 @@ export default async function Image({ params }: Props) {
       ],
     },
   );
-}
+} 

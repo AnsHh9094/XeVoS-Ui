@@ -234,4 +234,4 @@ export function WebGLLiquid({ className, delayMs = 2400 }: WebGLLiquidProps) {
       aria-hidden="true"
     />
   )
-}
+} 

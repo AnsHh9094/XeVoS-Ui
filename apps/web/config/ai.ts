@@ -20,4 +20,4 @@ export const AI_ASSISTANTS = [
         id: 'scira',
         url: (prompt: string) => `https://scira.app/?q=${encodeURIComponent(prompt)}`
     }
-]
+] 

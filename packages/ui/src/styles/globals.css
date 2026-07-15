@@ -402,4 +402,4 @@ body:has([data-blocks-layout])::-webkit-scrollbar,
 
 [data-block-code-panel] pre {
   scrollbar-color: rgba(113, 113, 122, 0.35) transparent;
-}
+} 

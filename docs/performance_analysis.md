@@ -426,4 +426,4 @@ function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
 | **CLS** | 0 ✅ | 0 ✅ | 0 ✅ |
 
 > [!TIP]
-> The P0 fixes alone (lazy source code + remove unused fonts) should bring FCP from 5.11s to ~2.5-3.0s — a **40-50% improvement** with relatively low effort. Implementing all P0+P1 fixes should get you to **<2.0s FCP**, which is the "Good" threshold for Core Web Vitals.
+> The P0 fixes alone (lazy source code + remove unused fonts) should bring FCP from 5.11s to ~2.5-3.0s — a **40-50% improvement** with relatively low effort. Implementing all P0+P1 fixes should get you to **<2.0s FCP**, which is the "Good" threshold for Core Web Vitals. 

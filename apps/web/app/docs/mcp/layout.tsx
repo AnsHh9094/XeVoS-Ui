@@ -28,4 +28,4 @@ export default function McpLayout({
   children: React.ReactNode
 }) {
   return children
-}
+} 

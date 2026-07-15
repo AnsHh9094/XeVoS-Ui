@@ -13,4 +13,4 @@ export default function Head() {
       <link rel="dns-prefetch" href={R2_PREVIEW_HOST} />
     </>
   )
-}
+} 

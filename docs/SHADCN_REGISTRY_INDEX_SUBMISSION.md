@@ -42,4 +42,4 @@ pnpm registry:build
 - [ ] `https://xevos-ui.fun/r/text-animate.json` is publicly accessible.
 - [ ] Local validation passes in this repo: `pnpm validate:registry`.
 - [ ] New namespace works with explicit registry flag:
-      `npx shadcn@latest add @xevos-ui/text-animate --registry "https://xevos-ui.fun/r/registry.json"`.
+      `npx shadcn@latest add @xevos-ui/text-animate --registry "https://xevos-ui.fun/r/registry.json"`. 

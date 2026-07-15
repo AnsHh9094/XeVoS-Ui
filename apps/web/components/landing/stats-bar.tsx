@@ -42,4 +42,4 @@ export function StatsBar() {
       </div>
     </motion.div>
   )
-}
+} 

@@ -26,4 +26,4 @@ export function Logo({ className, ...props }: React.SVGProps<SVGSVGElement>): Re
       <path d="m3 21 6-6" />
     </svg>
   )
-}
+} 

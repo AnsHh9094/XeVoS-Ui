@@ -77,4 +77,4 @@ export default async function BlockDetailPage({
       <BlocksStripeDivider />
     </>
   );
-}
+} 

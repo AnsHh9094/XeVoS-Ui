@@ -236,4 +236,4 @@ export default async function ComponentPage(props: PageProps) {
             props={[]}
         />
     );
-}
+} 

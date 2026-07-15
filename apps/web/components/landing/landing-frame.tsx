@@ -81,4 +81,4 @@ export function LandingContent({
   return (
     <div className={cn("mx-auto w-full min-w-0 max-w-[1360px]", className)}>{children}</div>
   )
-}
+} 

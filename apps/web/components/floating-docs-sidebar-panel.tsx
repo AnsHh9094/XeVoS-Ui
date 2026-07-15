@@ -264,4 +264,4 @@ export function FloatingDocsSidebarPanel() {
       )}
     </AnimatePresence>
   )
-}
+} 

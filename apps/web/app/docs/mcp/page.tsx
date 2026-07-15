@@ -110,4 +110,4 @@ function McpInitTabs() {
   return (
     <PackageManagerCommand getCommand={(pm) => MCP_INIT_COMMANDS[pm]} />
   )
-}
+} 

@@ -384,4 +384,4 @@ export function SplitFlapDisplay({
       })}
     </div>
   );
-}
+} 

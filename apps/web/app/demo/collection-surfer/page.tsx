@@ -33,4 +33,4 @@ export default function CollectionSurferDemoPage() {
             <CollectionSurfer items={DEMO_ITEMS} variant="magnetic" />
         </div>
     )
-}
+} 

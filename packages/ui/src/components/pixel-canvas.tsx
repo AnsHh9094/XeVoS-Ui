@@ -287,4 +287,4 @@ export function PixelCanvas({
             <canvas ref={canvasRef} className="block w-full h-full" />
         </div>
     );
-}
+} 

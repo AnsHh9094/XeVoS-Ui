@@ -177,4 +177,4 @@ export function Signature({
       </g>
     </motion.svg>
   );
-}
+} 

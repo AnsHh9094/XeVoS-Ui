@@ -25,4 +25,4 @@ export function MusicPlayerPreview() {
       </div>
     </div>
   );
-}
+} 

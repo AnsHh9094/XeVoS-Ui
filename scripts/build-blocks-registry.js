@@ -301,4 +301,4 @@ function main() {
   console.log(`[blocks-registry] Built ${blocks.length} blocks.`);
 }
 
-main();
+main(); 

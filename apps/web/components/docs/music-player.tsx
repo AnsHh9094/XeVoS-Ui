@@ -65,4 +65,4 @@ export async function MusicPlayerDocs() {
       ]}
     />
   );
-}
+} 

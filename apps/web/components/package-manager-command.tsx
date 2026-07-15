@@ -144,4 +144,4 @@ export function PackageManagerCommand({
       </div>
     </DocsCodePanel>
   )
-}
+} 

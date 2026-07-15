@@ -86,4 +86,4 @@ export default function CommerceProductGridBlock() {
       </div>
     </section>
   )
-}
+} 

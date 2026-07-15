@@ -217,4 +217,4 @@ export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
             )}
         </header>
     )
-}
+} 

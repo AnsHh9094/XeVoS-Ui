@@ -69,4 +69,4 @@ export function PixelCanvasSubtleDemo() {
       <CursorHint />
     </div>
   );
-}
+} 

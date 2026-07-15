@@ -38,4 +38,4 @@ export function DocsSidebarIcon({ className, dividerClassName }: DocsSidebarIcon
       />
     </span>
   )
-}
+} 

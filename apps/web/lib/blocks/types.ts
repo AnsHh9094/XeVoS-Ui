@@ -61,4 +61,4 @@ export type FileTree = {
   name: string;
   path?: string;
   children?: FileTree[];
-};
+}; 

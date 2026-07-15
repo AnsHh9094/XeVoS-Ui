@@ -54,4 +54,4 @@ export default function DemoPage() {
             <ScrollChoreography images={demoImages} />
         </div>
     );
-}
+} 

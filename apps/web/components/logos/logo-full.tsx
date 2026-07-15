@@ -14,4 +14,4 @@ export function LogoFull({ className, ...props }: React.HTMLAttributes<HTMLDivEl
       <span className="font-bold text-lg tracking-tight">Xevos UI</span>
     </div>
   )
-}
+} 

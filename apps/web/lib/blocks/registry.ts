@@ -153,4 +153,4 @@ export function createFileTreeForRegistryItemFiles(
   }
 
   return root;
-}
+} 

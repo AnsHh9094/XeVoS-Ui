@@ -52,4 +52,4 @@ export const SPRING_MOUSE = {
   stiffness: 200,
   damping: 15,
   mass: 0.3,
-} as const;
+} as const; 

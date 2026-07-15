@@ -666,4 +666,4 @@ export default function DitherPrismHero({
 }
 
 // Named export for easier imports
-export { DitherPrismHero };
+export { DitherPrismHero }; 
