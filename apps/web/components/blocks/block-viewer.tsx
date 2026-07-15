@@ -5,6 +5,10 @@ import {
   Check,
   Code2,
   Copy,
+  FileCode2,
+  FileJson,
+  FileText,
+  Folder,
   Monitor,
   Smartphone,
   Tablet,
@@ -34,12 +38,41 @@ const sizeIcons = {
   desktop: Monitor,
 }
 
+const viewerToolbarRail =
+  "relative mx-auto w-full max-w-[1360px] border-x border-line px-4 md:px-0"
+const viewerBodyRail =
+  "relative mx-auto w-full max-w-[1360px] border-x border-line px-4 md:px-3"
+
 function copyText(text: string) {
   return navigator.clipboard.writeText(text)
 }
 
 function getRegistryItemNamespace(item: string) {
   return `@componentry/${item}`
+}
+
+function getFileName(path: string) {
+  return path.split("/").filter(Boolean).at(-1) ?? path
+}
+
+function getFileFolder(path: string) {
+  const parts = path.split("/").filter(Boolean)
+  return parts.length > 1 ? parts.slice(0, -1).join("/") : "root"
+}
+
+function FileIcon({ file }: { file: string }) {
+  const extension = file.split(".").at(-1)
+  const iconClassName = "size-4 shrink-0 text-muted-foreground"
+
+  if (extension === "json") {
+    return <FileJson className={iconClassName} />
+  }
+
+  if (extension === "css" || extension === "md" || extension === "mdx") {
+    return <FileText className={iconClassName} />
+  }
+
+  return <FileCode2 className={iconClassName} />
 }
 
 function FullScreenIcon(props: React.ComponentProps<"svg">) {
@@ -151,6 +184,8 @@ export function BlockViewer({
   const file =
     highlightedFiles.find((candidate) => candidate.target === activeFile) ??
     highlightedFiles[0]
+  const activeFileName = file ? getFileName(file.target) : ""
+  const activeFileFolder = file ? getFileFolder(file.target) : ""
   const installCommand = `npx shadcn@latest add ${getRegistryItemNamespace(item.name)}`
   const previewUrl = `/preview/${item.name}?theme=${theme}`
 
@@ -161,98 +196,107 @@ export function BlockViewer({
     >
       <div>
         <Rule />
-        <div className="flex w-full flex-wrap items-center gap-2 px-2 py-2">
-          <SegmentedControl
-            value={view}
-            items={[
-              { value: "preview", label: "Preview", icon: Monitor },
-              { value: "code", label: "Code", icon: Code2 },
-            ]}
-            onValueChange={(value) => setView(value as View)}
-          />
+        <div className={viewerToolbarRail}>
+          <div className="flex w-full flex-wrap items-center gap-2 px-3 py-2">
+            <SegmentedControl
+              value={view}
+              items={[
+                { value: "preview", label: "Preview", icon: Monitor },
+                { value: "code", label: "Code", icon: Code2 },
+              ]}
+              onValueChange={(value) => setView(value as View)}
+            />
 
-          <div className="mx-1 hidden h-4 w-px bg-line md:block" />
+            <div className="mx-1 hidden h-4 w-px bg-line md:block" />
 
-          <a
-            href={`#${item.name}`}
-            className="line-clamp-1 min-w-0 flex-1 text-sm font-medium text-foreground hover:underline"
-          >
-            {item.description.replace(/\.$/, "")}
-          </a>
-
-          <div className="ml-auto flex min-w-0 flex-wrap items-center gap-2">
-            <select
-              value={theme}
-              aria-label="Preview theme"
-              className="h-8 rounded-md border border-line bg-background px-2 text-sm outline-none transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
-              onChange={(event) => setTheme(event.target.value as BlockThemeName)}
+            <a
+              href={`#${item.name}`}
+              className="line-clamp-1 min-w-0 flex-1 text-sm font-medium text-foreground hover:underline"
             >
-              {blockThemes.map((themeItem) => (
-                <option key={themeItem.name} value={themeItem.name}>
-                  {themeItem.label}
-                </option>
-              ))}
-            </select>
+              {item.description.replace(/\.$/, "")}
+            </a>
 
-            <div className="flex h-8 items-center rounded-md border border-line bg-background p-0.5">
-              {(["mobile", "tablet", "desktop"] as const).map((value) => {
-                const Icon = sizeIcons[value]
-                return (
-                  <button
-                    key={value}
-                    type="button"
-                    aria-label={`${value} preview`}
-                    title={`${value} preview`}
-                    className={cn(
-                      "inline-flex size-6 items-center justify-center rounded-sm text-muted-foreground transition hover:text-foreground",
-                      size === value && "bg-muted text-foreground"
-                    )}
-                    onClick={() => {
-                      setView("preview")
-                      setSize(value)
-                    }}
-                  >
-                    <Icon className="size-4" />
-                  </button>
-                )
-              })}
-              <div className="mx-0.5 h-4 w-px bg-line" />
-              <button
-                type="button"
-                aria-label="Open preview in new tab"
-                title="Open preview in new tab"
-                className="inline-flex size-6 items-center justify-center rounded-sm text-muted-foreground transition hover:bg-muted hover:text-foreground"
-                onClick={() =>
-                  window.open(previewUrl, "_blank", "noopener,noreferrer")
+            <div className="ml-auto flex min-w-0 flex-wrap items-center gap-2">
+              <select
+                value={theme}
+                aria-label="Preview theme"
+                className="h-8 rounded-md border border-line bg-background px-2 text-sm outline-none transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+                onChange={(event) =>
+                  setTheme(event.target.value as BlockThemeName)
                 }
               >
-                <FullScreenIcon className="size-4" />
-              </button>
-              <div className="mx-0.5 h-4 w-px bg-line" />
-              <button
-                type="button"
-                aria-label="Refresh preview"
-                title="Refresh preview"
-                className="inline-flex size-6 items-center justify-center rounded-sm text-muted-foreground transition hover:bg-muted hover:text-foreground"
-                onClick={() => {
-                  setView("preview")
-                  setIframeKey((key) => key + 1)
-                }}
-              >
-                <RefreshIcon className="size-4" />
-              </button>
+                {blockThemes.map((themeItem) => (
+                  <option key={themeItem.name} value={themeItem.name}>
+                    {themeItem.label}
+                  </option>
+                ))}
+              </select>
+
+              <div className="flex h-8 items-center rounded-md border border-line bg-background p-0.5">
+                {(["mobile", "tablet", "desktop"] as const).map((value) => {
+                  const Icon = sizeIcons[value]
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      aria-label={`${value} preview`}
+                      title={`${value} preview`}
+                      className={cn(
+                        "inline-flex size-6 items-center justify-center rounded-sm text-muted-foreground transition hover:text-foreground",
+                        size === value && "bg-muted text-foreground"
+                      )}
+                      onClick={() => {
+                        setView("preview")
+                        setSize(value)
+                      }}
+                    >
+                      <Icon className="size-4" />
+                    </button>
+                  )
+                })}
+                <div className="mx-0.5 h-4 w-px bg-line" />
+                <button
+                  type="button"
+                  aria-label="Open preview in new tab"
+                  title="Open preview in new tab"
+                  className="inline-flex size-6 items-center justify-center rounded-sm text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                  onClick={() =>
+                    window.open(previewUrl, "_blank", "noopener,noreferrer")
+                  }
+                >
+                  <FullScreenIcon className="size-4" />
+                </button>
+                <div className="mx-0.5 h-4 w-px bg-line" />
+                <button
+                  type="button"
+                  aria-label="Refresh preview"
+                  title="Refresh preview"
+                  className="inline-flex size-6 items-center justify-center rounded-sm text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                  onClick={() => {
+                    setView("preview")
+                    setIframeKey((key) => key + 1)
+                  }}
+                >
+                  <RefreshIcon className="size-4" />
+                </button>
+              </div>
+
+              <div className="mx-1 hidden h-4 w-px bg-line lg:block" />
+
+              <CopyCommandButton command={installCommand} />
             </div>
-
-            <div className="mx-1 hidden h-4 w-px bg-line lg:block" />
-
-            <CopyCommandButton command={installCommand} />
           </div>
         </div>
 
         <Rule />
 
         {view === "preview" ? (
-          <div className="relative max-w-full overflow-hidden bg-muted/20 p-2">
+          <div
+            className={cn(
+              viewerBodyRail,
+              "overflow-hidden bg-muted/20 py-2"
+            )}
+          >
             <div
               className={cn(
                 "relative mx-auto max-w-full overflow-hidden rounded-xl border border-line bg-background transition-[max-width] duration-300",
@@ -269,51 +313,90 @@ export function BlockViewer({
               />
             </div>
           </div>
-        ) : (
-          <div className="grid overflow-hidden bg-background lg:grid-cols-[280px_1fr]">
-            <div className="border-b border-line bg-muted/20 p-2 lg:border-b-0 lg:border-r">
-              <div className="mb-2 flex items-center gap-2 px-2 py-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                <Terminal className="size-3.5" />
+        ) : file ? (
+          <div
+            className={cn(
+              viewerBodyRail,
+              "grid overflow-hidden bg-muted/20 py-2 lg:h-[720px] lg:grid-cols-[288px_minmax(0,1fr)] lg:gap-2"
+            )}
+          >
+            <div className="flex min-h-0 flex-col overflow-hidden rounded-xl bg-background p-1 shadow-[inset_0_0_0_1px_var(--color-border)] max-lg:mb-2 max-lg:max-h-64">
+              <div className="flex h-10 shrink-0 items-center gap-2 px-3 text-sm font-medium text-muted-foreground">
+                <Folder className="size-4" />
                 Files
               </div>
-              <div className="space-y-1">
-                {highlightedFiles.map((candidate) => (
-                  <button
-                    key={candidate.target}
-                    type="button"
-                    className={cn(
-                      "block w-full truncate rounded-md px-2 py-2 text-left text-sm text-muted-foreground transition hover:bg-muted hover:text-foreground",
-                      file?.target === candidate.target &&
-                        "bg-muted text-foreground"
-                    )}
-                    onClick={() => setActiveFile(candidate.target)}
-                  >
-                    {candidate.target}
-                  </button>
-                ))}
+
+              <div className="min-h-0 flex-1 overflow-auto rounded-[9px] border border-line bg-background py-1">
+                {highlightedFiles.map((candidate) => {
+                  const isActive = file.target === candidate.target
+                  const fileName = getFileName(candidate.target)
+                  const folder = getFileFolder(candidate.target)
+
+                  return (
+                    <button
+                      key={candidate.target}
+                      type="button"
+                      title={candidate.target}
+                      className={cn(
+                        "group flex h-11 w-full min-w-0 items-start gap-2 px-3 py-1.5 text-left font-mono text-sm text-muted-foreground transition-[background-color,color]",
+                        "hover:bg-muted hover:text-foreground",
+                        isActive && "bg-muted text-foreground"
+                      )}
+                      onClick={() => setActiveFile(candidate.target)}
+                    >
+                      <span className="mt-0.5">
+                        <FileIcon file={candidate.target} />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate">{fileName}</span>
+                        <span className="block truncate text-xs text-muted-foreground/70">
+                          {folder}
+                        </span>
+                      </span>
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
-            {file && (
-              <div className="min-w-0">
-                <div className="flex h-11 items-center justify-between border-b border-line px-4">
-                  <span className="truncate font-mono text-xs text-muted-foreground">
-                    {file.target}
-                  </span>
-                  <CopyIconButton
-                    text={file.content ?? ""}
-                    label="Copy file"
-                    className="-mr-2"
-                  />
-                </div>
+            <figure className="my-0 flex min-w-0 flex-col overflow-hidden text-code-foreground max-lg:h-[560px]">
+              <figcaption className="relative flex h-10 shrink-0 items-center gap-3 rounded-t-xl bg-background px-3 pr-11 font-mono text-sm text-muted-foreground shadow-[inset_0_0_0_1px_var(--color-border)]">
+                <FileIcon file={file.target} />
+                <span className="min-w-0 truncate text-foreground">
+                  {activeFileName}
+                </span>
+                <span className="hidden min-w-0 truncate text-xs sm:block">
+                  {activeFileFolder}
+                </span>
+                <CopyIconButton
+                  text={file.content ?? ""}
+                  label="Copy file"
+                  className="absolute right-1.5 size-7 hover:bg-muted"
+                />
+              </figcaption>
+
+              <div
+                data-code-block
+                data-line-numbers="true"
+                className="min-h-0 flex-1 overflow-hidden rounded-b-xl border border-line border-t-0 bg-code text-sm shadow-[inset_0_1px_0_var(--color-background)] [&_.shiki]:h-full [&_code]:min-w-full [&_pre]:h-full [&_pre]:overflow-auto [&_pre]:py-4"
+              >
                 <div
-                  className="max-h-[720px] overflow-auto text-sm [&_pre]:min-h-[720px] [&_pre]:p-4"
+                  key={file.target}
+                  className="h-full [&_.shiki_[data-line]]:pr-4 [&_.shiki_[data-line]]:pl-4"
                   dangerouslySetInnerHTML={{
                     __html: file.highlightedContent,
                   }}
                 />
               </div>
-            )}
+            </figure>
+          </div>
+        ) : (
+          <div
+            className={cn(viewerBodyRail, "bg-muted/20 py-2")}
+          >
+            <div className="flex min-h-80 items-center justify-center rounded-xl border border-line bg-background text-sm text-muted-foreground">
+              No files available.
+            </div>
           </div>
         )}
       </div>
@@ -325,8 +408,10 @@ function Rule() {
   return (
     <div
       aria-hidden="true"
-      className="h-px bg-foreground/15 dark:bg-white/12"
-    />
+      className="mx-auto w-full max-w-[1360px] border-x border-line px-4 md:px-0"
+    >
+      <div className="h-px bg-foreground/15 dark:bg-white/12" />
+    </div>
   )
 }
 

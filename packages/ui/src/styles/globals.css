@@ -39,6 +39,10 @@
   --line: --alpha(var(--color-black) / 10%);
   --input: --alpha(var(--color-black) / 10%);
   --ring: oklch(0.708 0 0);
+  --code: var(--background);
+  --code-foreground: var(--foreground);
+  --code-number: --alpha(var(--color-black) / 32%);
+  --code-highlight: --alpha(var(--color-blue-500) / 6%);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -99,6 +103,10 @@
   --line: --alpha(var(--color-white) / 8%);
   --input: --alpha(var(--color-white) / 8%);
   --ring: oklch(0.556 0 0);
+  --code: oklch(0.18 0 0);
+  --code-foreground: var(--foreground);
+  --code-number: --alpha(var(--color-white) / 28%);
+  --code-highlight: --alpha(var(--color-blue-400) / 10%);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -154,6 +162,10 @@
   --color-line: var(--line);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-code: var(--code);
+  --color-code-foreground: var(--code-foreground);
+  --color-code-number: var(--code-number);
+  --color-code-highlight: var(--code-highlight);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -332,13 +344,13 @@ body:has([data-blocks-layout])::-webkit-scrollbar,
   width: 1.5rem;
   margin-right: 1.25rem;
   text-align: right;
-  color: #a1a1aa;
+  color: var(--code-number);
   user-select: none;
   font-size: 0.75rem;
 }
 
 .dark [data-code-block][data-line-numbers="true"] .shiki [data-line]::before {
-  color: #52525b;
+  color: var(--code-number);
 }
 
 [data-code-block][data-line-numbers="false"] .shiki [data-line]::before {
