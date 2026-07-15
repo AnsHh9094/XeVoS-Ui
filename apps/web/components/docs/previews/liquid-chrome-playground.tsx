@@ -66,8 +66,8 @@ function hexToRgbArray(hex: string): [number, number, number] {
 function generateCode(config: LiquidChromeConfig) {
   const rgb = hexToRgbArray(config.baseColor);
   const rgbString = `[${rgb[0].toFixed(2)}, ${rgb[1].toFixed(2)}, ${rgb[2].toFixed(2)}]`;
-  
-  return `<LiquidChrome 
+
+  return `<LiquidChrome
   baseColor={${rgbString}}
   speed={${config.speed}}
   amplitude={${config.amplitude}}

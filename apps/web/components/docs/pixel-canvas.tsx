@@ -17,7 +17,7 @@ import { readComponentSource } from "@/lib/source-code";
 const basicUsageCode = `import { PixelCanvas } from "@/components/ui/pixel-canvas"
 
 <div className="relative h-[400px] w-full overflow-hidden rounded-xl border bg-neutral-950">
-  <PixelCanvas 
+  <PixelCanvas
     colors={["#e879f9", "#a78bfa", "#38bdf8", "#22d3ee"]}
     speed={0.02}
   />
@@ -25,7 +25,7 @@ const basicUsageCode = `import { PixelCanvas } from "@/components/ui/pixel-canva
 
 const trailCode = `import { PixelCanvas } from "@/components/ui/pixel-canvas"
 
-<PixelCanvas 
+<PixelCanvas
   variant="trail"
   colors={["#f97316", "#fb923c", "#fbbf24", "#facc15"]}
   gap={8}
@@ -34,7 +34,7 @@ const trailCode = `import { PixelCanvas } from "@/components/ui/pixel-canvas"
 
 const glowCode = `import { PixelCanvas } from "@/components/ui/pixel-canvas"
 
-<PixelCanvas 
+<PixelCanvas
   variant="glow"
   colors={["#22c55e", "#10b981", "#14b8a6", "#06b6d4"]}
   gap={10}
@@ -43,7 +43,7 @@ const glowCode = `import { PixelCanvas } from "@/components/ui/pixel-canvas"
 
 const subtleCode = `import { PixelCanvas } from "@/components/ui/pixel-canvas"
 
-<PixelCanvas 
+<PixelCanvas
   colors={["#525252", "#a3a3a3", "#737373"]}
   gap={5}
   speed={0.03}

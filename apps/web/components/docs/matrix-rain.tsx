@@ -30,9 +30,9 @@ const rainbowCode = `import { MatrixRain } from "@/components/ui/matrix-rain"
 
 const customCode = `import { MatrixRain } from "@/components/ui/matrix-rain"
 
-<MatrixRain 
-  fixedColor="#ec4899" 
-  speed={80} 
+<MatrixRain
+  fixedColor="#ec4899"
+  speed={80}
   fontSize={20}
 />`;
 

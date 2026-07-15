@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen w-full text-foreground selection:bg-zinc-200 dark:selection:bg-zinc-800 flex flex-col">
       <SiteHeader />
-      
+
       <main className="relative flex-1 flex flex-col items-center justify-center overflow-hidden">
 
         {/* Hero Content */}
@@ -32,7 +32,7 @@ export default function Home() {
             <Sparkles className="size-4 text-indigo-500" />
             <span className="text-sm font-medium">Welcome to the new standard</span>
           </motion.div>
-          
+
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

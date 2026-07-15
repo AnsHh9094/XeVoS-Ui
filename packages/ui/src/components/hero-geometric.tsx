@@ -70,35 +70,35 @@ float snoise(vec2 v){
 float bayerDither4x4(vec2 uv) {
     int x = int(mod(uv.x, 4.0));
     int y = int(mod(uv.y, 4.0));
-    
+
     int matrix[16];
     matrix[0] = 0; matrix[1] = 8; matrix[2] = 2; matrix[3] = 10;
     matrix[4] = 12; matrix[5] = 4; matrix[6] = 14; matrix[7] = 6;
     matrix[8] = 3; matrix[9] = 11; matrix[10] = 1; matrix[11] = 9;
     matrix[12] = 15; matrix[13] = 7; matrix[14] = 13; matrix[15] = 5;
-    
+
     return float(matrix[y * 4 + x]) / 16.0;
 }
 
 void main() {
     vec2 uv = vUv;
     vec2 coord = gl_FragCoord.xy;
-    
+
     // Enhanced noise with time
     float noise = snoise(uv * 1.5 + vec2(uTime * 0.05, uTime * 0.03)) * 0.25;
-    
+
     // Diagonal gradient from bottom-left to top-right
     float diagonal = (uv.x + uv.y) * 0.5;
-    
+
     // Combine for gradient - emphasize corners
     float gradient = diagonal * 1.2 + noise;
-    
+
     // Interpolate colors based on gradient
     vec3 deepBlue = uColor1;
     vec3 paleBlue = uColor2;
     vec3 softBlue = mix(deepBlue, paleBlue, 0.33);
     vec3 lightBlue = mix(deepBlue, paleBlue, 0.66);
-    
+
     // Map to colors with more distinct steps
     vec3 color;
     if (gradient < 0.3) {
@@ -110,11 +110,11 @@ void main() {
     } else {
         color = paleBlue;
     }
-    
+
     // Enhanced dithering at boundaries
     float dither = bayerDither4x4(coord);
     float threshold = fract(gradient * 4.0);
-    
+
     if (gradient < 0.3 && threshold > dither * 0.5) {
         color = softBlue;
     } else if (gradient >= 0.3 && gradient < 0.55 && threshold > dither * 0.5) {
@@ -122,16 +122,16 @@ void main() {
     } else if (gradient >= 0.55 && gradient < 0.8 && threshold > dither * 0.5) {
         color = paleBlue;
     }
-    
+
     // Softer fade to white - only at extreme bottom-left
     vec2 cornerDist = vec2(uv.x, uv.y);
     float fadeMask = smoothstep(0.0, 0.25, length(cornerDist));
     color = mix(vec3(1.0), color, fadeMask);
-    
+
     // Add subtle vignette to emphasize corners
     float vignette = smoothstep(1.2, 0.3, length(uv - 0.5));
     color = mix(color, color * 0.95, (1.0 - vignette) * 0.3);
-    
+
     gl_FragColor = vec4(color, 1.0);
 }
 `;

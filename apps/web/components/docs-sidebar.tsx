@@ -72,7 +72,7 @@ const SidebarGroup = React.memo(
         <button
           onClick={onToggle}
           className={`
-            w-full flex items-center justify-between py-1.5 px-2 rounded-md 
+            w-full flex items-center justify-between py-1.5 px-2 rounded-md
             text-xs font-medium uppercase tracking-wider transition-colors
             ${hasActiveItem
               ? "text-foreground"

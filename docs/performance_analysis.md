@@ -23,7 +23,7 @@ flowchart TD
     H --> K["First Contentful Paint\n5.11s 🔴"]
     I --> K
     J --> K
-    
+
     style C fill:#ff4444,color:#fff
     style E fill:#ff4444,color:#fff
     style G fill:#ff4444,color:#fff

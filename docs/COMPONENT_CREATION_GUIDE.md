@@ -67,7 +67,7 @@ export function MyComponent({
   variant = "default",
 }: MyComponentProps) {
   // Implementation...
-  
+
   return (
     <div
       className={cn(
@@ -172,7 +172,7 @@ This file defines metadata used for:
 ```typescript
 export const components: Record<string, ComponentMetadata> = {
   // ... existing components
-  
+
   "my-component": {
     title: "My Component",
     description: "A brief, catchy description for SEO and tooltips.",
@@ -234,7 +234,7 @@ export async function MyComponentDocs() {
       // Header
       title="My Component"
       description="A detailed description of what this component does and why developers would use it."
-      
+
       // Main Preview Section
       preview={
         <MyComponent
@@ -243,16 +243,16 @@ export async function MyComponentDocs() {
         />
       }
       previewCode={defaultCode}
-      
+
       // Installation Section
       installPackageName="my-component"
       installDependencies="framer-motion clsx tailwind-merge"  // Space-separated list
       installSourceCode={sourceCode}  // Dynamic source from registry JSON
       installSourceFilename="components/ui/my-component.tsx"  // Optional: custom filename
-      
+
       // Usage Section
       usageCode={importCode}
-      
+
       // Examples Section
       examples={[
         {
@@ -278,7 +278,7 @@ export async function MyComponentDocs() {
           code: `<MyComponent text="Slow Animation" duration={2000} />`,
         },
       ]}
-      
+
       // Props Table
       props={[
         {
@@ -371,7 +371,7 @@ This is **CRITICAL for performance**. Components are lazy-loaded only when visit
 ```typescript
 const docsImportMap: Record<string, () => Promise<...>> = {
   // ... existing components
-  
+
   "my-component": () =>
     import("@/components/docs/my-component").then((m) => ({
       default: m.MyComponentDocs,

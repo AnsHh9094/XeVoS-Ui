@@ -74,7 +74,7 @@ export function CollectionSurfer({ items, variant = "magnetic" }: CollectionSurf
 
     return (
         <div className="relative bg-black min-h-screen text-white w-full">
-            {/* 3. Infinite Spacer: 
+            {/* 3. Infinite Spacer:
                 We make this huge so the user can scroll for a very long time.
                 (e.g., 50,000px) */}
             <div style={{ height: "50000px" }} className="w-full" />
@@ -187,7 +187,7 @@ function Card({
 
     // --- Uplift Variant ---
     // Map distance to Y uplift: Closer = move up (negative Y)
-    // We want it to move UP relative to the card's local space or world space? 
+    // We want it to move UP relative to the card's local space or world space?
     // Moving up in Y (negative) usually works.
     const targetUplift = useTransform(distance, [0, 400], [-100, 0]);
     const springUplift = useSpring(targetUplift, {

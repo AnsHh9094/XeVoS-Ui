@@ -196,8 +196,8 @@ export function MobileNav() {
                                         <div className="pt-4 border-t border-border">
                                             <Link
                                                 href="https://github.com/AnsHh9094/xevos-ui"
-                                                
-                                                
+
+
                                                 className="flex items-center gap-2 py-2 text-sm text-muted-foreground hover:text-foreground"
                                             >
                                                 GitHub

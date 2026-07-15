@@ -73,7 +73,7 @@ export function GitHubStarButton({ className, theme = "default" }: GitHubStarBut
     return (
         <Link
             href="https://github.com/AnsHh9094/xevos-ui"
-            
+
             className={cn(
                 "group relative inline-flex items-center gap-2.5 border text-sm font-semibold transition-all",
                 isLanding

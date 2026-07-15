@@ -40,8 +40,8 @@ const CTACard = () => (
     </div>
     <Link
       href="https://x.com/AnsHh9094"
-      
-      
+
+
       className="group flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-foreground text-background hover:opacity-90 text-xs font-medium transition-all shadow-sm"
     >
       Connect on X

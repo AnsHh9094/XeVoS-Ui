@@ -15,9 +15,9 @@ import { readComponentSource } from "@/lib/source-code";
 
 const basicUsageCode = `import { HeroGeometric } from "@/components/ui/hero-geometric"
 
-<HeroGeometric 
-    title1="Elevate" 
-    title2="Your Brand" 
+<HeroGeometric
+    title1="Elevate"
+    title2="Your Brand"
 />`;
 
 export async function HeroGeometricDocs() {

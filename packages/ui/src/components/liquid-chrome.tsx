@@ -50,9 +50,9 @@ const fragmentShaderSource = `
       vec2 i = floor( p );
       vec2 f = fract( p );
       vec2 u = f*f*(3.0-2.0*f);
-      return mix( mix( hash( i + vec2(0.0,0.0) ), 
+      return mix( mix( hash( i + vec2(0.0,0.0) ),
                        hash( i + vec2(1.0,0.0) ), u.x),
-                  mix( hash( i + vec2(0.0,1.0) ), 
+                  mix( hash( i + vec2(0.0,1.0) ),
                        hash( i + vec2(1.0,1.0) ), u.x), u.y);
   }
 
@@ -77,7 +77,7 @@ const fragmentShaderSource = `
     if (u_resolution.y > 0.0) {
         mouse.x *= u_resolution.x / u_resolution.y;
     }
-    
+
     // Distort based on distance to mouse
     vec2 diff = p - mouse;
     float dist = length(diff);
@@ -102,16 +102,16 @@ const fragmentShaderSource = `
 
     // Color mixing (Chrome / Liquid Metal style)
     vec3 col = u_baseColor;
-    
+
     // Add bright highlights based on the warped noise
     float highlight = smoothstep(0.4, 0.6, f);
     float highlight2 = smoothstep(0.6, 0.8, f);
     float dark = smoothstep(0.1, 0.3, f);
-    
+
     col = mix(col, vec3(0.0), 1.0 - dark); // add shadows
     col = mix(col, vec3(0.8, 0.8, 0.9), highlight); // add silver midtones
     col = mix(col, vec3(1.0, 1.0, 1.0), highlight2); // add bright white specular
-    
+
     // Vignette
     float v = 16.0 * uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y);
     col *= 0.5 + 0.5 * pow(max(0.0, v), 0.2);

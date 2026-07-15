@@ -52,7 +52,7 @@ export async function LayeredStackDocs() {
     <DocsPageLayout
       title="Layered Stack"
       description="A stack of layered cards that reset and spring out on mouse interactions."
-      
+
       preview={
         <div className="flex w-full min-h-[500px] items-center justify-center p-8">
             <LayeredStack className="w-full max-w-[920px] grid grid-cols-4 gap-4 p-8">
@@ -63,14 +63,14 @@ export async function LayeredStackDocs() {
         </div>
       }
       previewCode={defaultCode}
-      
+
       installPackageName="layered-stack"
       installDependencies="gsap"
       installSourceCode={sourceCode}
       installSourceFilename="components/ui/layered-stack.tsx"
-      
+
       usageCode={defaultCode}
-      
+
       props={[
         {
           name: "children",

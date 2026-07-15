@@ -129,11 +129,11 @@ export function MacKeyboard({ className, soundSrc = "/audio/key-press.wav", ...p
   return (
     <KeyboardContext.Provider value={{ activeKeys }}>
       {props.children ? (
-        <div 
+        <div
           className={cn(
-            "inline-flex items-center gap-1.5 rounded-[1.5rem] bg-neutral-200 p-3 shadow-2xl dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800", 
+            "inline-flex items-center gap-1.5 rounded-[1.5rem] bg-neutral-200 p-3 shadow-2xl dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800",
             className
-          )} 
+          )}
           {...props}
         >
           {props.children}
@@ -271,7 +271,7 @@ export function MacKeyboard({ className, soundSrc = "/audio/key-press.wav", ...p
           <Command className="absolute top-2 left-2 h-4 w-4" />
         </MacKey>
         {/* Spacebar */}
-        <MacKey width={4} keyCode="Space" /> 
+        <MacKey width={4} keyCode="Space" />
         <MacKey
           width={1.5}
           keyCode="MetaRight"
@@ -288,7 +288,7 @@ export function MacKeyboard({ className, soundSrc = "/audio/key-press.wav", ...p
         >
            <Option className="absolute top-2 right-2 h-4 w-4" />
         </MacKey>
-        
+
         {/* Arrow keys */}
         <div style={{ flex: 3 }} className="grid h-full grid-cols-3 items-end gap-1.5 pl-0.5">
           <MacKey width={1} keyCode="ArrowLeft" className="h-full">
@@ -355,10 +355,10 @@ export function MacKey({
     // 2. Try to infer from label (simple cases)
     if (typeof label === "string") {
       const l = label.toLowerCase();
-      
+
       // Numbers
       if (/^[0-9]$/.test(l)) return activeKeys.has(`Digit${l}`);
-      
+
       // Letters
       if (/^[a-z]$/.test(l)) return activeKeys.has(`Key${l.toUpperCase()}`);
 
@@ -376,15 +376,15 @@ export function MacKey({
         "/": "Slash",
         "`": "Backquote",
         "delete": "Backspace",
-        "tab": "Tab", 
+        "tab": "Tab",
         "caps lock": "CapsLock",
         "return": "Enter",
         "space": "Space"
       };
-      
+
       if (symbolMap[l]) return activeKeys.has(symbolMap[l]);
     }
-    
+
     return false;
   }, [activeKeys, keyCode, label]);
 
@@ -428,7 +428,7 @@ export function MacKey({
              <span className="text-sm font-medium">{label}</span>
           </div>
         )}
-        
+
         {/* Letter keys */}
         {!subLabel && !icon && typeof label === "string" && label.length === 1 && (
           <span className="text-lg font-medium">{label}</span>
@@ -438,7 +438,7 @@ export function MacKey({
         {!subLabel && !icon && (typeof label !== "string" || label.length > 1) && !children && (
           <span className="font-medium text-xs">{label}</span>
         )}
-        
+
         {children}
       </div>
     </div>

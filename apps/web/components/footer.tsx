@@ -51,20 +51,20 @@ export function Footer() {
               Beautiful animated React components. Copy, paste, ship. Built for modern web applications with a focus on motion and usability.
             </p>
             <div className="flex items-center gap-3">
-              <a 
-                href="https://x.com/AnsHh9094" 
-                 
-                 
+              <a
+                href="https://x.com/AnsHh9094"
+
+
                 className="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
               >
                 <svg className="size-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
-              <a 
-                href="https://github.com/AnsHh9094/xevos-ui" 
-                 
-                 
+              <a
+                href="https://github.com/AnsHh9094/xevos-ui"
+
+
                 className="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
               >
                 <svg className="size-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -143,8 +143,8 @@ export function Footer() {
             © {new Date().getFullYear()} Xevos UI. Created by{" "}
             <a
               href="https://x.com/AnsHh9094"
-              
-              
+
+
               className="text-zinc-900 dark:text-zinc-100 hover:underline underline-offset-4"
             >
               ansh anand

@@ -181,9 +181,9 @@ export default function Home() {
             <Link href="/docs/components/magnetic-dock" className="absolute inset-0 z-20"><span className="sr-only">Magnetic dock</span></Link>
             <div className={`${showcasePreviewClass} flex max-h-[260px] items-center justify-center overflow-hidden p-6 text-black sm:p-10`}>
               <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px] opacity-70 dark:opacity-60" />
-              
+
               <div className="z-10 flex h-[80px] items-center justify-center translate-y-2 group-hover:scale-105 transition-transform duration-500">
-                 <MagneticDock 
+                 <MagneticDock
                     items={[
                        { id: "home", label: "Home", icon: <DockIconHome /> },
                        { id: "search", label: "Search", icon: <DockIconSearch /> },

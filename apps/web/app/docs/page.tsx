@@ -187,7 +187,7 @@ function ComponentCard({
 
         {/* ── Preview area (Floating) ── */}
         <div className="p-1.5">
-          <motion.div 
+          <motion.div
             initial={false}
             animate={{ height: isHovered ? 228 : 260 }}
             transition={{

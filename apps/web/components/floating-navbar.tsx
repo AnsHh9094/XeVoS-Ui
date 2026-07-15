@@ -67,7 +67,7 @@ export function FloatingNavbar() {
                         {/* GitHub */}
                         <Link
                             href="https://github.com/AnsHh9094/xevos-ui"
-                            
+
                             className="flex size-9 items-center justify-center rounded-[12px] bg-zinc-100/80 dark:bg-zinc-800/50 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition-colors group"
                         >
                             <Github className="size-4 text-zinc-500 group-hover:text-zinc-900 dark:text-zinc-400 dark:group-hover:text-zinc-100 transition-colors" />

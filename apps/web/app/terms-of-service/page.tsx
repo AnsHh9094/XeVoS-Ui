@@ -14,7 +14,7 @@ export default function TermsOfServicePage() {
   return (
     <div className="min-h-screen w-full bg-white dark:bg-[#09090B] text-zinc-900 dark:text-zinc-100 flex flex-col">
       <SiteHeader />
-      
+
       <main className="flex-grow w-full max-w-3xl mx-auto px-6 py-32 md:py-40">
         <h1 className="text-3xl md:text-5xl font-semibold tracking-tight mb-4">Terms of Service</h1>
         <p className="text-zinc-500 dark:text-zinc-400 mb-12">Last updated: June 20, 2026</p>

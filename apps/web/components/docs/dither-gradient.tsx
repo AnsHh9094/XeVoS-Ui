@@ -25,7 +25,7 @@ const basicUsageCode = `import { DitherGradient } from "@/components/ui/dither-g
 const oceanThemeCode = `import { DitherGradient } from "@/components/ui/dither-gradient"
 
 <div className="relative h-[300px] w-full overflow-hidden rounded-xl border bg-background">
-  <DitherGradient 
+  <DitherGradient
     colorFrom="#06b6d4"
     colorMid="#10b981"
     colorTo="#84cc16"
@@ -38,7 +38,7 @@ const oceanThemeCode = `import { DitherGradient } from "@/components/ui/dither-g
 const sunsetThemeCode = `import { DitherGradient } from "@/components/ui/dither-gradient"
 
 <div className="relative h-[300px] w-full overflow-hidden rounded-xl border bg-background">
-  <DitherGradient 
+  <DitherGradient
     colorFrom="#f97316"
     colorMid="#ef4444"
     colorTo="#be185d"

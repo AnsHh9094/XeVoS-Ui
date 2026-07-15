@@ -63,8 +63,8 @@ export function DocsFooterSection() {
         </div>
         <Link
           href="https://x.com/AnsHh9094"
-          
-          
+
+
           className="mt-3 inline-flex w-fit items-center gap-2 rounded-lg border border-border bg-white px-3 py-1.5 text-[13px] font-medium text-zinc-900 transition-colors hover:bg-zinc-50 active:scale-[0.98] sm:mt-0 sm:shrink-0 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900"
         >
           <svg role="img" viewBox="0 0 24 24" fill="currentColor" className="size-3.5" aria-hidden>

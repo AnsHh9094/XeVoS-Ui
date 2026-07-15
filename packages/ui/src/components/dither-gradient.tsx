@@ -81,10 +81,10 @@ export function DitherGradient({
         for (let x = 0; x < width; x++) {
           const normalizedX = x / width
           const normalizedY = y / height
-          
-          const gradientPos = 
-            (normalizedX * Math.cos(rad) + normalizedY * Math.sin(rad)) * 0.8 + 
-            0.1 + 
+
+          const gradientPos =
+            (normalizedX * Math.cos(rad) + normalizedY * Math.sin(rad)) * 0.8 +
+            0.1 +
             Math.sin(time * speed * 0.0008) * 0.1
 
           const clampedPos = Math.max(0, Math.min(1, gradientPos))

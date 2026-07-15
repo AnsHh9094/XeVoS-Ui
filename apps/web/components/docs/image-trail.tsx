@@ -23,7 +23,7 @@ export function Hero() {
       <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
         <h1 className="text-4xl font-bold text-white">DISCOVERY</h1>
       </div>
-      <ImageTrail 
+      <ImageTrail
         images={myImages}
         imageWidth={250}
         imageHeight={320}

@@ -15,8 +15,8 @@ import { readComponentSource } from "@/lib/source-code";
 
 const basicUsageCode = `import { DitherPrismHero } from "@/components/ui/dither-prism-hero"
 
-<DitherPrismHero 
-    title1="Experience" 
+<DitherPrismHero
+    title1="Experience"
     title2="The Future"
 />`;
 

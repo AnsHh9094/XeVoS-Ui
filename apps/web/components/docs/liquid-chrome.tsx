@@ -15,7 +15,7 @@ import {
 
 const basicUsageCode = `import { LiquidChrome } from "@workspace/ui/components/liquid-chrome"
 
-<LiquidChrome 
+<LiquidChrome
   baseColor={[0.10, 0.10, 0.10]}
   speed={1.0}
   amplitude={0.6}

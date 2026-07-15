@@ -89,7 +89,7 @@ vec3 getLineColor(float t, vec3 baseColor) {
   }
 
   vec3 gradientColor;
-  
+
   if (lineGradientCount == 1) {
     gradientColor = lineGradient[0];
   } else {
@@ -101,10 +101,10 @@ vec3 getLineColor(float t, vec3 baseColor) {
 
     vec3 c1 = lineGradient[idx];
     vec3 c2 = lineGradient[idx2];
-    
+
     gradientColor = mix(c1, c2, f);
   }
-  
+
   return gradientColor * 0.5;
 }
 
@@ -130,7 +130,7 @@ vec3 getLineColor(float t, vec3 baseColor) {
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   vec2 baseUv = (2.0 * fragCoord - iResolution.xy) / iResolution.y;
   baseUv.y *= -1.0;
-  
+
   if (parallax) {
     baseUv += parallaxOffset;
   }
@@ -144,13 +144,13 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     mouseUv = (2.0 * iMouse - iResolution.xy) / iResolution.y;
     mouseUv.y *= -1.0;
   }
-  
+
   if (enableBottom) {
     for (int i = 0; i < bottomLineCount; ++i) {
       float fi = float(i);
       float t = fi / max(float(bottomLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
-      
+
       float angle = bottomWavePosition.z * log(length(baseUv) + 1.0);
       vec2 ruv = baseUv * rotate(angle);
       col += lineCol * wave(
@@ -168,7 +168,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       float fi = float(i);
       float t = fi / max(float(middleLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
-      
+
       float angle = middleWavePosition.z * log(length(baseUv) + 1.0);
       vec2 ruv = baseUv * rotate(angle);
       col += lineCol * wave(
@@ -186,7 +186,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       float fi = float(i);
       float t = fi / max(float(topLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
-      
+
       float angle = topWavePosition.z * log(length(baseUv) + 1.0);
       vec2 ruv = baseUv * rotate(angle);
       ruv.x *= -1.0;

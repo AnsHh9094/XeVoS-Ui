@@ -18,7 +18,7 @@ interface CodeBlockProps {
 
 /**
  * Server Component CodeBlock with cached Shiki highlighting.
- * 
+ *
  * PERFORMANCE: Uses a singleton highlighter pattern to avoid the
  * expensive (~200-500ms) cost of creating a new highlighter per render.
  */

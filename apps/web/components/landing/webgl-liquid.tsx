@@ -55,7 +55,7 @@ float fbm(vec2 p) {
 void main() {
   vec2 uv = gl_FragCoord.xy / u_res;
   float t = u_time * 0.15;
-  
+
   vec2 aspect = vec2(u_res.x / u_res.y, 1.0);
   vec2 p = (uv - 0.5) * aspect;
 
@@ -71,7 +71,7 @@ void main() {
   // Vertical masking: Fade out towards top
   // Strongest at bottom (uv.y ~ 0), gone by top (uv.y ~ 0.8)
   float mask = smoothstep(0.8, 0.0, uv.y);
-  mask = pow(mask, 1.2); 
+  mask = pow(mask, 1.2);
 
   // Colors
   vec3 c1 = vec3(0.02, 0.02, 0.05);  // Deep
@@ -79,16 +79,16 @@ void main() {
   vec3 c3 = vec3(0.6, 0.85, 0.95);   // High
 
   float intensity = n3 * 1.2 + (n2 - 0.5) * 0.5;
-  
+
   vec3 col = mix(c1, c2, smoothstep(0.2, 0.6, intensity));
   col = mix(col, c3, smoothstep(0.7, 1.1, intensity));
-  
+
   // Apply mask
   col *= mask;
-  
+
   // Compute alpha: transparent where mask is low or intensity is low
   float alpha = mask * smoothstep(0.1, 0.9, intensity);
-  
+
   // Dither
   float dither = (hash(gl_FragCoord.xy + t) - 0.5) * 0.04;
   col += dither;
@@ -98,7 +98,7 @@ void main() {
   // We want a smooth wipe appearing from left (uv.x=0) to right (uv.x=1).
   float revealProgress = u_time * 0.8; // Speed of the wipe
   float revealMask = smoothstep(0.0, 0.3, revealProgress - uv.x);
-  
+
   alpha *= revealMask;
 
   gl_FragColor = vec4(col, alpha);

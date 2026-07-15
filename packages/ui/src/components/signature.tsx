@@ -55,8 +55,8 @@ export function Signature({
     async function load() {
       try {
         let font;
-        const fontPaths = fontUrl 
-          ? [fontUrl] 
+        const fontPaths = fontUrl
+          ? [fontUrl]
           : [
               "/LastoriaBoldRegular.otf",
               "./LastoriaBoldRegular.otf",

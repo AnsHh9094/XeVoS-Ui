@@ -94,7 +94,7 @@ void main() {
     float n = fbm(p * 2.0 + flow * 1.5);
 
     float ridges = 1.0 - abs(snoise(p * 4.0 + n) * 2.0);
-    ridges = pow(ridges, 3.0); 
+    ridges = pow(ridges, 3.0);
 
     // ── Dark Theme Palette ──────────────────────
     vec3 darkA = vec3(0.05, 0.05, 0.08);
@@ -115,7 +115,7 @@ void main() {
     // Mix based on noise
     vec3 col = mix(colorA, colorB, smoothstep(-0.5, 0.5, n));
     col = mix(col, colorC, smoothstep(0.3, 1.0, n * 0.5 + ridges * 0.5));
-    
+
     // Add subtle glow points
     float sparkle = pow(snoise(gl_FragCoord.xy * 0.2 + t * 2.0), 20.0) * 0.5;
     // Sparkle color adapts to theme
@@ -123,7 +123,7 @@ void main() {
     col += sparkleColor * sparkle;
 
     // ── Post FX ──────────────────────────────────
-    
+
     // Vignette — softer in light mode to avoid darkening edges too harshly
     float vigStrength = mix(1.8, 1.6, u_isDark);
     float vig = 1.0 - smoothstep(0.5, vigStrength, length(p));

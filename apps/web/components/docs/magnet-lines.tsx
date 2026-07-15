@@ -11,7 +11,7 @@ import { readComponentSource } from "@/lib/source-code";
 
 const basicUsageCode = `import { MagnetLines } from "@/components/ui/magnet-lines"
 
-<MagnetLines 
+<MagnetLines
   rows={9}
   columns={9}
   containerSize="60vmin"

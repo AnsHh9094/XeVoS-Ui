@@ -158,8 +158,8 @@ export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
                     <div className="flex items-center gap-1">
                         <Link
                             href="https://github.com/AnsHh9094"
-                            
-                            
+
+
                             title={fullStars}
                             className="group inline-flex h-8 items-center justify-center gap-1 rounded-md px-1.5 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-foreground dark:hover:bg-muted/50"
                         >

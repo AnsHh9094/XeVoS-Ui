@@ -43,19 +43,19 @@ export async function SignatureDocs() {
     <DocsPageLayout
       title="Signature"
       description="An animated SVG signature effect using Opentype.js and Framer Motion to draw out text as if hand-written."
-      
+
       preview={<SignaturePlayground />}
       personalizeContent={<SignaturePersonalizePanel />}
       previewCode=""
-      
+
       installPackageName="signature"
       installDependencies="framer-motion opentype.js"
       installSourceCode={sourceCode}
       installSourceFilename="components/ui/signature.tsx"
-      
+
       usageNote={installationNote}
       usageCode={<LiveCodeBlock defaultCode={defaultCode} />}
-      
+
       props={[
         {
           name: "text",

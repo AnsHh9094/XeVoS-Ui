@@ -90,7 +90,7 @@ void main() {
   float r1 = ribbon(p, -0.1, 0.18, 0.12, t);
   vec3 c1 = mix(vec3(0.25, 0.10, 0.55), vec3(0.15, 0.30, 0.70), uv.x + gnoise(p * 2.0 + t * 0.1) * 0.3);
 
-  // Ribbon 2 — teal-emerald  
+  // Ribbon 2 — teal-emerald
   float r2 = ribbon(p, 0.15, 0.14, 0.09, t + 3.0);
   vec3 c2 = mix(vec3(0.05, 0.35, 0.40), vec3(0.10, 0.55, 0.45), uv.x + gnoise(p * 1.5 - t * 0.08) * 0.4);
 

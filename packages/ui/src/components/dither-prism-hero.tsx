@@ -144,15 +144,15 @@ float blueNoise(vec2 uv, float time) {
 vec3 prism(vec2 uv, float time, float intensity) {
   float angle = atan(uv.y - 0.5, uv.x - 0.5);
   float dist = length(uv - 0.5);
-  
+
   // Create rotating prismatic effect
   float prismAngle = angle + time * 0.3 + dist * 3.0;
-  
+
   // RGB separation based on angle
   float r = 0.5 + 0.5 * sin(prismAngle);
   float g = 0.5 + 0.5 * sin(prismAngle + 2.094); // 120 degrees
   float b = 0.5 + 0.5 * sin(prismAngle + 4.188); // 240 degrees
-  
+
   return vec3(r, g, b) * intensity;
 }
 
@@ -162,15 +162,15 @@ vec3 prism(vec2 uv, float time, float intensity) {
 vec3 iridescence(vec2 uv, float time) {
   float t = time * 0.5;
   vec2 p = uv * 3.0;
-  
+
   float n1 = snoise(p + vec2(t, 0.0));
   float n2 = snoise(p * 1.3 + vec2(0.0, t * 0.7));
   float n3 = snoise(p * 0.7 + vec2(t * 0.5, t * 0.3));
-  
+
   vec3 col1 = vec3(0.5 + 0.5 * sin(n1 * 3.14159 + t));
   vec3 col2 = vec3(0.5 + 0.5 * sin(n2 * 3.14159 + t * 1.3 + 2.0));
   vec3 col3 = vec3(0.5 + 0.5 * sin(n3 * 3.14159 + t * 0.7 + 4.0));
-  
+
   return (col1 + col2 + col3) / 3.0;
 }
 
@@ -183,20 +183,20 @@ float diamond(vec2 p) {
 
 float morphShape(vec2 uv, float time) {
   float morph = sin(time * 0.4) * 0.5 + 0.5;
-  
+
   vec2 p = uv * 4.0 - 2.0;
   p = p + vec2(sin(time * 0.3), cos(time * 0.4)) * 0.5;
-  
+
   // Morphing between circle and diamond
   float circle = length(p) - 1.0;
   float diam = diamond(p) - 1.4;
-  
+
   float shape = mix(circle, diam, morph);
-  
+
   // Create multiple copies
   vec2 q = mod(uv * 8.0, 2.0) - 1.0;
   float multiShape = mix(length(q), diamond(q), morph) - 0.3;
-  
+
   return min(shape, multiShape);
 }
 
@@ -215,16 +215,16 @@ float mouseRipple(vec2 uv, vec2 mouse, float time, float intensity) {
 // Mouse glow - creates bright aura around cursor
 vec3 mouseGlow(vec2 uv, vec2 mouse, float time, float intensity, vec3 glowColor) {
   float dist = length(uv - mouse);
-  
+
   // Inner bright core
   float core = exp(-dist * 15.0) * 1.5;
-  
+
   // Outer soft glow
   float outer = exp(-dist * 5.0) * 0.8;
-  
+
   // Pulsing effect
   float pulse = 0.8 + 0.2 * sin(time * 3.0);
-  
+
   // Rainbow chromatic aberration around cursor
   float chromatic = sin(dist * 30.0 + time * 2.0) * exp(-dist * 8.0);
   vec3 rainbow = vec3(
@@ -232,10 +232,10 @@ vec3 mouseGlow(vec2 uv, vec2 mouse, float time, float intensity, vec3 glowColor)
     sin(time * 2.0 + 2.094) * 0.5 + 0.5,
     sin(time * 2.0 + 4.188) * 0.5 + 0.5
   );
-  
+
   vec3 glow = glowColor * (core + outer) * pulse * intensity;
   glow += rainbow * chromatic * intensity * 0.5;
-  
+
   return glow;
 }
 
@@ -254,42 +254,42 @@ void main() {
   vec2 uv = vUv;
   vec2 pixelCoord = gl_FragCoord.xy;
   float time = uTime;
-  
+
   // ═══════════════════════════════════════════════════════════════════
   // Layer 0: Apply mouse lens distortion to UV coordinates FIRST
   // ═══════════════════════════════════════════════════════════════════
   vec2 distortedUv = mouseLensDistort(uv, uMouse, uMouseIntensity);
-  
+
   // ═══════════════════════════════════════════════════════════════════
   // Layer 1: Base flowing gradient with noise (using distorted UVs)
   // ═══════════════════════════════════════════════════════════════════
   float noise1 = fbm(distortedUv * 2.0 + vec2(time * 0.05, time * 0.03), 4);
   float noise2 = fbm(distortedUv * 3.0 + vec2(-time * 0.04, time * 0.06), 3);
-  
+
   float diagonal = (distortedUv.x + distortedUv.y) * 0.5;
   float flow = diagonal + noise1 * 0.3 + noise2 * 0.2;
   flow += sin(time * 0.2) * 0.1;
-  
+
   // ═══════════════════════════════════════════════════════════════════
   // Layer 2: Color mixing with tri-color gradient
   // ═══════════════════════════════════════════════════════════════════
   vec3 col;
   float t1 = smoothstep(0.0, 0.5, flow);
   float t2 = smoothstep(0.5, 1.0, flow);
-  
+
   col = mix(uColor1, uColor2, t1);
   col = mix(col, uColor3, t2);
-  
+
   // ═══════════════════════════════════════════════════════════════════
   // Layer 3: Prismatic light refraction
   // ═══════════════════════════════════════════════════════════════════
   vec3 prismColor = prism(distortedUv, time, uPrismIntensity);
-  
+
   // Apply prism only at edges/transitions
   float edgeMask = abs(fract(flow * 5.0) - 0.5) * 2.0;
   edgeMask = smoothstep(0.3, 0.7, edgeMask);
   col += prismColor * edgeMask * 0.4;
-  
+
   // ═══════════════════════════════════════════════════════════════════
   // Layer 4: Iridescent holographic overlay
   // ═══════════════════════════════════════════════════════════════════
@@ -297,67 +297,67 @@ void main() {
   float irisMask = snoise(distortedUv * 5.0 + time * 0.1);
   irisMask = smoothstep(-0.2, 0.8, irisMask) * 0.15;
   col = mix(col, iris, irisMask);
-  
+
   // ═══════════════════════════════════════════════════════════════════
   // Layer 5: Geometric crystal patterns
   // ═══════════════════════════════════════════════════════════════════
   float shape = morphShape(distortedUv, time);
   float shapeMask = 1.0 - smoothstep(-0.1, 0.1, shape);
   col = mix(col, col * 1.15 + vec3(0.08), shapeMask * 0.3);
-  
+
   // ═══════════════════════════════════════════════════════════════════
   // Layer 6: VISIBLE Mouse interaction - ripples + glow + color shift
   // ═══════════════════════════════════════════════════════════════════
   float ripple = mouseRipple(uv, uMouse, time, uMouseIntensity);
-  
+
   // Add dramatic ripple color changes
   col += ripple * prismColor * 1.2;
   col += ripple * vec3(0.3, 0.2, 0.4);
-  
+
   // Add bright glowing cursor aura
   vec3 glow = mouseGlow(uv, uMouse, time, uMouseIntensity, vec3(1.0, 0.8, 1.0));
   col += glow;
-  
+
   // Color shift near cursor - make area around mouse more vibrant
   float mouseDist = length(uv - uMouse);
   float proximityBoost = exp(-mouseDist * 4.0) * uMouseIntensity;
   col = mix(col, col * 1.5 + prismColor * 0.3, proximityBoost);
-  
+
   // ═══════════════════════════════════════════════════════════════════
   // Layer 7: ADVANCED DITHERING - The signature look!
   // ═══════════════════════════════════════════════════════════════════
-  
+
   // 8x8 Bayer ordered dithering
   float bayer = bayer8x8(pixelCoord);
-  
+
   // Animated blue noise
   float blue = blueNoise(pixelCoord * 0.1, time);
-  
+
   // Combine dithering patterns
   float ditherPattern = mix(bayer, blue, 0.3 + 0.2 * sin(time * 0.5));
-  
+
   // Apply dithering to create the signature grainy/retro look
   vec3 ditherOffset = (vec3(ditherPattern) - 0.5) * uDitherIntensity;
   col += ditherOffset;
-  
+
   // Quantize colors for retro dithered appearance
   float levels = 16.0;
   vec3 quantized = floor(col * levels + ditherPattern) / levels;
   col = mix(col, quantized, uDitherIntensity * 0.5);
-  
+
   // ═══════════════════════════════════════════════════════════════════
   // Layer 8: Scanline effect for extra depth
   // ═══════════════════════════════════════════════════════════════════
   float scanline = sin(pixelCoord.y * 2.0 + time * 2.0) * 0.02;
   col += scanline * uDitherIntensity;
-  
+
   // ═══════════════════════════════════════════════════════════════════
   // Layer 9: Vignette for cinematic depth
   // ═══════════════════════════════════════════════════════════════════
   float vignette = 1.0 - length((uv - 0.5) * 1.2);
   vignette = smoothstep(0.0, 0.7, vignette);
   col *= 0.85 + vignette * 0.15;
-  
+
   // ═══════════════════════════════════════════════════════════════════
   // Final output
   // ═══════════════════════════════════════════════════════════════════
