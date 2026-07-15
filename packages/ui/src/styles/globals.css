@@ -383,3 +383,23 @@ body:has([data-blocks-layout])::-webkit-scrollbar,
   width: 0 !important;
   height: 0 !important;
 }
+
+[data-block-code-panel] .shiki,
+[data-block-code-panel] .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: transparent !important;
+}
+
+[data-block-code-panel][data-line-numbers="true"] .shiki [data-line]::before {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 2.25rem;
+  margin-right: 1rem;
+  color: var(--code-number);
+  background: #09090b;
+}
+
+[data-block-code-panel] pre {
+  scrollbar-color: rgba(113, 113, 122, 0.35) transparent;
+}
