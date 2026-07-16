@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import * as React from "react"
@@ -94,11 +100,11 @@ export function PageContextMenu({ content, className }: PageContextMenuProps) {
   }
 
   const getPrompt = (url: string) => {
-    return `I'm looking at this Componentry documentation: ${url}. The full docs are copied to my clipboard as markdown. Help me install, use, and customize this component.`
+    return `I'm looking at this Xevos UI documentation: ${url}. The full docs are copied to my clipboard as markdown. Help me install, use, and customize this component.`
   }
 
   const openLink = async (assistant: (typeof AI_ASSISTANTS)[number]) => {
-    const url = new URL(window.location.pathname, "https://componentry.dev").toString()
+    const url = new URL(window.location.pathname, "https://xevos-ui.dev").toString()
     const prompt = getPrompt(url)
 
     await navigator.clipboard.writeText(content)

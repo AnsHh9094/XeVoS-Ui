@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 import { absoluteUrl, siteConfig } from "@/lib/site"
 
 export function JsonLd() {
@@ -26,7 +32,7 @@ export function JsonLd() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: siteConfig.name,
-    alternateName: ["Componentry UI", "Componentry Components"],
+    alternateName: ["Xevos UI UI", "Xevos UI Components"],
     url: siteConfig.url,
     description: siteConfig.description,
     publisher: {
@@ -69,7 +75,7 @@ export function JsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: siteConfig.author.name,
-    alternateName: ["harshjdhv", "Harsh"],
+    alternateName: ["AnsHh9094", "Harsh"],
     url: siteConfig.author.twitter,
     jobTitle: "Frontend Developer",
     knowsAbout: [

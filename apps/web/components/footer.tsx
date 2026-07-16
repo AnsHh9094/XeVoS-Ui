@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import React from "react"
@@ -6,7 +12,7 @@ import {
   LandingContent,
   landingGutterClass,
 } from "@/components/landing/landing-frame"
-import { ComponentryLogomark } from "@/components/logos/componentry-logomark"
+import { XevosUILogomark } from "@/components/logos/xevos-ui-logomark"
 
 const links = {
   product: [
@@ -16,15 +22,14 @@ const links = {
   ],
   resources: [
     { label: "Documentation", href: "/docs" },
-    { label: "GitHub", href: "https://github.com/harshjdhv/componentry", external: true },
-    { label: "Sponsor", href: "https://github.com/sponsors/harshjdhv", external: true },
+    { label: "GitHub", href: "https://github.com/AnsHh9094/xevos-ui", external: true },
     { label: "Terms of Service", href: "/terms-of-service" },
     { label: "Privacy Policy", href: "/privacy-policy" },
   ],
   connect: [
-    { label: "Twitter / X", href: "https://x.com/harshjdhv", external: true },
-    { label: "LinkedIn", href: "https://linkedin.com/in/harshjdhv", external: true },
-    { label: "Developer", href: "https://harshjdhv.com", external: true },
+    { label: "Twitter / X", href: "https://x.com/AnsHh9094", external: true },
+    { label: "LinkedIn", href: "https://linkedin.com/in/AnsHh9094", external: true },
+    { label: "Developer", href: "https://AnsHh9094.com", external: true },
   ],
 }
 
@@ -37,9 +42,9 @@ export function Footer() {
           {/* Brand and Description */}
           <div className="flex flex-col items-start md:col-span-12 lg:col-span-5 xl:col-span-5">
             <Link href="/" className="group mb-6 flex w-fit items-center gap-2.5">
-              <ComponentryLogomark className="size-7 text-zinc-900 transition-transform duration-300 group-hover:scale-105 dark:text-white" />
+              <XevosUILogomark className="size-7 text-zinc-900 transition-transform duration-300 group-hover:scale-105 dark:text-white" />
               <span className="text-lg font-semibold tracking-tight text-zinc-900 dark:text-white">
-                Componentry
+                Xevos UI
               </span>
             </Link>
             <p className="mb-7 max-w-md text-base leading-7 text-zinc-500 dark:text-zinc-400">
@@ -47,9 +52,9 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-3">
               <a 
-                href="https://x.com/harshjdhv" 
-                target="_blank" 
-                rel="noreferrer" 
+                href="https://x.com/AnsHh9094" 
+                 
+                 
                 className="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
               >
                 <svg className="size-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -57,9 +62,9 @@ export function Footer() {
                 </svg>
               </a>
               <a 
-                href="https://github.com/harshjdhv/componentry" 
-                target="_blank" 
-                rel="noreferrer" 
+                href="https://github.com/AnsHh9094/xevos-ui" 
+                 
+                 
                 className="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
               >
                 <svg className="size-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -135,14 +140,14 @@ export function Footer() {
 
         <div className="z-10 flex flex-col items-center justify-between gap-4 pb-8 text-sm md:flex-row">
           <p className="text-zinc-500 dark:text-zinc-400">
-            © {new Date().getFullYear()} Componentry. Created by{" "}
+            © {new Date().getFullYear()} Xevos UI. Created by{" "}
             <a
-              href="https://x.com/harshjdhv"
-              target="_blank"
-              rel="noreferrer"
+              href="https://x.com/AnsHh9094"
+              
+              
               className="text-zinc-900 dark:text-zinc-100 hover:underline underline-offset-4"
             >
-              Harsh Jadhav
+              ansh anand
             </a>
             .
           </p>
@@ -164,7 +169,7 @@ export function Footer() {
       {/* Massive Half-Cut Text */}
       <div className="w-full flex justify-center mt-12 pointer-events-none select-none overflow-hidden h-[10.5vw]">
         <h1 className="text-[10.5vw] font-black leading-[0.7] tracking-tighter text-zinc-950/5 dark:text-white/5 translate-y-[28%]">
-          COMPONENTRY
+          XEVOS UI
         </h1>
       </div>
     </footer>

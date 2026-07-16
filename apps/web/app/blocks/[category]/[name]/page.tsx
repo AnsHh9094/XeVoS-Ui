@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -30,7 +36,7 @@ export async function generateMetadata({
   if (!item) return {};
 
   return {
-    title: `${item.title} Block | Componentry`,
+    title: `${item.title} Block | Xevos UI`,
     description: item.description,
   };
 }

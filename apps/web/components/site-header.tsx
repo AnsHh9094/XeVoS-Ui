@@ -1,9 +1,15 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ComponentryLogomark } from "@/components/logos/componentry-logomark"
+import { XevosUILogomark } from "@/components/logos/xevos-ui-logomark"
 import { CommandMenu } from "@/components/command-menu"
 import { landingGutterClass } from "@/components/landing/landing-frame"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -54,7 +60,7 @@ export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
                     }
                 }
 
-                const response = await fetch("https://api.github.com/repos/harshjdhv/componentry")
+                const response = await fetch("https://api.github.com/repos/AnsHh9094/xevos-ui")
                 if (!response.ok) return
 
                 const data = (await response.json()) as { stargazers_count?: number }
@@ -100,9 +106,9 @@ export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
             active: pathname === "/docs/mcp",
         },
         {
-            href: "/sponsors",
-            label: "Sponsors",
-            active: pathname === "/sponsors",
+            href: "/showcase",
+            label: "Showcase",
+            active: pathname === "/showcase",
         },
     ]
 
@@ -125,8 +131,8 @@ export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
                         href="/"
                         className="group inline-flex h-8 items-center gap-1.5 rounded-md px-1 transition-colors duration-200 hover:bg-muted/60 dark:hover:bg-muted/40"
                     >
-                        <ComponentryLogomark className="size-5 text-zinc-900 dark:text-white transition-opacity group-hover:opacity-80" />
-                        <span className="text-[16px] font-bold font-display tracking-tight text-zinc-900 dark:text-white">COMPONENTRY</span>
+                        <XevosUILogomark className="size-5 text-zinc-900 dark:text-white transition-opacity group-hover:opacity-80" />
+                        <span className="text-[16px] font-bold font-display tracking-tight text-zinc-900 dark:text-white">XEVOS UI</span>
                     </Link>
                     <nav className="hidden items-center gap-0.5 text-sm font-medium sm:flex">
                         {navItems.map((item) => (
@@ -147,29 +153,13 @@ export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
                     </nav>
                 </div>
                 <div className="ml-auto flex items-center gap-1">
-                    <Link
-                        href="https://shadcnblocks.com/?utm_source=componentry&utm_medium=sponsor&utm_campaign=header_badge"
-                        target="_blank"
-                        data-umami-event="click-sponsor-shadcnblocks"
-                        className="hidden h-8 items-center gap-1.5 rounded-md border border-input/50 bg-muted/30 pl-2 pr-2.5 text-sm font-normal transition-colors hover:border-input hover:bg-accent/50 md:inline-flex"
-                    >
-                        <span className="text-[10px] font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">Sponsor</span>
-                        <span className="w-px h-4 bg-border/40" />
-                        <img
-                            src="https://cdn.shadcnblocks.com/shadcnblocks/images/logo/shadcnblocks-logo.svg"
-                            className="w-4 dark:invert"
-                            alt="Shadcnblocks Logo"
-                        />
-                        <span className="text-foreground/80 hover:text-foreground">Shadcnblocks.com</span>
-                    </Link>
-                    <div className="hidden h-4 w-px bg-foreground/15 dark:bg-foreground/20 md:block" />
                     <CommandMenu />
                     <div className="hidden h-4 w-px bg-foreground/15 dark:bg-foreground/20 sm:block" />
                     <div className="flex items-center gap-1">
                         <Link
-                            href="https://github.com/harshjdhv/componentry"
-                            target="_blank"
-                            rel="noreferrer"
+                            href="https://github.com/AnsHh9094"
+                            
+                            
                             title={fullStars}
                             className="group inline-flex h-8 items-center justify-center gap-1 rounded-md px-1.5 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-foreground dark:hover:bg-muted/50"
                         >

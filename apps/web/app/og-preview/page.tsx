@@ -1,6 +1,12 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client";
 
-import { ComponentryLogomark } from "@/components/logos/componentry-logomark";
+import { XevosUILogomark } from "@/components/logos/xevos-ui-logomark";
 
 export default function OpenGraphPreviewPage() {
   return (
@@ -11,9 +17,9 @@ export default function OpenGraphPreviewPage() {
 
         <div className="absolute left-[104px] top-[120px] flex items-center gap-4 text-[38px] font-semibold leading-none tracking-[-0.045em] text-white">
           <div className="flex size-[46px] items-center justify-center">
-            <ComponentryLogomark className="size-[46px] text-white drop-shadow-[0_18px_46px_rgba(255,255,255,0.2)]" />
+            <XevosUILogomark className="size-[46px] text-white drop-shadow-[0_18px_46px_rgba(255,255,255,0.2)]" />
           </div>
-          Componentry
+          Xevos UI
         </div>
 
         <div className="absolute left-[104px] top-[292px]">

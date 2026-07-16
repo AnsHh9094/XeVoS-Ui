@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import React, { useRef } from "react"
@@ -35,7 +41,7 @@ export default function LandingPage() {
             {/* Navigation - Minimal */}
             <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 mix-blend-exclusion text-white pointer-events-none">
                 <div className="text-xs font-bold tracking-tighter uppercase pointer-events-auto">
-                    Componentry
+                    Xevos UI
                 </div>
                 <div className="flex gap-6 text-xs font-medium pointer-events-auto uppercase tracking-wider">
                     <Link href="/docs" className="hover:opacity-50">Docs</Link>
@@ -178,7 +184,7 @@ export default function LandingPage() {
                             Get V1.0
                         </Link>
                         <Link
-                            href="https://github.com/harshjdhv/componentry"
+                            href="https://github.com/AnsHh9094/xevos-ui"
                             className="h-14 px-8 bg-transparent text-[#1C1917] flex items-center justify-center text-sm font-bold uppercase tracking-wider hover:bg-[#E7E5E4] transition-colors border-l border-[#1C1917]"
                         >
                             GitHub
@@ -187,7 +193,7 @@ export default function LandingPage() {
                 </div>
 
                 <div className="text-xs font-mono text-[#78716C] flex gap-8">
-                    <span>© 2024 COMPONENTRY</span>
+                    <span>© 2024 XEVOS UI</span>
                     <span>OS LAUNCH</span>
                 </div>
             </footer>

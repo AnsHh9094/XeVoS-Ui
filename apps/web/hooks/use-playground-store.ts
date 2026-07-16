@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 import { create } from "zustand";
 
 export interface DitherPrismHeroConfig {
@@ -21,7 +27,7 @@ export interface SignatureConfig {
 }
 
 export const SIGNATURE_DEFAULT_CONFIG: SignatureConfig = {
-  text: "Componentry",
+  text: "Xevos UI",
   color: "",
   fontSize: 48,
   duration: 1.5,
@@ -38,7 +44,7 @@ export interface SplitFlapDisplayConfig {
 }
 
 export const SPLIT_FLAP_DISPLAY_DEFAULT_CONFIG: SplitFlapDisplayConfig = {
-  text: "COMPONENTRY",
+  text: "XEVOS UI",
   columns: 11,
   size: "md",
   accentColor: "#22c55e",

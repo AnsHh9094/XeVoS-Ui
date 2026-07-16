@@ -1,6 +1,6 @@
-# Componentry Internal Documentation
+# Xevos UI Internal Documentation
 
-This directory contains internal documentation for maintaining and extending the Componentry UI library.
+This directory contains internal documentation for maintaining and extending the Xevos UI UI library.
 
 ## 📄 Available Guides
 
@@ -11,7 +11,7 @@ This directory contains internal documentation for maintaining and extending the
 ## 🏗️ Architecture Overview
 
 ```
-componentry/
+xevos-ui/
 ├── packages/ui/          # Core component library (publishable)
 ├── apps/web/             # Documentation website (Next.js)
 └── docs/                 # Internal documentation (this folder)
@@ -47,6 +47,6 @@ See [CREATING_COMPONENTS.md](./CREATING_COMPONENTS.md) for detailed instructions
 
 ## 🔗 Useful Links
 
-- **Live Site:** https://componentry.dev
-- **Registry URL:** https://componentry.fun/r/{component}.json
-- **Install Example:** `pnpm dlx shadcn@latest add @componentry/showcase-card`
+- **Live Site:** https://xevos-ui.dev
+- **Registry URL:** https://xevos-ui.fun/r/{component}.json
+- **Install Example:** `pnpm dlx shadcn@latest add @xevos-ui/showcase-card`

@@ -1,7 +1,13 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import React from "react"
-import { ComponentryLogomark } from "@/components/logos/componentry-logomark"
+import { XevosUILogomark } from "@/components/logos/xevos-ui-logomark"
 import { WebGLLiquid } from "@/components/landing/webgl-liquid"
 
 export default function PreviewPage() {
@@ -34,13 +40,13 @@ export default function PreviewPage() {
         <div className="flex flex-row items-center justify-center gap-10 md:gap-16">
           <div className="relative group">
             <div className="absolute inset-0 animate-pulse bg-indigo-500/20 blur-[60px] rounded-full duration-[3s]" />
-            <ComponentryLogomark className="relative h-32 w-32 md:h-48 md:w-48 text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-transform duration-700 hover:scale-105" />
+            <XevosUILogomark className="relative h-32 w-32 md:h-48 md:w-48 text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-transform duration-700 hover:scale-105" />
           </div>
 
           <div className="flex flex-col items-center justify-center">
             <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-[8rem] leading-none pb-2 pr-2">
               <span className="bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent block pb-4 pr-2">
-                Componentry
+                Xevos UI
               </span>
             </h1>
           </div>

@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import React from "react"
@@ -33,9 +39,9 @@ const CTACard = () => (
       </p>
     </div>
     <Link
-      href="https://x.com/harshjdhv"
-      target="_blank"
-      rel="noopener noreferrer"
+      href="https://x.com/AnsHh9094"
+      
+      
       className="group flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-foreground text-background hover:opacity-90 text-xs font-medium transition-all shadow-sm"
     >
       Connect on X

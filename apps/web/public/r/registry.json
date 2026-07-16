@@ -1,10 +1,10 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "componentry",
-  "homepage": "https://componentry.fun",
+  "name": "xevos-ui",
+  "homepage": "https://xevos-ui.fun",
   "aliases": [
-    "componentry",
-    "componentryui",
+    "xevos-ui",
+    "xevos-uiui",
     "ui",
     "cmp"
   ],

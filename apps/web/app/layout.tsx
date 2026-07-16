@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 import type React from "react";
 import type { Metadata, Viewport } from "next";
 import {
@@ -13,6 +19,7 @@ import { Providers } from "@/components/providers";
 import { JsonLd } from "@/components/seo/json-ld";
 import { RouteScrollbarController } from "@/components/route-scrollbar-controller";
 import { absoluteUrl, siteConfig } from "@/lib/site";
+import GhostCursor from "@/components/ghost-cursor/GhostCursor";
 
 const fontSans = Albert_Sans({
   subsets: ["latin"],
@@ -53,13 +60,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.title,
-    template: "%s | Componentry - UI Component Library",
+    template: "%s | Xevos UI - UI Component Library",
   },
   description: siteConfig.description,
   keywords: [
-    "Componentry",
-    "Componentry UI",
-    "componentry.dev",
+    "Xevos UI",
+    "Xevos UI UI",
+    "xevos-ui.dev",
     "UI component library",
     "React components",
     "React UI library",
@@ -111,21 +118,21 @@ export const metadata: Metadata = {
         url: absoluteUrl("/opengraph-image.png"),
         width: 1200,
         height: 630,
-        alt: "Componentry - Premium React UI Component Library",
+        alt: "Xevos UI - Premium React UI Component Library",
         type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Componentry - Premium React UI Component Library",
+    title: "Xevos UI - Premium React UI Component Library",
     description: siteConfig.description,
     images: [
       {
         url: absoluteUrl("/opengraph-image.png"),
         width: 1200,
         height: 630,
-        alt: "Componentry - Premium React UI Component Library",
+        alt: "Xevos UI - Premium React UI Component Library",
       },
     ],
     creator: siteConfig.author.handle,
@@ -167,7 +174,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>): React.JSX.Element {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning style={{ ['--background' as any]: 'transparent' } as React.CSSProperties}>
       <Analytics />
       <head>
         <JsonLd />
@@ -175,10 +182,11 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} ${fontDisplay.variable} relative font-sans antialiased`}
         style={
-          { "--font-heading": "var(--font-display)" } as React.CSSProperties
+          ({ "--font-heading": "var(--font-display)", backgroundColor: 'transparent', "--background": 'transparent' } as React.CSSProperties)
         }
       >
         <div className="isolate relative flex min-h-svh flex-col">
+          <GhostCursor zIndex={0} color="#B497CF" mixBlendMode="screen" />
           <RouteScrollbarController />
           <Providers>{children}</Providers>
         </div>

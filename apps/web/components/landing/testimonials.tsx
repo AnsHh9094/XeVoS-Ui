@@ -1,3 +1,9 @@
+/**
+ * XeVoS UI — https://github.com/AnsHh9094/XeVoS-Ui
+ * Copyright (c) 2026 Anand Ansh (AnsHh9094)
+ * SPDX-License-Identifier: MIT
+ * This notice must be retained in all copies or substantial portions (MIT License).
+ */
 "use client"
 
 import { motion } from "framer-motion"
@@ -35,7 +41,7 @@ const row1: Testimonial[] = [
     meta: "Design Engineer @ Cal.com",
   },
   {
-    quote: "what is going on @shadcn? In just a few hours I've discovered a bunch of new shadcn libraries I had never seen before... componentry fun by @harshjdhv... I thought I'd caught them all!",
+    quote: "what is going on @shadcn? In just a few hours I've discovered a bunch of new shadcn libraries I had never seen before... xevos-ui fun by @AnsHh9094... I thought I'd caught them all!",
     name: "Ali Bey",
     handle: "@alibey_10",
     initials: "AB",
@@ -43,7 +49,7 @@ const row1: Testimonial[] = [
     meta: "151 likes · 8.5k views",
   },
   {
-    quote: "particle typography — npx shadcn add @componentry/cursor-driven-particle-typography",
+    quote: "particle typography — npx shadcn add @xevos-ui/cursor-driven-particle-typography",
     name: "Ali Bey",
     handle: "@alibey_10",
     initials: "AB",
