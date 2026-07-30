@@ -145,7 +145,7 @@ function ComponentCard({
         onMouseLeave={stopPreview}
         onFocus={startPreview}
         onBlur={stopPreview}
-        className="group relative flex flex-col rounded-2xl border border-border bg-white dark:bg-zinc-900/50 overflow-hidden transition-all duration-300 shadow-card hover:-translate-y-0.5 hover:border-input hover:shadow-card-hover"
+        className="group relative flex flex-col rounded-2xl border border-border bg-white dark:bg-zinc-900/50 overflow-hidden transition-all duration-300 shadow-card hover:-translate-y-0.5 hover:border-input hover:shadow-card-hover [content-visibility:auto] [contain-intrinsic-size:100px_360px]"
       >
         {/* ── Expandable hover info (upper side) ── */}
         <motion.div
@@ -201,7 +201,7 @@ function ComponentCard({
                 src={previewPosterSrc}
                 alt=""
                 aria-hidden="true"
-                loading={component.category === "Text Animations" ? "eager" : "lazy"}
+                loading="lazy"
                 decoding="async"
                 className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-200 ${isVideoReady && isHovered ? "opacity-0" : "opacity-100"}`}
               />
@@ -213,7 +213,7 @@ function ComponentCard({
                 loop
                 muted
                 playsInline
-                preload="metadata"
+                preload="none"
                 poster={previewPosterSrc ?? undefined}
                 onLoadedData={(e) => {
                   setIsVideoReady(true)

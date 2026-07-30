@@ -17,7 +17,7 @@ import './GhostCursor.css'
 const GhostCursor = ({
   className = undefined,
   style = undefined,
-  trailLength = 50,
+  trailLength = 16,
   inertia = 0.5,
   grainIntensity = 0.05,
   bloomStrength = 0.1,
@@ -96,7 +96,7 @@ const GhostCursor = ({
       float v = 0.0;
       float a = 0.5;
       mat2 m = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
-      for(int i=0;i<5;i++){
+      for(int i=0;i<3;i++){
         v += a * noise(p);
         p = m * p * 2.0;
         a *= 0.5;
@@ -133,15 +133,14 @@ const GhostCursor = ({
       colorAcc += b.rgb;
       alphaAcc += b.a;
 
-      for (int i = 0; i < MAX_TRAIL_LENGTH; i++) {
-        vec2 pm = (iPrevMouse[i] * 2.0 - 1.0) * vec2(iResolution.x / iResolution.y, 1.0);
+      for (int i = 0; i < MAX_TRAIL_LENGTH; i += 2) {
         float t = 1.0 - float(i) / float(MAX_TRAIL_LENGTH);
         t = pow(t, 2.0);
-        if (t > 0.01) {
-          vec4 bt = blob(uv, pm, t * 0.8, iOpacity);
-          colorAcc += bt.rgb;
-          alphaAcc += bt.a;
-        }
+        if (t <= 0.05) break;
+        vec2 pm = (iPrevMouse[i] * 2.0 - 1.0) * vec2(iResolution.x / iResolution.y, 1.0);
+        vec4 bt = blob(uv, pm, t * 0.8, iOpacity);
+        colorAcc += bt.rgb;
+        alphaAcc += bt.a;
       }
 
       colorAcc *= iBrightness;

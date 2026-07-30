@@ -62,18 +62,18 @@ export default function Home() {
             className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
           >
             <Link
-              href="/showcase"
+              href="/docs"
               className="group relative flex h-14 w-full sm:w-auto items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-b from-[#EAEAEA]/90 to-[#D8D8D8]/90 px-8 text-base font-semibold text-zinc-900 backdrop-blur-xl transition-[box-shadow,gap] duration-300 shadow-[0_1px_1px_0_rgba(0,0,0,0.06),0_4px_8px_-2px_rgba(0,0,0,0.10),0_0_0_1px_rgba(0,0,0,0.15),inset_0_1.5px_0_0_rgba(255,255,255,0.9),inset_0_-1px_0_0_rgba(0,0,0,0.04)] hover:shadow-[0_2px_2px_0_rgba(0,0,0,0.06),0_10px_20px_-6px_rgba(0,0,0,0.14),0_0_0_1px_rgba(0,0,0,0.15),inset_0_1.5px_0_0_rgba(255,255,255,0.9),inset_0_-1px_0_0_rgba(0,0,0,0.04)] dark:bg-gradient-to-b dark:from-zinc-700/90 dark:to-zinc-800/90 dark:text-zinc-100 dark:shadow-[0_1px_1px_0_rgba(0,0,0,0.3),0_4px_8px_-2px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.08),inset_0_1.5px_0_0_rgba(255,255,255,0.06)] hover:gap-3"
             >
-              Explore Showcase
+              Browse Components
               <ArrowRight className="size-4" />
             </Link>
 
             <Link
-              href="/docs"
+              href="/showcase"
               className="rounded-xl transition-[box-shadow,background-color] duration-300 h-14 px-8 font-medium flex items-center justify-center bg-gradient-to-b from-zinc-800 to-zinc-900 text-zinc-100 hover:from-zinc-700 hover:to-zinc-800 shadow-[0_1px_1px_0_rgba(0,0,0,0.2),0_4px_8px_-2px_rgba(0,0,0,0.3),0_0_0_1px_rgba(255,255,255,0.06),inset_0_1.5px_0_0_rgba(255,255,255,0.08)] hover:shadow-[0_2px_2px_0_rgba(0,0,0,0.3),0_10px_20px_-6px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.06),inset_0_1.5px_0_0_rgba(255,255,255,0.08)] dark:bg-gradient-to-b dark:from-white dark:to-zinc-100 dark:text-zinc-900 dark:hover:from-zinc-50 dark:hover:to-zinc-200 dark:shadow-[0_1px_1px_0_rgba(0,0,0,0.06),0_4px_8px_-2px_rgba(0,0,0,0.10),0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_0_0_rgba(255,255,255,1),inset_0_-1px_0_0_rgba(0,0,0,0.03)] dark:hover:shadow-[0_2px_2px_0_rgba(0,0,0,0.06),0_10px_20px_-6px_rgba(0,0,0,0.14),0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_0_0_rgba(255,255,255,1),inset_0_-1px_0_0_rgba(0,0,0,0.03)] w-full sm:w-auto"
             >
-              Read Docs
+              Explore Showcase
             </Link>
           </motion.div>
         </div>

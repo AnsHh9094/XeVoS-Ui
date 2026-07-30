@@ -92,7 +92,7 @@ export function SiteHeader({ sidebarToggle }: SiteHeaderProps) {
     const navItems = [
         {
             href: "/docs",
-            label: "Docs",
+            label: "Components",
             active: pathname === "/docs" || (pathname.startsWith("/docs/") && !pathname.startsWith("/docs/mcp")),
         },
         {
